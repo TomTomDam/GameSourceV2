@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameSource.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSource
 {
@@ -24,6 +26,8 @@ namespace GameSource
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<GameSource_DBContext>(x => x.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
