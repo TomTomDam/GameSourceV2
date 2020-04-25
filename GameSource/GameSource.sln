@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSource", "GameSource.csproj", "{FA444A02-4EF1-4A62-835E-6155238FC397}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource", "GameSource.csproj", "{FA444A02-4EF1-4A62-835E-6155238FC397}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSource.Data", "..\GameSource.Data\GameSource.Data.csproj", "{F13E3BE9-FD34-4A35-B9CE-A582F95437AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource.Data", "..\GameSource.Data\GameSource.Data.csproj", "{F13E3BE9-FD34-4A35-B9CE-A582F95437AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSource.Services", "..\GameSource.Services\GameSource.Services.csproj", "{20347067-06C0-4BC3-B8FD-CA9654F629A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource.Services", "..\GameSource.Services\GameSource.Services.csproj", "{20347067-06C0-4BC3-B8FD-CA9654F629A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSource.Services.Contracts", "..\GameSource.Services.Contracts\GameSource.Services.Contracts.csproj", "{4954696E-8A56-41B5-A8C2-97ED2268DDCD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSource.Models", "..\GameSource.Models\GameSource.Models.csproj", "{5D3AB010-A9E5-4567-86ED-969C46502A07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource.Models", "..\GameSource.Models\GameSource.Models.csproj", "{5D3AB010-A9E5-4567-86ED-969C46502A07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{20347067-06C0-4BC3-B8FD-CA9654F629A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20347067-06C0-4BC3-B8FD-CA9654F629A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20347067-06C0-4BC3-B8FD-CA9654F629A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4954696E-8A56-41B5-A8C2-97ED2268DDCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4954696E-8A56-41B5-A8C2-97ED2268DDCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4954696E-8A56-41B5-A8C2-97ED2268DDCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4954696E-8A56-41B5-A8C2-97ED2268DDCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D3AB010-A9E5-4567-86ED-969C46502A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D3AB010-A9E5-4567-86ED-969C46502A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D3AB010-A9E5-4567-86ED-969C46502A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
