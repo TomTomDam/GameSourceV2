@@ -12,10 +12,10 @@ namespace GameSource.Data
         {
         }
 
-        DbSet<Game> Game { get; set; }
-        DbSet<Genre> Genre { get; set; }
-        DbSet<Developer> Developer { get; set; }
-        DbSet<Publisher> Publisher { get; set; }
-        DbSet<Platform> Platform { get; set; }
+        public DbSet<Game> Game { get; set; }
+        public DbSet<Genre> Genre { get; set; }
+        public DbSet<Developer> Developer { get; set; }
+        public DbSet<Publisher> Publisher { get; set; }
+        public DbSet<Platform> Platform { get; set; }
     }
 }
