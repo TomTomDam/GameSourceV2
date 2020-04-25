@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GameSource.Data.Repositories
 {
-    public class GameRepository : IBaseRepository<Game>, IGameRepository
+    public class GameRepository : BaseRepository<Game>, IGameRepository
     {
-        protected readonly GameSource_DBContext context;
+        private GameSource_DBContext context;
         private DbSet<Game> gameEntity;
 
-        public GameRepository(GameSource_DBContext context)
+        public GameRepository(GameSource_DBContext context) : base(context)
         {
             this.context = context;
             gameEntity = context.Set<Game>();

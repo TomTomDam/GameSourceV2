@@ -1,5 +1,7 @@
 ﻿using GameSource.Data.Repositories;
 using GameSource.Models;
+using GameSource.Services;
+using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,40 +12,40 @@ namespace GameSource.Controllers
 {
     public class GamesController : Controller
     {
-        protected GameRepository gamesRepo;
+        private IGameService gameService;
 
-        public GamesController(GameRepository gamesRepo)
+        public GamesController(IGameService gameService)
         {
-            this.gamesRepo = gamesRepo;
+            this.gameService = gameService;
         }
 
         public IActionResult Index()
         {
-            var gamesList = gamesRepo.GetAll();
+            var gamesList = gameService.GetAll();
             return View(gamesList);
         }
 
         public IActionResult Page(int id)
         {
-            var game = gamesRepo.GetByID(id);
+            var game = gameService.GetByID(id);
             return View(game);
         }
 
         public IActionResult Create(Game game)
         {
-            gamesRepo.Insert(game);
+            gameService.Insert(game);
             return RedirectToAction("Index");
         }
 
         public IActionResult Update(Game game)
         {
-            gamesRepo.Update(game);
+            gameService.Update(game);
             return RedirectToAction("Page", game);
         }
 
         public IActionResult Delete(int id)
         {
-            gamesRepo.Delete(id);
+            gameService.Delete(id);
             return RedirectToAction("Index");
         }
     }

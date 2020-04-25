@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Razor.Runtime;
+using GameSource.Services;
+using GameSource.Services.Contracts;
+using GameSource.Data.Repositories.Contracts;
+using GameSource.Data.Repositories;
 
 namespace GameSource
 {
@@ -28,7 +32,10 @@ namespace GameSource
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddDbContext<GameSource_DBContext>(x => x.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
+            services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
+
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IGameService, GameService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
