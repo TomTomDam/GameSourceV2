@@ -16,13 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var developer in Model)
-                {
+            @foreach (var developer in Model)
+            {
+                <tr>
                     <td>@developer.Name</td>
-                    <td><a class="btn btn-primary"asp-action="Details" asp-route-id="@developer.Developer_ID">View</a></td>
-                    }
+                    <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@developer.Developer_ID">View</a></td>
                 </tr>
+            }
         </tbody>
     </table>
 </div>

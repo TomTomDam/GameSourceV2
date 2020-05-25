@@ -16,13 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var genre in Model)
-                {
+            @foreach (var genre in Model)
+            {
+                <tr>
                     <td>@genre.Name</td>
                     <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@genre.Genre_ID">View</a></td>
-                    }
                 </tr>
+            }
         </tbody>
     </table>
 </div>
