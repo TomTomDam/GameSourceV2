@@ -1,49 +1,50 @@
 ﻿using GameSource.Data.Repositories.Contracts;
+using GameSource.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 
 namespace GameSource.Data.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class PlatformRepository : BaseRepository<Platform>, IPlatformRepository
     {
         private GameSource_DBContext context;
-        private DbSet<T> entity;
+        private DbSet<Platform> entity; 
 
-        public BaseRepository(GameSource_DBContext context)
+        public PlatformRepository(GameSource_DBContext context) : base(context)
         {
             this.context = context;
-            entity = context.Set<T>();
+            entity = context.Set<Platform>();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<Platform> GetAll()
         {
             return entity.ToList();
         }
 
-        public T GetByID(int id)
+        public Platform GetByID(int id)
         {
             return entity.Find(id);
         }
 
-        public void Insert(T item)
+        public void Insert(Platform platform)
         {
-            entity.Add(item);
+            entity.Add(platform);
             context.SaveChanges();
         }
 
-        public void Update(T item)
+        public void Update(Platform platform)
         {
-            entity.Update(item);
+            entity.Update(platform);
             context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var item = GetByID(id);
-            entity.Remove(item);
+            var platform = GetByID(id);
+            entity.Remove(platform);
             context.SaveChanges();
         }
     }

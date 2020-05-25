@@ -1,49 +1,49 @@
 ﻿using GameSource.Data.Repositories.Contracts;
+using GameSource.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace GameSource.Data.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class GenreRepository : BaseRepository<Genre>, IGenreRepository
     {
         private GameSource_DBContext context;
-        private DbSet<T> entity;
+        private DbSet<Genre> entity;
 
-        public BaseRepository(GameSource_DBContext context)
+        public GenreRepository(GameSource_DBContext context) : base(context)
         {
             this.context = context;
-            entity = context.Set<T>();
+            entity = context.Set<Genre>();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<Genre> GetAll() 
         {
             return entity.ToList();
         }
 
-        public T GetByID(int id)
+        public Genre GetByID(int id)
         {
             return entity.Find(id);
         }
 
-        public void Insert(T item)
+        public void Insert(Genre genre)
         {
-            entity.Add(item);
+            entity.Add(genre);
             context.SaveChanges();
         }
 
-        public void Update(T item)
+        public void Update(Genre genre)
         {
-            entity.Update(item);
+            entity.Update(genre);
             context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var item = GetByID(id);
-            entity.Remove(item);
+            var genre = GetByID(id);
+            entity.Remove(genre);
             context.SaveChanges();
         }
     }

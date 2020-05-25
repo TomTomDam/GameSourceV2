@@ -36,6 +36,18 @@ namespace GameSource
 
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
+
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IGenreService, GenreService>();
+
+            services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+            services.AddScoped<IDeveloperService, DeveloperService>();
+
+            services.AddScoped<IPublisherRepository, PublisherRepository>();
+            services.AddScoped<IPublisherService, PublisherService>();
+
+            services.AddScoped<IPlatformRepository, PlatformRepository>();
+            services.AddScoped<IPlatformService, PlatformService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

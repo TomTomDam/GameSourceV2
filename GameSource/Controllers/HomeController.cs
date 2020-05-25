@@ -22,7 +22,7 @@ namespace GameSource.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult News()
         {
             return View();
         }

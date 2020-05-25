@@ -1,32 +1,33 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 using GameSource.Models;
 using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers
 {
-    public class GamesController : Controller
+    public class GenreController : Controller
     {
-        private IGameService gameService;
+        public IGenreService genreService;
 
-        public GamesController(IGameService gameService)
+        public GenreController(IGenreService genreService)
         {
-            this.gameService = gameService;
+            this.genreService = genreService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var gamesList = gameService.GetAll();
-            return View(gamesList);
+            var genreList = genreService.GetAll();
+            return View(genreList);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var game = gameService.GetByID(id);
-            return View(game);
+            var genre = genreService.GetByID(id);
+            return View(genre);
         }
 
         [HttpGet]
@@ -37,25 +38,24 @@ namespace GameSource.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Game game)
+        public IActionResult Create(Genre genre)
         {
-            gameService.Insert(game);
+            genreService.Insert(genre);
             return RedirectToAction("Index");
         }
-
 
         [HttpGet]
         public IActionResult Update()
         {
-            return View(new Game());
+            return View(new Genre());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Game game)
+        public IActionResult Update(Genre genre)
         {
-            gameService.Update(game);
-            return RedirectToAction("Details", game);
+            genreService.Update(genre);
+            return View("Details", genre);
         }
 
         [HttpGet]
@@ -65,9 +65,10 @@ namespace GameSource.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id )
         {
-            gameService.Delete(id);
+            genreService.Delete(id);
             return RedirectToAction("Index");
         }
     }

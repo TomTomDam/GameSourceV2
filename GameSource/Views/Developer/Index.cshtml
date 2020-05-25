@@ -1,0 +1,29 @@
+﻿@model IEnumerable<GameSource.Models.Developer>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Index</h1>
+
+<div class="container">
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var developer in Model)
+                {
+                    <td>@developer.Name</td>
+                    <td><a class="btn btn-primary"asp-action="Details" asp-route-id="@developer.Developer_ID">View</a></td>
+                    }
+                </tr>
+        </tbody>
+    </table>
+</div>
+

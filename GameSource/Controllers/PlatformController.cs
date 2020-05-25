@@ -1,32 +1,34 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers
 {
-    public class GamesController : Controller
+    public class PlatformController : Controller
     {
-        private IGameService gameService;
+        private IPlatformService platformService;
 
-        public GamesController(IGameService gameService)
+        public PlatformController(IPlatformService platformService)
         {
-            this.gameService = gameService;
+            this.platformService = platformService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var gamesList = gameService.GetAll();
-            return View(gamesList);
+            var platformList = platformService.GetAll();
+            return View(platformList);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var game = gameService.GetByID(id);
-            return View(game);
+            var platform = platformService.GetByID(id);
+            return View(platform);
         }
 
         [HttpGet]
@@ -37,9 +39,9 @@ namespace GameSource.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Game game)
+        public IActionResult Create(Platform platform)
         {
-            gameService.Insert(game);
+            platformService.Insert(platform);
             return RedirectToAction("Index");
         }
 
@@ -47,15 +49,15 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Update()
         {
-            return View(new Game());
+            return View(new Platform());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Game game)
+        public IActionResult Update(Platform platform)
         {
-            gameService.Update(game);
-            return RedirectToAction("Details", game);
+            platformService.Update(platform);
+            return RedirectToAction("Details", platform);
         }
 
         [HttpGet]
@@ -67,7 +69,7 @@ namespace GameSource.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            gameService.Delete(id);
+            platformService.Delete(id);
             return RedirectToAction("Index");
         }
     }

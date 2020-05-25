@@ -5,33 +5,33 @@ using System.Collections.Generic;
 
 namespace GameSource.Services
 {
-    public class GameService : IGameService
+    public class GenreService : IGenreService
     {
-        private IGameRepository repo;
+        private IGenreRepository repo;
 
-        public GameService(IGameRepository repo)
+        public GenreService(IGenreRepository repo)
         {
             this.repo = repo;
         }
 
-        public IEnumerable<Game> GetAll()
+        public IEnumerable<Genre> GetAll()
         {
             return repo.GetAll();
         }
 
-        public Game GetByID(int id)
+        public Genre GetByID(int id)
         {
             return repo.GetByID(id);
         }
 
-        public void Insert(Game game)
+        public void Insert(Genre genre)
         {
-            repo.Insert(game);
+            repo.Insert(genre);
         }
 
-        public void Update(Game game)
+        public void Update(Genre genre)
         {
-            repo.Update(game);
+            repo.Update(genre);
         }
 
         public void Delete(int id)
