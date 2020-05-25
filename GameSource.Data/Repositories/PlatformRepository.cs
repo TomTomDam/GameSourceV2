@@ -32,17 +32,20 @@ namespace GameSource.Data.Repositories
         public void Insert(Platform platform)
         {
             entity.Add(platform);
+            context.SaveChanges();
         }
 
         public void Update(Platform platform)
         {
             entity.Update(platform);
+            context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var platform = GetByID(id);
             entity.Remove(platform);
+            context.SaveChanges();
         }
     }
 }

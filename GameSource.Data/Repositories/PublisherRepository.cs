@@ -32,17 +32,20 @@ namespace GameSource.Data.Repositories
         public void Insert(Publisher publisher)
         {
             entity.Add(publisher);
+            context.SaveChanges();
         }
 
         public void Update(Publisher publisher)
         {
             entity.Update(publisher);
+            context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var publisher = GetByID(id);
             entity.Remove(publisher);
+            context.SaveChanges();
         }
     }
 }

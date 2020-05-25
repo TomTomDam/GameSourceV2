@@ -31,17 +31,20 @@ namespace GameSource.Data.Repositories
         public void Insert(Genre genre)
         {
             entity.Add(genre);
+            context.SaveChanges();
         }
 
         public void Update(Genre genre)
         {
             entity.Update(genre);
+            context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var genre = GetByID(id);
             entity.Remove(genre);
+            context.SaveChanges();
         }
     }
 }
