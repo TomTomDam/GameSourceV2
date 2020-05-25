@@ -1,12 +1,8 @@
-﻿using GameSource.Data.Repositories;
+﻿using System;
+using System.Text;
 using GameSource.Models;
-using GameSource.Services;
 using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GameSource.Controllers
 {
@@ -19,30 +15,54 @@ namespace GameSource.Controllers
             this.gameService = gameService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var gamesList = gameService.GetAll();
             return View(gamesList);
         }
 
-        public IActionResult Page(int id)
+        [HttpGet]
+        public IActionResult Game(int id)
         {
             var game = gameService.GetByID(id);
             return View(game);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Create(Game game)
         {
             gameService.Insert(game);
             return RedirectToAction("Index");
         }
 
+
+        [HttpGet]
+        public IActionResult Update()
+        {
+            return View(new Game());
+        }
+
+        [HttpPost]
         public IActionResult Update(Game game)
         {
             gameService.Update(game);
             return RedirectToAction("Page", game);
         }
 
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             gameService.Delete(id);

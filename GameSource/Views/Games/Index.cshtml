@@ -1,7 +1,41 @@
-﻿
+﻿@model IEnumerable<GameSource.Models.Game>
+
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Index</h1>
+
+<a class="btn btn-primary" asp-controller="Games" asp-action="Create">Add a new game</a>
+
+<div class="container">
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Developer</th>
+                <th>Publisher</th>
+                <th>Description</th>
+                <th>Platforms</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var game in Model)
+                {
+                    <td>@game.Name</td>
+                    <td>@game.Genre</td>
+                    <td>@game.Developer</td>
+                    <td>@game.Publisher</td>
+                    <td>@game.Description</td>
+                    <td>@game.Platforms</td>
+                    <td><a class="btn btn-primary" asp-controller="Games" asp-action="Game" asp-route-id="@game.Game_ID">View</a></td>
+                    }
+                </tr>
+        </tbody>
+    </table>
+</div>
 

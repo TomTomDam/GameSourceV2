@@ -1,37 +1,39 @@
 ﻿using GameSource.Data.Repositories.Contracts;
 using GameSource.Models;
 using GameSource.Services.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace GameSource.Services
 {
-    public class GameService : IGameService
+    public class PublisherService : IPublisherService
     {
-        private IGameRepository repo;
+        private IPublisherRepository repo;
 
-        public GameService(IGameRepository repo)
+        public PublisherService(IPublisherRepository repo)
         {
             this.repo = repo;
         }
 
-        public IEnumerable<Game> GetAll()
+        public IEnumerable<Publisher> GetAll()
         {
             return repo.GetAll();
         }
 
-        public Game GetByID(int id)
+        public Publisher GetByID(int id)
         {
             return repo.GetByID(id);
         }
 
-        public void Insert(Game game)
+        public void Insert(Publisher publisher)
         {
-            repo.Insert(game);
+            repo.Insert(publisher);
         }
 
-        public void Update(Game game)
+        public void Update(Publisher publisher)
         {
-            repo.Update(game);
+            repo.Update(publisher);
         }
 
         public void Delete(int id)
