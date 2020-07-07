@@ -18,6 +18,10 @@
     <ProjectReference Include="..\GameSource.Services\GameSource.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Home\" />
+  </ItemGroup>
+
 
 
 </Project>

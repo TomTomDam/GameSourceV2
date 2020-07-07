@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using GameSource.Models;
 using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using GameSource.ViewModels.Genre;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using GameSource.Services;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace GameSource.Controllers
 {
@@ -20,6 +26,7 @@ namespace GameSource.Controllers
         public IActionResult Index()
         {
             var genreList = genreService.GetAll();
+
             return View(genreList);
         }
 
@@ -45,9 +52,16 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Update(GenreViewModel viewModel)
         {
-            return View(new Genre());
+            var genreList = genreService.GetAll();
+            var genresSelectList = genreList.Select(x => new {
+                x.Genre_ID,
+                x.Name
+            }).ToList();
+            viewModel.Genres = new SelectList(genresSelectList, "Genre_ID", "Name");
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -55,7 +69,7 @@ namespace GameSource.Controllers
         public IActionResult Update(Genre genre)
         {
             genreService.Update(genre);
-            return View("Details", genre);
+            return RedirectToAction("Details", genre);
         }
 
         [HttpGet]
