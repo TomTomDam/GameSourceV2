@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameSource.Data.Migrations
 {
     [DbContext(typeof(GameSource_DBContext))]
-    [Migration("20200425185147_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20200710205205_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,7 +55,7 @@ namespace GameSource.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlatformsPlatform_ID")
+                    b.Property<int?>("Platform_ID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Publisher_ID")
@@ -67,7 +67,7 @@ namespace GameSource.Data.Migrations
 
                     b.HasIndex("Genre_ID");
 
-                    b.HasIndex("PlatformsPlatform_ID");
+                    b.HasIndex("Platform_ID");
 
                     b.HasIndex("Publisher_ID");
 
@@ -132,9 +132,9 @@ namespace GameSource.Data.Migrations
                         .WithMany()
                         .HasForeignKey("Genre_ID");
 
-                    b.HasOne("GameSource.Models.Platform", "Platforms")
+                    b.HasOne("GameSource.Models.Platform", "Platform")
                         .WithMany()
-                        .HasForeignKey("PlatformsPlatform_ID");
+                        .HasForeignKey("Platform_ID");
 
                     b.HasOne("GameSource.Models.Publisher", "Publisher")
                         .WithMany()

@@ -19,7 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Home\" />
+    <Folder Include="ViewModels\GenreViewModel\" />
+    <Folder Include="ViewModels\DeveloperViewModel\" />
+    <Folder Include="ViewModels\PublisherViewModel\" />
+    <Folder Include="ViewModels\PlatformViewModel\" />
   </ItemGroup>
 
 

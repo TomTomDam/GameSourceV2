@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using GameSource.Models;
 using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using GameSource.ViewModels.Genre;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GameSource.Services;
@@ -52,16 +51,9 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(GenreViewModel viewModel)
+        public IActionResult Update()
         {
-            var genreList = genreService.GetAll();
-            var genresSelectList = genreList.Select(x => new {
-                x.Genre_ID,
-                x.Name
-            }).ToList();
-            viewModel.Genres = new SelectList(genresSelectList, "Genre_ID", "Name");
-
-            return View(viewModel);
+            return View(new Genre());
         }
 
         [HttpPost]

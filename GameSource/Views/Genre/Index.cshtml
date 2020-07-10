@@ -21,8 +21,10 @@
             {
                 <tr>
                     <td>@genre.Name</td>
-                    <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@genre.Genre_ID">View</a></td>
-                    <td><a class="btn btn-primary" asp-action="Update" asp-route-id="@genre.Genre_ID">Edit</a></td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@genre.Genre_ID">View</a>
+                        <a class="btn btn-primary" asp-action="Update" asp-route-id="@genre.Genre_ID">Edit</a>
+                    </td>
                 </tr>
             }
         </tbody>

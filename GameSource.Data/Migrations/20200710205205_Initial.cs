@@ -2,7 +2,7 @@
 
 namespace GameSource.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,7 +70,7 @@ namespace GameSource.Data.Migrations
                     Developer_ID = table.Column<int>(nullable: true),
                     Publisher_ID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    PlatformsPlatform_ID = table.Column<int>(nullable: true)
+                    Platform_ID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,8 +88,8 @@ namespace GameSource.Data.Migrations
                         principalColumn: "Genre_ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Game_Platform_PlatformsPlatform_ID",
-                        column: x => x.PlatformsPlatform_ID,
+                        name: "FK_Game_Platform_Platform_ID",
+                        column: x => x.Platform_ID,
                         principalTable: "Platform",
                         principalColumn: "Platform_ID",
                         onDelete: ReferentialAction.Restrict);
@@ -112,9 +112,9 @@ namespace GameSource.Data.Migrations
                 column: "Genre_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_PlatformsPlatform_ID",
+                name: "IX_Game_Platform_ID",
                 table: "Game",
-                column: "PlatformsPlatform_ID");
+                column: "Platform_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Game_Publisher_ID",

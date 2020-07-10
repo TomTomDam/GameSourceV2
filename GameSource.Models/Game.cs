@@ -14,6 +14,6 @@ namespace GameSource.Models
         public Developer Developer { get; set; }
         public Publisher Publisher { get; set; }
         public string Description { get; set; }
-        public Platform Platforms { get; set; }
+        public Platform Platform { get; set; }
     }
 }
