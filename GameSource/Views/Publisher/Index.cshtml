@@ -16,13 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var publisher in Model)
-                {
+            @foreach (var publisher in Model)
+            {
+                <tr>
                     <td>@publisher.Name</td>
                     <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@publisher.Publisher_ID">View</a></td>
-                    }
                 </tr>
+            }
         </tbody>
     </table>
 </div>

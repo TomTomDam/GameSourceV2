@@ -27,18 +27,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var game in Model)
-                {
+            @foreach (var game in Model)
+            {
+                <tr>
                     <td>@game.Name</td>
                     <td>@game.Genre</td>
                     <td>@game.Developer</td>
                     <td>@game.Publisher</td>
                     <td>@game.Description</td>
-                    <td>@game.Platforms</td>
-                    <td><a class="btn btn-primary" asp-controller="Games" asp-action="Game" asp-route-id="@game.Game_ID">View</a></td>
-                    }
+                    <td>@game.Platform</td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Games" asp-action="Details" asp-route-id="@game.Game_ID">View</a>
+                        <a class="btn btn-primary" asp-controller="Games" asp-action="Update" asp-route-id="@game.Game_ID">Edit</a>
+                        <a class="btn btn-primary" asp-controller="Games" asp-action="Delete" asp-route-id="@game.Game_ID">Delete</a>
+                    </td>
                 </tr>
+            }
         </tbody>
     </table>
 </div>

@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using GameSource.Models;
 using GameSource.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using GameSource.Services;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace GameSource.Controllers
 {
@@ -20,6 +25,7 @@ namespace GameSource.Controllers
         public IActionResult Index()
         {
             var genreList = genreService.GetAll();
+
             return View(genreList);
         }
 
@@ -55,7 +61,7 @@ namespace GameSource.Controllers
         public IActionResult Update(Genre genre)
         {
             genreService.Update(genre);
-            return View("Details", genre);
+            return RedirectToAction("Details", genre);
         }
 
         [HttpGet]

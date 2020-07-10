@@ -1,4 +1,4 @@
-﻿@model GameSource.Models.Game
+﻿@model GameSource.ViewModels.GameViewModel.GameUpdateViewModel
 
 @{
     ViewData["Title"] = "Update";
@@ -12,36 +12,36 @@
         <div class="col-md-4">
             <form asp-controller="Games" asp-action="Update">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Game_ID" />
+                <input type="hidden" asp-for="Game.Game_ID" />
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="Game.Name" class="control-label"></label>
+                    <input asp-for="Game.Name" class="form-control" />
+                    <span asp-validation-for="Game.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Genre" class="control-label"></label>
-                    <input asp-for="Genre" class="form-control" />
-                    <span asp-validation-for="Genre" class="text-danger"></span>
+                    <label asp-for="Game.Genre" class="control-label"></label>
+                    <input asp-for="Game.Genre" class="form-control" />
+                    <span asp-validation-for="Game.Genre" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Developer" class="control-label"></label>
-                    <input asp-for="Developer" class="form-control" />
-                    <span asp-validation-for="Developer" class="text-danger"></span>
+                    <label asp-for="Game.Developer" class="control-label"></label>
+                    <input asp-for="Game.Developer" class="form-control" />
+                    <span asp-validation-for="Game.Developer" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Publisher" class="control-label"></label>
-                    <input asp-for="Publisher" class="form-control" />
-                    <span asp-validation-for="Publisher" class="text-danger"></span>
+                    <label asp-for="Game.Publisher" class="control-label"></label>
+                    <input asp-for="Game.Publisher" class="form-control" />
+                    <span asp-validation-for="Game.Publisher" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <label asp-for="Game.Description" class="control-label"></label>
+                    <input asp-for="Game.Description" class="form-control" />
+                    <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Platforms" class="control-label"></label>
-                    <input asp-for="Platforms" class="form-control" />
-                    <span asp-validation-for="Platforms" class="text-danger"></span>
+                    <label asp-for="Game.Platform" class="control-label"></label>
+                    <input asp-for="Game.Platform" class="form-control" />
+                    <span asp-validation-for="Game.Platform" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save changes" class="btn btn-primary" />

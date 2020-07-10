@@ -17,15 +17,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var platform in Model)
-                {
+            @foreach (var platform in Model)
+            {
+                <tr>
+
                     <td>@platform.Name</td>
                     <td>@platform.Type</td>
                     <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@platform.Platform_ID">View</a></td>
-                    }
+                    
                 </tr>
-        </tbody>
+            }
+            </tbody>
     </table>
 </div>
 
