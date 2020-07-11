@@ -18,13 +18,6 @@
     <ProjectReference Include="..\GameSource.Services\GameSource.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\GenreViewModel\" />
-    <Folder Include="ViewModels\DeveloperViewModel\" />
-    <Folder Include="ViewModels\PublisherViewModel\" />
-    <Folder Include="ViewModels\PlatformViewModel\" />
-  </ItemGroup>
-
 
 
 </Project>

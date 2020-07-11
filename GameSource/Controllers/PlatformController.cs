@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Services.Contracts;
+using GameSource.ViewModels.PlatformViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers
@@ -27,8 +28,9 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var platform = platformService.GetByID(id);
-            return View(platform);
+            PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel();
+            viewModel.Platform = platformService.GetByID(id);
+            return View(viewModel);
         }
 
         [HttpGet]

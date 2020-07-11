@@ -12,6 +12,10 @@ namespace GameSource.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
+
         public DbSet<Game> Game { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Developer> Developer { get; set; }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GameSource.Services;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using GameSource.ViewModels.GenreViewModel;
 
 namespace GameSource.Controllers
 {
@@ -32,8 +33,9 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var genre = genreService.GetByID(id);
-            return View(genre);
+            GenreDetailsViewModel viewModel = new GenreDetailsViewModel();
+            viewModel.Genre = genreService.GetByID(id);
+            return View(viewModel);
         }
 
         [HttpGet]

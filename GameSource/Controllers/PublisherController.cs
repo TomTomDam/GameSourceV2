@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameSource.Models;
 using GameSource.Services.Contracts;
+using GameSource.ViewModels.PublisherViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers
@@ -25,8 +26,9 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var publisher = publisherService.GetByID(id);
-            return View(publisher);
+            PublisherDetailsViewModel viewModel = new PublisherDetailsViewModel();
+            viewModel.Publisher = publisherService.GetByID(id);
+            return View(viewModel);
         }
 
         [HttpGet]

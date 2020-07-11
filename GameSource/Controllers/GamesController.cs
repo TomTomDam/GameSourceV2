@@ -50,22 +50,22 @@ namespace GameSource.Controllers
             viewModel.Genres = genreService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
-                Value = x.Genre_ID.ToString()
+                Value = x.ID.ToString()
             }).ToList();
             viewModel.Developers = developerService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
-                Value = x.Developer_ID.ToString()
+                Value = x.ID.ToString()
             }).ToList();
             viewModel.Publishers = publisherService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
-                Value = x.Publisher_ID.ToString()
+                Value = x.ID.ToString()
             }).ToList();
             viewModel.Platforms = platformService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
-                Value = x.Platform_ID.ToString()
+                Value = x.ID.ToString()
             }).ToList();
 
             return View(viewModel);
@@ -77,7 +77,7 @@ namespace GameSource.Controllers
         {
             Game game = new Game
             {
-                Game_ID = viewModel.Game.Game_ID,
+                ID = viewModel.Game.ID,
                 Name = viewModel.Game.Name,
                 Genre = viewModel.Game.Genre,
                 Developer = viewModel.Game.Developer,
@@ -97,7 +97,7 @@ namespace GameSource.Controllers
             viewModel.Genres = genreService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
-                Value = x.Genre_ID.ToString()
+                Value = x.ID.ToString()
             }).ToList();
 
             return View(viewModel);
@@ -107,7 +107,7 @@ namespace GameSource.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(GameUpdateViewModel viewModel)
         {
-            Game game = gameService.GetByID(viewModel.Game.Game_ID);
+            Game game = gameService.GetByID(viewModel.Game.ID);
 
             gameService.Update(game);
             return RedirectToAction("Details", game);
