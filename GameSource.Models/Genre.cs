@@ -8,7 +8,8 @@ namespace GameSource.Models
     public class Genre
     {
         [Key]
-        public int Genre_ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }

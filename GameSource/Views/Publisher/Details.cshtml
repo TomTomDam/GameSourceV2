@@ -1,7 +1,16 @@
-﻿
+﻿@model GameSource.ViewModels.PublisherViewModel.PublisherDetailsViewModel
+
 @{
     ViewData["Title"] = "Publisher";
 }
 
-    <h1>Publisher</h1>
+<h1>Publisher</h1>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <label asp-for="Publisher.ID" class="control-label font-weight-bold"></label><p>@Model.Publisher.ID</p>
+            <label asp-for="Publisher.Name" class="control-label font-weight-bold"></label><p>@Model.Publisher.Name</p>
+        </div>
+    </div>
+</div>
