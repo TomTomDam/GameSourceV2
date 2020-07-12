@@ -48,6 +48,9 @@ namespace GameSource
 
             services.AddScoped<IPlatformRepository, PlatformRepository>();
             services.AddScoped<IPlatformService, PlatformService>();
+
+            services.AddScoped<IPlatformTypeRepository, PlatformTypeRepository>();
+            services.AddScoped<IPlatformTypeService, PlatformTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

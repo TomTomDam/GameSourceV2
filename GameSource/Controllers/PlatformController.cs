@@ -6,16 +6,19 @@ using GameSource.Models;
 using GameSource.Services.Contracts;
 using GameSource.ViewModels.PlatformViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameSource.Controllers
 {
     public class PlatformController : Controller
     {
         private IPlatformService platformService;
+        private IPlatformTypeService platformTypeService;
 
-        public PlatformController(IPlatformService platformService)
+        public PlatformController(IPlatformService platformService, IPlatformTypeService platformTypeService)
         {
             this.platformService = platformService;
+            this.platformTypeService = platformTypeService;
         }
 
         [HttpGet]
@@ -36,13 +39,27 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            PlatformCreateViewModel viewModel = new PlatformCreateViewModel();
+            viewModel.Platform = new Platform();
+            viewModel.PlatformTypes = platformTypeService.GetAll().Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Platform platform)
+        public IActionResult Create(PlatformCreateViewModel viewModel)
         {
+            Platform platform = new Platform
+            {
+                ID = viewModel.Platform.ID,
+                Name = viewModel.Platform.Name,
+                PlatformType = viewModel.Platform.PlatformType
+            };
             platformService.Insert(platform);
             return RedirectToAction("Index");
         }

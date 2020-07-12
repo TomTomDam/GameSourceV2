@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using GameSource.Models;
-using GameSource.Services;
 using GameSource.Services.Contracts;
 using GameSource.ViewModels.GameViewModel;
 using Microsoft.AspNetCore.Mvc;

@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Type</th>
+                <th>Type of Platform</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -20,11 +20,9 @@
             @foreach (var platform in Model)
             {
                 <tr>
-
                     <td>@platform.Name</td>
-                    <td>@platform.Type</td>
+                    <td>@platform.PlatformType.Name</td>
                     <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@platform.ID">View</a></td>
-                    
                 </tr>
             }
             </tbody>
