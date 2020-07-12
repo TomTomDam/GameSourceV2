@@ -1,5 +1,4 @@
-﻿@model IEnumerable<GameSource.Models.Genre>
-
+﻿@model IEnumerable<GameSource.Models.PlatformType>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,14 +15,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var genre in Model)
+            @foreach (var platformType in Model)
             {
                 <tr>
-                    <td>@genre.Name</td>
-                    <td>
-                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@genre.ID">View</a>
-                        <a class="btn btn-primary" asp-action="Update" asp-route-id="@genre.ID">Edit</a>
-                    </td>
+
+                    <td>@platformType.Name</td>
+                    <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@platformType.ID">View</a></td>
+
                 </tr>
             }
         </tbody>

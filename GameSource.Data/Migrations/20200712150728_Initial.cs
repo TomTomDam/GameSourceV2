@@ -33,17 +33,16 @@ namespace GameSource.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Platform",
+                name: "PlatformType",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Platform", x => x.ID);
+                    table.PrimaryKey("PK_PlatformType", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,17 +59,37 @@ namespace GameSource.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Platform",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    PlatformTypeID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Platform", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Platform_PlatformType_PlatformTypeID",
+                        column: x => x.PlatformTypeID,
+                        principalTable: "PlatformType",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Game",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    GenreID = table.Column<int>(nullable: false),
-                    DeveloperID = table.Column<int>(nullable: false),
-                    PublisherID = table.Column<int>(nullable: false),
+                    GenreID = table.Column<int>(nullable: true),
+                    DeveloperID = table.Column<int>(nullable: true),
+                    PublisherID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    PlatformID = table.Column<int>(nullable: false)
+                    PlatformID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,25 +99,25 @@ namespace GameSource.Data.Migrations
                         column: x => x.DeveloperID,
                         principalTable: "Developer",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Genre_GenreID",
                         column: x => x.GenreID,
                         principalTable: "Genre",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Platform_PlatformID",
                         column: x => x.PlatformID,
                         principalTable: "Platform",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Publisher_PublisherID",
                         column: x => x.PublisherID,
                         principalTable: "Publisher",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -120,6 +139,11 @@ namespace GameSource.Data.Migrations
                 name: "IX_Game_PublisherID",
                 table: "Game",
                 column: "PublisherID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Platform_PlatformTypeID",
+                table: "Platform",
+                column: "PlatformTypeID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -138,6 +162,9 @@ namespace GameSource.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Publisher");
+
+            migrationBuilder.DropTable(
+                name: "PlatformType");
         }
     }
 }
