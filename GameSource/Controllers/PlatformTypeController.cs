@@ -40,13 +40,22 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            PlatformTypeCreateViewModel viewModel = new PlatformTypeCreateViewModel();
+            viewModel.PlatformType = new PlatformType();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PlatformType platformType)
+        public IActionResult Create(PlatformTypeCreateViewModel viewModel)
         {
+            PlatformType platformType = new PlatformType
+            {
+                ID = viewModel.PlatformType.ID,
+                Name = viewModel.PlatformType.Name
+            };
+
             platformTypeService.Insert(platformType);
             return RedirectToAction("Index");
         }
@@ -74,15 +83,22 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            PlatformTypeDeleteViewModel viewModel = new PlatformTypeDeleteViewModel
+            {
+                PlatformType = platformTypeService.GetByID(id)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(PlatformTypeDeleteViewModel viewModel)
         {
-            platformTypeService.Delete(id);
+            PlatformType platformType = platformTypeService.GetByID(viewModel.PlatformType.ID);
+
+            platformTypeService.Delete(platformType.ID);
             return RedirectToAction("Index");
         }
     }

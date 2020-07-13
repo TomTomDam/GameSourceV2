@@ -153,15 +153,28 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            var game = gameService.GetByID(id);
+
+            GameDeleteViewModel viewModel = new GameDeleteViewModel
+            {
+                Game = gameService.GetByID(id),
+                Genre = genreService.GetByID(game.GenreID),
+                Developer = developerService.GetByID(game.DeveloperID),
+                Publisher = publisherService.GetByID(game.PublisherID),
+                Platform = platformService.GetByID(game.PlatformID)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(GameDeleteViewModel viewModel)
         {
-            gameService.Delete(id);
+            Game game = gameService.GetByID(viewModel.Game.ID);
+
+            gameService.Delete(game.ID);
             return RedirectToAction("Index");
         }
     }
