@@ -31,8 +31,14 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel();
-            viewModel.Platform = platformService.GetByID(id);
+            var platform = platformService.GetByID(id);
+
+            PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel
+            {
+                Platform = platform,
+                PlatformType = platformTypeService.GetAll().Single(x => x.ID == platform.PlatformTypeID)
+            };
+
             return View(viewModel);
         }
 
@@ -58,8 +64,9 @@ namespace GameSource.Controllers
             {
                 ID = viewModel.Platform.ID,
                 Name = viewModel.Platform.Name,
-                PlatformType = viewModel.Platform.PlatformType
+                PlatformType = platformTypeService.GetAll().Single(x => x.ID == viewModel.Platform.PlatformTypeID)
             };
+
             platformService.Insert(platform);
             return RedirectToAction("Index");
         }

@@ -9,5 +9,6 @@ namespace GameSource.ViewModels.PlatformViewModel
     public class PlatformDetailsViewModel
     {
         public Platform Platform { get; set; }
+        public PlatformType PlatformType { get; set; }
     }
 }

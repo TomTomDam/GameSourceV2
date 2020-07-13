@@ -7,8 +7,9 @@ namespace GameSource.Models
 {
     public class PlatformType
     {
-        [Key]
         public int ID { get; set; }
         public string Name { get; set; }
+
+        public ICollection<Platform> Platforms { get; set; }
     }
 }

@@ -8,9 +8,11 @@ namespace GameSource.Models
 {
     public class Platform
     {
-        [Key]
         public int ID { get; set; }
         public string Name { get; set; }
+        public int PlatformTypeID { get; set; }
+
         public PlatformType PlatformType { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }
