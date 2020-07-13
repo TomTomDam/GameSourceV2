@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameSource.ViewModels.GameViewModel
 {
-    public class GameUpdateViewModel
+    public class GameEditViewModel
     {
         public Game Game { get; set; }
         public int GenreID { get; set; }

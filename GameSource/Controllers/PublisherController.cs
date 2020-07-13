@@ -19,8 +19,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var publisherList = publisherService.GetAll();
-            return View(publisherList);
+            PublisherIndexViewModel viewModel = new PublisherIndexViewModel
+            {
+                Publishers = publisherService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -47,15 +51,22 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit(int id)
         {
-            return View(new Publisher());
+            PublisherEditViewModel viewModel = new PublisherEditViewModel();
+            viewModel.Publisher = publisherService.GetByID(id);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Publisher publisher)
+        public IActionResult Edit(PublisherEditViewModel viewModel)
         {
+            Publisher publisher = publisherService.GetByID(viewModel.Publisher.ID);
+
+            publisher.Name = viewModel.Publisher.Name;
+
             publisherService.Update(publisher);
             return RedirectToAction("Details", publisher);
         }

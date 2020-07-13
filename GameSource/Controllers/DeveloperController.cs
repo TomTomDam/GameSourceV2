@@ -20,8 +20,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var developerList = developerService.GetAll();
-            return View(developerList);
+            DeveloperIndexViewModel viewModel = new DeveloperIndexViewModel
+            {
+                Developers = developerService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -48,15 +52,22 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit(int id)
         {
-            return View(new Developer());
+            DeveloperEditViewModel viewModel = new DeveloperEditViewModel();
+            viewModel.Developer = developerService.GetByID(id);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Developer developer)
+        public IActionResult Edit(DeveloperEditViewModel viewModel)
         {
+            Developer developer = developerService.GetByID(viewModel.Developer.ID);
+
+            developer.Name = viewModel.Developer.Name;
+
             developerService.Update(developer);
             return RedirectToAction("Details", developer);
         }

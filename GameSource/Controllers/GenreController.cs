@@ -25,9 +25,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var genreList = genreService.GetAll();
+            GenreIndexViewModel viewModel = new GenreIndexViewModel
+            {
+                Genres = genreService.GetAll()
+            };
 
-            return View(genreList);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -53,17 +56,24 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit(int id)
         {
-            return View(new Genre());
+            GenreEditViewModel viewModel = new GenreEditViewModel();
+            viewModel.Genre = genreService.GetByID(id);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Genre genre)
+        public IActionResult Edit(GenreEditViewModel viewModel)
         {
-            genreService.Update(genre);
-            return RedirectToAction("Details", genre);
+            Genre Genre = genreService.GetByID(viewModel.Genre.ID);
+
+            Genre.Name = viewModel.Genre.Name;
+
+            genreService.Update(Genre);
+            return RedirectToAction("Details", Genre);
         }
 
         [HttpGet]

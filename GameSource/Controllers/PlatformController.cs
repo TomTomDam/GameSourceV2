@@ -24,8 +24,13 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var platformList = platformService.GetAll();
-            return View(platformList);
+            PlatformIndexViewModel viewModel = new PlatformIndexViewModel
+            {
+                Platforms = platformService.GetAll(),
+                PlatformTypes = platformTypeService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -71,17 +76,29 @@ namespace GameSource.Controllers
             return RedirectToAction("Index");
         }
 
-
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit(int id)
         {
-            return View(new Platform());
+            PlatformEditViewModel viewModel = new PlatformEditViewModel();
+            viewModel.Platform = platformService.GetByID(id);
+            viewModel.PlatformTypes = platformTypeService.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Platform platform)
+        public IActionResult Edit(PlatformEditViewModel viewModel)
         {
+            Platform platform = platformService.GetByID(viewModel.Platform.ID);
+
+            platform.Name = viewModel.Platform.Name;
+            platform.PlatformTypeID = viewModel.Platform.PlatformTypeID;
+
             platformService.Update(platform);
             return RedirectToAction("Details", platform);
         }
