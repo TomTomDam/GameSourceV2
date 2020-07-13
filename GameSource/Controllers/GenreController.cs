@@ -44,13 +44,22 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            GenreCreateViewModel viewModel = new GenreCreateViewModel();
+            viewModel.Genre = new Genre();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Genre genre)
+        public IActionResult Create(GenreCreateViewModel viewModel)
         {
+            Genre genre = new Genre
+            {
+                ID = viewModel.Genre.ID,
+                Name = viewModel.Genre.Name
+            };
+
             genreService.Insert(genre);
             return RedirectToAction("Index");
         }
@@ -77,16 +86,23 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            GenreDeleteViewModel viewModel = new GenreDeleteViewModel
+            {
+                Genre = genreService.GetByID(id)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id )
+        public IActionResult Delete(GenreDeleteViewModel viewModel)
         {
-            genreService.Delete(id);
+            Genre genre = genreService.GetByID(viewModel.Genre.ID);
+
+            genreService.Delete(genre.ID);
             return RedirectToAction("Index");
         }
     }

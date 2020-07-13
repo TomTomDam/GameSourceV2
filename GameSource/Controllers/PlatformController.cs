@@ -41,7 +41,7 @@ namespace GameSource.Controllers
             PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel
             {
                 Platform = platform,
-                PlatformType = platformTypeService.GetAll().Single(x => x.ID == platform.PlatformTypeID)
+                PlatformType = platformTypeService.GetByID(platform.PlatformTypeID)
             };
 
             return View(viewModel);
@@ -104,15 +104,25 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            var platform = platformService.GetByID(id);
+
+            PlatformDeleteViewModel viewModel = new PlatformDeleteViewModel
+            {
+                Platform = platform,
+                PlatformType = platformTypeService.GetByID(platform.PlatformTypeID)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(PlatformDeleteViewModel viewModel)
         {
-            platformService.Delete(id);
+            Platform platform = platformService.GetByID(viewModel.Platform.ID);
+
+            platformService.Delete(platform.ID);
             return RedirectToAction("Index");
         }
     }

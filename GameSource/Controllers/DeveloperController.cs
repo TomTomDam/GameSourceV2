@@ -39,13 +39,22 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            DeveloperCreateViewModel viewModel = new DeveloperCreateViewModel();
+            viewModel.Developer = new Developer();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Developer developer)
+        public IActionResult Create(DeveloperCreateViewModel viewModel)
         {
+            Developer developer = new Developer
+            {
+                ID = viewModel.Developer.ID,
+                Name = viewModel.Developer.Name
+            };
+
             developerService.Insert(developer);
             return RedirectToAction("Index");
         }
@@ -73,15 +82,22 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            DeveloperDeleteViewModel viewModel = new DeveloperDeleteViewModel
+            {
+                Developer = developerService.GetByID(id)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(DeveloperDeleteViewModel viewModel)
         {
-            developerService.Delete(id);
+            Developer developer = developerService.GetByID(viewModel.Developer.ID);
+
+            developerService.Delete(developer.ID);
             return RedirectToAction("Index");
         }
     }

@@ -1,4 +1,4 @@
-﻿@model GameSource.Models.Developer
+﻿@model GameSource.ViewModels.DeveloperViewModel.DeveloperCreateViewModel
 
 @{
     ViewData["Title"] = "Add a new Developer";
@@ -10,11 +10,11 @@
     <div class="row">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="Developer.ID" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Developer.Name" class="control-label"></label>
+                <input asp-for="Developer.Name" class="form-control" />
+                <span asp-validation-for="Developer.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />

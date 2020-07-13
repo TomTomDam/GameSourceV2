@@ -38,13 +38,22 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            PublisherCreateViewModel viewModel = new PublisherCreateViewModel();
+            viewModel.Publisher = new Publisher();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Publisher publisher)
+        public IActionResult Create(PublisherCreateViewModel viewModel)
         {
+            Publisher publisher = new Publisher
+            {
+                ID = viewModel.Publisher.ID,
+                Name = viewModel.Publisher.Name
+            };
+
             publisherService.Insert(publisher);
             return RedirectToAction("Index");
         }
@@ -72,15 +81,22 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            PublisherDeleteViewModel viewModel = new PublisherDeleteViewModel
+            {
+                Publisher = publisherService.GetByID(id)
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(PublisherDeleteViewModel viewModel)
         {
-            publisherService.Delete(id);
+            Publisher publisher = publisherService.GetByID(viewModel.Publisher.ID);
+
+            publisherService.Delete(publisher.ID);
             return RedirectToAction("Index");
         }
     }
