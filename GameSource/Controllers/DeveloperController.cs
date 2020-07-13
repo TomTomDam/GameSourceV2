@@ -33,6 +33,7 @@ namespace GameSource.Controllers
         {
             DeveloperDetailsViewModel viewModel = new DeveloperDetailsViewModel();
             viewModel.Developer = developerService.GetByID(id);
+
             return View(viewModel);
         }
 

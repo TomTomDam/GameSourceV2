@@ -49,10 +49,10 @@ namespace GameSource.Controllers
             GameDetailsViewModel viewModel = new GameDetailsViewModel
             {
                 Game = game,
-                Genre = genreService.GetAll().Single(x => x.ID == game.GenreID),
-                Developer = developerService.GetAll().Single(x => x.ID == game.DeveloperID),
-                Publisher = publisherService.GetAll().Single(x => x.ID == game.PublisherID),
-                Platform = platformService.GetAll().Single(x => x.ID == game.PlatformID)
+                Genre = genreService.GetByID(game.GenreID),
+                Developer = developerService.GetByID(game.DeveloperID),
+                Publisher = publisherService.GetByID(game.PublisherID),
+                Platform = platformService.GetByID(game.PlatformID)
             };
 
             return View(viewModel);

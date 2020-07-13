@@ -38,6 +38,7 @@ namespace GameSource.Controllers
         {
             GenreDetailsViewModel viewModel = new GenreDetailsViewModel();
             viewModel.Genre = genreService.GetByID(id);
+
             return View(viewModel);
         }
 

@@ -32,6 +32,7 @@ namespace GameSource.Controllers
         {
             PublisherDetailsViewModel viewModel = new PublisherDetailsViewModel();
             viewModel.Publisher = publisherService.GetByID(id);
+
             return View(viewModel);
         }
 
