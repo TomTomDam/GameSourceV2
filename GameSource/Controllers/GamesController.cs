@@ -29,15 +29,33 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var gamesList = gameService.GetAll();
-            return View(gamesList);
+            GameIndexViewModel viewModel = new GameIndexViewModel
+            {
+                Games = gameService.GetAll(),
+                Genres = genreService.GetAll(),
+                Developers = developerService.GetAll(),
+                Publishers = publisherService.GetAll(),
+                Platforms = platformService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
             var game = gameService.GetByID(id);
-            return View(game);
+
+            GameDetailsViewModel viewModel = new GameDetailsViewModel
+            {
+                Game = game,
+                Genre = genreService.GetAll().Single(x => x.ID == game.GenreID),
+                Developer = developerService.GetAll().Single(x => x.ID == game.DeveloperID),
+                Publisher = publisherService.GetAll().Single(x => x.ID == game.PublisherID),
+                Platform = platformService.GetAll().Single(x => x.ID == game.PlatformID)
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -77,12 +95,13 @@ namespace GameSource.Controllers
             {
                 ID = viewModel.Game.ID,
                 Name = viewModel.Game.Name,
-                Genre = viewModel.Game.Genre,
-                Developer = viewModel.Game.Developer,
-                Publisher = viewModel.Game.Publisher,
                 Description = viewModel.Game.Description,
-                Platform = viewModel.Game.Platform
+                GenreID = viewModel.Game.GenreID,
+                DeveloperID = viewModel.Game.DeveloperID,
+                PublisherID = viewModel.Game.PublisherID,
+                PlatformID = viewModel.Game.PlatformID
             };
+
             gameService.Insert(game);
             return RedirectToAction("Index");
         }
@@ -97,6 +116,21 @@ namespace GameSource.Controllers
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
+            viewModel.Developers = developerService.GetAll().Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+            viewModel.Publishers = publisherService.GetAll().Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+            viewModel.Platforms = platformService.GetAll().Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
 
             return View(viewModel);
         }
@@ -107,8 +141,15 @@ namespace GameSource.Controllers
         {
             Game game = gameService.GetByID(viewModel.Game.ID);
 
+            game.Name = viewModel.Game.Name;
+            game.Description = viewModel.Game.Description;
+            game.Genre = genreService.GetAll().Single(x => x.ID == viewModel.Game.GenreID);
+            game.Developer = developerService.GetAll().Single(x => x.ID == viewModel.Game.DeveloperID);
+            game.Publisher = publisherService.GetAll().Single(x => x.ID == viewModel.Game.PublisherID);
+            game.Platform = platformService.GetAll().Single(x => x.ID == viewModel.Game.PlatformID);
+
             gameService.Update(game);
-            return RedirectToAction("Details", game);
+            return RedirectToAction("Details", viewModel);
         }
 
         [HttpGet]

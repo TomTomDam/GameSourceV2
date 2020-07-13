@@ -65,7 +65,7 @@ namespace GameSource.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    PlatformTypeID = table.Column<int>(nullable: true)
+                    PlatformTypeID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +75,7 @@ namespace GameSource.Data.Migrations
                         column: x => x.PlatformTypeID,
                         principalTable: "PlatformType",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,11 +85,11 @@ namespace GameSource.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    GenreID = table.Column<int>(nullable: true),
-                    DeveloperID = table.Column<int>(nullable: true),
-                    PublisherID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    PlatformID = table.Column<int>(nullable: true)
+                    GenreID = table.Column<int>(nullable: false),
+                    DeveloperID = table.Column<int>(nullable: false),
+                    PublisherID = table.Column<int>(nullable: false),
+                    PlatformID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,25 +99,25 @@ namespace GameSource.Data.Migrations
                         column: x => x.DeveloperID,
                         principalTable: "Developer",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Game_Genre_GenreID",
                         column: x => x.GenreID,
                         principalTable: "Genre",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Game_Platform_PlatformID",
                         column: x => x.PlatformID,
                         principalTable: "Platform",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Game_Publisher_PublisherID",
                         column: x => x.PublisherID,
                         principalTable: "Publisher",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

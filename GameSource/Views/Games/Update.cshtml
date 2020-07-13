@@ -20,18 +20,18 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Genre" class="control-label"></label>
-                    <input asp-for="Game.Genre" class="form-control" />
-                    <span asp-validation-for="Game.Genre" class="text-danger"></span>
+                    <input asp-for="Game.Genre.Name" class="form-control" />
+                    <span asp-validation-for="Game.Genre.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Developer" class="control-label"></label>
-                    <input asp-for="Game.Developer" class="form-control" />
-                    <span asp-validation-for="Game.Developer" class="text-danger"></span>
+                    <input asp-for="Game.Developer.Name" class="form-control" />
+                    <span asp-validation-for="Game.Developer.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Publisher" class="control-label"></label>
-                    <input asp-for="Game.Publisher" class="form-control" />
-                    <span asp-validation-for="Game.Publisher" class="text-danger"></span>
+                    <input asp-for="Game.Publisher.Name" class="form-control" />
+                    <span asp-validation-for="Game.Publisher.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Description" class="control-label"></label>
@@ -40,8 +40,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Platform" class="control-label"></label>
-                    <input asp-for="Game.Platform" class="form-control" />
-                    <span asp-validation-for="Game.Platform" class="text-danger"></span>
+                    <input asp-for="Game.Platform.Name" class="form-control" />
+                    <span asp-validation-for="Game.Platform.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save changes" class="btn btn-primary" />

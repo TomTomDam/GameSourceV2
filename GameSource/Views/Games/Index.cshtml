@@ -1,5 +1,4 @@
-﻿@model IEnumerable<GameSource.Models.Game>
-
+﻿@model GameSource.ViewModels.GameViewModel.GameIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -28,15 +27,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var game in Model)
+            @foreach (var game in Model.Games)
             {
                 <tr>
                     <td>@game.Name</td>
-                    <td>@game.Genre</td>
-                    <td>@game.Developer</td>
-                    <td>@game.Publisher</td>
+                    <td>@game.GenreID</td>
+                    <td>@game.Developer.Name</td>
+                    <td>@game.Publisher.Name</td>
                     <td>@game.Description</td>
-                    <td>@game.Platform</td>
+                    <td>@game.Platform.Name</td>
                     <td>
                         <a class="btn btn-primary" asp-controller="Games" asp-action="Details" asp-route-id="@game.ID">View</a>
                         <a class="btn btn-primary" asp-controller="Games" asp-action="Update" asp-route-id="@game.ID">Edit</a>
