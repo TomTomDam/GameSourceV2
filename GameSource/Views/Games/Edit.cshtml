@@ -1,16 +1,16 @@
-﻿@model GameSource.ViewModels.GameViewModel.GameUpdateViewModel
+﻿@model GameSource.ViewModels.GameViewModel.GameEditViewModel
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Update Game information</h1>
+<h1 class="text-center">Edit Game</h1>
 
 <hr />
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <form asp-controller="Games" asp-action="Update">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Game.ID" />
                 <div class="form-group">
@@ -20,18 +20,24 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Genre" class="control-label"></label>
-                    <input asp-for="Game.Genre.Name" class="form-control" />
-                    <span asp-validation-for="Game.Genre.Name" class="text-danger"></span>
+                    <select asp-for="Game.GenreID" asp-items="@Model.Genres" class="form-control">
+                        <option value="">Select a Genre/Genres</option>
+                    </select>
+                    <span asp-validation-for="Game.Genre" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Developer" class="control-label"></label>
-                    <input asp-for="Game.Developer.Name" class="form-control" />
-                    <span asp-validation-for="Game.Developer.Name" class="text-danger"></span>
+                    <select asp-for="Game.DeveloperID" asp-items="@Model.Developers" class="form-control">
+                        <option value="">Select a Developer</option>
+                    </select>
+                    <span asp-validation-for="Game.Developer" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Publisher" class="control-label"></label>
-                    <input asp-for="Game.Publisher.Name" class="form-control" />
-                    <span asp-validation-for="Game.Publisher.Name" class="text-danger"></span>
+                    <select asp-for="Game.PublisherID" asp-items="@Model.Publishers" class="form-control">
+                        <option value="">Select a Publisher</option>
+                    </select>
+                    <span asp-validation-for="Game.Publisher" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Description" class="control-label"></label>
@@ -40,8 +46,10 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Platform" class="control-label"></label>
-                    <input asp-for="Game.Platform.Name" class="form-control" />
-                    <span asp-validation-for="Game.Platform.Name" class="text-danger"></span>
+                    <select asp-for="Game.PlatformID" asp-items="@Model.Platforms" class="form-control">
+                        <option value="">Select a Platform/Platforms</option>
+                    </select>
+                    <span asp-validation-for="Game.Platform" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save changes" class="btn btn-primary" />

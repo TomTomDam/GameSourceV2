@@ -1,27 +1,22 @@
-﻿@model GameSource.Models.Platform
+﻿@model GameSource.Models.Genre
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Update Platform information</h1>
+<h1 class="text-center">Edit Genre</h1>
 
 <hr />
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Update">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
+                    <input asp-for="Name" class="form-control"/>
                     <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PlatformType" class="control-label"></label>
-                    <input asp-for="PlatformType" class="form-control" />
-                    <span asp-validation-for="PlatformType" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save changes" class="btn btn-primary" />

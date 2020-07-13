@@ -107,9 +107,9 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public IActionResult Edit(int id)
         {
-            GameUpdateViewModel viewModel = new GameUpdateViewModel();
+            GameEditViewModel viewModel = new GameEditViewModel();
             viewModel.Game = gameService.GetByID(id);
             viewModel.Genres = genreService.GetAll().Select(x => new SelectListItem()
             {
@@ -137,19 +137,19 @@ namespace GameSource.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(GameUpdateViewModel viewModel)
+        public IActionResult Edit(GameEditViewModel viewModel)
         {
             Game game = gameService.GetByID(viewModel.Game.ID);
 
             game.Name = viewModel.Game.Name;
             game.Description = viewModel.Game.Description;
-            game.Genre = genreService.GetAll().Single(x => x.ID == viewModel.Game.GenreID);
-            game.Developer = developerService.GetAll().Single(x => x.ID == viewModel.Game.DeveloperID);
-            game.Publisher = publisherService.GetAll().Single(x => x.ID == viewModel.Game.PublisherID);
-            game.Platform = platformService.GetAll().Single(x => x.ID == viewModel.Game.PlatformID);
+            game.GenreID = viewModel.Game.GenreID;
+            game.DeveloperID = viewModel.Game.DeveloperID;
+            game.PublisherID = viewModel.Game.PublisherID;
+            game.PlatformID = viewModel.Game.PlatformID;
 
             gameService.Update(game);
-            return RedirectToAction("Details", viewModel);
+            return RedirectToAction("Details", game);
         }
 
         [HttpGet]

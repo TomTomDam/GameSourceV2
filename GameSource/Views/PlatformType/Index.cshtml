@@ -18,10 +18,12 @@
             @foreach (var platformType in Model)
             {
                 <tr>
-
                     <td>@platformType.Name</td>
-                    <td><a class="btn btn-primary" asp-action="Details" asp-route-id="@platformType.ID">View</a></td>
-
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@platformType.ID">View</a>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@platformType.ID">Edit</a>
+                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@platformType.ID">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>

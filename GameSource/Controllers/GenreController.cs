@@ -53,14 +53,14 @@ namespace GameSource.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit()
         {
             return View(new Genre());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Genre genre)
+        public IActionResult Edit(Genre genre)
         {
             genreService.Update(genre);
             return RedirectToAction("Details", genre);

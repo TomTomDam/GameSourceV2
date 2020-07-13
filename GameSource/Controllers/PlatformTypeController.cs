@@ -49,14 +49,14 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit()
         {
             return View(new PlatformType());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(PlatformType platformType)
+        public IActionResult Edit(PlatformType platformType)
         {
             platformTypeService.Update(platformType);
             return RedirectToAction("Details", platformType);

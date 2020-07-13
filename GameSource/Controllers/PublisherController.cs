@@ -47,14 +47,14 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit()
         {
             return View(new Publisher());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Publisher publisher)
+        public IActionResult Edit(Publisher publisher)
         {
             publisherService.Update(publisher);
             return RedirectToAction("Details", publisher);

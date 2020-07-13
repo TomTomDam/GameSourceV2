@@ -1,16 +1,16 @@
 ﻿@model GameSource.Models.PlatformType
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Update Platform Type information</h1>
+<h1 class="text-center">Edit Platform Type</h1>
 
 <hr />
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Update">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
                 <div class="form-group">

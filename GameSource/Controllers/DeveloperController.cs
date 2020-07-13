@@ -48,14 +48,14 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Edit()
         {
             return View(new Developer());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Developer developer)
+        public IActionResult Edit(Developer developer)
         {
             developerService.Update(developer);
             return RedirectToAction("Details", developer);
