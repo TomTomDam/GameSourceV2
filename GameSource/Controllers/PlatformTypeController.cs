@@ -53,15 +53,22 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View(new PlatformType());
+            PlatformTypeEditViewModel viewModel = new PlatformTypeEditViewModel();
+            viewModel.PlatformType = platformTypeService.GetByID(id);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(PlatformType platformType)
+        public IActionResult Edit(PlatformTypeEditViewModel viewModel)
         {
+            PlatformType platformType = platformTypeService.GetByID(viewModel.PlatformType.ID);
+
+            platformType.Name = viewModel.PlatformType.Name;
+
             platformTypeService.Update(platformType);
             return RedirectToAction("Details", platformType);
         }

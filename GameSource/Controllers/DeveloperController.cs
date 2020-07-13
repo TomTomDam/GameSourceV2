@@ -52,15 +52,22 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View(new Developer());
+            DeveloperEditViewModel viewModel = new DeveloperEditViewModel();
+            viewModel.Developer = developerService.GetByID(id);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Developer developer)
+        public IActionResult Edit(DeveloperEditViewModel viewModel)
         {
+            Developer developer = developerService.GetByID(viewModel.Developer.ID);
+
+            developer.Name = viewModel.Developer.Name;
+
             developerService.Update(developer);
             return RedirectToAction("Details", developer);
         }

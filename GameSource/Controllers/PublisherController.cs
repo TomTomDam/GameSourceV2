@@ -51,15 +51,22 @@ namespace GameSource.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View(new Publisher());
+            PublisherEditViewModel viewModel = new PublisherEditViewModel();
+            viewModel.Publisher = publisherService.GetByID(id);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Publisher publisher)
+        public IActionResult Edit(PublisherEditViewModel viewModel)
         {
+            Publisher publisher = publisherService.GetByID(viewModel.Publisher.ID);
+
+            publisher.Name = viewModel.Publisher.Name;
+
             publisherService.Update(publisher);
             return RedirectToAction("Details", publisher);
         }
