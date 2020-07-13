@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GameSource.Models.Developer>
+﻿@model GameSource.ViewModels.DeveloperViewModel.DeveloperIndexViewModel
 
 
 @{
@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var developer in Model)
+            @foreach (var developer in Model.Developers)
             {
                 <tr>
                     <td>@developer.Name</td>

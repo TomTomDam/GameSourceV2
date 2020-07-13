@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GameSource.Models.Publisher>
+﻿@model GameSource.ViewModels.PublisherViewModel.PublisherIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var publisher in Model)
+            @foreach (var publisher in Model.Publishers)
             {
                 <tr>
                     <td>@publisher.Name</td>

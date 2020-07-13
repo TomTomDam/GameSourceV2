@@ -19,8 +19,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var publisherList = publisherService.GetAll();
-            return View(publisherList);
+            PublisherIndexViewModel viewModel = new PublisherIndexViewModel
+            {
+                Publishers = publisherService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]

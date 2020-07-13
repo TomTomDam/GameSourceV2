@@ -25,9 +25,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var genreList = genreService.GetAll();
+            GenreIndexViewModel viewModel = new GenreIndexViewModel
+            {
+                Genres = genreService.GetAll()
+            };
 
-            return View(genreList);
+            return View(viewModel);
         }
 
         [HttpGet]

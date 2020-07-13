@@ -21,8 +21,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var platformTypeList = platformTypeService.GetAll();
-            return View(platformTypeList);
+            PlatformTypeIndexViewModel viewModel = new PlatformTypeIndexViewModel
+            {
+                PlatformTypes = platformTypeService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]

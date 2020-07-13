@@ -20,8 +20,12 @@ namespace GameSource.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var developerList = developerService.GetAll();
-            return View(developerList);
+            DeveloperIndexViewModel viewModel = new DeveloperIndexViewModel
+            {
+                Developers = developerService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
