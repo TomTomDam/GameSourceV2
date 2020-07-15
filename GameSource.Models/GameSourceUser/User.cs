@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace GameSource.Models
+namespace GameSource.Models.GameSourceUser
 {
     public class User : IdentityUser<int>
     {

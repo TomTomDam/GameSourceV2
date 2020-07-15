@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace GameSource.Models
+namespace GameSource.Models.GameSourceUser
 {
     public class UserStatus
     {
