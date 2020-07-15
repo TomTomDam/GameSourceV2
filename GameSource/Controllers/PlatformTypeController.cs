@@ -34,6 +34,7 @@ namespace GameSource.Controllers
         {
             PlatformTypeDetailsViewModel viewModel = new PlatformTypeDetailsViewModel();
             viewModel.PlatformType = platformTypeService.GetByID(id);
+
             return View(viewModel);
         }
 

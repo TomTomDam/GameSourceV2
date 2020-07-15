@@ -15,6 +15,8 @@ using GameSource.Services;
 using GameSource.Services.Contracts;
 using GameSource.Data.Repositories.Contracts;
 using GameSource.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
+using GameSource.Models;
 
 namespace GameSource
 {
@@ -33,6 +35,10 @@ namespace GameSource
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
+            services.AddDbContext<GameSourceUser_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSourceUser_DB")));
+
+            services.AddIdentity<User, UserRole>()
+                .AddEntityFrameworkStores<GameSourceUser_DBContext>();
 
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
@@ -66,10 +72,13 @@ namespace GameSource
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

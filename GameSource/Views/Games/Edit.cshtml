@@ -40,16 +40,16 @@
                     <span asp-validation-for="Game.Publisher" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Game.Description" class="control-label"></label>
-                    <input asp-for="Game.Description" class="form-control" />
-                    <span asp-validation-for="Game.Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="Game.Platform" class="control-label"></label>
                     <select asp-for="Game.PlatformID" asp-items="@Model.Platforms" class="form-control">
                         <option value="">Select a Platform/Platforms</option>
                     </select>
                     <span asp-validation-for="Game.Platform" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.Description" class="control-label"></label>
+                    <input asp-for="Game.Description" class="form-control" />
+                    <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save changes" class="btn btn-primary" />

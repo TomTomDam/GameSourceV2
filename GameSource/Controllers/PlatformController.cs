@@ -69,7 +69,7 @@ namespace GameSource.Controllers
             {
                 ID = viewModel.Platform.ID,
                 Name = viewModel.Platform.Name,
-                PlatformType = platformTypeService.GetAll().Single(x => x.ID == viewModel.Platform.PlatformTypeID)
+                PlatformTypeID = viewModel.Platform.PlatformTypeID
             };
 
             platformService.Insert(platform);
