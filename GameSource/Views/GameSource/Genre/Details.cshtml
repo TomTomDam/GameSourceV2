@@ -1,0 +1,16 @@
+﻿@model GameSource.ViewModels.GameSource.GenreViewModel.GenreDetailsViewModel
+
+@{
+    ViewData["Title"] = "Genre";
+}
+
+<h1>Genre</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <label asp-for="Genre.ID" class="control-label font-weight-bold"></label><p>@Model.Genre.ID</p>
+            <label asp-for="Genre.Name" class="control-label font-weight-bold"></label><p>@Model.Genre.Name</p>
+        </div>
+    </div>
+</div>

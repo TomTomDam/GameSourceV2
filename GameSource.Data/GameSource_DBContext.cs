@@ -1,4 +1,4 @@
-﻿using GameSource.Models;
+﻿using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

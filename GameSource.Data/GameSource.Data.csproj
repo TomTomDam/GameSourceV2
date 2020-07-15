@@ -22,4 +22,8 @@
     <ProjectReference Include="..\GameSource.Models\GameSource.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\GameSourceUser\" />
+  </ItemGroup>
+
 </Project>

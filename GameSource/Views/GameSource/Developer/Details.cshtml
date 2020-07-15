@@ -1,0 +1,16 @@
+﻿@model GameSource.ViewModels.GameSource.DeveloperViewModel.DeveloperDetailsViewModel
+
+@{
+    ViewData["Title"] = "Developer";
+}
+
+<h1>Developer</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <label asp-for="Developer.ID" class="control-label font-weight-bold"></label><p>@Model.Developer.ID</p>
+            <label asp-for="Developer.Name" class="control-label font-weight-bold"></label><p>@Model.Developer.Name</p>
+        </div>
+    </div>
+</div>

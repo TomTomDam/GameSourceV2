@@ -12,4 +12,8 @@
     <ProjectReference Include="..\GameSource.Data\GameSource.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GameSourceUser\Contracts\" />
+  </ItemGroup>
+
 </Project>
