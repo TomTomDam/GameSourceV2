@@ -1,0 +1,17 @@
+﻿@model GameSource.ViewModels.GameSource.PlatformViewModel.PlatformDetailsViewModel
+
+@{
+    ViewData["Title"] = "Platform";
+}
+
+<h1>Platform</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <label asp-for="Platform.ID" class="control-label font-weight-bold"></label><p>@Model.Platform.ID</p>
+            <label asp-for="Platform.Name" class="control-label font-weight-bold"></label><p>@Model.Platform.Name</p>
+            <label asp-for="Platform.PlatformType" class="control-label font-weight-bold"></label><p>@Model.PlatformType.Name</p>
+        </div>
+    </div>
+</div>

@@ -11,12 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Razor.Runtime;
-using GameSource.Services;
-using GameSource.Services.Contracts;
-using GameSource.Data.Repositories.Contracts;
-using GameSource.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using GameSource.Models;
+using GameSource.Data.Repositories.GameSource.Contracts;
+using GameSource.Data.Repositories.GameSource;
+using GameSource.Services.GameSource.Contracts;
+using GameSource.Services.GameSource;
 
 namespace GameSource
 {
