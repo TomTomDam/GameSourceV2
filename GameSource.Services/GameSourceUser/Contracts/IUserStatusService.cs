@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSourceUser.Contracts
 {
@@ -12,5 +13,10 @@ namespace GameSource.Services.GameSourceUser.Contracts
         public void Insert(UserStatus userStatus);
         public void Update(UserStatus userStatus);
         public void Delete(int id);
+        public Task<IEnumerable<UserStatus>> GetAllAsync();
+        public Task<UserStatus> GetByIDAsync(int id);
+        public Task InsertAsync(UserStatus userStatus);
+        public Task UpdateAsync(UserStatus userStatus);
+        public Task DeleteAsync(int id);
     }
 }

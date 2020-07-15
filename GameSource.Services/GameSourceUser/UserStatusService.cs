@@ -4,10 +4,11 @@ using GameSource.Services.GameSourceUser.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSourceUser
 {
-    public class UserStatusService : IUserStatusService
+    public class UserStatusService : BaseService<UserStatus>, IUserStatusService
     {
         private IUserStatusRepository repo;
 
@@ -39,6 +40,31 @@ namespace GameSource.Services.GameSourceUser
         public void Delete(int id)
         {
             repo.Delete(id);
+        }
+
+        public async Task<IEnumerable<UserStatus>> GetAllAsync()
+        {
+            return await repo.GetAllAsync();
+        }
+
+        public async Task<UserStatus> GetByIDAsync(int id)
+        {
+            return await repo.GetByIDAsync(id);
+        }
+
+        public async Task InsertAsync(UserStatus userStatus)
+        {
+            await repo.InsertAsync(userStatus);
+        }
+
+        public async Task UpdateAsync(UserStatus userStatus)
+        {
+            await repo.UpdateAsync(userStatus);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await repo.DeleteAsync(id);
         }
     }
 }
