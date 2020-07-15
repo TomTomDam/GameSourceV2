@@ -17,6 +17,7 @@ using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Data.Repositories.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.Services.GameSource;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace GameSource
 {
