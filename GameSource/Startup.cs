@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 using GameSource.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Razor.Runtime;
-using Microsoft.AspNetCore.Identity;
-using GameSource.Models;
 using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Data.Repositories.GameSource;
+using GameSource.Data.Repositories.GameSourceUser.Contracts;
+using GameSource.Data.Repositories.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.Services.GameSource;
-using Microsoft.AspNetCore.Mvc.Razor;
+using GameSource.Services.GameSourceUser.Contracts;
+using GameSource.Services.GameSourceUser;
+using GameSource.Models.GameSourceUser;
 
 namespace GameSource
 {
@@ -58,6 +58,15 @@ namespace GameSource
 
             services.AddScoped<IPlatformTypeRepository, PlatformTypeRepository>();
             services.AddScoped<IPlatformTypeService, PlatformTypeService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
+
+            services.AddScoped<IUserStatusRepository, UserStatusRepository>();
+            services.AddScoped<IUserStatusService, UserStatusService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

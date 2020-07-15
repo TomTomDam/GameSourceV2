@@ -6,37 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GameSource.Data;
-using GameSource.Models;
+using GameSource.Models.GameSourceUser;
+using GameSource.Services.GameSourceUser.Contracts;
 
 namespace GameSource.Controllers.GameSourceUser
 {
     public class UserController : Controller
     {
         private readonly GameSourceUser_DBContext _context;
+        private readonly IUserService userService;
 
-        public UserController(GameSourceUser_DBContext context)
+        public UserController(GameSourceUser_DBContext context, IUserService userService)
         {
             _context = context;
+            this.userService = userService;
         }
 
         // GET: User
         public async Task<IActionResult> Index()
         {
-            var gameSourceUser_DBContext = _context.User.Include(u => u.UserStatus);
-            return View(await gameSourceUser_DBContext.ToListAsync());
+            var usersList = userService.GetAll();
+
+            return View(usersList);
         }
 
         // GET: User/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var user = userService.GetByID(id);
 
-            var user = await _context.User
-                .Include(u => u.UserStatus)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -53,8 +51,6 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         // POST: User/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName,LastName,Age,Location,DateCreated,AvatarFilePath,Description,UserStatusID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
@@ -87,8 +83,6 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         // POST: User/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Age,Location,DateCreated,AvatarFilePath,Description,UserStatusID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSourceUser
 {
@@ -45,6 +46,35 @@ namespace GameSource.Data.Repositories.GameSourceUser
             var item = GetByID(id);
             entity.Remove(item);
             context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await entity.ToListAsync();
+        }
+
+        public async Task<T> GetByIDAsync(int id)
+        {
+            return await entity.FindAsync(id);
+        }
+
+        public async Task InsertAsync(T item)
+        {
+            await entity.AddAsync(item);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(T item)
+        {
+            entity.Update(item);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var item = await GetByIDAsync(id);
+            entity.Remove(item);
+            await context.SaveChangesAsync();
         }
     }
 }

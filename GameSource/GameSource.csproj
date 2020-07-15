@@ -28,8 +28,6 @@
   <ItemGroup>
     <Folder Include="ViewModels\GameSourceUser\UserRoleViewModel\" />
     <Folder Include="ViewModels\GameSourceUser\UserViewModel\" />
-    <Folder Include="Views\GameSourceUser\UserStatus\" />
-    <Folder Include="Views\GameSourceUser\UserRole\" />
   </ItemGroup>
 
 

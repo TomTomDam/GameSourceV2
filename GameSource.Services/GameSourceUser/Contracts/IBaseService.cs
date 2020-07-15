@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameSource.Data.Repositories.GameSourceUser.Contracts
+namespace GameSource.Services.GameSourceUser.Contracts
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseService<T> where T : class
     {
-        public T GetByID(int id);
         public IEnumerable<T> GetAll();
+        public T GetByID(int id);
         public void Insert(T item);
         public void Update(T item);
         public void Delete(int id);
