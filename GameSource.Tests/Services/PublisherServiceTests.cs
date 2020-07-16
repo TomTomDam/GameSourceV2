@@ -1,20 +1,17 @@
-﻿using GameSource.Controllers.GameSource;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameSource.Tests.Controllers
+namespace GameSource.Tests.Services
 {
     [TestFixture]
-    public class DeveloperControllerTest
+    public class PublisherServiceTests
     {
-
-
         [SetUp]
         public void Setup()
         {
-            
+
         }
     }
 }
