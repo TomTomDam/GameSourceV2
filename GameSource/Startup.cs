@@ -18,6 +18,7 @@ using GameSource.Services.GameSource;
 using GameSource.Services.GameSourceUser.Contracts;
 using GameSource.Services.GameSourceUser;
 using GameSource.Models.GameSourceUser;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameSource
 {
@@ -38,8 +39,11 @@ namespace GameSource
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
             services.AddDbContext<GameSourceUser_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSourceUser_DB")));
 
-            services.AddIdentity<User, UserRole>()
-                .AddEntityFrameworkStores<GameSourceUser_DBContext>();
+            services.AddIdentity<User, UserRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<GameSourceUser_DBContext>();
 
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();

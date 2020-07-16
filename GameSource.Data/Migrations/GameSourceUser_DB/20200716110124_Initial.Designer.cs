@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameSource.Data.Migrations.GameSourceUser_DB
 {
     [DbContext(typeof(GameSourceUser_DBContext))]
-    [Migration("20200715154440_Initial")]
+    [Migration("20200716110124_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GameSource.Models.User", b =>
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("AvatarFilePath")
@@ -121,7 +121,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("GameSource.Models.UserRole", b =>
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,7 +153,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("GameSource.Models.UserStatus", b =>
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,13 +269,13 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("GameSource.Models.User", b =>
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
-                    b.HasOne("GameSource.Models.UserRole", "UserRole")
+                    b.HasOne("GameSource.Models.GameSourceUser.UserRole", "UserRole")
                         .WithMany("Users")
                         .HasForeignKey("UserRoleId");
 
-                    b.HasOne("GameSource.Models.UserStatus", "UserStatus")
+                    b.HasOne("GameSource.Models.GameSourceUser.UserStatus", "UserStatus")
                         .WithMany("Users")
                         .HasForeignKey("UserStatusID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -284,7 +284,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("GameSource.Models.UserRole", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.UserRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,7 +293,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("GameSource.Models.User", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -302,7 +302,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("GameSource.Models.User", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -311,13 +311,13 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("GameSource.Models.UserRole", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.UserRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GameSource.Models.User", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -326,7 +326,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("GameSource.Models.User", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
