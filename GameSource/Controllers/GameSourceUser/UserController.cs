@@ -24,7 +24,7 @@ namespace GameSource.Controllers.GameSourceUser
             this.signInManager = signInManager;
         }
 
-        // GET: User
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var usersList = await userService.GetAllAsync();
@@ -32,7 +32,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(usersList);
         }
 
-        // GET: User/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var user = await userService.GetByIDAsync(id);
@@ -45,14 +45,13 @@ namespace GameSource.Controllers.GameSourceUser
             return View(user);
         }
 
-        // GET: User/Register
+        [HttpGet]
         public IActionResult Register()
         {
             UserRegisterViewModel viewModel = new UserRegisterViewModel();
             return View(viewModel);
         }
 
-        // POST: User/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegisterViewModel viewModel)
@@ -85,7 +84,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        // GET: User/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var user = await userManager.FindByIdAsync(id.ToString());
@@ -112,7 +111,6 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserEditViewModel viewModel)
@@ -137,7 +135,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        // GET: User/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await userManager.FindByIdAsync(id.ToString());
@@ -149,7 +147,6 @@ namespace GameSource.Controllers.GameSourceUser
             return View(user);
         }
 
-        // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

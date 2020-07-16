@@ -21,7 +21,7 @@ namespace GameSource.Controllers.GameSourceUser
             this.roleManager = roleManager;
         }
 
-        // GET: UserRole
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userRolesList = await userRoleService.GetAllAsync();
@@ -29,7 +29,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(userRolesList);
         }
 
-        // GET: UserRole/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var userRole = await userRoleService.GetByIDAsync(id);
@@ -42,14 +42,13 @@ namespace GameSource.Controllers.GameSourceUser
             return View(userRole);
         }
 
-        // GET: UserRole/Create
+        [HttpGet]
         public IActionResult Create()
         {
             UserRoleCreateViewModel viewModel = new UserRoleCreateViewModel();
             return View(viewModel);
         }
 
-        // POST: UserRole/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserRoleCreateViewModel viewModel)
@@ -77,7 +76,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        // GET: UserRole/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var userRole = await roleManager.FindByIdAsync(id.ToString());
@@ -96,7 +95,6 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        // POST: UserRole/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserRoleEditViewModel viewModel)
@@ -113,7 +111,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        // GET: UserRole/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var userRole = await roleManager.FindByIdAsync(id.ToString());
@@ -125,7 +123,6 @@ namespace GameSource.Controllers.GameSourceUser
             return View(userRole);
         }
 
-        // POST: UserRole/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
