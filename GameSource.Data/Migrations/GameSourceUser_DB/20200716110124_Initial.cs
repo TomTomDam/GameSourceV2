@@ -79,7 +79,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 20, nullable: true),
                     LastName = table.Column<string>(maxLength: 20, nullable: true),
-                    Age = table.Column<int>(nullable: false),
+                    Age = table.Column<int>(nullable: true),
                     Location = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     AvatarFilePath = table.Column<string>(nullable: true),

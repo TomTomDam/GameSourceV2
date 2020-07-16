@@ -7,34 +7,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GameSource.Data;
 using GameSource.Models.GameSourceUser;
+using GameSource.Services.GameSourceUser.Contracts;
 
 namespace GameSource.Controllers.GameSourceUser
 {
     public class UserRoleController : Controller
     {
         private readonly GameSourceUser_DBContext _context;
+        private readonly IUserRoleService userRoleService;
 
-        public UserRoleController(GameSourceUser_DBContext context)
+        public UserRoleController(GameSourceUser_DBContext context, IUserRoleService userRoleService)
         {
             _context = context;
+            this.userRoleService = userRoleService;
         }
 
         // GET: UserRole
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserRole.ToListAsync());
+            var userRolesList = await userRoleService.GetAllAsync();
+
+            return View(userRolesList);
         }
 
         // GET: UserRole/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var userRole = await userRoleService.GetByIDAsync(id);
 
-            var userRole = await _context.UserRole
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (userRole == null)
             {
                 return NotFound();
@@ -50,8 +50,6 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         // POST: UserRole/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Description,Id,Name,NormalizedName,ConcurrencyStamp")] UserRole userRole)
@@ -82,8 +80,6 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         // POST: UserRole/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Description,Id,Name,NormalizedName,ConcurrencyStamp")] UserRole userRole)

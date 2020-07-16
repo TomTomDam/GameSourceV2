@@ -6,8 +6,8 @@ namespace GameSource.Models.GameSourceUser.Enums
 {
     public enum UserStatusEnum
     {
-        Enabled = 1,
-        Disabled = 2,
+        Active = 1,
+        Deactivated = 2,
         Deleted = 3,
         Banned = 4
     }

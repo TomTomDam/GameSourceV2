@@ -10,7 +10,7 @@ namespace GameSource.Services.GameSourceUser
 {
     public class UserRoleService : BaseService<UserStatus>, IUserRoleService
     {
-        public IUserRoleRepository repo;
+        private IUserRoleRepository repo;
 
         public UserRoleService(IUserRoleRepository repo)
         {

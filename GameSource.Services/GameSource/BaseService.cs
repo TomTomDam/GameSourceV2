@@ -1,10 +1,10 @@
-﻿using GameSource.Services.GameSourceUser.Contracts;
+﻿using GameSource.Services.GameSource.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameSource.Services.GameSourceUser
+namespace GameSource.Services.GameSource
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {

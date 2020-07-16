@@ -8,24 +8,32 @@ using Microsoft.EntityFrameworkCore;
 using GameSource.Data;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using GameSource.ViewModels.GameSourceUser.UserViewModel;
+using GameSource.Models.GameSourceUser.Enums;
 
 namespace GameSource.Controllers.GameSourceUser
 {
     public class UserController : Controller
     {
         private readonly GameSourceUser_DBContext _context;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
         private readonly IUserService userService;
 
-        public UserController(GameSourceUser_DBContext context, IUserService userService)
+        public UserController(GameSourceUser_DBContext context, IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
             this.userService = userService;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         // GET: User
         public async Task<IActionResult> Index()
         {
-            var usersList = userService.GetAll();
+            var usersList = await userService.GetAllAsync();
 
             return View(usersList);
         }
@@ -33,7 +41,7 @@ namespace GameSource.Controllers.GameSourceUser
         // GET: User/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var user = userService.GetByID(id);
+            var user = await userService.GetByIDAsync(id);
 
             if (user == null)
             {
@@ -43,26 +51,44 @@ namespace GameSource.Controllers.GameSourceUser
             return View(user);
         }
 
-        // GET: User/Create
-        public IActionResult Create()
+        // GET: User/Register
+        public IActionResult Register()
         {
-            ViewData["UserStatusID"] = new SelectList(_context.UserStatus, "Id", "Id");
-            return View();
+            UserRegisterViewModel viewModel = new UserRegisterViewModel();
+            return View(viewModel);
         }
 
-        // POST: User/Create
+        // POST: User/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,Age,Location,DateCreated,AvatarFilePath,Description,UserStatusID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Register(UserRegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                User user = new User
+                {
+                    UserName = viewModel.Username,
+                    Email = viewModel.Email,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    UserStatusID = (int)UserStatusEnum.Active,
+                    UserRoleID = (int)UserRoleEnum.Member
+                };
+
+                var result = await userManager.CreateAsync(user, viewModel.Password);
+                if (result.Succeeded)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            ViewData["UserStatusID"] = new SelectList(_context.UserStatus, "Id", "Id", user.UserStatusID);
-            return View(user);
+
+            return View(viewModel);
         }
 
         // GET: User/Edit/5

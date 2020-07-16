@@ -60,7 +60,6 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Index");
         }
 
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
