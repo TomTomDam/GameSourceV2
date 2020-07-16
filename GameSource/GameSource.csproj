@@ -25,10 +25,6 @@
     <ProjectReference Include="..\GameSource.Services\GameSource.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\GameSourceUser\UserRoleViewModel\" />
-  </ItemGroup>
-
 
 
 </Project>
