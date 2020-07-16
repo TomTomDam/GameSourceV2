@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using GameSource.Data;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
 
@@ -17,14 +13,12 @@ namespace GameSource.Controllers.GameSourceUser
 {
     public class UserController : Controller
     {
-        private readonly GameSourceUser_DBContext _context;
+        private readonly IUserService userService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly IUserService userService;
 
-        public UserController(GameSourceUser_DBContext context, IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _context = context;
             this.userService = userService;
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -92,67 +86,61 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         // GET: User/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.User.FindAsync(id);
+            var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return NotFound();
             }
-            ViewData["UserStatusID"] = new SelectList(_context.UserStatus, "Id", "Id", user.UserStatusID);
-            return View(user);
+
+            var userRoles = await userManager.GetRolesAsync(user);
+            UserEditViewModel viewModel = new UserEditViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Age = user.Age,
+                Location = user.Location,
+                AvatarFilePath = user.AvatarFilePath,
+                AvatarImage = user.AvatarImage,
+                Description = user.Description,
+                UserStatusID = user.UserStatusID,
+                UserRoleID = user.UserRoleID,
+            };
+
+            return View(viewModel);
         }
 
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Age,Location,DateCreated,AvatarFilePath,Description,UserStatusID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Edit(UserEditViewModel viewModel)
         {
-            if (id != user.Id)
+            User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
+            if (user == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserStatusID"] = new SelectList(_context.UserStatus, "Id", "Id", user.UserStatusID);
-            return View(user);
+            user.FirstName = viewModel.FirstName;
+            user.LastName = viewModel.LastName;
+            user.Email = viewModel.Email;
+            user.Age = viewModel.Age;
+            user.Location = viewModel.Location;
+            user.AvatarFilePath = viewModel.AvatarFilePath;
+            user.AvatarImage = viewModel.AvatarImage;
+            user.Description = viewModel.Description;
+            user.UserStatusID = viewModel.UserStatusID;
+            user.UserRoleID = viewModel.UserRoleID;
+
+            return View(viewModel);
         }
 
         // GET: User/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.User
-                .Include(u => u.UserStatus)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return NotFound();
@@ -166,15 +154,22 @@ namespace GameSource.Controllers.GameSourceUser
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                var result = await userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
 
-        private bool UserExists(int id)
-        {
-            return _context.User.Any(e => e.Id == id);
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return RedirectToAction("Index", userManager.Users);
         }
     }
 }

@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using GameSource.Data;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
+using Microsoft.AspNetCore.Identity;
+using GameSource.ViewModels.GameSourceUser.UserRoleViewModel;
 
 namespace GameSource.Controllers.GameSourceUser
 {
     public class UserRoleController : Controller
     {
-        private readonly GameSourceUser_DBContext _context;
         private readonly IUserRoleService userRoleService;
+        private readonly RoleManager<UserRole> roleManager;
 
-        public UserRoleController(GameSourceUser_DBContext context, IUserRoleService userRoleService)
+        public UserRoleController(IUserRoleService userRoleService, RoleManager<UserRole> roleManager)
         {
-            _context = context;
             this.userRoleService = userRoleService;
+            this.roleManager = roleManager;
         }
 
         // GET: UserRole
@@ -46,82 +45,78 @@ namespace GameSource.Controllers.GameSourceUser
         // GET: UserRole/Create
         public IActionResult Create()
         {
-            return View();
+            UserRoleCreateViewModel viewModel = new UserRoleCreateViewModel();
+            return View(viewModel);
         }
 
         // POST: UserRole/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,Id,Name,NormalizedName,ConcurrencyStamp")] UserRole userRole)
+        public async Task<IActionResult> Create(UserRoleCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userRole);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                UserRole userRole = new UserRole
+                {
+                    Name = viewModel.Name,
+                    Description = viewModel.Description
+                };
+
+                var result = await roleManager.CreateAsync(userRole);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            return View(userRole);
+
+            return View(viewModel);
         }
 
         // GET: UserRole/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userRole = await _context.UserRole.FindAsync(id);
+            var userRole = await roleManager.FindByIdAsync(id.ToString());
             if (userRole == null)
             {
                 return NotFound();
             }
-            return View(userRole);
+
+            UserRoleEditViewModel viewModel = new UserRoleEditViewModel
+            {
+                ID = userRole.Id,
+                Name = userRole.Name,
+                Description = userRole.Description
+            };
+
+            return View(viewModel);
         }
 
         // POST: UserRole/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Description,Id,Name,NormalizedName,ConcurrencyStamp")] UserRole userRole)
+        public async Task<IActionResult> Edit(UserRoleEditViewModel viewModel)
         {
-            if (id != userRole.Id)
+            UserRole userRole = await roleManager.FindByIdAsync(viewModel.ID.ToString());
+            if (userRole == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(userRole);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserRoleExists(userRole.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(userRole);
+            userRole.Name = viewModel.Name;
+            userRole.Description = viewModel.Description;
+
+            return View(viewModel);
         }
 
         // GET: UserRole/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userRole = await _context.UserRole
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var userRole = await roleManager.FindByIdAsync(id.ToString());
             if (userRole == null)
             {
                 return NotFound();
@@ -135,15 +130,22 @@ namespace GameSource.Controllers.GameSourceUser
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userRole = await _context.UserRole.FindAsync(id);
-            _context.UserRole.Remove(userRole);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            var userRole = await roleManager.FindByIdAsync(id.ToString());
+            if (userRole != null)
+            {
+                var result = await roleManager.DeleteAsync(userRole);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
 
-        private bool UserRoleExists(int id)
-        {
-            return _context.UserRole.Any(e => e.Id == id);
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return RedirectToAction("Index", roleManager.Roles);
         }
     }
 }
