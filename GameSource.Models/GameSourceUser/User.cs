@@ -11,9 +11,11 @@ namespace GameSource.Models.GameSourceUser
     public class User : IdentityUser<int>
     {
         [StringLength(20)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [StringLength(20)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [NotMapped]

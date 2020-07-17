@@ -8,18 +8,24 @@ using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Identity;
 using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
+using System.Runtime.InteropServices;
+using GameSource.Services.GameSourceUser;
 
 namespace GameSource.Controllers.GameSourceUser
 {
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly IUserRoleService userRoleService;
+        private readonly IUserStatusService userStatusService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public UserController(IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userService = userService;
+            this.userRoleService = userRoleService;
+            this.userStatusService = userStatusService;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -27,22 +33,33 @@ namespace GameSource.Controllers.GameSourceUser
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var usersList = await userService.GetAllAsync();
+            UserIndexViewModel viewModel = new UserIndexViewModel
+            {
+                Users = await userService.GetAllAsync(),
+                UserRoles = await userRoleService.GetAllAsync(),
+                UserStatuses = await userStatusService.GetAllAsync()
+            };
 
-            return View(usersList);
+            return View(viewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var user = await userService.GetByIDAsync(id);
-
             if (user == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            UserDetailsViewModel viewModel = new UserDetailsViewModel
+            {
+                User = user,
+                UserRole = await userRoleService.GetByIDAsync(user.UserRoleID),
+                UserStatus = await userStatusService.GetByIDAsync(user.UserStatusID)
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -64,6 +81,7 @@ namespace GameSource.Controllers.GameSourceUser
                     Email = viewModel.Email,
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
+                    DateCreated = DateTime.Now,
                     UserStatusID = (int)UserStatusEnum.Active,
                     UserRoleID = (int)UserRoleEnum.Member
                 };

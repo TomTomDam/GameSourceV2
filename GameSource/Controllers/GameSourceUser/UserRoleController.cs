@@ -24,22 +24,29 @@ namespace GameSource.Controllers.GameSourceUser
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userRolesList = await userRoleService.GetAllAsync();
+            UserRoleIndexViewModel viewModel = new UserRoleIndexViewModel
+            {
+                UserRoles = await userRoleService.GetAllAsync()
+            };
 
-            return View(userRolesList);
+            return View(viewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var userRole = await userRoleService.GetByIDAsync(id);
-
             if (userRole == null)
             {
                 return NotFound();
             }
 
-            return View(userRole);
+            UserRoleDetailsViewModel viewModel = new UserRoleDetailsViewModel
+            {
+                UserRole = userRole
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
