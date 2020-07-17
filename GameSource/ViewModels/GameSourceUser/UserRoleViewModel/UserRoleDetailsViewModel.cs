@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GameSource.ViewModels.GameSourceUser.UserViewModel
+namespace GameSource.ViewModels.GameSourceUser.UserRoleViewModel
 {
-    public class UserDeleteViewModel
+    public class UserRoleDetailsViewModel
     {
-        public User User { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }

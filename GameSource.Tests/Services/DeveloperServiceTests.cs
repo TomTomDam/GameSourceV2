@@ -4,6 +4,7 @@ using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource;
 using GameSource.Services.GameSource.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -16,6 +17,9 @@ namespace GameSource.Tests.Services
     public class DeveloperServiceTests
     {
         private DeveloperService developerService;
+        private DeveloperRepository developerRepo;
+        private GameSource_DBContext context;
+        private DbContextOptions<GameSource_DBContext> options;
 
         private Mock<IDeveloperService> mockDeveloperService;
         private Mock<IDeveloperRepository> mockDeveloperRepo;
@@ -23,6 +27,9 @@ namespace GameSource.Tests.Services
         [SetUp]
         public void Setup()
         {
+            context = new GameSource_DBContext(options);
+            developerRepo = new DeveloperRepository(context);
+            developerService = new DeveloperService(developerRepo);
             mockDeveloperService = new Mock<IDeveloperService>();
             mockDeveloperRepo = new Mock<IDeveloperRepository>();
         }
