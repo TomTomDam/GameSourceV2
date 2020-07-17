@@ -34,6 +34,11 @@
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+                <label asp-for="AvatarImage" class="control-label"></label>
+                <input asp-for="AvatarImage" class="form-control" />
+                <span asp-validation-for="AvatarImage" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="AvatarFilePath" class="control-label"></label>
                 <input asp-for="AvatarFilePath" class="form-control" />
@@ -46,12 +51,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserStatusID" class="control-label"></label>
-                <select asp-for="UserStatusID" class="form-control" asp-items="@Model.UserStatus"></select>
+                <select asp-for="UserStatusID" class="form-control" asp-items="@Model.UserStatuses"></select>
                 <span asp-validation-for="UserStatusID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UserRoleID" class="control-label"></label>
-                <select asp-for="UserRoleID" class="form-control" asp-items="@Model.UserRole"></select>
+                <select asp-for="UserRoleID" class="form-control" asp-items="@Model.UserRoles"></select>
                 <span asp-validation-for="UserRoleID" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -10,6 +10,8 @@ using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
 using System.Runtime.InteropServices;
 using GameSource.Services.GameSourceUser;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameSource.Controllers.GameSourceUser
 {
@@ -111,7 +113,20 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            var userRoles = await userManager.GetRolesAsync(user);
+            var userRoles = await userRoleService.GetAllAsync();
+            var userRolesSelectList = userRoles.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            var userStatuses = await userStatusService.GetAllAsync();
+            var userStatusesSelectList = userStatuses.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+
             UserEditViewModel viewModel = new UserEditViewModel
             {
                 FirstName = user.FirstName,
@@ -122,8 +137,8 @@ namespace GameSource.Controllers.GameSourceUser
                 AvatarFilePath = user.AvatarFilePath,
                 AvatarImage = user.AvatarImage,
                 Description = user.Description,
-                UserStatusID = user.UserStatusID,
-                UserRoleID = user.UserRoleID,
+                UserRoles = userRolesSelectList,
+                UserStatuses = userStatusesSelectList
             };
 
             return View(viewModel);
@@ -150,7 +165,8 @@ namespace GameSource.Controllers.GameSourceUser
             user.UserStatusID = viewModel.UserStatusID;
             user.UserRoleID = viewModel.UserRoleID;
 
-            return View(viewModel);
+            userService.Update(user);
+            return RedirectToAction("Index", user);
         }
 
         [HttpGet]

@@ -115,7 +115,8 @@ namespace GameSource.Controllers.GameSourceUser
             userRole.Name = viewModel.Name;
             userRole.Description = viewModel.Description;
 
-            return View(viewModel);
+            userRoleService.Update(userRole);
+            return RedirectToAction("Index", userRole);
         }
 
         [HttpGet]

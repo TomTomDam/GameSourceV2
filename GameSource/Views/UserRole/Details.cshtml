@@ -1,4 +1,4 @@
-﻿@model GameSource.Models.GameSourceUser.UserRole
+﻿@model GameSource.ViewModels.GameSourceUser.UserRoleViewModel.UserRoleDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -8,36 +8,24 @@
 <h1>Details</h1>
 
 <div>
-    <h4>UserRole</h4>
+    <h4>User Role</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.UserRole.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.UserRole.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.UserRole.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NormalizedName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ConcurrencyStamp)
+            @Html.DisplayFor(model => model.UserRole.Name)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.UserRole.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
