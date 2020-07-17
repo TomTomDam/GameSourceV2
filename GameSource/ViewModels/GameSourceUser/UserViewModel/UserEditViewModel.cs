@@ -13,7 +13,8 @@ namespace GameSource.ViewModels.GameSourceUser.UserViewModel
     {
         public UserEditViewModel()
         {
-            UserRole = new List<SelectListItem>();
+            UserRoles = new List<SelectListItem>();
+            UserStatuses = new List<SelectListItem>();
         }
 
         public int ID { get; set; }
@@ -33,6 +34,7 @@ namespace GameSource.ViewModels.GameSourceUser.UserViewModel
         [Display(Name = "Avatar File Path")]
         public string AvatarFilePath { get; set; }
 
+        [Display(Name = "Avatar Image")]
         public IFormFile AvatarImage { get; set; }
 
         public string Description { get; set; }
@@ -43,8 +45,8 @@ namespace GameSource.ViewModels.GameSourceUser.UserViewModel
         [Display(Name = "User Role")]
         public int UserRoleID { get; set; }
 
-        public List<SelectListItem> UserStatus { get; set; }
+        public List<SelectListItem> UserStatuses { get; set; }
 
-        public List<SelectListItem> UserRole { get; set; }
+        public List<SelectListItem> UserRoles { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GameSource.Models.GameSourceUser;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace GameSource.ViewModels.GameSourceUser.UserViewModel
 {
     public class UserRegisterViewModel
     {
+
         [Required]
         public string Username { get; set; }
 
