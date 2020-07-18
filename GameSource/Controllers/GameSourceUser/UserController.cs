@@ -8,9 +8,6 @@ using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Identity;
 using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
-using System.Runtime.InteropServices;
-using GameSource.Services.GameSourceUser;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameSource.Controllers.GameSourceUser

@@ -25,7 +25,7 @@ namespace GameSource.Controllers.GameSource
                 Developers = developerService.GetAll()
             };
 
-            return View(viewModel);
+            return View("Index", viewModel);
         }
 
         [HttpGet]
