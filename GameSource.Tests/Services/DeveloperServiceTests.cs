@@ -1,6 +1,4 @@
-﻿using GameSource.Controllers.GameSource;
-using GameSource.Data.Repositories.GameSource;
-using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource;
 using GameSource.Services.GameSource.Contracts;
@@ -33,7 +31,8 @@ namespace GameSource.Tests.Services
         [TearDown]
         public void Teardown()
         {
-
+            mockDeveloperService.Invocations.Clear();
+            mockDeveloperRepo.Invocations.Clear();
         }
 
         [Test]

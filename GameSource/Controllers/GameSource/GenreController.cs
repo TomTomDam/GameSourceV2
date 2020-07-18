@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GameSource.Services;
-using System.Linq;
 using GameSource.ViewModels.GameSource.GenreViewModel;
 
 namespace GameSource.Controllers.GameSource
