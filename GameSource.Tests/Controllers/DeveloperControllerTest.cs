@@ -3,7 +3,6 @@ using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using GameSource.ViewModels.GameSource.DeveloperViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -45,10 +44,6 @@ namespace GameSource.Tests.Controllers
             var developerList = new List<Developer>()
             {
                 new Developer { ID = 1, Name = "LucasArts"}
-            };
-            var viewModel = new DeveloperIndexViewModel
-            {
-                Developers = developerService.GetAll()
             };
 
             mockDeveloperRepo.Setup(x => x.GetAll()).Returns(developerList);
