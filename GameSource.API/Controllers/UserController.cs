@@ -26,7 +26,7 @@ namespace GameSource.API.Controllers
             return await userService.GetAllAsync();
         }
 
-        [HttpGet("{id}", Name = "GetByID")]
+        [HttpGet("{id}")]
         public async Task<User> GetByID(int id)
         {
             return await userService.GetByIDAsync(id);

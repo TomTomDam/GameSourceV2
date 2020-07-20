@@ -18,11 +18,17 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="vue" Version="2.6.11" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GameSource.Data\GameSource.Data.csproj" />
     <ProjectReference Include="..\GameSource.Services\GameSource.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\vue\components\" />
   </ItemGroup>
 
 
