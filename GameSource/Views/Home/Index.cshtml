@@ -1,6 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Welcome to Game Source";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="text-center" id="homepage-top-section">
@@ -8,6 +7,10 @@
     <p>A place for databasing and discussing all things games.</p>
 </div>
 
-<div id="app"></div>
+<div id="app">
+    {{message}}
+</div>
 
-<script src="~/js/site.js"></script>
+@section scripts {
+    <script src="~/js/vue/main.js"></script>
+}

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameSource.Models;
+using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Http;
@@ -21,9 +23,24 @@ namespace GameSource.API.Controllers
         }
         
         [HttpGet]
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<ApiResponse> GetAll()
         {
-            return await userService.GetAllAsync();
+            var result = await userService.GetAllAsync();
+
+            if (result.Any())
+            {
+                return new ApiResponse
+                {
+                    ResponseStatusCode = ResponseStatusCode.Success,
+                    ResponseMessage = "Successfully returned Users list."
+                };
+            }
+
+            return new ApiResponse
+            {
+                ResponseStatusCode = ResponseStatusCode.Error,
+                ResponseMessage = "Could not return Users list."
+            };
         }
 
         [HttpGet("{id}")]
