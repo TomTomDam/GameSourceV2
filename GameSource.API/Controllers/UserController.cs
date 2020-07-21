@@ -29,30 +29,36 @@ namespace GameSource.API.Controllers
 
             if (result.Any())
             {
-                return new ApiResponse
-                {
-                    ResponseStatusCode = ResponseStatusCode.Success,
-                    ResponseMessage = "Successfully returned Users list."
-                };
+                return new ApiResponse(ResponseStatusCode.Success, "Successfully returned Users list.");
             }
 
-            return new ApiResponse
-            {
-                ResponseStatusCode = ResponseStatusCode.Error,
-                ResponseMessage = "Could not return Users list."
-            };
+            return new ApiResponse(ResponseStatusCode.Error, "Could not return Users list.");
         }
 
         [HttpGet("{id}")]
-        public async Task<User> GetByID(int id)
+        public async Task<ApiResponse> GetByID(int id)
         {
-            return await userService.GetByIDAsync(id);
+            var result = await userService.GetByIDAsync(id);
+
+            if (result != null)
+            {
+                return new ApiResponse(ResponseStatusCode.Success, "Successfully returned a User.");
+            }
+
+            return new ApiResponse(ResponseStatusCode.Error, "Could not return a User.");
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] User user)
+        public async Task<ApiResponse> Insert([FromBody] User user)
         {
-            await userService.InsertAsync(user);
+            var result = await userService.InsertAsync(user);
+
+            if (result != null)
+            {
+                return new ApiResponse(ResponseStatusCode.Success, "Successfully created a User.");
+            }
+
+            return new ApiResponse(ResponseStatusCode.Error, "Could not create a User.");
         }
 
         [HttpPost]

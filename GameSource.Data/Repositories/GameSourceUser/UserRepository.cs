@@ -59,10 +59,11 @@ namespace GameSource.Data.Repositories.GameSourceUser
             return await entity.FindAsync(id);
         }
 
-        public async Task InsertAsync(User user)
+        public async Task<User> InsertAsync(User user)
         {
             await entity.AddAsync(user);
             await context.SaveChangesAsync();
+            return user;
         }
 
         public async Task UpdateAsync(User user)

@@ -52,9 +52,9 @@ namespace GameSource.Services.GameSourceUser
             return await repo.GetByIDAsync(id);
         }
 
-        public async Task InsertAsync(User user)
+        public async Task<User> InsertAsync(User user)
         {
-            await repo.InsertAsync(user);
+            return await repo.InsertAsync(user);
         }
 
         public async Task UpdateAsync(User user)

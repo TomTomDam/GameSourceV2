@@ -15,7 +15,7 @@ namespace GameSource.Services.GameSourceUser.Contracts
         public void Delete(int id);
         public Task<IEnumerable<User>> GetAllAsync();
         public Task<User> GetByIDAsync(int id);
-        public Task InsertAsync(User user);
+        public Task<User> InsertAsync(User user);
         public Task UpdateAsync(User user);
         public Task DeleteAsync(int id);
     }

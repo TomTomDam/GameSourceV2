@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GameSource.Models.GameSource
@@ -16,6 +18,10 @@ namespace GameSource.Models.GameSource
 
         [Required]
         public string Description { get; set; }
+
+        [Display(Name = "Upload Image")]
+        [NotMapped]
+        public IFormFile CoverImage { get; set; }
 
         [Required]
         public int GenreID { get; set; }
