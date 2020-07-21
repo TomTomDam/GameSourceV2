@@ -5,6 +5,8 @@ using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using GameSource.ViewModels.GameSource.GenreViewModel;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace GameSource.Controllers.GameSource
 {
@@ -15,6 +17,18 @@ namespace GameSource.Controllers.GameSource
         public GenreController(IGenreService genreService)
         {
             this.genreService = genreService;
+        }
+
+        [HttpGet]
+        public async Task<IList<Genre>> Get(string filter)
+        {
+            List<Genre> models = await genreService.FindByName(filter);
+
+            var viewModels = models
+                .Select(x => x.ToViewModel())
+                .ToList();
+
+            return viewModels;
         }
 
         [HttpGet]

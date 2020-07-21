@@ -27,7 +27,7 @@
                     <option value="">Select a Genre/Genres</option>
                 </select>
                 <span asp-validation-for="Game.Genre" class="text-danger"></span>*@
-                <multiselect v-model="model.genresmultiselect" id="ajax" label="name" track-by="code" placeholder="" open-direction="bottom" :options="genres" :multiple="true" :searchable="true" :loading="isLoadingGenres" :internal-search="false" :clear-on-select="true" :close-on-select="false" :options-limit="300" :limit="5" :max-height="600" :show-no-results="false" v-on:search-change="genreSearch">
+                <multiselect v-model="model.genresmultiselect" id="ajax" label="name" track-by="code" placeholder="" open-direction="bottom" :options="genresmultiselect" :multiple="true" :searchable="true" :loading="isLoadingGenres" :internal-search="false" :clear-on-select="true" :close-on-select="false" :options-limit="300" :limit="5" :max-height="600" :show-no-results="false" v-on:search-change="genreSearch">
                     <template slot="tag" slot-scope="{ option, remove }">
                         <span class="multiselect__tag">
                             <span>{{ option.name }}</span>
