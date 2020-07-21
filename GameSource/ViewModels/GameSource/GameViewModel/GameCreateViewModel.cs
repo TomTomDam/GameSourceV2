@@ -15,6 +15,7 @@ namespace GameSource.ViewModels.GameSource.GameViewModel
         public int PublisherID { get; set; }
         public int PlatformID { get; set; }
         public List<SelectListItem> Genres { get; set; }
+        public List<Genre> GenresMultiSelect { get; set; } = new List<Genre>();
         public List<SelectListItem> Developers { get; set; }
         public List<SelectListItem> Publishers { get; set; }
         public List<SelectListItem> Platforms { get; set; }

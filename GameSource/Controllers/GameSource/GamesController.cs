@@ -96,6 +96,7 @@ namespace GameSource.Controllers.GameSource
                 ID = viewModel.Game.ID,
                 Name = viewModel.Game.Name,
                 Description = viewModel.Game.Description,
+                CoverImage = viewModel.Game.CoverImage,
                 GenreID = viewModel.Game.GenreID,
                 DeveloperID = viewModel.Game.DeveloperID,
                 PublisherID = viewModel.Game.PublisherID,
