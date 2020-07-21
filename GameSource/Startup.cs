@@ -19,6 +19,7 @@ using GameSource.Services.GameSourceUser.Contracts;
 using GameSource.Services.GameSourceUser;
 using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity;
+using GameSource.Data.Settings;
 
 namespace GameSource
 {
@@ -35,6 +36,8 @@ namespace GameSource
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
             services.AddDbContext<GameSourceUser_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSourceUser_DB")));

@@ -10,13 +10,14 @@ let app = new Vue({
         model: null,
         genres: [],
         isLoadingGenres: false,
-        selectedGenres: []
+        selectedGenres: [],
+        genresmultiselect: [],
     },
     methods: {
         genreSearch: function (filter) {
-            axios.get(`/Genre/?filter=${encodeURIComponent(filter)}`)
+            axios.get(`/GameSource/Genre/?filter=${encodeURIComponent(filter)}`)
                 .then(response => {
-                    this.genres = response.data;
+                    this.genresmultiselect = response.data;
                 })
                 .catch(error => {
                     console.log("Error: " + error.statusText);
