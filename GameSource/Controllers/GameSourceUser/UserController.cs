@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GameSource.Controllers.GameSourceUser
 {
@@ -99,6 +100,42 @@ namespace GameSource.Controllers.GameSourceUser
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserLoginViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(viewModel.UserName, viewModel.Password, viewModel.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            return View();
         }
 
         [HttpGet]

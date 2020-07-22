@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject SignInManager<User> signInManager;
+@inject RoleManager<UserRole> roleManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,8 +11,8 @@
     <title>@ViewData["Title"] - GameSource</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/site.scss"/>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -16,8 +21,8 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container" id="app">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameSource</a>
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">GameSource</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,11 +30,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="">Browse Games</a>
-
+                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse Games</a>
                             <ul class="dropdown-menu dropdown-columns" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-header font-weight-bold">By Genre</a></li>
                                 <li><div class="dropdown-divider"></div></li>
@@ -39,34 +43,55 @@
                                 <li><div class="dropdown-divider"></div></li>
                                 <li><a class="dropdown-item">PC</a></li>
                             </ul>
-
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="">Database</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="nav-link text-dark" asp-controller="Games" asp-action="Index">View All Games</a>
-                                <a class="nav-link text-dark" asp-controller="Genre" asp-action="Index">View All Genres</a>
-                                <a class="nav-link text-dark" asp-controller="Developer" asp-action="Index">View All Developers</a>
-                                <a class="nav-link text-dark" asp-controller="Publisher" asp-action="Index">View All Publishers</a>
-                                <a class="nav-link text-dark" asp-controller="Platform" asp-action="Index">View All Platforms</a>
-                            </div>
+                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Database</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="nav-link text-dark" asp-controller="Games" asp-action="Index">View All Games</a></li>
+                                <li><a class="nav-link text-dark" asp-controller="Genre" asp-action="Index">View All Genres</a></li>
+                                <li><a class="nav-link text-dark" asp-controller="Developer" asp-action="Index">View All Developers</a></li>
+                                <li><a class="nav-link text-dark" asp-controller="Publisher" asp-action="Index">View All Publishers</a></li>
+                                <li><a class="nav-link text-dark" asp-controller="Platform" asp-action="Index">View All Platforms</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Forum" asp-action="Index">Forum</a>
+                            <a class="nav-link text-dark" asp-controller="Forum" asp-action="Index">Forum</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="News">News</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="News">News</a>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="nav-link text-dark" asp-controller="User" asp-action="Index">View All Users</a></li>
+                                <li><a class="nav-link text-dark" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="UserRole" asp-action="Index">User Roles</a>
-                        </li>
+
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Details" asp-route-id="@User.">View my profile</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Settings">Account settings</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -80,13 +105,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - GameSource - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - GameSource - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <script src="~/lib/vue/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

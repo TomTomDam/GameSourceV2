@@ -7,7 +7,11 @@
 <h1 class="text-center">Index</h1>
 
 <div class="container">
-    <table class="table">
+    <p>
+        <a class="btn btn-primary" asp-controller="PlatformType" asp-action="Create">Add a new Platform Type</a>
+    </p>
+
+    <table class="table" id="platformTypeIndexTable">
         <thead>
             <tr>
                 <th>Name</th>
@@ -30,3 +34,6 @@
     </table>
 </div>
 
+@section scripts {
+    <script src="~/js/indexDataTables.js"></script>
+}
