@@ -8,14 +8,12 @@ let app = new Vue({
     data: {
         gameId: document.getElementById('gameId').value,
         model: null,
-        genres: [],
-        isLoadingGenres: false,
-        selectedGenres: [],
         genresmultiselect: [],
+        isLoadingGenres: false,
     },
     methods: {
         genreSearch: function (filter) {
-            axios.get(`/GameSource/Genre/?filter=${encodeURIComponent(filter)}`)
+            axios.get(`/Genre/?filter=${encodeURIComponent(filter)}`)
                 .then(response => {
                     this.genresmultiselect = response.data;
                 })

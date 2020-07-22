@@ -10,38 +10,48 @@
 <div class="container">
     <h3 class="">Featured Games</h3>
 
-    <div id="gameImagesCarousel" class="carousel slide" data-ride="carousel">
+    <div id="gameCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#gameImagesCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#gameImagesCarousel" data-slide-to="1"></li>
-            <li data-target="#gameImagesCarousel" data-slide-to="2"></li>
+            <li data-target="#gameCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#gameCarousel" data-slide-to="1"></li>
+            <li data-target="#gameCarousel" data-slide-to="2"></li>
         </ol>
 
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="https://dummyimage.com/920x480/eeeeee/aaaaaa&text=Example%20light%20background%20image" alt="First slide">
+                <a>
+                    <img class="d-block w-100" src="https://dummyimage.com/920x480/eeeeee/aaaaaa&text=Example%20light%20background%20image" alt="First slide">
+                </a>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="https://dummyimage.com/920x480/eeeeee/aaaaaa&text=Example%20light%20background%20image%20with%20caption" alt="Second slide">
+                <a>
+                    <img class="d-block w-100" src="https://dummyimage.com/920x480/eeeeee/aaaaaa&text=Example%20light%20background%20image%20with%20caption" alt="Second slide">
+                </a>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="https://dummyimage.com/920x480/eeeeee/aaaaaa&text=Another%20example%20without%20caption" alt="Third slide">
+                <a>
+                    <img class="d-block w-100" src="https://dummyimage.com/920x480/eeeeee/aaaaaa&text=Another%20example%20without%20caption" alt="Third slide">
+                </a>
             </div>
         </div>
 
-        <a class="carousel-control-prev" href="#gameImagesCarousel" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#gameCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#gameImagesCarousel" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#gameCarousel" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
 
-    <div id="app">
-        {{message}}
+    <div>
+
     </div>
+
+    @*<div id="app">
+        {{message}}
+    </div>*@
 </div>
 
 @section scripts {

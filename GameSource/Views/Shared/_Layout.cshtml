@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - GameSource</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/site.scss"/>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     </environment>
     <environment exclude="Development">
@@ -15,7 +16,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container" id="app">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameSource</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -26,8 +27,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Games" asp-action="Index">Games</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="">Browse Games</a>
+
+                            <ul class="dropdown-menu dropdown-columns" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-header font-weight-bold">By Genre</a></li>
+                                <li><div class="dropdown-divider"></div></li>
+                                <li><a class="dropdown-item">Sci-Fi</a></li>
+
+                                <li><a class="dropdown-header font-weight-bold">Platforms</a></li>
+                                <li><div class="dropdown-divider"></div></li>
+                                <li><a class="dropdown-item">PC</a></li>
+                            </ul>
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="">Database</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link text-dark" asp-controller="Games" asp-action="Index">View All Games</a>
+                                <a class="nav-link text-dark" asp-controller="Genre" asp-action="Index">View All Genres</a>
+                                <a class="nav-link text-dark" asp-controller="Developer" asp-action="Index">View All Developers</a>
+                                <a class="nav-link text-dark" asp-controller="Publisher" asp-action="Index">View All Publishers</a>
+                                <a class="nav-link text-dark" asp-controller="Platform" asp-action="Index">View All Platforms</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Forum" asp-action="Index">Forum</a>
@@ -68,6 +90,7 @@
     <script src="~/lib/vue/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/vue/layout.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>
