@@ -7,9 +7,11 @@ using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Identity;
 using GameSource.ViewModels.GameSourceUser.UserRoleViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameSource.Controllers.GameSourceUser
 {
+    //[Authorize(Roles = "Administrator")]
     public class UserRoleController : Controller
     {
         private readonly IUserRoleService userRoleService;
@@ -151,6 +153,13 @@ namespace GameSource.Controllers.GameSourceUser
             }
 
             return RedirectToAction("Index", roleManager.Roles);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

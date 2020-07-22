@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
 @inject SignInManager<User> signInManager;
-@inject RoleManager<UserRole> roleManager;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,22 +63,25 @@
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link text-dark" asp-controller="User" asp-action="Index">View All Users</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
-                            </ul>
-                        </li>
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Index">View All Users</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
+                                </ul>
+                            </li>
+                        }
 
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Details" asp-route-id="@User.">View my profile</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Details" asp-route-id="@User">View my profile</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="User" asp-action="Settings">Account settings</a></li>
-                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Logout" onclick="logoutUser();">Logout</a></li>
                                 </ul>
                             </li>
                         }
@@ -117,6 +119,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/vue/layout.js"></script>
+    <script src="~/js/loginSystem.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameSource.Controllers.GameSourceUser
 {
@@ -125,7 +125,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
@@ -235,6 +235,13 @@ namespace GameSource.Controllers.GameSourceUser
             }
 
             return RedirectToAction("Index", userManager.Users);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

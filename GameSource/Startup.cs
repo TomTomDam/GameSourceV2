@@ -47,7 +47,10 @@ namespace GameSource
                 options.Password.RequiredLength = 10;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<GameSourceUser_DBContext>();
+            })
+                .AddRoleManager<RoleManager<UserRole>>()
+                .AddUserManager<UserManager<User>>()
+                .AddEntityFrameworkStores<GameSourceUser_DBContext>();
 
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
