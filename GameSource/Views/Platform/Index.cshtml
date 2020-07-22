@@ -7,7 +7,11 @@
 <h1 class="text-center">Index</h1>
 
 <div class="container">
-    <table class="table">
+    <p>
+        <a class="btn btn-primary" asp-controller="Platform" asp-action="Create">Add a new Platform</a>
+    </p>
+
+    <table class="table" id="platformIndexTable">
         <thead>
             <tr>
                 <th>Name</th>
@@ -18,17 +22,20 @@
         <tbody>
             @foreach (var platform in Model.Platforms)
             {
-            <tr>
-                <td>@platform.Name</td>
-                <td>@platform.PlatformType.Name</td>
-                <td>
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@platform.ID">View</a>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@platform.ID">Edit</a>
-                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@platform.ID">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@platform.Name</td>
+                    <td>@platform.PlatformType.Name</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@platform.ID">View</a>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@platform.ID">Edit</a>
+                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@platform.ID">Delete</a>
+                    </td>
+                </tr>
             }
-            </tbody>
+        </tbody>
     </table>
 </div>
 
+@section scripts {
+    <script src="~/js/indexDataTables.js"></script>
+}
