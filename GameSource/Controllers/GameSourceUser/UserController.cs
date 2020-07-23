@@ -20,6 +20,7 @@ namespace GameSource.Controllers.GameSourceUser
         private readonly IUserStatusService userStatusService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly RoleManager<UserRole> roleManager;
 
         public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
@@ -63,6 +64,7 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             UserRegisterViewModel viewModel = new UserRegisterViewModel();
@@ -70,6 +72,7 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegisterViewModel viewModel)
         {
@@ -89,8 +92,14 @@ namespace GameSource.Controllers.GameSourceUser
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index");
+                    var newUser = await userManager.FindByNameAsync(user.UserName);
+                    var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
+
+                    if (roleResult.Succeeded)
+                    {
+                        await signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 foreach (var error in result.Errors)
@@ -103,12 +112,14 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginViewModel viewModel)
         {
             if (ModelState.IsValid)
