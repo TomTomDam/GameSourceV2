@@ -69,8 +69,8 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link text-dark" asp-controller="Admin" asp-area="Admin" asp-action="UserIndex">View All Users</a></li>
-                                    <li><a class="nav-link text-dark" asp-controller="Admin" asp-area="Admin" asp-action="UserRoleIndex">View All User Roles</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Index">View All Users</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">View All User Roles</a></li>
                                 </ul>
                             </li>
                         
@@ -82,7 +82,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="nav-link text-dark" asp-controller="User" asp-action="Details" asp-route-id="@User">View my profile</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="User" asp-action="Settings">Account settings</a></li>
-                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Logout" onclick="logoutUser();">Logout</a></li>
                                 </ul>
                             </li>
                         }

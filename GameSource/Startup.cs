@@ -48,8 +48,7 @@ namespace GameSource
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-                .AddRoleManager<RoleManager<UserRole>>()
-                .AddUserManager<UserManager<User>>()
+                .AddRoles<UserRole>()
                 .AddEntityFrameworkStores<GameSourceUser_DBContext>();
 
             services.AddScoped<IGameRepository, GameRepository>();
@@ -81,7 +80,7 @@ namespace GameSource
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -102,12 +101,58 @@ namespace GameSource
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //SetUpDefaultRolesAndSuperUser(serviceProvider);
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "admin",
+                    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void SetUpDefaultRolesAndSuperUser(IServiceProvider serviceProvider)
+        {
+            //Initializing custom roles
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<UserRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            string[] roleNames = { "Member", "Moderator", "Admin" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExists = roleManager.RoleExistsAsync(roleName).Result;
+                if (!roleExists)
+                {
+                    //Create the roles and seed them to the database
+                    roleResult = roleManager.CreateAsync(new UserRole { Name = roleName }).Result;
+                }
+            }
+
+            //Create a "super user" that has full access to the application
+            var superUser = new User
+            {
+                UserName = "thomasdam",
+                Email = "thomasdam@live.co.uk",
+            };
+
+            //Config values are provided in appsettings.json
+            string userPassword = "hellothere1";
+            var user = userManager.FindByEmailAsync("thomasdam@live.co.uk").Result;
+
+            if (user == null)
+            {
+                var createSuperUser = userManager.CreateAsync(superUser, userPassword).Result;
+                if (createSuperUser.Succeeded)
+                {
+                    //Add Admin role to the super user
+                    userManager.AddToRoleAsync(superUser, "Admin");
+                }
+            }
         }
     }
 }

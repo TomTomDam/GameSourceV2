@@ -1,0 +1,72 @@
+﻿@model GameSource.ViewModels.GameSourceUser.UserViewModel.UserEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="AvatarImage" class="control-label"></label>
+                <input asp-for="AvatarImage" class="form-control" />
+                <span asp-validation-for="AvatarImage" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="AvatarFilePath" class="control-label"></label>
+                <input asp-for="AvatarFilePath" class="form-control" />
+                <span asp-validation-for="AvatarFilePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserStatusID" class="control-label"></label>
+                <select asp-for="UserStatusID" class="form-control" asp-items="@Model.UserStatuses"></select>
+                <span asp-validation-for="UserStatusID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRoleID" class="control-label"></label>
+                <select asp-for="UserRoleID" class="form-control" asp-items="@Model.UserRoles"></select>
+                <span asp-validation-for="UserRoleID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
