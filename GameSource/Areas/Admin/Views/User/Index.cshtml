@@ -9,7 +9,7 @@
 
 <div class="container">
     <p>
-        <a class="btn btn-primary" asp-action="Register">Register a new User</a>
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="RegisterUser">Register a new User</a>
     </p>
 
     <table class="table">
@@ -32,24 +32,24 @@
         <tbody>
             @foreach (var item in Model.Users)
             {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Age)</td>
-                <td>@Html.DisplayFor(modelItem => item.Location)</td>
-                <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
-                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserStatus.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserRole.Name)</td>
-                <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserStatus.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserRole.Name)</td>
+                    <td>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUser" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="UserDetails" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

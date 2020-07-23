@@ -75,7 +75,7 @@ namespace GameSource.Areas.Admin.Controllers
         public IActionResult RegisterUser()
         {
             AdminRegisterUserViewModel viewModel = new AdminRegisterUserViewModel();
-            return View("~/Areas/Admin/Views/Admin/Register.cshtml", viewModel);
+            return View("~/Areas/Admin/Views/User/Register.cshtml", viewModel);
         }
 
         [HttpPost("User/Register")]
@@ -105,7 +105,7 @@ namespace GameSource.Areas.Admin.Controllers
                     if (roleResult.Succeeded)
                     {
                         await signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("UserIndex");
                     }
                 }
 
@@ -179,7 +179,7 @@ namespace GameSource.Areas.Admin.Controllers
             user.UserRoleID = viewModel.UserRoleID;
 
             userService.Update(user);
-            return RedirectToAction("Index", user);
+            return RedirectToAction("UserIndex", user);
         }
 
         [HttpGet("User/Delete/{id}")]
@@ -204,7 +204,7 @@ namespace GameSource.Areas.Admin.Controllers
                 var result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserIndex");
                 }
 
                 foreach (var error in result.Errors)
@@ -213,7 +213,7 @@ namespace GameSource.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Index", userManager.Users);
+            return RedirectToAction("UserIndex", userManager.Users);
         }
 
         #endregion
@@ -251,7 +251,7 @@ namespace GameSource.Areas.Admin.Controllers
         public IActionResult CreateUserRole()
         {
             UserRoleCreateViewModel viewModel = new UserRoleCreateViewModel();
-            return View(viewModel);
+            return View("~/Areas/Admin/Views/UserRole/Create.cshtml", viewModel);
         }
 
         [HttpPost("UserRole/Create")]
@@ -269,7 +269,7 @@ namespace GameSource.Areas.Admin.Controllers
                 var result = await roleManager.CreateAsync(userRole);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserRoleIndex");
                 }
 
                 foreach (var error in result.Errors)
@@ -314,7 +314,7 @@ namespace GameSource.Areas.Admin.Controllers
             userRole.Description = viewModel.Description;
 
             userRoleService.Update(userRole);
-            return RedirectToAction("Index", userRole);
+            return RedirectToAction("UserRoleIndex");
         }
 
         [HttpGet("UserRole/Delete/{id}")]
@@ -339,7 +339,7 @@ namespace GameSource.Areas.Admin.Controllers
                 var result = await roleManager.DeleteAsync(userRole);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserRoleIndex");
                 }
 
                 foreach (var error in result.Errors)
@@ -348,7 +348,7 @@ namespace GameSource.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Index", roleManager.Roles);
+            return RedirectToAction("UserRoleIndex", roleManager.Roles);
         }
         #endregion
 
@@ -356,7 +356,7 @@ namespace GameSource.Areas.Admin.Controllers
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            return View();
+            return View("~/Areas/Admin/Views/Shared/AccessDenied.cshtml");
         }
     }
 }
