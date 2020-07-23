@@ -26,6 +26,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="UserRole/Edit" asp-route-id="@Model.UserRole.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-area="Admin" asp-controller="Admin" asp-action="EditUserRole" asp-route-id="@Model.UserRole.Id">Edit</a> |
+    <a asp-area="Admin" asp-controller="Admin" asp-action="UserRoleIndex">Back to List</a>
 </div>

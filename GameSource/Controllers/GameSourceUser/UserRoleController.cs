@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GameSource.Controllers.GameSourceUser
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UserRoleController : Controller
     {
         private readonly IUserRoleService userRoleService;
