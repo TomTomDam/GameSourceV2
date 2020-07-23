@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameSource.Areas.Admin.ViewModels
+namespace GameSource.Areas.Admin.ViewModels.UserViewModel
 {
-    public class AdminRegisterUserViewModel
+    public class AdminUserRegisterViewModel
     {
+
         [Required]
         public string Username { get; set; }
 

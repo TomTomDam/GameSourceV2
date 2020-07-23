@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GameSource.Areas.Admin.ViewModels;
+using GameSource.Areas.Admin.ViewModels.UserRoleViewModel;
+using GameSource.Areas.Admin.ViewModels.UserViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Models.GameSourceUser.Enums;
 using GameSource.Services.GameSourceUser.Contracts;
-using GameSource.ViewModels.GameSourceUser.UserRoleViewModel;
-using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +39,7 @@ namespace GameSource.Areas.Admin.Controllers
         [HttpGet("User/Index")]
         public async Task<IActionResult> UserIndex()
         {
-            UserIndexViewModel viewModel = new UserIndexViewModel
+            AdminUserIndexViewModel viewModel = new AdminUserIndexViewModel
             {
                 Users = await userService.GetAllAsync(),
                 UserRoles = await userRoleService.GetAllAsync(),
@@ -60,7 +58,7 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            UserDetailsViewModel viewModel = new UserDetailsViewModel
+            AdminUserDetailsViewModel viewModel = new AdminUserDetailsViewModel
             {
                 User = user,
                 UserRole = await userRoleService.GetByIDAsync(user.UserRoleID),
@@ -74,14 +72,14 @@ namespace GameSource.Areas.Admin.Controllers
         [AllowAnonymous]
         public IActionResult RegisterUser()
         {
-            AdminRegisterUserViewModel viewModel = new AdminRegisterUserViewModel();
+            AdminUserRegisterViewModel viewModel = new AdminUserRegisterViewModel();
             return View("~/Areas/Admin/Views/User/Register.cshtml", viewModel);
         }
 
         [HttpPost("User/Register")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterUser(AdminRegisterUserViewModel viewModel)
+        public async Task<IActionResult> RegisterUser(AdminUserRegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -141,7 +139,7 @@ namespace GameSource.Areas.Admin.Controllers
                 Value = x.Id.ToString()
             }).ToList();
 
-            UserEditViewModel viewModel = new UserEditViewModel
+            AdminUserEditViewModel viewModel = new AdminUserEditViewModel
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -159,7 +157,7 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpPost("User/Edit")]
-        public async Task<IActionResult> EditUser(UserEditViewModel viewModel)
+        public async Task<IActionResult> EditUser(AdminUserEditViewModel viewModel)
         {
             User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
             if (user == null)
@@ -222,7 +220,7 @@ namespace GameSource.Areas.Admin.Controllers
         [HttpGet("UserRole/Index")]
         public async Task<IActionResult> UserRoleIndex()
         {
-            UserRoleIndexViewModel viewModel = new UserRoleIndexViewModel
+            AdminUserRoleIndexViewModel viewModel = new AdminUserRoleIndexViewModel
             {
                 UserRoles = await userRoleService.GetAllAsync()
             };
@@ -239,7 +237,7 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            UserRoleDetailsViewModel viewModel = new UserRoleDetailsViewModel
+            AdminUserRoleDetailsViewModel viewModel = new AdminUserRoleDetailsViewModel
             {
                 UserRole = userRole
             };
@@ -250,13 +248,13 @@ namespace GameSource.Areas.Admin.Controllers
         [HttpGet("UserRole/Create")]
         public IActionResult CreateUserRole()
         {
-            UserRoleCreateViewModel viewModel = new UserRoleCreateViewModel();
+            AdminUserRoleCreateViewModel viewModel = new AdminUserRoleCreateViewModel();
             return View("~/Areas/Admin/Views/UserRole/Create.cshtml", viewModel);
         }
 
         [HttpPost("UserRole/Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUserRole(UserRoleCreateViewModel viewModel)
+        public async Task<IActionResult> CreateUserRole(AdminUserRoleCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -290,7 +288,7 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            UserRoleEditViewModel viewModel = new UserRoleEditViewModel
+            AdminUserRoleEditViewModel viewModel = new AdminUserRoleEditViewModel
             {
                 ID = userRole.Id,
                 Name = userRole.Name,
@@ -301,7 +299,7 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpPost("UserRole/Edit")]
-        public async Task<IActionResult> EditUserRole(UserRoleEditViewModel viewModel)
+        public async Task<IActionResult> EditUserRole(AdminUserRoleEditViewModel viewModel)
         {
             UserRole userRole = await roleManager.FindByIdAsync(viewModel.ID.ToString());
             if (userRole == null)
