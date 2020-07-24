@@ -1,12 +1,10 @@
 ﻿using GameSource.Models.GameSourceUser;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace GameSource.ViewModels.GameSourceUser.UserRoleViewModel
+namespace GameSource.Areas.Admin.ViewModels.UserRoleViewModel
 {
-    public class UserRoleIndexViewModel
+    public class AdminUserRoleIndexViewModel
     {
         public IEnumerable<UserRole> UserRoles { get; set; }
     }

@@ -150,6 +150,12 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpGet]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var user = await userManager.FindByIdAsync(id.ToString());
@@ -252,7 +258,7 @@ namespace GameSource.Controllers.GameSourceUser
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            return View();
+            return View("~/Views/Shared/AccessDenied.cshtml");
         }
     }
 }

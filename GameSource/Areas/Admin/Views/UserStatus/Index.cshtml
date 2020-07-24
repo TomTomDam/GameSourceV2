@@ -1,0 +1,39 @@
+﻿@model GameSource.Areas.Admin.ViewModels.UserStatusViewModel.AdminUserStatusIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<div class="container">
+    <p>
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="CreateUserStatus">Create a new User Status</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserStatuses)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUserStatus" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="UserStatusDetails" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="DeleteUserStatus" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
