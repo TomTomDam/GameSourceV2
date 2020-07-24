@@ -42,9 +42,18 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
-            var game = gameService.GetByID(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Game game = gameService.GetByID((int)id);
+            if (game == null)
+            {
+                return NotFound();
+            }
 
             GameDetailsViewModel viewModel = new GameDetailsViewModel
             {
@@ -108,10 +117,15 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
             GameEditViewModel viewModel = new GameEditViewModel();
-            viewModel.Game = gameService.GetByID(id);
+            viewModel.Game = gameService.GetByID((int)id);
+            if (viewModel.Game == null)
+            {
+                return NotFound();
+            }
+
             viewModel.Genres = genreService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
@@ -154,13 +168,22 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            var game = gameService.GetByID(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Game game = gameService.GetByID((int)id);
+            if (game == null)
+            {
+                return NotFound();
+            }
 
             GameDeleteViewModel viewModel = new GameDeleteViewModel
             {
-                Game = gameService.GetByID(id),
+                Game = gameService.GetByID((int)id),
                 Genre = genreService.GetByID(game.GenreID),
                 Developer = developerService.GetByID(game.DeveloperID),
                 Publisher = publisherService.GetByID(game.PublisherID),
@@ -174,6 +197,10 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(GameDeleteViewModel viewModel)
         {
             Game game = gameService.GetByID(viewModel.Game.ID);
+            if (game == null)
+            {
+                return NotFound();
+            }
 
             gameService.Delete(game.ID);
             return RedirectToAction("Index");

@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Index</h1>
 
 <div class="container">
     <p>
-        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="CreateUserRole">Create a new User Role</a>
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="UserRole" asp-action="Create">Create a new User Role</a>
     </p>
 
     <table class="table">
@@ -29,9 +29,9 @@
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                     <td>
-                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUserRole" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="UserRoleDetails" asp-route-id="@item.Id">Details</a>
-                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="DeleteUserRole" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="UserRole" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="UserRole" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="UserRole" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

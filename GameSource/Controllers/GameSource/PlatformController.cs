@@ -33,9 +33,18 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
-            var platform = platformService.GetByID(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Platform platform = platformService.GetByID((int)id);
+            if (platform == null)
+            {
+                return NotFound();
+            }
 
             PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel
             {
@@ -76,10 +85,21 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Platform platform = platformService.GetByID((int)id);
+            if (platform == null)
+            {
+                return NotFound();
+            }
+
             PlatformEditViewModel viewModel = new PlatformEditViewModel();
-            viewModel.Platform = platformService.GetByID(id);
+            viewModel.Platform = platform;
             viewModel.PlatformTypes = platformTypeService.GetAll().Select(x => new SelectListItem
             {
                 Text = x.Name,
@@ -103,9 +123,18 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            var platform = platformService.GetByID(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Platform platform = platformService.GetByID((int)id);
+            if (platform == null)
+            {
+                return NotFound();
+            }
 
             PlatformDeleteViewModel viewModel = new PlatformDeleteViewModel
             {

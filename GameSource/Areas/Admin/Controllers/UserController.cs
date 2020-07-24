@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using GameSource.Areas.Admin.ViewModels.UserViewModel;
 using GameSource.Models.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
-using Microsoft.AspNetCore.Identity;
-using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using GameSource.Models.GameSourceUser.Enums;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace GameSource.Controllers.GameSourceUser
+namespace GameSource.Areas.Admin.Controllers
 {
+    //[Authorize(Roles = "Admin")]
+    [Area("Admin")]
+    [Route("Admin/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserService userService;
@@ -21,7 +24,7 @@ namespace GameSource.Controllers.GameSourceUser
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager) 
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
@@ -30,20 +33,20 @@ namespace GameSource.Controllers.GameSourceUser
             this.signInManager = signInManager;
         }
 
-        [HttpGet]
+        [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            UserIndexViewModel viewModel = new UserIndexViewModel
+            AdminUserIndexViewModel viewModel = new AdminUserIndexViewModel
             {
                 Users = await userService.GetAllAsync(),
                 UserRoles = await userRoleService.GetAllAsync(),
                 UserStatuses = await userStatusService.GetAllAsync()
             };
 
-            return View(viewModel);
+            return View("~/Areas/Admin/Views/User/Index.cshtml", viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,34 +54,32 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            User user = await userService.GetByIDAsync((int)id);
+            var user = await userService.GetByIDAsync((int)id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            UserDetailsViewModel viewModel = new UserDetailsViewModel
+            AdminUserDetailsViewModel viewModel = new AdminUserDetailsViewModel
             {
                 User = user,
                 UserRole = await userRoleService.GetByIDAsync(user.UserRoleID),
                 UserStatus = await userStatusService.GetByIDAsync(user.UserStatusID)
             };
 
-            return View(viewModel);
+            return View("~/Areas/Admin/Views/User/Details.cshtml", viewModel);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpGet("Register")]
         public IActionResult Register()
         {
-            UserRegisterViewModel viewModel = new UserRegisterViewModel();
-            return View(viewModel);
+            AdminUserRegisterViewModel viewModel = new AdminUserRegisterViewModel();
+            return View("~/Areas/Admin/Views/User/Register.cshtml", viewModel);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost("Register")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegisterViewModel viewModel)
+        public async Task<IActionResult> Register(AdminUserRegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -96,13 +97,13 @@ namespace GameSource.Controllers.GameSourceUser
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
-                    User newUser = await userManager.FindByNameAsync(user.UserName);
+                    var newUser = await userManager.FindByNameAsync(user.UserName);
                     var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
 
                     if (roleResult.Succeeded)
                     {
                         await signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("UserIndex");
                     }
                 }
 
@@ -115,51 +116,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await signInManager.PasswordSignInAsync(viewModel.UserName, viewModel.Password, viewModel.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Logout()
-        {
-            await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public IActionResult Settings()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
-        [HttpGet]
+        [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -167,27 +124,27 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            User user = await userManager.FindByIdAsync(id.ToString());
+            var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return NotFound();
             }
 
-            IEnumerable<UserRole> userRoles = await userRoleService.GetAllAsync();
-            List<SelectListItem> userRolesSelectList = userRoles.Select(x => new SelectListItem()
+            var userRoles = await userRoleService.GetAllAsync();
+            var userRolesSelectList = userRoles.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
 
-            IEnumerable<UserStatus> userStatuses = await userStatusService.GetAllAsync();
-            List<SelectListItem> userStatusesSelectList = userStatuses.Select(x => new SelectListItem()
+            var userStatuses = await userStatusService.GetAllAsync();
+            var userStatusesSelectList = userStatuses.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
 
-            UserEditViewModel viewModel = new UserEditViewModel
+            AdminUserEditViewModel viewModel = new AdminUserEditViewModel
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -201,12 +158,11 @@ namespace GameSource.Controllers.GameSourceUser
                 UserStatuses = userStatusesSelectList
             };
 
-            return View(viewModel);
+            return View("~/Areas/Admin/Views/User/Edit.cshtml", viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserEditViewModel viewModel)
+        [HttpPost("Edit/{id}")]
+        public async Task<IActionResult> Edit(AdminUserEditViewModel viewModel)
         {
             User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
             if (user == null)
@@ -226,10 +182,10 @@ namespace GameSource.Controllers.GameSourceUser
             user.UserRoleID = viewModel.UserRoleID;
 
             userService.Update(user);
-            return RedirectToAction("Index", user);
+            return RedirectToAction("UserIndex", user);
         }
 
-        [HttpGet]
+        [HttpGet("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -237,16 +193,16 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            User user = await userManager.FindByIdAsync(id.ToString());
+            var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View("~/Areas/Admin/Views/User/Delete.cshtml", user);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
@@ -255,13 +211,13 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            User user = await userManager.FindByIdAsync(id.ToString());
+            var user = await userManager.FindByIdAsync(id.ToString());
             if (user != null)
             {
                 var result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserIndex");
                 }
 
                 foreach (var error in result.Errors)
@@ -270,14 +226,14 @@ namespace GameSource.Controllers.GameSourceUser
                 }
             }
 
-            return RedirectToAction("Index", userManager.Users);
+            return RedirectToAction("UserIndex", userManager.Users);
         }
 
         [HttpGet]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            return View("~/Views/Shared/AccessDenied.cshtml");
+            return View("~/Areas/Admin/Views/Shared/AccessDenied.cshtml");
         }
     }
 }

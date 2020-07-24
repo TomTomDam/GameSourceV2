@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\UserStatus\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\vue\components\" />
     <Folder Include="wwwroot\js\vue\views\" />
