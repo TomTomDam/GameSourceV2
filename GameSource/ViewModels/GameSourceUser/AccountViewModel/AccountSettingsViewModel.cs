@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GameSource.ViewModels.GameSourceUser.UserViewModel
+namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
-    public class UserSettingsViewModel
+    public class AccountSettingsViewModel
     {
         [Display(Name = "Username")]
         public string UserName { get; set; }

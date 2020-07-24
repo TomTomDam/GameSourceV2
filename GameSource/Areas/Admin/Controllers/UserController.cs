@@ -162,6 +162,7 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpPost("edit/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AdminUserEditViewModel viewModel)
         {
             User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
@@ -202,7 +203,7 @@ namespace GameSource.Areas.Admin.Controllers
             return View(user);
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpPost("delete/{id}"), ActionName("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
@@ -229,7 +230,7 @@ namespace GameSource.Areas.Admin.Controllers
             return RedirectToAction("Index", userManager.Users);
         }
 
-        [HttpGet]
+        [HttpGet("access-denied")]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {

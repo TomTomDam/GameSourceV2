@@ -96,6 +96,7 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpPost("edit/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AdminUserStatusEditViewModel viewModel)
         {
             UserStatus userStatus = await userStatusService.GetByIDAsync(viewModel.ID);
@@ -148,7 +149,7 @@ namespace GameSource.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("access-denied")]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {

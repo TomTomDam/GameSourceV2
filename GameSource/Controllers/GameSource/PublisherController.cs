@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers.GameSource
 {
+    [Route("publisher")]
     public class PublisherController : Controller
     {
         private IPublisherService publisherService;
@@ -16,7 +17,7 @@ namespace GameSource.Controllers.GameSource
             this.publisherService = publisherService;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             PublisherIndexViewModel viewModel = new PublisherIndexViewModel
@@ -27,7 +28,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("details/{id}")]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -47,7 +48,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             PublisherCreateViewModel viewModel = new PublisherCreateViewModel();
@@ -56,7 +57,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PublisherCreateViewModel viewModel)
         {
@@ -71,7 +72,7 @@ namespace GameSource.Controllers.GameSource
         }
 
 
-        [HttpGet]
+        [HttpGet("edit/{id}")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -91,7 +92,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(PublisherEditViewModel viewModel)
         {
@@ -103,7 +104,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Details", publisher);
         }
 
-        [HttpGet]
+        [HttpGet("delete/{id}")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,7 +126,8 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("delete/{id}")]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(PublisherDeleteViewModel viewModel)
         {
             Publisher publisher = publisherService.GetByID(viewModel.Publisher.ID);

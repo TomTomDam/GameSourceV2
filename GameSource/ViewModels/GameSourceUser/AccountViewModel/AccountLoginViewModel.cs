@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace GameSource.ViewModels.GameSourceUser.UserViewModel
+namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
-    public class UserLoginViewModel
+    public class AccountLoginViewModel
     {
         [Required]
         [Display(Name = "Username")]

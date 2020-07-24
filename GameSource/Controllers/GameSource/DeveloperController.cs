@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers.GameSource
 {
+    [Route("developer")]
     public class DeveloperController : Controller
     {
         private IDeveloperService developerService;
@@ -17,7 +18,7 @@ namespace GameSource.Controllers.GameSource
             this.developerService = developerService;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             DeveloperIndexViewModel viewModel = new DeveloperIndexViewModel
@@ -28,7 +29,7 @@ namespace GameSource.Controllers.GameSource
             return View("Index", viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("details/{id}")]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -42,7 +43,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             DeveloperCreateViewModel viewModel = new DeveloperCreateViewModel();
@@ -51,7 +52,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(DeveloperCreateViewModel viewModel)
         {
@@ -65,7 +66,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("edit/{id}")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,7 +80,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(DeveloperEditViewModel viewModel)
         {
@@ -91,7 +92,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Details", developer);
         }
 
-        [HttpGet]
+        [HttpGet("delete/{id}")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,7 +114,8 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("delete/{id}")]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(DeveloperDeleteViewModel viewModel)
         {
             Developer developer = developerService.GetByID(viewModel.Developer.ID);

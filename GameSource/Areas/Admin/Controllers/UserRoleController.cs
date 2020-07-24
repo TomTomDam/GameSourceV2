@@ -117,6 +117,7 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpPost("edit/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AdminUserRoleEditViewModel viewModel)
         {
             UserRole userRole = await roleManager.FindByIdAsync(viewModel.ID.ToString());
@@ -150,7 +151,7 @@ namespace GameSource.Areas.Admin.Controllers
             return View(userRole);
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpPost("delete/{id}"), ActionName("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
@@ -177,7 +178,7 @@ namespace GameSource.Areas.Admin.Controllers
             return RedirectToAction("Index", roleManager.Roles);
         }
 
-        [HttpGet]
+        [HttpGet("access-denied")]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {

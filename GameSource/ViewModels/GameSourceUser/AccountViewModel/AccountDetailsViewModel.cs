@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GameSource.ViewModels.GameSourceUser.UserViewModel
+namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
-    public class UserDetailsViewModel
+    public class AccountDetailsViewModel
     {
         public User User { get; set; }
         public int UserID { get; set; }
