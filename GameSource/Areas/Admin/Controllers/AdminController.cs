@@ -71,7 +71,6 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("User/Register")]
-        [AllowAnonymous]
         public IActionResult RegisterUser()
         {
             AdminUserRegisterViewModel viewModel = new AdminUserRegisterViewModel();
@@ -79,7 +78,6 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpPost("User/Register")]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterUser(AdminUserRegisterViewModel viewModel)
         {
