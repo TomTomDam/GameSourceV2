@@ -13,7 +13,7 @@ namespace GameSource.Areas.Admin.Controllers
 {
     //[Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("Admin/[controller]")]
+    [Route("admin/user-roles")]
     public class UserRoleController : Controller
     {
         private readonly IUserRoleService userRoleService;
@@ -25,7 +25,7 @@ namespace GameSource.Areas.Admin.Controllers
             this.roleManager = roleManager;
         }
 
-        [HttpGet("Index")]
+        [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
             AdminUserRoleIndexViewModel viewModel = new AdminUserRoleIndexViewModel
@@ -33,10 +33,10 @@ namespace GameSource.Areas.Admin.Controllers
                 UserRoles = await userRoleService.GetAllAsync()
             };
 
-            return View("~/Areas/Admin/Views/UserRole/Index.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Details/{id}")]
+        [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,17 +55,17 @@ namespace GameSource.Areas.Admin.Controllers
                 UserRole = userRole
             };
 
-            return View("~/Areas/Admin/Views/UserRole/Details.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Create")]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             AdminUserRoleCreateViewModel viewModel = new AdminUserRoleCreateViewModel();
-            return View("~/Areas/Admin/Views/UserRole/Create.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Create")]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AdminUserRoleCreateViewModel viewModel)
         {
@@ -80,7 +80,7 @@ namespace GameSource.Areas.Admin.Controllers
                 var result = await roleManager.CreateAsync(userRole);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("UserRoleIndex");
+                    return RedirectToAction("Index");
                 }
 
                 foreach (var error in result.Errors)
@@ -89,10 +89,10 @@ namespace GameSource.Areas.Admin.Controllers
                 }
             }
 
-            return View("~/Areas/Admin/Views/UserRole/Create.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Edit/{id}")]
+        [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,10 +113,10 @@ namespace GameSource.Areas.Admin.Controllers
                 Description = userRole.Description
             };
 
-            return View("~/Areas/Admin/Views/UserRole/Edit.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Edit/{id}")]
+        [HttpPost("edit/{id}")]
         public async Task<IActionResult> Edit(AdminUserRoleEditViewModel viewModel)
         {
             UserRole userRole = await roleManager.FindByIdAsync(viewModel.ID.ToString());
@@ -130,10 +130,10 @@ namespace GameSource.Areas.Admin.Controllers
             userRole.Description = viewModel.Description;
 
             userRoleService.Update(userRole);
-            return RedirectToAction("UserRoleIndex");
+            return RedirectToAction("Index");
         }
 
-        [HttpGet("Delete/{id}")]
+        [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,10 +147,10 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View("~/Areas/Admin/Views/UserRole/Delete.cshtml", userRole);
+            return View(userRole);
         }
 
-        [HttpPost("Delete/{id}")]
+        [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
@@ -165,7 +165,7 @@ namespace GameSource.Areas.Admin.Controllers
                 var result = await roleManager.DeleteAsync(userRole);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("UserRoleIndex");
+                    return RedirectToAction("Index");
                 }
 
                 foreach (var error in result.Errors)
@@ -174,7 +174,7 @@ namespace GameSource.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("UserRoleIndex", roleManager.Roles);
+            return RedirectToAction("Index", roleManager.Roles);
         }
 
         [HttpGet]

@@ -12,7 +12,7 @@ namespace GameSource.Areas.Admin.Controllers
 {
     //[Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("Admin/[controller]")]
+    [Route("admin/user-statuses")]
     public class UserStatusController : Controller
     {
         private readonly IUserStatusService userStatusService;
@@ -22,7 +22,7 @@ namespace GameSource.Areas.Admin.Controllers
             this.userStatusService = userStatusService;
         }
 
-        [HttpGet("Index")]
+        [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
             AdminUserStatusIndexViewModel viewModel = new AdminUserStatusIndexViewModel
@@ -30,10 +30,10 @@ namespace GameSource.Areas.Admin.Controllers
                 UserStatuses = await userStatusService.GetAllAsync()
             };
 
-            return View("~/Areas/Admin/Views/UserStatus/Index.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Details/{id}")]
+        [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,17 +44,17 @@ namespace GameSource.Areas.Admin.Controllers
             AdminUserStatusDetailsViewModel viewModel = new AdminUserStatusDetailsViewModel();
             viewModel.UserStatus = await userStatusService.GetByIDAsync((int)id);
 
-            return View("~/Areas/Admin/Views/UserStatus/Details.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Create")]
+        [HttpGet("create")]
         public async Task<IActionResult> Create()
         {
             AdminUserStatusCreateViewModel viewModel = new AdminUserStatusCreateViewModel();
-            return View("~/Areas/Admin/Views/UserStatus/Create.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Create")]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AdminUserStatusCreateViewModel viewModel)
         {
@@ -66,13 +66,13 @@ namespace GameSource.Areas.Admin.Controllers
                 };
 
                 userStatusService.Insert(userStatus);
-                return RedirectToAction("UserStatusIndex");
+                return RedirectToAction("Index");
             }
 
-            return View("~/Areas/Admin/Views/UserStatus/Create.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Edit/{id}")]
+        [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,10 +92,10 @@ namespace GameSource.Areas.Admin.Controllers
                 Name = userStatus.Name
             };
 
-            return View("~/Areas/Admin/Views/UserStatus/Edit.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Edit/{id}")]
+        [HttpPost("edit/{id}")]
         public async Task<IActionResult> Edit(AdminUserStatusEditViewModel viewModel)
         {
             UserStatus userStatus = await userStatusService.GetByIDAsync(viewModel.ID);
@@ -108,10 +108,10 @@ namespace GameSource.Areas.Admin.Controllers
             userStatus.Name = viewModel.Name;
 
             userStatusService.Update(userStatus);
-            return RedirectToAction("UserStatusIndex");
+            return RedirectToAction("Index");
         }
 
-        [HttpGet("Delete/{id}")]
+        [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,10 +131,10 @@ namespace GameSource.Areas.Admin.Controllers
                 Name = userStatus.Name
             };
 
-            return View("~/Areas/Admin/Views/UserStatus/Delete.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Delete/{id}")]
+        [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(AdminUserStatusDeleteViewModel viewModel)
         {
@@ -142,10 +142,10 @@ namespace GameSource.Areas.Admin.Controllers
             if (userStatus != null)
             {
                 await userStatusService.DeleteAsync(userStatus.Id);
-                return RedirectToAction("UserStatusIndex");
+                return RedirectToAction("Index");
             }
 
-            return View("~/Areas/Admin/Views/UserStatus/Delete.cshtml");
+            return View();
         }
 
         [HttpGet]
