@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Controllers.GameSource
 {
+    [Route("platform-type")]
     public class PlatformTypeController : Controller
     {
         public IPlatformTypeService platformTypeService;
@@ -17,7 +18,7 @@ namespace GameSource.Controllers.GameSource
             this.platformTypeService = platformTypeService;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             PlatformTypeIndexViewModel viewModel = new PlatformTypeIndexViewModel
@@ -28,7 +29,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("details/{id}")]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -48,7 +49,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             PlatformTypeCreateViewModel viewModel = new PlatformTypeCreateViewModel();
@@ -57,7 +58,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PlatformTypeCreateViewModel viewModel)
         {
@@ -72,7 +73,7 @@ namespace GameSource.Controllers.GameSource
         }
 
 
-        [HttpGet]
+        [HttpGet("edit/{id}")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -92,7 +93,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(PlatformTypeEditViewModel viewModel)
         {
@@ -104,7 +105,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Details", platformType);
         }
 
-        [HttpGet]
+        [HttpGet("delete/{id}")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -126,7 +127,8 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("delete/{id}")]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(PlatformTypeDeleteViewModel viewModel)
         {
             PlatformType platformType = platformTypeService.GetByID(viewModel.PlatformType.ID);

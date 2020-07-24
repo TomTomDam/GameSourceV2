@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GameSource.ViewModels.GameSourceUser.UserViewModel
+namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
-    public class UserRegisterViewModel
+    public class AccountRegisterViewModel
     {
 
         [Required]

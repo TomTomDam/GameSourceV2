@@ -7,11 +7,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GameSource.ViewModels.GameSourceUser.UserViewModel
+namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
-    public class UserEditViewModel
+    public class AccountEditViewModel
     {
-        public UserEditViewModel()
+        public AccountEditViewModel()
         {
             UserRoles = new List<SelectListItem>();
             UserStatuses = new List<SelectListItem>();

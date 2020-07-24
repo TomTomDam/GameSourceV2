@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace GameSource.Controllers.GameSource
 {
+    [Route("genre")]
     public class GenreController : Controller
     {
         public IGenreService genreService;
@@ -19,7 +20,7 @@ namespace GameSource.Controllers.GameSource
             this.genreService = genreService;
         }
 
-        [HttpGet]
+        [HttpGet("get")]
         public async Task<IList<Genre>> Get(string filter)
         {
             List<Genre> models = await genreService.FindByName(filter);
@@ -31,7 +32,7 @@ namespace GameSource.Controllers.GameSource
             return viewModels;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             GenreIndexViewModel viewModel = new GenreIndexViewModel
@@ -42,7 +43,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("details/{id}")]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -62,7 +63,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             GenreCreateViewModel viewModel = new GenreCreateViewModel();
@@ -71,7 +72,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(GenreCreateViewModel viewModel)
         {
@@ -85,7 +86,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("edit/{id}")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -105,7 +106,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(GenreEditViewModel viewModel)
         {
@@ -117,7 +118,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Details", Genre);
         }
 
-        [HttpGet]
+        [HttpGet("delete/{id}")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -139,7 +140,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(GenreDeleteViewModel viewModel)
         {

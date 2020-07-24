@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameSource.Controllers.GameSource
 {
+    [Route("games")]
     public class GamesController : Controller
     {
         private IGameService gameService;
@@ -26,7 +27,7 @@ namespace GameSource.Controllers.GameSource
             this.platformService = platformService;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             GameIndexViewModel viewModel = new GameIndexViewModel
@@ -41,7 +42,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("details/{id}")]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -67,7 +68,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             GameCreateViewModel viewModel = new GameCreateViewModel();
@@ -96,7 +97,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(GameCreateViewModel viewModel)
         {
@@ -116,7 +117,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("edit/{id}")]
         public IActionResult Edit(int? id)
         {
             GameEditViewModel viewModel = new GameEditViewModel();
@@ -150,7 +151,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(GameEditViewModel viewModel)
         {
@@ -167,7 +168,7 @@ namespace GameSource.Controllers.GameSource
             return RedirectToAction("Details", game);
         }
 
-        [HttpGet]
+        [HttpGet("delete/{id}")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -193,7 +194,8 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("delete/{id}")]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(GameDeleteViewModel viewModel)
         {
             Game game = gameService.GetByID(viewModel.Game.ID);

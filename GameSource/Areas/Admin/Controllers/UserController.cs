@@ -15,7 +15,7 @@ namespace GameSource.Areas.Admin.Controllers
 {
     //[Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("Admin/[controller]")]
+    [Route("admin/users")]
     public class UserController : Controller
     {
         private readonly IUserService userService;
@@ -33,7 +33,7 @@ namespace GameSource.Areas.Admin.Controllers
             this.signInManager = signInManager;
         }
 
-        [HttpGet("Index")]
+        [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
             AdminUserIndexViewModel viewModel = new AdminUserIndexViewModel
@@ -43,10 +43,10 @@ namespace GameSource.Areas.Admin.Controllers
                 UserStatuses = await userStatusService.GetAllAsync()
             };
 
-            return View("~/Areas/Admin/Views/User/Index.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Details/{id}")]
+        [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,17 +67,17 @@ namespace GameSource.Areas.Admin.Controllers
                 UserStatus = await userStatusService.GetByIDAsync(user.UserStatusID)
             };
 
-            return View("~/Areas/Admin/Views/User/Details.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpGet("Register")]
+        [HttpGet("register")]
         public IActionResult Register()
         {
             AdminUserRegisterViewModel viewModel = new AdminUserRegisterViewModel();
-            return View("~/Areas/Admin/Views/User/Register.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(AdminUserRegisterViewModel viewModel)
         {
@@ -103,7 +103,7 @@ namespace GameSource.Areas.Admin.Controllers
                     if (roleResult.Succeeded)
                     {
                         await signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("UserIndex");
+                        return RedirectToAction("Index");
                     }
                 }
 
@@ -116,7 +116,7 @@ namespace GameSource.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("Edit/{id}")]
+        [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -158,10 +158,11 @@ namespace GameSource.Areas.Admin.Controllers
                 UserStatuses = userStatusesSelectList
             };
 
-            return View("~/Areas/Admin/Views/User/Edit.cshtml", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("Edit/{id}")]
+        [HttpPost("edit/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AdminUserEditViewModel viewModel)
         {
             User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
@@ -182,10 +183,10 @@ namespace GameSource.Areas.Admin.Controllers
             user.UserRoleID = viewModel.UserRoleID;
 
             userService.Update(user);
-            return RedirectToAction("UserIndex", user);
+            return RedirectToAction("Index", user);
         }
 
-        [HttpGet("Delete/{id}")]
+        [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -199,10 +200,10 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View("~/Areas/Admin/Views/User/Delete.cshtml", user);
+            return View(user);
         }
 
-        [HttpPost("Delete/{id}")]
+        [HttpPost("delete/{id}"), ActionName("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
@@ -217,7 +218,7 @@ namespace GameSource.Areas.Admin.Controllers
                 var result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("UserIndex");
+                    return RedirectToAction("Index");
                 }
 
                 foreach (var error in result.Errors)
@@ -226,10 +227,10 @@ namespace GameSource.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("UserIndex", userManager.Users);
+            return RedirectToAction("Index", userManager.Users);
         }
 
-        [HttpGet]
+        [HttpGet("access-denied")]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {

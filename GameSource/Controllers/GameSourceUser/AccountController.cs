@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Identity;
-using GameSource.ViewModels.GameSourceUser.UserViewModel;
+using GameSource.ViewModels.GameSourceUser.AccountViewModel;
 using GameSource.Models.GameSourceUser.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GameSource.Controllers.GameSourceUser
 {
-    public class UserController : Controller
+    [Route("account")]
+    public class AccountController : Controller
     {
         private readonly IUserService userService;
         private readonly IUserRoleService userRoleService;
@@ -21,7 +22,7 @@ namespace GameSource.Controllers.GameSourceUser
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
@@ -30,10 +31,10 @@ namespace GameSource.Controllers.GameSourceUser
             this.signInManager = signInManager;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public async Task<IActionResult> Index()
         {
-            UserIndexViewModel viewModel = new UserIndexViewModel
+            AccountIndexViewModel viewModel = new AccountIndexViewModel
             {
                 Users = await userService.GetAllAsync(),
                 UserRoles = await userRoleService.GetAllAsync(),
@@ -43,7 +44,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,7 +58,7 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            UserDetailsViewModel viewModel = new UserDetailsViewModel
+            AccountDetailsViewModel viewModel = new AccountDetailsViewModel
             {
                 User = user,
                 UserRole = await userRoleService.GetByIDAsync(user.UserRoleID),
@@ -67,18 +68,18 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("register")]
         [AllowAnonymous]
         public IActionResult Register()
         {
-            UserRegisterViewModel viewModel = new UserRegisterViewModel();
+            AccountRegisterViewModel viewModel = new AccountRegisterViewModel();
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegisterViewModel viewModel)
+        public async Task<IActionResult> Register(AccountRegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -115,16 +116,17 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("login")]
         [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(AccountLoginViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -140,26 +142,26 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet("settings")]
         public IActionResult Settings()
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("profile")]
         public IActionResult Profile()
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -187,7 +189,7 @@ namespace GameSource.Controllers.GameSourceUser
                 Value = x.Id.ToString()
             }).ToList();
 
-            UserEditViewModel viewModel = new UserEditViewModel
+            AccountEditViewModel viewModel = new AccountEditViewModel
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -204,9 +206,9 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserEditViewModel viewModel)
+        public async Task<IActionResult> Edit(AccountEditViewModel viewModel)
         {
             User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
             if (user == null)
@@ -229,7 +231,7 @@ namespace GameSource.Controllers.GameSourceUser
             return RedirectToAction("Index", user);
         }
 
-        [HttpGet]
+        [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -246,7 +248,7 @@ namespace GameSource.Controllers.GameSourceUser
             return View(user);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("delete/{id}"), ActionName("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
@@ -273,7 +275,7 @@ namespace GameSource.Controllers.GameSourceUser
             return RedirectToAction("Index", userManager.Users);
         }
 
-        [HttpGet]
+        [HttpGet("access-denied")]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
