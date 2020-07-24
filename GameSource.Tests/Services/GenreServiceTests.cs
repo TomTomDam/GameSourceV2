@@ -1,8 +1,10 @@
 ﻿using AutoFixture;
 using GameSource.Data.Repositories.GameSource.Contracts;
+using GameSource.Data.Settings;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource;
 using GameSource.Services.GameSource.Contracts;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -19,6 +21,7 @@ namespace GameSource.Tests.Services
 
         public Mock<IGenreRepository> mockGenreRepo;
         public Mock<IGenreService> mockGenreService;
+        public Mock<IOptions<DatabaseSettings>> mockDbSettings;
         public IFixture fixture;
 
         [SetUp]
@@ -26,12 +29,13 @@ namespace GameSource.Tests.Services
         {
             mockGenreRepo = new Mock<IGenreRepository>();
             mockGenreService = new Mock<IGenreService>();
+            mockDbSettings = new Mock<IOptions<DatabaseSettings>>();
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
                 .ForEach(b => fixture.Behaviors.Remove(b));
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-            genreService = new GenreService(mockGenreRepo.Object);
+            genreService = new GenreService(mockGenreRepo.Object, mockDbSettings.Object);
         }
 
         [TearDown]
@@ -39,6 +43,7 @@ namespace GameSource.Tests.Services
         {
             mockGenreRepo.Invocations.Clear();
             mockGenreService.Invocations.Clear();
+            mockDbSettings.Invocations.Clear();
         }
 
         [Test]

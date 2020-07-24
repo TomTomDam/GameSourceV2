@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Areas.Admin.ViewModels.UserRoleViewModel;
+using GameSource.Areas.Admin.ViewModels.UserStatusViewModel;
 using GameSource.Areas.Admin.ViewModels.UserViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Models.GameSourceUser.Enums;
@@ -327,7 +329,7 @@ namespace GameSource.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/UserRole/Delete.cshtml", userRole);
         }
 
-        [HttpPost("UserRole/Delete/{id}")]
+        [HttpPost("UserRole/Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUserRoleConfirmed(int id)
         {
@@ -347,6 +349,108 @@ namespace GameSource.Areas.Admin.Controllers
             }
 
             return RedirectToAction("UserRoleIndex", roleManager.Roles);
+        }
+        #endregion
+
+        #region UserStatus
+        [HttpGet("UserStatus/Index")]
+        public async Task<IActionResult> UserStatusIndex()
+        {
+            AdminUserStatusIndexViewModel viewModel = new AdminUserStatusIndexViewModel
+            {
+                UserStatuses = await userStatusService.GetAllAsync()
+            };
+
+            return View("~/Areas/Admin/Views/UserStatus/Index.cshtml", viewModel);
+        }
+
+        [HttpGet("UserStatus/Details/{id}")]
+        public async Task<IActionResult> UserStatusDetails(int id)
+        {
+            AdminUserStatusDetailsViewModel viewModel = new AdminUserStatusDetailsViewModel();
+            viewModel.UserStatus = await userStatusService.GetByIDAsync(id);
+
+            return View("~/Areas/Admin/Views/UserStatus/Details.cshtml", viewModel);
+        }
+
+        [HttpGet("UserStatus/Create")]
+        public async Task<IActionResult> CreateUserStatus()
+        {
+            AdminUserStatusCreateViewModel viewModel = new AdminUserStatusCreateViewModel();
+            return View("~/Areas/Admin/Views/UserStatus/Create.cshtml", viewModel);
+        }
+
+        [HttpPost("UserStatus/Create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUserStatus(AdminUserStatusCreateViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                UserStatus userStatus = new UserStatus
+                {
+                    Name = viewModel.Name
+                };
+
+                userStatusService.Insert(userStatus);
+                return RedirectToAction("UserStatusIndex");
+            }
+
+            return View("~/Areas/Admin/Views/UserStatus/Create.cshtml", viewModel);
+        }
+
+        [HttpGet("UserStatus/Edit/{id}")]
+        public async Task<IActionResult> EditUserStatus(int id)
+        {
+            UserStatus userStatus = await userStatusService.GetByIDAsync(id);
+            AdminUserStatusEditViewModel viewModel = new AdminUserStatusEditViewModel
+            {
+                ID = userStatus.Id,
+                Name = userStatus.Name
+            };
+
+            return View("~/Areas/Admin/Views/UserStatus/Edit.cshtml", viewModel);
+        }
+
+        [HttpPost("UserStatus/Edit")]
+        public async Task<IActionResult> EditUserStatus(AdminUserStatusEditViewModel viewModel)
+        {
+            UserStatus userStatus = await userStatusService.GetByIDAsync(viewModel.ID);
+            if (userStatus == null)
+            {
+                return NotFound();
+            }
+
+            userStatus.Id = viewModel.ID;
+            userStatus.Name = viewModel.Name;
+
+            userStatusService.Update(userStatus);
+            return RedirectToAction("UserStatusIndex");
+        }
+
+        [HttpGet("UserStatus/Delete/{id}")]
+        public async Task<IActionResult> DeleteUserStatus(int id)
+        {
+            var userStatus = await userStatusService.GetByIDAsync(id);
+            if (userStatus == null)
+            {
+                return NotFound();
+            }
+
+            return View("~/Areas/Admin/Views/UserStatus/Delete.cshtml", userStatus);
+        }
+
+        [HttpPost("UserStatus/Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUserStatus(AdminUserStatusDeleteViewModel viewModel)
+        {
+            var userStatus = await userStatusService.GetByIDAsync(viewModel.ID);
+            if (userStatus != null)
+            {
+                await userStatusService.DeleteAsync(userStatus.Id);
+                return RedirectToAction("UserStatusIndex");
+            }
+
+            return View("~/Areas/Admin/Views/UserStatus/Delete.cshtml");
         }
         #endregion
 
