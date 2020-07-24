@@ -29,10 +29,15 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             DeveloperDetailsViewModel viewModel = new DeveloperDetailsViewModel();
-            viewModel.Developer = developerService.GetByID(id);
+            viewModel.Developer = developerService.GetByID((int)id);
 
             return View(viewModel);
         }
@@ -61,10 +66,15 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             DeveloperEditViewModel viewModel = new DeveloperEditViewModel();
-            viewModel.Developer = developerService.GetByID(id);
+            viewModel.Developer = developerService.GetByID((int)id);
 
             return View(viewModel);
         }
@@ -82,11 +92,22 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Developer developer = developerService.GetByID((int)id);
+            if (developer == null)
+            {
+                return NotFound();
+            }
+
             DeveloperDeleteViewModel viewModel = new DeveloperDeleteViewModel
             {
-                Developer = developerService.GetByID(id)
+                Developer = developer
             };
 
             return View(viewModel);

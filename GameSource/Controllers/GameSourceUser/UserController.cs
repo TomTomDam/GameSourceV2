@@ -20,7 +20,6 @@ namespace GameSource.Controllers.GameSourceUser
         private readonly IUserStatusService userStatusService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<UserRole> roleManager;
 
         public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
@@ -45,9 +44,14 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            var user = await userService.GetByIDAsync(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userService.GetByIDAsync((int)id);
             if (user == null)
             {
                 return NotFound();
@@ -92,7 +96,7 @@ namespace GameSource.Controllers.GameSourceUser
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
-                    var newUser = await userManager.FindByNameAsync(user.UserName);
+                    User newUser = await userManager.FindByNameAsync(user.UserName);
                     var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
 
                     if (roleResult.Succeeded)
@@ -156,23 +160,28 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return NotFound();
             }
 
-            var userRoles = await userRoleService.GetAllAsync();
-            var userRolesSelectList = userRoles.Select(x => new SelectListItem()
+            IEnumerable<UserRole> userRoles = await userRoleService.GetAllAsync();
+            List<SelectListItem> userRolesSelectList = userRoles.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
 
-            var userStatuses = await userStatusService.GetAllAsync();
-            var userStatusesSelectList = userStatuses.Select(x => new SelectListItem()
+            IEnumerable<UserStatus> userStatuses = await userStatusService.GetAllAsync();
+            List<SelectListItem> userStatusesSelectList = userStatuses.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
@@ -221,9 +230,14 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return NotFound();
@@ -234,9 +248,14 @@ namespace GameSource.Controllers.GameSourceUser
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
             if (user != null)
             {
                 var result = await userManager.DeleteAsync(user);

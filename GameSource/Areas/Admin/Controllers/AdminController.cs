@@ -52,9 +52,14 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("User/Details/{id}")]
-        public async Task<IActionResult> UserDetails(int id)
+        public async Task<IActionResult> UserDetails(int? id)
         {
-            var user = await userService.GetByIDAsync(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await userService.GetByIDAsync((int)id);
             if (user == null)
             {
                 return NotFound();
@@ -117,8 +122,13 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("User/Edit/{id}")]
-        public async Task<IActionResult> EditUser(int id)
+        public async Task<IActionResult> EditUser(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
@@ -181,8 +191,13 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("User/Delete/{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var user = await userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
@@ -194,8 +209,13 @@ namespace GameSource.Areas.Admin.Controllers
 
         [HttpPost("User/Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUserConfirmed(int id)
+        public async Task<IActionResult> DeleteUserConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var user = await userManager.FindByIdAsync(id.ToString());
             if (user != null)
             {
@@ -229,9 +249,14 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("UserRole/Details/{id}")]
-        public async Task<IActionResult> UserRoleDetails(int id)
+        public async Task<IActionResult> UserRoleDetails(int? id)
         {
-            var userRole = await userRoleService.GetByIDAsync(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userRole = await userRoleService.GetByIDAsync((int)id);
             if (userRole == null)
             {
                 return NotFound();
@@ -280,8 +305,13 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("UserRole/Edit/{id}")]
-        public async Task<IActionResult> EditUserRole(int id)
+        public async Task<IActionResult> EditUserRole(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var userRole = await roleManager.FindByIdAsync(id.ToString());
             if (userRole == null)
             {
@@ -316,8 +346,13 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("UserRole/Delete/{id}")]
-        public async Task<IActionResult> DeleteUserRole(int id)
+        public async Task<IActionResult> DeleteUserRole(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var userRole = await roleManager.FindByIdAsync(id.ToString());
             if (userRole == null)
             {
@@ -329,8 +364,13 @@ namespace GameSource.Areas.Admin.Controllers
 
         [HttpPost("UserRole/Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUserRoleConfirmed(int id)
+        public async Task<IActionResult> DeleteUserRoleConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var userRole = await roleManager.FindByIdAsync(id.ToString());
             if (userRole != null)
             {
@@ -363,10 +403,15 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("UserStatus/Details/{id}")]
-        public async Task<IActionResult> UserStatusDetails(int id)
+        public async Task<IActionResult> UserStatusDetails(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             AdminUserStatusDetailsViewModel viewModel = new AdminUserStatusDetailsViewModel();
-            viewModel.UserStatus = await userStatusService.GetByIDAsync(id);
+            viewModel.UserStatus = await userStatusService.GetByIDAsync((int)id);
 
             return View("~/Areas/Admin/Views/UserStatus/Details.cshtml", viewModel);
         }
@@ -397,9 +442,19 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("UserStatus/Edit/{id}")]
-        public async Task<IActionResult> EditUserStatus(int id)
+        public async Task<IActionResult> EditUserStatus(int? id)
         {
-            UserStatus userStatus = await userStatusService.GetByIDAsync(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserStatus userStatus = await userStatusService.GetByIDAsync((int)id);
+            if (userStatus == null)
+            {
+                return NotFound();
+            }
+
             AdminUserStatusEditViewModel viewModel = new AdminUserStatusEditViewModel
             {
                 ID = userStatus.Id,
@@ -426,22 +481,33 @@ namespace GameSource.Areas.Admin.Controllers
         }
 
         [HttpGet("UserStatus/Delete/{id}")]
-        public async Task<IActionResult> DeleteUserStatus(int id)
+        public async Task<IActionResult> DeleteUserStatus(int? id)
         {
-            var userStatus = await userStatusService.GetByIDAsync(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserStatus userStatus = await userStatusService.GetByIDAsync((int)id);
             if (userStatus == null)
             {
                 return NotFound();
             }
 
-            return View("~/Areas/Admin/Views/UserStatus/Delete.cshtml", userStatus);
+            AdminUserStatusDeleteViewModel viewModel = new AdminUserStatusDeleteViewModel
+            {
+                ID = userStatus.Id,
+                Name = userStatus.Name
+            };
+
+            return View("~/Areas/Admin/Views/UserStatus/Delete.cshtml", viewModel);
         }
 
         [HttpPost("UserStatus/Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUserStatus(AdminUserStatusDeleteViewModel viewModel)
         {
-            var userStatus = await userStatusService.GetByIDAsync(viewModel.ID);
+            UserStatus userStatus = await userStatusService.GetByIDAsync(viewModel.ID);
             if (userStatus != null)
             {
                 await userStatusService.DeleteAsync(userStatus.Id);

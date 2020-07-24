@@ -28,10 +28,21 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Publisher publisher = publisherService.GetByID((int)id);
+            if (publisher == null)
+            {
+                return NotFound();
+            }
+
             PublisherDetailsViewModel viewModel = new PublisherDetailsViewModel();
-            viewModel.Publisher = publisherService.GetByID(id);
+            viewModel.Publisher = publisher;
 
             return View(viewModel);
         }
@@ -61,10 +72,21 @@ namespace GameSource.Controllers.GameSource
 
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Publisher publisher = publisherService.GetByID((int)id);
+            if (publisher == null)
+            {
+                return NotFound();
+            }
+
             PublisherEditViewModel viewModel = new PublisherEditViewModel();
-            viewModel.Publisher = publisherService.GetByID(id);
+            viewModel.Publisher = publisher;
 
             return View(viewModel);
         }
@@ -82,11 +104,22 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Publisher publisher = publisherService.GetByID((int)id);
+            if (publisher == null)
+            {
+                return NotFound();
+            }
+
             PublisherDeleteViewModel viewModel = new PublisherDeleteViewModel
             {
-                Publisher = publisherService.GetByID(id)
+                Publisher = publisher
             };
 
             return View(viewModel);

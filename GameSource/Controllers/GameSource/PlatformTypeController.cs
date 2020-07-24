@@ -29,10 +29,21 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PlatformType platformType = platformTypeService.GetByID((int)id);
+            if (platformType == null)
+            {
+                return NotFound();
+            }
+
             PlatformTypeDetailsViewModel viewModel = new PlatformTypeDetailsViewModel();
-            viewModel.PlatformType = platformTypeService.GetByID(id);
+            viewModel.PlatformType = platformType;
 
             return View(viewModel);
         }
@@ -62,10 +73,21 @@ namespace GameSource.Controllers.GameSource
 
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PlatformType platformType = platformTypeService.GetByID((int)id);
+            if (platformType == null)
+            {
+                return NotFound();
+            }
+
             PlatformTypeEditViewModel viewModel = new PlatformTypeEditViewModel();
-            viewModel.PlatformType = platformTypeService.GetByID(id);
+            viewModel.PlatformType = platformType;
 
             return View(viewModel);
         }
@@ -83,11 +105,22 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PlatformType platformType = platformTypeService.GetByID((int)id);
+            if (platformType == null)
+            {
+                return NotFound();
+            }
+
             PlatformTypeDeleteViewModel viewModel = new PlatformTypeDeleteViewModel
             {
-                PlatformType = platformTypeService.GetByID(id)
+                PlatformType = platformType
             };
 
             return View(viewModel);
