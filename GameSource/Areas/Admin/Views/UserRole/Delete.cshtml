@@ -26,9 +26,9 @@
         </dd>
     </dl>
     
-    <form asp-area="Admin" asp-controller="Admin" asp-action="DeleteUserRole">
+    <form asp-area="Admin" asp-controller="UserRole" asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-area="Admin" asp-controller="Admin" asp-action="UserRoleIndex">Back to List</a>
+        <a asp-area="Admin" asp-controller="UserRole" asp-action="Index">Back to List</a>
     </form>
 </div>

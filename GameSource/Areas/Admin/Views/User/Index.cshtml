@@ -9,7 +9,7 @@
 
 <div class="container">
     <p>
-        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="RegisterUser">Register a new User</a>
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="Register">Register a new User</a>
     </p>
 
     <table class="table">
@@ -45,9 +45,9 @@
                     <td>@Html.DisplayFor(modelItem => item.UserStatus.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.UserRole.Name)</td>
                     <td>
-                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="EditUser" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="UserDetails" asp-route-id="@item.Id">Details</a>
-                        <a class="btn btn-primary" asp-area="Admin" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

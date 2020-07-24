@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-area="Admin" asp-controller="Admin" asp-action="CreateUserRole">
+        <form asp-area="Admin" asp-controller="UserRole" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -31,6 +31,6 @@
 </div>
 
 <div>
-    <a asp-area="Admin" asp-controller="Admin" asp-action="UserRoleIndex">Back to List</a>
+    <a asp-area="Admin" asp-controller="UserRole" asp-action="Index">Back to List</a>
 </div>
 
