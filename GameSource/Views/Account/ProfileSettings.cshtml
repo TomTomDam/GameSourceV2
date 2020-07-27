@@ -1,0 +1,33 @@
+﻿@model GameSource.ViewModels.GameSourceUser.AccountViewModel.AccountProfileSettingsViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject SignInManager<User> signInManager;
+@inject RoleManager<UserRole> roleManager;
+
+@{
+    ViewData["Title"] = "Profile settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="settings-page">
+    <div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Profile Settings</div>
+    <div class="page-content container clearfix">
+        <div class="col-md-3 float-left pr-4">
+            <nav class="menu position-relative" aria-label="Profile Settings">
+                <a class="menu-item">
+                    General
+                </a>
+                <a class="menu-item">
+                    Avatar
+                </a>
+                <a class="menu-item">
+                    Profile Background
+                </a>
+            </nav>
+        </div>
+
+        <div class="col-md-9 float-left">
+            <div class="sub-heading">General</div>
+        </div>
+    </div>
+</div>

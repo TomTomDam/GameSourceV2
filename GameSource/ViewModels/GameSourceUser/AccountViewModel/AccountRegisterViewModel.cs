@@ -11,6 +11,7 @@ namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
     public class AccountRegisterViewModel
     {
+        public int ID { get; set; }
 
         [Required]
         public string Username { get; set; }

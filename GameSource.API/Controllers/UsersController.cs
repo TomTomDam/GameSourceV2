@@ -6,18 +6,17 @@ using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         public IUserService userService;
 
-        public UserController(IUserService userService)
+        public UsersController(IUserService userService)
         {
             this.userService = userService;
         }

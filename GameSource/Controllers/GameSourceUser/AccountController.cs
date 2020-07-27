@@ -91,7 +91,7 @@ namespace GameSource.Controllers.GameSourceUser
                     LastName = viewModel.LastName,
                     DateCreated = DateTime.Now,
                     UserStatusID = (int)UserStatusEnum.Active,
-                    UserRoleID = (int)UserRoleEnum.Member
+                    UserRoleID = 11 //(int)UserRoleEnum.Member
                 };
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);
@@ -149,10 +149,18 @@ namespace GameSource.Controllers.GameSourceUser
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("settings")]
-        public IActionResult Settings()
+        [HttpGet("account-settings")]
+        public IActionResult AccountSettings()
         {
-            return View();
+            AccountSettingsViewModel viewModel = new AccountSettingsViewModel();
+            return View(viewModel);
+        }
+
+        [HttpGet("profile-settings")]
+        public IActionResult ProfileSettings()
+        {
+            AccountProfileSettingsViewModel viewModel = new AccountProfileSettingsViewModel();
+            return View(viewModel);
         }
 
         [HttpGet("profile")]
