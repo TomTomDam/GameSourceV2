@@ -149,6 +149,7 @@ namespace GameSource.Controllers.GameSourceUser
             return RedirectToAction("Index", "Home");
         }
 
+        #region Account Settings
         [HttpGet("account-settings")]
         public IActionResult AccountSettings()
         {
@@ -156,12 +157,51 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
+        [HttpGet]
+        public IActionResult AccountSettingsPartial()
+        {
+            return PartialView("~/Views/Account/_AccountSettings.cshtml");
+        }
+
+        [HttpGet]
+        public IActionResult EmailSettingsPartial()
+        {
+            return PartialView("~/Views/Account/_EmailSettings.cshtml");
+        }
+
+        [HttpGet]
+        public IActionResult PrivacySettingsPartial()
+        {
+            return PartialView("~/Views/Account/_PrivacySettings.cshtml");
+        }
+        #endregion
+
+        #region Profile Settings
         [HttpGet("profile-settings")]
         public IActionResult ProfileSettings()
         {
             AccountProfileSettingsViewModel viewModel = new AccountProfileSettingsViewModel();
             return View(viewModel);
         }
+
+        [HttpGet("account-settings/account")]
+        public IActionResult GeneralSettingsPartial()
+        {
+            return PartialView("~/Views/Account/_GeneralSettings.cshtml");
+        }
+
+        [HttpGet("account-settings/email")]
+        public IActionResult AvatarSettingsPartial()
+        {
+            return PartialView("~/Views/Account/_AvatarSettings.cshtml");
+        }
+
+        [HttpGet("account-settings/privacy")]
+        public IActionResult ProfileBackgroundSettingsPartial()
+        {
+            return PartialView("~/Views/Account/_ProfileBackgroundSettings.cshtml");
+        }
+        #endregion
 
         [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)

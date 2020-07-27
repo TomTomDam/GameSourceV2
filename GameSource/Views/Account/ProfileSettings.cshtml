@@ -14,13 +14,13 @@
     <div class="page-content container clearfix">
         <div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Profile Settings">
-                <a class="menu-item">
+                <a class="menu-item active" onclick="generalSettings();">
                     General
                 </a>
-                <a class="menu-item">
+                <a class="menu-item" onclick="avatarSettings();">
                     Avatar
                 </a>
-                <a class="menu-item">
+                <a class="menu-item" onclick="profileBackgroundSettings();">
                     Profile Background
                 </a>
             </nav>
@@ -31,3 +31,7 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/js/profileSettings.js"></script>
+}
