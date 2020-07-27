@@ -1,7 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
+@inject UserManager<User> userManager;
 @inject SignInManager<User> signInManager;
 @inject RoleManager<UserRole> roleManager;
+
+@{
+    ViewBag.UserID = userManager.GetUserId(User);
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,23 +70,23 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
                         @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
-                        
-                            <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">View All Users</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
-                                </ul>
-                            </li>
-                        
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">View All Users</a></li>
+                                <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
+                                <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
+                            </ul>
+                        </li>
+
 
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link text-dark" asp-controller="Account" asp-action="Details" asp-route-id="@User">View my profile</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="User" asp-action="Profile" asp-route-id="@ViewBag.UserID">View my profile</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="Account" asp-action="ProfileSettings">Profile settings</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="Account" asp-action="AccountSettings">Account settings</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a></li>
