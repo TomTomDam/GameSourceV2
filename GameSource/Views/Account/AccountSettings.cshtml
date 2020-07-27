@@ -14,20 +14,61 @@
     <div class="page-content container clearfix">
         <div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Account Settings">
-                <a class="menu-item">
+                <a href="#" class="menu-item active" onclick="accountSettings();">
                     Account
                 </a>
-                <a class="menu-item">
+                <a href="#" class="menu-item" onclick="emailSettings();">
                     Email
                 </a>
-                <a class="menu-item">
-                    Privacy settings
+                <a href="#" class="menu-item" onclick="privacySettings();">
+                    Privacy
                 </a>
             </nav>
         </div>
 
-        <div class="col-md-9 float-left">
-            <div class="sub-heading">Profile</div>
-        </div>
+        <div id="account-settings"></div>
+        <div id="email-settings"></div>
+        <div id="privacy-settings"></div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $('#account-settings').show();
+        $('#email-settings').hide();
+        $('#privacy-settings').hide();
+
+        function accountSettings() {
+            $('#email-settings').hide();
+            $('#privacy-settings').hide();
+
+            $.ajax({
+                url: '/account/AccountSettingsPartial',
+                type: 'GET',
+                success: function (result) {
+                    $('#account-settings').html(result);
+                    $('#account-settings').show();
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error: " + xhr.statusText);
+                }
+            });
+        }
+
+        function emailSettings() {
+            $('#account-settings').hide();
+            $('#privacy-settings').hide();
+
+            $('#email-settings').load('@Url.Action("EmailSettingsPartial", "Account")');
+            $('#email-settings').show();
+        }
+
+        function privacySettings() {
+            $('#email-settings').hide();
+            $('#account-settings').hide();
+
+            $('#privacy-settings').load('@Url.Action("PrivacySettingsPartial", "Account")');
+            $('#privacy-settings').show();
+        }
+    </script>
+}
