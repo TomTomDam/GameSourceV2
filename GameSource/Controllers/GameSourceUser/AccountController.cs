@@ -163,12 +163,6 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet("profile")]
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
         [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
