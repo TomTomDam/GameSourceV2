@@ -8,6 +8,6 @@ namespace GameSource.Models.GameSourceUser.Enums
     {
         Member = 1,
         Moderator = 2,
-        Administrator = 3,
+        Admin = 3,
     }
 }

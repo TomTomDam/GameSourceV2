@@ -87,3 +87,40 @@ body {
         height: 170px;
     }
 }
+
+/*Profile Settings + Account Settings*/
+#settings-page {
+    box-sizing: border-box;
+}
+
+.page-heading {
+    padding: 8px 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: inherit;
+    font-weight: 600;
+    border-bottom: 1px solid #808080;
+    font-size: 20px;
+}
+
+.page-heading-username {
+    font-size: 30px;
+}
+
+.page-content {
+    padding-top: 20px;
+}
+
+.menu {
+    margin-bottom: 16px;
+    list-style: none;
+    border: 1px solid #808080;
+    border-radius: 6px;
+}
+
+.menu-item {
+    position: relative;
+    display: block;
+    padding: 8px 16px;
+    border-bottom: 1px solid #808080;
+}
