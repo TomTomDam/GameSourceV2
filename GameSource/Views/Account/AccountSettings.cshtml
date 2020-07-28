@@ -14,13 +14,13 @@
     <div class="page-content container clearfix">
         <div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Account Settings">
-                <a href="#" class="menu-item active" onclick="accountSettings();">
+                <a href="javascript:void(0)" class="menu-item active" id="account-settings-btn">
                     Account
                 </a>
-                <a href="#" class="menu-item" onclick="emailSettings();">
+                <a href="javascript:void(0)" class="menu-item" id="email-settings-btn">
                     Email
                 </a>
-                <a href="#" class="menu-item" onclick="privacySettings();">
+                <a href="javascript:void(0)" class="menu-item" id="privacy-settings-btn">
                     Privacy
                 </a>
             </nav>
@@ -34,41 +34,74 @@
 
 @section scripts {
     <script>
-        $('#account-settings').show();
-        $('#email-settings').hide();
-        $('#privacy-settings').hide();
-
-        function accountSettings() {
+        $(document).ready(function () {
+            accountSettings();
+            $('#account-settings').show();
             $('#email-settings').hide();
             $('#privacy-settings').hide();
 
-            $.ajax({
-                url: '/account/AccountSettingsPartial',
-                type: 'GET',
-                success: function (result) {
-                    $('#account-settings').html(result);
-                    $('#account-settings').show();
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error: " + xhr.statusText);
-                }
+            $('#account-settings-btn').on('click', function (e) {
+                accountSettings();
             });
-        }
 
-        function emailSettings() {
-            $('#account-settings').hide();
-            $('#privacy-settings').hide();
+            function accountSettings() {
+                $('#email-settings').hide();
+                $('#privacy-settings').hide();
 
-            $('#email-settings').load('@Url.Action("EmailSettingsPartial", "Account")');
-            $('#email-settings').show();
-        }
+                $.ajax({
+                    url: '/account/account-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#account-settings').html(result);
+                        $('#account-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            }
 
-        function privacySettings() {
-            $('#email-settings').hide();
-            $('#account-settings').hide();
+            $('#email-settings-btn').on('click', function (e) {
+                emailSettings();
+            });
 
-            $('#privacy-settings').load('@Url.Action("PrivacySettingsPartial", "Account")');
-            $('#privacy-settings').show();
-        }
+            function emailSettings() {
+                $('#account-settings').hide();
+                $('#privacy-settings').hide();
+
+                $.ajax({
+                    url: '/account/email-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#email-settings').html(result);
+                        $('#email-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            }
+
+            $('#privacy-settings-btn').on('click', function (e) {
+                privacySettings();
+            });
+
+            function privacySettings() {
+                $('#email-settings').hide();
+                $('#account-settings').hide();
+
+                $.ajax({
+                    url: '/account/privacy-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#privacy-settings').html(result);
+                        $('#privacy-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            }
+        });
     </script>
 }
