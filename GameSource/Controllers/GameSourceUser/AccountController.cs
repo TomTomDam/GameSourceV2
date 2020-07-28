@@ -150,29 +150,29 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         #region Account Settings
-        [HttpGet("account-settings")]
+        [HttpGet("account")]
         public IActionResult AccountSettings()
         {
             AccountSettingsViewModel viewModel = new AccountSettingsViewModel();
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpGet("account-settings")]
         public IActionResult AccountSettingsPartial()
         {
-            return PartialView("~/Views/Account/_AccountSettings.cshtml");
+            return PartialView("_AccountSettings");
         }
 
-        [HttpGet]
+        [HttpGet("email-settings")]
         public IActionResult EmailSettingsPartial()
         {
-            return PartialView("~/Views/Account/_EmailSettings.cshtml");
+            return PartialView("_EmailSettings");
         }
 
-        [HttpGet]
+        [HttpGet("privacy-settings")]
         public IActionResult PrivacySettingsPartial()
         {
-            return PartialView("~/Views/Account/_PrivacySettings.cshtml");
+            return PartialView("_PrivacySettings");
         }
         #endregion
 
