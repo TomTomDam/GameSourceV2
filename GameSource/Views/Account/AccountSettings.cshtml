@@ -12,19 +12,20 @@
 <div id="settings-page">
     <div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Account Settings</div>
     <div class="page-content container clearfix">
-        <div class="col-md-3 float-left pr-4">
+        <div id="app"></div>
+        @*<div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Account Settings">
-                <a href="javascript:void(0)" class="menu-item active" id="account-settings-btn">
+                <a href="javascript:void(0)" data-url="'@Url.Action("AccountSettingsPartial", "Account")'" class="menu-item active" id="account-settings-btn">
                     Account
                 </a>
-                <a href="javascript:void(0)" class="menu-item" id="email-settings-btn">
+                <a href="javascript:void(0)" data-url="'@Url.Action("EmailSettingsPartial", "Account")'" class="menu-item" id="email-settings-btn">
                     Email
                 </a>
-                <a href="javascript:void(0)" class="menu-item" id="privacy-settings-btn">
+                <a href="javascript:void(0)" data-url="'@Url.Action("PrivacySettingsPartial", "Account")'" class="menu-item" id="privacy-settings-btn">
                     Privacy
                 </a>
             </nav>
-        </div>
+        </div>*@
 
         <div id="account-settings"></div>
         <div id="email-settings"></div>
@@ -33,6 +34,8 @@
 </div>
 
 @section scripts {
+    <script type="module" src="~/js/vue/router/account-settings.js"></script>
+
     <script>
         $(document).ready(function () {
             accountSettings();
