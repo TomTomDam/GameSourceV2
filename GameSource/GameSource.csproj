@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\js\vue\components\" />
     <Folder Include="wwwroot\js\vue\views\" />
     <Folder Include="wwwroot\lib\vue\" />
   </ItemGroup>

@@ -1,13 +1,12 @@
-﻿//import Vue from 'vue'
-//import App from './App.vue'
+﻿import Vue from '../../lib/vue.js'
+import App from './App.vue'
+import router from './router'
 
-//new Vue({
-//    render: h => h.(App),
-//}).mount('#app')
+Vue.config.productionTip = false;
 
-var app = new Vue({
+new Vue({
     el: '#app',
-    data: {
-        message: 'Hi there!'
-    }
+    router,
+    template: '</App>',
+    components: { App },
 })
