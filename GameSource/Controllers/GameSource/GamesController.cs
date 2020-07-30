@@ -121,32 +121,41 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Edit(int? id)
         {
             GameEditViewModel viewModel = new GameEditViewModel();
-            viewModel.Game = gameService.GetByID((int)id);
-            if (viewModel.Game == null)
+            Game game = gameService.GetByID((int)id);
+            if (game == null)
             {
                 return NotFound();
             }
+
+            viewModel.Game = game;
 
             viewModel.Genres = genreService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
+            viewModel.GenreID = game.GenreID;
+
             viewModel.Developers = developerService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
+            viewModel.DeveloperID = game.DeveloperID;
+
             viewModel.Publishers = publisherService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
+            viewModel.PublisherID = game.PublisherID;
+
             viewModel.Platforms = platformService.GetAll().Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
+            viewModel.PlatformID = game.PlatformID;
 
             return View(viewModel);
         }
