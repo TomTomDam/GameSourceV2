@@ -106,6 +106,7 @@ namespace GameSource.Controllers.GameSource
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
+            viewModel.PlatformTypeID = platform.PlatformTypeID;
 
             return View(viewModel);
         }

@@ -23,10 +23,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Game.Genre" class="control-label" for="ajax"></label>
-                @*<select asp-for="Game.GenreID" asp-items="@Model.Genres" class="form-control">
+                <select asp-for="Game.GenreID" asp-items="@Model.Genres" class="form-control">
                     <option value="">Select a Genre/Genres</option>
                 </select>
-                <span asp-validation-for="Game.Genre" class="text-danger"></span>*@
+                <span asp-validation-for="Game.Genre" class="text-danger"></span>
 
                 @*<multiselect v-model="model.genresmultiselect" id="ajax" label="name" track-by="id" placeholder="" open-direction="bottom" :options="genresmultiselect" :multiple="true" :searchable="true" :loading="isLoadingGenres" :internal-search="false" :clear-on-select="true" :close-on-select="false" :options-limit="300" :limit="5" :max-height="600" :show-no-results="false" v-on:search-change="genreSearch">
                     <template slot="genre" slot-scope="{ option, remove }">
@@ -40,12 +40,9 @@
                     <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
                 </multiselect>*@
 
-            <div>
-                <label class="typo__label">Tagging</label>
+                @*<label class="typo__label">Tagging</label>
                 <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @@tag="addTag"></multiselect>
-                <pre class="language-json"><code>{{ value  }}</code></pre>
-            </div>
-
+                <pre class="language-json"><code>{{ value  }}</code></pre>*@
             </div>
             <div class="form-group">
                 <label asp-for="Game.Developer" class="control-label"></label>
@@ -82,5 +79,5 @@
 @section scripts {
     <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
     <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
-    <script src="~/js/vue/game-create.js"></script>
+    @*<script src="~/js/vue/game-create.js"></script>*@
 }
