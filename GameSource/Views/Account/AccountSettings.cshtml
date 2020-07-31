@@ -9,11 +9,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="settings-page">
+<div id="account-settings-page">
     <div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Account Settings</div>
     <div class="page-content container clearfix">
-        <div id="app"></div>
-        @*<div class="col-md-3 float-left pr-4">
+        <div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Account Settings">
                 <a href="javascript:void(0)" data-url="'@Url.Action("AccountSettingsPartial", "Account")'" class="menu-item active" id="account-settings-btn">
                     Account
@@ -25,16 +24,24 @@
                     Privacy
                 </a>
             </nav>
-        </div>*@
+        </div>
 
         <div id="account-settings"></div>
         <div id="email-settings"></div>
         <div id="privacy-settings"></div>
+
+        @*<div id="account-settings-page-content">
+
+        </div>*@
     </div>
 </div>
 
 @section scripts {
-    <script type="module" src="~/js/vue/router/account-settings.js"></script>
+    <script src="~/vue/js/app.js"></script>
+    <script>
+        new Vue({
+        }).$mount('#account-settings-page-content')
+    </script>
 
     <script>
         $(document).ready(function () {
