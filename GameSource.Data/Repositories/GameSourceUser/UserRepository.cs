@@ -1,10 +1,8 @@
 ﻿using GameSource.Data.Repositories.GameSourceUser.Contracts;
 using GameSource.Models.GameSourceUser;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSourceUser

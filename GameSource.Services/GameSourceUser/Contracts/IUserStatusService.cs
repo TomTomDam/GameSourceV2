@@ -1,7 +1,5 @@
 ﻿using GameSource.Models.GameSourceUser;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSourceUser.Contracts

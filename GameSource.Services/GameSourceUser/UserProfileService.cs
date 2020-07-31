@@ -6,33 +6,33 @@ using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSourceUser
 {
-    public class UserRoleService : BaseService<UserStatus>, IUserRoleService
+    public class UserProfileService : BaseService<UserProfile>, IUserProfileService
     {
-        private IUserRoleRepository repo;
+        private IUserProfileRepository repo;
 
-        public UserRoleService(IUserRoleRepository repo)
+        public UserProfileService(IUserProfileRepository repo)
         {
             this.repo = repo;
         }
 
-        public IEnumerable<UserRole> GetAll()
+        public IEnumerable<UserProfile> GetAll()
         {
             return repo.GetAll();
         }
 
-        public UserRole GetByID(int id)
+        public UserProfile GetByID(int id)
         {
             return repo.GetByID(id);
         }
 
-        public void Insert(UserRole userRole)
+        public void Insert(UserProfile userProfile)
         {
-            repo.Insert(userRole);
+            repo.Insert(userProfile);
         }
 
-        public void Update(UserRole userRole)
+        public void Update(UserProfile userProfile)
         {
-            repo.Update(userRole);
+            repo.Update(userProfile);
         }
 
         public void Delete(int id)
@@ -40,24 +40,24 @@ namespace GameSource.Services.GameSourceUser
             repo.Delete(id);
         }
 
-        public async Task<IEnumerable<UserRole>> GetAllAsync()
+        public async Task<IEnumerable<UserProfile>> GetAllAsync()
         {
             return await repo.GetAllAsync();
         }
 
-        public async Task<UserRole> GetByIDAsync(int id)
+        public async Task<UserProfile> GetByIDAsync(int id)
         {
             return await repo.GetByIDAsync(id);
         }
 
-        public async Task InsertAsync(UserRole userRole)
+        public async Task InsertAsync(UserProfile userProfile)
         {
-            await repo.InsertAsync(userRole);
+            await repo.InsertAsync(userProfile);
         }
 
-        public async Task UpdateAsync(UserRole userRole)
+        public async Task UpdateAsync(UserProfile userProfile)
         {
-            await repo.UpdateAsync(userRole);
+            await repo.UpdateAsync(userProfile);
         }
 
         public async Task DeleteAsync(int id)
