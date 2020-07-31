@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GameSource.Models.GameSourceUser;
+﻿using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +14,7 @@ namespace GameSource.Data
         public DbSet<User> User { get; set; }
         public DbSet<UserStatus> UserStatus { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<UserProfile> UserProfile { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

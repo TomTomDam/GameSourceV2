@@ -6,10 +6,16 @@ using System.Text;
 namespace GameSource.Tests.Controllers
 {
     [TestFixture]
-    public class AdminControllerTests
+    public class UserStatusControllerTests
     {
         [SetUp]
         public void Setup()
+        {
+
+        }
+
+        [TearDown]
+        public void Teardown()
         {
 
         }

@@ -13,5 +13,11 @@ namespace GameSource.Tests.Controllers
         {
 
         }
+
+        [TearDown]
+        public void Teardown()
+        {
+
+        }
     }
 }
