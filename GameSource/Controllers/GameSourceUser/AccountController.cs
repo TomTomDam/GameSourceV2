@@ -241,7 +241,9 @@ namespace GameSource.Controllers.GameSourceUser
                 AvatarFilePath = user.AvatarFilePath,
                 AvatarImage = user.AvatarImage,
                 Description = user.Description,
+                UserRoleID = user.UserRoleID,
                 UserRoles = userRolesSelectList,
+                UserStatusID = user.UserStatusID,
                 UserStatuses = userStatusesSelectList
             };
 

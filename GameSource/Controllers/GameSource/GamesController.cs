@@ -120,13 +120,18 @@ namespace GameSource.Controllers.GameSource
         [HttpGet("edit/{id}")]
         public IActionResult Edit(int? id)
         {
-            GameEditViewModel viewModel = new GameEditViewModel();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             Game game = gameService.GetByID((int)id);
             if (game == null)
             {
                 return NotFound();
             }
 
+            GameEditViewModel viewModel = new GameEditViewModel();
             viewModel.Game = game;
 
             viewModel.Genres = genreService.GetAll().Select(x => new SelectListItem()
@@ -168,10 +173,10 @@ namespace GameSource.Controllers.GameSource
 
             game.Name = viewModel.Game.Name;
             game.Description = viewModel.Game.Description;
-            game.GenreID = viewModel.Game.GenreID;
-            game.DeveloperID = viewModel.Game.DeveloperID;
-            game.PublisherID = viewModel.Game.PublisherID;
-            game.PlatformID = viewModel.Game.PlatformID;
+            game.GenreID = viewModel.GenreID;
+            game.DeveloperID = viewModel.DeveloperID;
+            game.PublisherID = viewModel.PublisherID;
+            game.PlatformID = viewModel.PlatformID;
 
             gameService.Update(game);
             return RedirectToAction("Details", game);
