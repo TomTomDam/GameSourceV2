@@ -9,9 +9,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="settings-page">
+<div id="profile-settings-page">
     <div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Profile Settings</div>
-    <div class="page-content container clearfix">
+    <div class="page-content container clearfix" id="profile-settings-page-content">
         <div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Profile Settings">
                 <a class="menu-item active" onclick="generalSettings();">
