@@ -13,7 +13,8 @@ module.exports = {
     // and the script file under './Scripts' directory
     entry: {
         css: './Styles/site.scss',
-        site: './Scripts/site.js'
+        site: './Scripts/site.js',
+        main: './src/main.js'
     },
     // This is where we define the path where Webpack will place
     // a bundled JS file.
