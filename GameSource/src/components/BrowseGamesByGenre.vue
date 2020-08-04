@@ -2,13 +2,11 @@
     <div>
         <li><a class="dropdown-header font-weight-bold">By Genre</a></li>
         <li><div class="dropdown-divider"></div></li>
-        <li><a class="dropdown-item" v-for="genre in genres" v-bind:key="genre">{{ genre.name }}</a></li>
+        <li><a class="dropdown-item" v-for="genre in genres" :key="genre.id">{{ genre.name }}</a></li>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
-
     export default {
         data: function () {
             return {
@@ -17,17 +15,17 @@
         },
         methods: {
             getAllGenres() {
-                axios.get('/genre/GetAll')
+                this.$api.get('genre/GetAll')
                     .then(res => {
-                        this.genres = res;
-                        console.log(res);
+                        this.genres = res.data;
+                        console.log("genre/GetAll Success: " + res);
                     })
                     .catch(err => {
-                        console.log("Error:" + err);
+                        console.log("genre/GetAll Error: " + err);
                     });
             }
         },
-        mounted() {
+        created() {
             this.getAllGenres();
         }
     }

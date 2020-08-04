@@ -12,11 +12,11 @@ namespace GameSource.API.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         public IUserService userService;
 
-        public UsersController(IUserService userService)
+        public UserController(IUserService userService)
         {
             this.userService = userService;
         }
