@@ -20,17 +20,17 @@ namespace GameSource.Controllers.GameSource
             this.genreService = genreService;
         }
 
-        [HttpGet("get")]
-        public async Task<IList<Genre>> Get(string filter)
-        {
-            List<Genre> models = await genreService.FindByName(filter);
+        //[HttpGet("get")]
+        //public async Task<IList<Genre>> Get(string filter)
+        //{
+        //    List<Genre> models = await genreService.FindByName(filter);
 
-            var viewModels = models
-                .Select(x => x.ToViewModel())
-                .ToList();
+        //    var viewModels = models
+        //        .Select(x => x.ToViewModel())
+        //        .ToList();
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
 
         [HttpGet("index")]
         public IActionResult Index()
@@ -41,12 +41,6 @@ namespace GameSource.Controllers.GameSource
             };
 
             return View(viewModel);
-        }
-
-        [HttpGet("GetAll")]
-        public IEnumerable<Genre> GetAll()
-        {
-            return genreService.GetAll();
         }
 
         [HttpGet("details/{id}")]
