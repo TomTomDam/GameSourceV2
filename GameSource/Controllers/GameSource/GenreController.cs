@@ -43,6 +43,12 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
+        [HttpGet("GetAll")]
+        public IEnumerable<Genre> GetAll()
+        {
+            return genreService.GetAll();
+        }
+
         [HttpGet("details/{id}")]
         public IActionResult Details(int? id)
         {

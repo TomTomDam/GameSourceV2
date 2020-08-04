@@ -16,13 +16,19 @@
             };
         },
         methods: {
-            async getAllGenres() {
-                const { data } = await axios.get('/genres/index');
-                this.genres = data;
+            getAllGenres() {
+                axios.get('/genre/GetAll')
+                    .then(res => {
+                        this.genres = res;
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log("Error:" + err);
+                    });
             }
         },
-        async mounted() {
-            await this.getAllGenres();
+        mounted() {
+            this.getAllGenres();
         }
     }
 </script>

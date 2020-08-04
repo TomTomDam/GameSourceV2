@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.GameViewModel;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -17,14 +19,16 @@ namespace GameSource.Controllers.GameSource
         private IDeveloperService developerService;
         private IPublisherService publisherService;
         private IPlatformService platformService;
+        private IHostingEnvironment hostingEnv;
 
-        public GamesController(IGameService gameService, IGenreService genreService, IDeveloperService developerService, IPublisherService publisherService, IPlatformService platformService)
+        public GamesController(IGameService gameService, IGenreService genreService, IDeveloperService developerService, IPublisherService publisherService, IPlatformService platformService, IHostingEnvironment hostingEnv)
         {
             this.gameService = gameService;
             this.genreService = genreService;
             this.developerService = developerService;
             this.publisherService = publisherService;
             this.platformService = platformService;
+            this.hostingEnv = hostingEnv;
         }
 
         [HttpGet("index")]
@@ -106,12 +110,20 @@ namespace GameSource.Controllers.GameSource
                 ID = viewModel.Game.ID,
                 Name = viewModel.Game.Name,
                 Description = viewModel.Game.Description,
-                CoverImage = viewModel.Game.CoverImage,
                 GenreID = viewModel.Game.GenreID,
                 DeveloperID = viewModel.Game.DeveloperID,
                 PublisherID = viewModel.Game.PublisherID,
                 PlatformID = viewModel.Game.PlatformID
             };
+
+            //var fileName = Path.GetFileName(viewModel.Game.CoverImage.FileName);
+            //var filePath = Path.Combine(hostingEnv.WebRootPath, "images\\Game", fileName);
+            //using (var fileStream = new FileStream(filePath, FileMode.Create))
+            //{
+            //    viewModel.Game.CoverImage.CopyToAsync(fileStream);
+            //}
+
+            //game.CoverImage = viewModel.Game.CoverImage;
 
             gameService.Insert(game);
             return RedirectToAction("Index");

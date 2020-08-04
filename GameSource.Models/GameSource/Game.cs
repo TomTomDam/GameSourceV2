@@ -19,9 +19,8 @@ namespace GameSource.Models.GameSource
         [Required]
         public string Description { get; set; }
 
-        [Display(Name = "Upload Image")]
-        [NotMapped]
-        public IFormFile CoverImage { get; set; }
+        //[Display(Name = "Upload Image")]
+        //public IFormFile CoverImage { get; set; }
 
         [Required]
         public int GenreID { get; set; }

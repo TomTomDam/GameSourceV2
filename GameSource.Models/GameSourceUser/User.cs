@@ -30,7 +30,6 @@ namespace GameSource.Models.GameSourceUser
         public string AvatarFilePath { get; set; }
 
         [Display(Name = "Upload Image")]
-        [NotMapped]
         public IFormFile AvatarImage { get; set; }
 
         public string Description { get; set; }
