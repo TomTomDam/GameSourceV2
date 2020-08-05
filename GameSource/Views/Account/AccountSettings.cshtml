@@ -9,11 +9,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="account-settings-page">
+<div>
     <div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Account Settings</div>
-    <div class="page-content container clearfix">
+    <div id="account-settings-page"></div>
+    @*<div class="page-content container clearfix">
         <div class="col-md-3 float-left pr-4">
-            <nav class="menu position-relative" aria-label="Account Settings">
+            <nav class="menu position-relative" aria-label="Account Settings Sidebar Menu">
                 <a href="javascript:void(0)" data-url="'@Url.Action("AccountSettingsPartial", "Account")'" class="menu-item active" id="account-settings-btn">
                     Account
                 </a>
@@ -28,24 +29,17 @@
 
         <div id="account-settings"></div>
         <div id="email-settings"></div>
-        <div id="privacy-settings"></div>
-
-        @*<div id="account-settings-page-content">
-            <account-settings></account-settings>
-            <email-settings></email-settings>
-            <privacy-settings></privacy-settings>
-        </div>*@
+        <div id="privacy-settings"></div>*@
     </div>
 </div>
 
 @section scripts {
-    <script src="~/vue/js/app.js"></script>
     <script>
         new Vue({
-        }).$mount('#account-settings-page-content')
+        }).$mount('#account-settings-page')
     </script>
 
-    <script>
+    @*<script>
         $(document).ready(function () {
             accountSettings();
             $('#account-settings').show();
@@ -115,5 +109,5 @@
                 });
             }
         });
-    </script>
+    </script>*@
 }
