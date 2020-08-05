@@ -27,10 +27,10 @@ namespace GameSource.Models.GameSourceUser
 
         public DateTime DateCreated { get; set; }
 
-        public string AvatarFilePath { get; set; }
+        //public string AvatarFilePath { get; set; }
 
-        [Display(Name = "Upload Image")]
-        public IFormFile AvatarImage { get; set; }
+        //[Display(Name = "Upload Image")]
+        //public IFormFile AvatarImage { get; set; }
 
         public string Description { get; set; }
 
