@@ -1,18 +1,21 @@
+//Registered modules
 import Vue from 'vue';
 import axios from 'axios';
 import VueRouter from 'vue-router';
+//Account Settings
 import AccountSettingsPage from './AccountSettingsPage.vue'
+import AccountSettings from './components/AccountSettings.vue'
+import EmailSettings from './components/EmailSettings.vue'
+import PrivacySettings from './components/PrivacySettings.vue'
+//Browse Games
+import BrowseGames from './BrowseGames.vue'
+import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
+import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
+//Game Grid
+//import GameCard from './components/GameCard.vue'
+//import GamesCardGrid from './components/GamesCardGrid.vue'
 
 Vue.config.productionTip = false;
-
-//Registered components
-Vue.component('game-card', require('./components/GameCard.vue').default);
-Vue.component('games-card-grid', require('./components/GamesCardGrid.vue').default);
-Vue.component('browse-games-by-genre', require('./components/BrowseGamesByGenre.vue').default);
-Vue.component('browse-games-by-platform', require('./components/BrowseGamesByPlatform.vue').default);
-Vue.component('account-settings', require('./components/AccountSettings.vue').default);
-Vue.component('email-settings', require('./components/EmailSettings.vue').default);
-Vue.component('privacy-settings', require('./components/PrivacySettings.vue').default);
 
 //Axios
 const api = axios.create({
@@ -31,9 +34,9 @@ Vue.use(axiosPlugin);
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/account', component: 'account-settings' },
-    { path: '/email', component: 'email-settings' },
-    { path: '/privacy', component: 'privacy-settings' },
+    { path: '/account', component: AccountSettings },
+    { path: '/email', component: EmailSettings },
+    { path: '/privacy', component: PrivacySettings },
 ];
 
 const router = new VueRouter({
@@ -46,6 +49,15 @@ new Vue({
     el: '#account-settings-page',
     router,
     render: h => h(AccountSettingsPage)
+});
+
+new Vue({
+    el: '#browse-games',
+    components: {
+        BrowseGamesByGenre,
+        BrowseGamesByPlatform
+    },
+    render: h => h(BrowseGames)
 });
 
 window.Vue = Vue;
