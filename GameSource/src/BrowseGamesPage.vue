@@ -1,5 +1,5 @@
 ﻿<template>
-    <div id="browse-games">
+    <div id="browse-games-page">
         <BrowseGamesByGenre></BrowseGamesByGenre>
         <BrowseGamesByPlatform></BrowseGamesByPlatform>
     </div>
