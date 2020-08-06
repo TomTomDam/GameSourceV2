@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -12,6 +10,10 @@ namespace GameSource.Models.GameSourceUser
 
         public string Biography { get; set; }
 
+        public int UserID { get; set; }
+
         public User User { get; set; }
+
+        public ICollection<UserProfileComment> Comments { get; set; }
     }
 }

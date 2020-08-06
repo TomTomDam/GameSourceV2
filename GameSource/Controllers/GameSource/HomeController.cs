@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameSource.Models.GameSourceUser;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

@@ -126,7 +126,7 @@ namespace GameSource
                     "{*path}",
                     new SpaOptions { SourcePath = "src" },
                     npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
-                    regex: "Completed successfully!",
+                    regex: "Completed successfully",
                     forceKill: true
                     );
 

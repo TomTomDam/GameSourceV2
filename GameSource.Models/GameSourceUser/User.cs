@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GameSource.Models.GameSource;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -41,5 +40,11 @@ namespace GameSource.Models.GameSourceUser
         public UserStatus UserStatus { get; set; }
 
         public UserRole UserRole { get; set; }
+
+        public UserProfile UserProfile { get; set; }
+
+        public ICollection<UserProfileComment> UserProfileCommentsCreated { get; set; }
+
+        public ICollection<NewsArticle> NewsArticlesCreated { get; set; }
     }
 }
