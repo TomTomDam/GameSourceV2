@@ -48,7 +48,7 @@ new Vue({
         BrowseGamesByGenre,
         BrowseGamesByPlatform
     },
-    render: h => h(BrowseGames)
+    render: h => h(BrowseGamesPage)
 });
 
 window.Vue = Vue;

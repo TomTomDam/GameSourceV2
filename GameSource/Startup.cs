@@ -20,6 +20,8 @@ using GameSource.Services.GameSourceUser;
 using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity;
 using GameSource.Data.Settings;
+using VueCliMiddleware;
+using Microsoft.AspNetCore.SpaServices;
 
 namespace GameSource
 {
@@ -35,6 +37,8 @@ namespace GameSource
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSpaStaticFiles(option => option.RootPath = "wwwroot/vue");
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
@@ -50,7 +54,7 @@ namespace GameSource
             })
                 .AddRoles<UserRole>()
                 .AddEntityFrameworkStores<GameSourceUser_DBContext>();
-
+            
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
 
@@ -93,18 +97,16 @@ namespace GameSource
                 app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+            app.UseRouting();
             app.UseCors(options =>
             {
                 options.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -119,6 +121,21 @@ namespace GameSource
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapToVueCliProxy(
+                    "{*path}",
+                    new SpaOptions { SourcePath = "src" },
+                    npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
+                    regex: "Completed successfully!",
+                    forceKill: true
+                    );
+
+                endpoints.MapFallbackToController("Index", "Home");
+            });
+
+            app.UseSpa(spa => 
+            {
+                spa.Options.SourcePath = "src";
             });
         }
 
