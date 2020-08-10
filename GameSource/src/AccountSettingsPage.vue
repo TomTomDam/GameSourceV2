@@ -21,7 +21,75 @@
             return {
     
             }
-        }
+        },
+        methods: {
+            accountSettings() {
+                $('#email-settings').hide();
+                $('#privacy-settings').hide();
+
+                $.ajax({
+                    url: '/account/account-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#account-settings').html(result);
+                        $('#account-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            },
+            emailSettings() {
+                $('#account-settings').hide();
+                $('#privacy-settings').hide();
+
+                $.ajax({
+                    url: '/account/email-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#email-settings').html(result);
+                        $('#email-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            },
+            privacySettings() {
+                $('#email-settings').hide();
+                $('#account-settings').hide();
+
+                $.ajax({
+                    url: '/account/privacy-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#privacy-settings').html(result);
+                        $('#privacy-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            }
+        },
+        mounted: {
+            accountSettings();
+            $('#account-settings').show();
+            $('#email-settings').hide();
+            $('#privacy-settings').hide();
+
+            $('#account-settings-btn').on('click', function (e) {
+                accountSettings();
+            });
+
+            $('#email-settings-btn').on('click', function (e) {
+                emailSettings();
+            });
+
+            $('#privacy-settings-btn').on('click', function (e) {
+                privacySettings();
+            });
+        },
     }
 </script>
 
