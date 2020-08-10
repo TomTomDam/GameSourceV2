@@ -1,5 +1,6 @@
 ﻿import Vue from 'vue';
 import VueRouter from 'vue-router';
+import AccountSettingsPage from '../AccountSettingsPage.vue';
 import AccountSettings from '../components/AccountSettings.vue';
 import EmailSettings from '../components/EmailSettings.vue';
 import PrivacySettings from '../components/PrivacySettings.vue';
@@ -11,19 +12,26 @@ export default new VueRouter({
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '/account/account',
-            name: 'account',
-            component: AccountSettings
-        },
-        {
-            path: '/email/account',
-            name: 'email',
-            component: EmailSettings
-        },
-        {
-            path: '/privacy/account',
-            name: 'privacy',
-            component: PrivacySettings
+            path: '/account',
+            name: 'account-settings',
+            component: AccountSettingsPage,
+            children: [
+                {
+                    path: 'account',
+                    name: 'account',
+                    component: AccountSettings
+                },
+                {
+                    path: 'email',
+                    name: 'email',
+                    component: EmailSettings
+                },
+                {
+                    path: 'privacy',
+                    name: 'privacy',
+                    component: PrivacySettings
+                }
+            ]
         }
     ]
 });

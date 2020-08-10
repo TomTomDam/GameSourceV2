@@ -127,8 +127,7 @@ namespace GameSource
                     new SpaOptions { SourcePath = "src" },
                     npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
                     regex: "Completed successfully",
-                    forceKill: true
-                    );
+                    forceKill: true);
 
                 endpoints.MapFallbackToController("Index", "Home");
             });

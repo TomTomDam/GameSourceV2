@@ -150,26 +150,26 @@ namespace GameSource.Controllers.GameSourceUser
         }
 
         #region Account Settings
-        [HttpGet("account")]
+        [HttpGet("account-settings")]
         public IActionResult AccountSettings()
         {
             AccountSettingsViewModel viewModel = new AccountSettingsViewModel();
             return View(viewModel);
         }
 
-        [HttpGet("account-settings")]
+        [HttpGet("account")]
         public IActionResult AccountSettingsPartial()
         {
             return PartialView("_AccountSettings");
         }
 
-        [HttpGet("email-settings")]
+        [HttpGet("email")]
         public IActionResult EmailSettingsPartial()
         {
             return PartialView("_EmailSettings");
         }
 
-        [HttpGet("privacy-settings")]
+        [HttpGet("privacy")]
         public IActionResult PrivacySettingsPartial()
         {
             return PartialView("_PrivacySettings");
@@ -184,19 +184,19 @@ namespace GameSource.Controllers.GameSourceUser
             return View(viewModel);
         }
 
-        [HttpGet("account-settings/account")]
+        [HttpGet("general")]
         public IActionResult GeneralSettingsPartial()
         {
             return PartialView("~/Views/Account/_GeneralSettings.cshtml");
         }
 
-        [HttpGet("account-settings/email")]
+        [HttpGet("avatar")]
         public IActionResult AvatarSettingsPartial()
         {
             return PartialView("~/Views/Account/_AvatarSettings.cshtml");
         }
 
-        [HttpGet("account-settings/privacy")]
+        [HttpGet("profile-background")]
         public IActionResult ProfileBackgroundSettingsPartial()
         {
             return PartialView("~/Views/Account/_ProfileBackgroundSettings.cshtml");
