@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import router from './router/router.js';
+import App from './App.vue';
 //Account Settings
 import AccountSettingsPage from './AccountSettingsPage.vue'
 import AccountSettings from './components/AccountSettings.vue'
