@@ -38,14 +38,15 @@ namespace GameSource
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSpaStaticFiles(option => option.RootPath = "wwwroot/vue");
-
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddRazorPages();
 
+            //Databases
             services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
-
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
             services.AddDbContext<GameSourceUser_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSourceUser_DB")));
 
+            //ASP.NET Identity Core
             services.AddIdentity<User, UserRole>(options =>
             {
                 options.Password.RequiredLength = 10;
@@ -55,6 +56,7 @@ namespace GameSource
                 .AddRoles<UserRole>()
                 .AddEntityFrameworkStores<GameSourceUser_DBContext>();
             
+            //Services and their respective Repositories
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameService, GameService>();
 
@@ -128,8 +130,8 @@ namespace GameSource
                     npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
                     regex: "Completed successfully",
                     forceKill: true);
-
-                endpoints.MapFallbackToController("Index", "Home");
+                
+                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa => 

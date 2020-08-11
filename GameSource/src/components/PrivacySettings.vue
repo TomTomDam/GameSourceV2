@@ -8,7 +8,12 @@
 </template>
 
 <script>
+    export default {
+        name: 'PrivacySettings',
+        created() {
 
+        }
+    }
 </script>
 
 <style>

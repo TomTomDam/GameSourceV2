@@ -8,7 +8,12 @@
 </template>
 
 <script>
+    export default {
+        name: 'EmailSettings',
+        created() {
 
+        }
+    }
 </script>
 
 <style>

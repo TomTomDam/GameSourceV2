@@ -6,6 +6,9 @@
 </template>
 
 <script>
+    import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue';
+    import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue';
+
     export default {
         data() {
             return {
