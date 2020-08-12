@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameSource.Areas.User.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
-using GameSource.ViewModels.GameSourceUser.UserViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Areas.User.Controllers
@@ -27,13 +27,13 @@ namespace GameSource.Areas.User.Controllers
                 return NotFound();
             }
 
-            GameSource.Models.GameSourceUser.User user = await userService.GetByIDAsync((int)id);
+            var user = await userService.GetByIDAsync((int)id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            UserProfileViewModel viewModel = new UserProfileViewModel
+            UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
 
             };
@@ -41,41 +41,15 @@ namespace GameSource.Areas.User.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("create")]
-        public IActionResult Create(ViewResult viewModel)
-        {
-            return View();
-        }
-
-        [HttpPost("create")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(ViewResult viewModel)
+        public IActionResult Edit(UserProfileEditViewModel viewModel)
         {
-            return View();
+            return View(viewModel);
         }
 
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int? id)
-        {
-            return View();
-        }
-
-        [HttpGet("delete/{id}")]
-        public IActionResult Delete(ViewResult viewModel)
-        {
-            return View();
-        }
-
-        [HttpPost("delete/{id}")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(int? id)
         {
             return View();
         }

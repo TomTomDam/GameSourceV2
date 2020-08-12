@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using GameSource.Areas.User.ViewModels.UserProfileCommentViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Areas.User.Controllers
@@ -15,43 +15,36 @@ namespace GameSource.Areas.User.Controllers
 
         }
 
+        [HttpGet("index")]
+        public IActionResult Index(UserProfileCommentIndexViewModel viewModel)
+        {
+            return View(viewModel);
+        }
+
         [HttpGet("create")]
-        public IActionResult Create(ViewResult viewModel)
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create()
+        public IActionResult Create(UserProfileCommentCreateViewModel viewModel)
         {
-            return View();
-        }
-
-        [HttpGet("edit/{id}")]
-        public IActionResult Edit(ViewResult viewModel)
-        {
-            return View();
-        }
-
-        [HttpPost("edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id)
-        {
-            return View();
+            return View(viewModel);
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(ViewResult viewModel)
+        public IActionResult Delete(int? id)
         {
             return View();
         }
 
         [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(UserProfileCommentDeleteViewModel viewModel)
         {
-            return View();
+            return View(viewModel);
         }
     }
 }
