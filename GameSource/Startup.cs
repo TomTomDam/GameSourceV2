@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GameSource.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -119,6 +116,10 @@ namespace GameSource
                 endpoints.MapControllerRoute(
                     name: "admin",
                     pattern: "{area:exists}/{controller=admin}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{area:exists}/{controller=user}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "default",
