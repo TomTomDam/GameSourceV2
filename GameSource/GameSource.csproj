@@ -29,7 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\User\ViewModels\UserProfileViewModel\" />
+    <Folder Include="Areas\User\Views\UserProfile\" />
     <Folder Include="Views\Account\AccountSettings\" />
+    <Folder Include="Views\NewsArticle\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\vue\" />
   </ItemGroup>

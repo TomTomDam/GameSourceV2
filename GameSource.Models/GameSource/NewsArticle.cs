@@ -15,6 +15,8 @@ namespace GameSource.Models.GameSource
 
         public DateTime DateCreated { get; set; }
 
+        public DateTime DateModified { get; set; }
+
         public int CreatedByID { get; set; }
 
         public User CreatedBy { get; set; }

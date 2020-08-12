@@ -20,6 +20,8 @@ namespace GameSource.Models.GameSourceUser
         [NotMapped]
         public string FullName { get { return $"{FirstName} {LastName}"; } }
 
+        public string DisplayName { get; set; }
+
         public int? Age { get; set; }
 
         public string Location { get; set; }

@@ -1,0 +1,17 @@
+﻿@model GameSource.Areas.User.ViewModels.UserProfileViewModel.UserProfileDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.UserProfile.User.UserName + "'s Profile";
+}
+
+<h1>@Model.UserProfile.User.UserName</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <label asp-for="UserProfile.User.UserName" class="control-label font-weight-bold"></label><p>@Model.UserProfile.User.UserName</p>
+            <label asp-for="UserProfile.Biography" class="control-label font-weight-bold"></label><p>@Model.UserProfile.Biography</p>
+            <label asp-for="UserProfile.Comments" class="control-label font-weight-bold"></label><p>@Model.UserProfile.Comments</p>
+        </div>
+    </div>
+</div>
