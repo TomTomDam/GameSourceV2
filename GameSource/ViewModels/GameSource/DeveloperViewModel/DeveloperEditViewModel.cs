@@ -8,6 +8,6 @@ namespace GameSource.ViewModels.GameSource.DeveloperViewModel
 {
     public class DeveloperEditViewModel
     {
-        public Developer Developer{ get; set; }
+        public Developer Developer { get; set; }
     }
 }
