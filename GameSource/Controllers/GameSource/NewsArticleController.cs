@@ -1,68 +1,136 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GameSource.Models.GameSource;
+using GameSource.Models.GameSourceUser;
+using GameSource.Services.GameSource.Contracts;
+using GameSource.ViewModels.GameSource.NewsArticleViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GameSource.Controllers.GameSource
 {
     [Route("news-article")]
     public class NewsArticleController : Controller
     {
-        public NewsArticleController()
-        {
+        private readonly INewsArticleService newsArticleService;
+        private readonly UserManager<User> userManager;
 
+        public NewsArticleController(INewsArticleService newsArticleService, UserManager<User> userManager)
+        {
+            this.newsArticleService = newsArticleService;
+            this.userManager = userManager;
         }
 
         [HttpGet("index")]
-        public IActionResult Index(ViewResult viewModel)
+        public IActionResult Index()
         {
-            return View();
+            NewsArticleIndexViewModel viewModel = new NewsArticleIndexViewModel
+            {
+                NewsArticles = newsArticleService.GetAll()
+            };
+
+            return View(viewModel);
         }
 
-        [HttpGet("details")]
-        public IActionResult Details(ViewResult viewModel)
+        [HttpGet("details/{id}")]
+        public IActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            NewsArticleDetailsViewModel viewModel = new NewsArticleDetailsViewModel();
+            viewModel.NewsArticle = newsArticleService.GetByID((int)id);
+
+            return View(viewModel);
         }
 
         [HttpGet("create")]
-        public IActionResult Create(ViewResult viewModel)
+        public IActionResult Create()
         {
-            return View();
+            NewsArticleCreateViewModel viewModel = new NewsArticleCreateViewModel();
+            viewModel.NewsArticle = new NewsArticle();
+
+            return View(viewModel);
         }
 
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create()
+        public IActionResult Create(NewsArticleCreateViewModel viewModel)
         {
-            return View();
+            NewsArticle newsArticle = new NewsArticle
+            {
+                ID = viewModel.NewsArticle.ID,
+                Title = viewModel.NewsArticle.Title,
+                Body = viewModel.NewsArticle.Body,
+                DateCreated = DateTime.Now,
+                DateModified = null,
+                CreatedByID = viewModel.NewsArticle.CreatedByID,
+                CreatedBy = userManager.GetUserAsync(HttpContext.User).Result
+            };
+
+            newsArticleService.Insert(newsArticle);
+            return RedirectToAction("Index");
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(ViewResult viewModel)
+        public IActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            NewsArticleEditViewModel viewModel = new NewsArticleEditViewModel();
+            viewModel.NewsArticle = newsArticleService.GetByID((int)id);
+
+            return View(viewModel);
         }
 
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(NewsArticleEditViewModel viewModel)
         {
-            return View();
+            NewsArticle newsArticle = newsArticleService.GetByID(viewModel.NewsArticle.ID);
+
+            newsArticle.Title = viewModel.NewsArticle.Title;
+            newsArticle.Body = viewModel.NewsArticle.Body;
+            newsArticle.DateModified = DateTime.Now;
+
+            newsArticleService.Update(newsArticle);
+            return RedirectToAction("Details", newsArticle);
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(ViewResult viewModel)
+        public IActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            NewsArticle newsArticle = newsArticleService.GetByID((int)id);
+            if (newsArticle == null)
+            {
+                return NotFound();
+            }
+
+            NewsArticleDeleteViewModel viewModel = new NewsArticleDeleteViewModel
+            {
+                NewsArticle = newsArticle
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(NewsArticleDeleteViewModel viewModel)
         {
-            return View();
+            NewsArticle newsArticle = newsArticleService.GetByID(viewModel.NewsArticle.ID);
+
+            newsArticleService.Delete(newsArticle.ID);
+            return RedirectToAction("Index");
         }
     }
 }

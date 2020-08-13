@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameSource.Services.GameSource.Contracts
 {
-    interface INewsArticleService
+    public interface INewsArticleService
     {
         public IEnumerable<NewsArticle> GetAll();
         public NewsArticle GetByID(int id);
