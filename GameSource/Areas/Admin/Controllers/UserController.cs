@@ -21,10 +21,10 @@ namespace GameSource.Areas.Admin.Controllers
         private readonly IUserService userService;
         private readonly IUserRoleService userRoleService;
         private readonly IUserStatusService userStatusService;
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<Models.GameSourceUser.User> userManager;
+        private readonly SignInManager<Models.GameSourceUser.User> signInManager;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager) 
+        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<Models.GameSourceUser.User> userManager, SignInManager<Models.GameSourceUser.User> signInManager) 
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
@@ -83,7 +83,7 @@ namespace GameSource.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User
+                Models.GameSourceUser.User user = new Models.GameSourceUser.User
                 {
                     UserName = viewModel.Username,
                     Email = viewModel.Email,
@@ -167,7 +167,7 @@ namespace GameSource.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AdminUserEditViewModel viewModel)
         {
-            User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
+            Models.GameSourceUser.User user = await userManager.FindByIdAsync(viewModel.ID.ToString());
             if (user == null)
             {
                 return NotFound();

@@ -72,6 +72,9 @@ namespace GameSource
             services.AddScoped<IPlatformTypeRepository, PlatformTypeRepository>();
             services.AddScoped<IPlatformTypeService, PlatformTypeService>();
 
+            services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
+            services.AddScoped<INewsArticleService, NewsArticleService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 

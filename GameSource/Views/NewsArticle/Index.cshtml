@@ -1,0 +1,26 @@
+﻿@model GameSource.ViewModels.GameSource.NewsArticleViewModel.NewsArticleIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Index</h1>
+
+<div class="container">
+    <p>
+        <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
+    </p>
+
+    @foreach (var newsArticle in Model.NewsArticles)
+    {
+        <h2>@newsArticle.Title</h2>
+        <p>@newsArticle.CreatedBy</p>
+        <p>@newsArticle.DateCreated</p>
+        <p>@newsArticle.DateModified</p>
+        <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
+        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
+        <br />
+    }
+</div>
