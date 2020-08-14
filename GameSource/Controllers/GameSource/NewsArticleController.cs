@@ -65,7 +65,7 @@ namespace GameSource.Controllers.GameSource
                 Body = viewModel.NewsArticle.Body,
                 DateCreated = DateTime.Now,
                 DateModified = null,
-                CreatedByID = viewModel.NewsArticle.CreatedByID,
+                CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
                 CreatedBy = userManager.GetUserAsync(HttpContext.User).Result
             };
 
