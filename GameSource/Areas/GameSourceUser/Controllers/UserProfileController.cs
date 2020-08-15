@@ -13,10 +13,12 @@ namespace GameSource.Areas.GameSourceUser.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserService userService;
+        private readonly IUserProfileService userProfileService;
 
-        public UserProfileController(IUserService userService)
+        public UserProfileController(IUserService userService, IUserProfileService userProfileService)
         {
             this.userService = userService;
+            this.userProfileService = userProfileService;
         }
 
         [HttpGet("{id}")]
@@ -27,7 +29,14 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            User user = await userService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+
+            User user = await userService.GetByIDAsync(userProfile.UserID);
             if (user == null)
             {
                 return NotFound();
@@ -35,23 +44,42 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
             UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
-
+                UserProfile = userProfile,
+                User = user
             };
 
             return View(viewModel);
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(UserProfileEditViewModel viewModel)
+        public async Task<IActionResult> Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile
+            };
+
             return View(viewModel);
         }
 
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(UserProfileEditViewModel viewModel)
         {
-            return View();
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            userProfile.Biography = viewModel.UserProfile.Biography;
+            userProfile.Visibility = viewModel.UserProfile.Visibility;
+            userProfile.CommentPermission = viewModel.UserProfile.CommentPermission;
+
+            return RedirectToAction("Profile", userProfile);
         }
     }
 }

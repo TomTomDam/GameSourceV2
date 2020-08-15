@@ -19,14 +19,16 @@ namespace GameSource.Controllers.GameSourceUser
         private readonly IUserService userService;
         private readonly IUserRoleService userRoleService;
         private readonly IUserStatusService userStatusService;
+        private readonly IUserProfileService userProfileService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public AccountController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
             this.userStatusService = userStatusService;
+            this.userProfileService = userProfileService;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -83,6 +85,16 @@ namespace GameSource.Controllers.GameSourceUser
         {
             if (ModelState.IsValid)
             {
+                //Create a new UserProfile for each new User
+                UserProfile userProfile = new UserProfile
+                {
+                    Biography = null,
+                    Visibility = (int)UserProfileVisibilityEnum.Everyone,
+                    CommentPermission = (int)UserProfileCommentPermissionEnum.Everyone
+                };
+
+                await userProfileService.InsertAsync(userProfile);
+
                 User user = new User
                 {
                     UserName = viewModel.Username,
@@ -91,7 +103,8 @@ namespace GameSource.Controllers.GameSourceUser
                     LastName = viewModel.LastName,
                     DateCreated = DateTime.Now,
                     UserStatusID = (int)UserStatusEnum.Active,
-                    UserRoleID = 11 //(int)UserRoleEnum.Member
+                    UserRoleID = 11, //(int)UserRoleEnum.Member
+                    UserProfile = userProfile
                 };
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);

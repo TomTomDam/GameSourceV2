@@ -10,6 +10,10 @@ namespace GameSource.Models.GameSourceUser
 
         public string Biography { get; set; }
 
+        public int Visibility { get; set; }
+
+        public int CommentPermission { get; set; }
+
         public int UserID { get; set; }
 
         public User User { get; set; }
