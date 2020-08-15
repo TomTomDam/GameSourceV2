@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel;
+using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Areas.GameSourceUser.Controllers
@@ -10,39 +11,45 @@ namespace GameSource.Areas.GameSourceUser.Controllers
     [Route("user/profile/comment")]
     public class UserProfileCommentController : Controller
     {
-        public UserProfileCommentController()
-        {
+        private readonly IUserProfileCommentService userProfileCommentService;
+        private readonly IUserProfileService userProfileService;
+        private readonly IUserService userService;
 
+        public UserProfileCommentController(IUserProfileCommentService userProfileCommentService, IUserProfileService userProfileService, IUserService userService)
+        {
+            this.userProfileCommentService = userProfileCommentService;
+            this.userProfileService = userProfileService;
+            this.userService = userService;
         }
 
         [HttpGet("index")]
-        public IActionResult Index(UserProfileCommentIndexViewModel viewModel)
+        public async Task<IActionResult> Index(UserProfileCommentIndexViewModel viewModel)
         {
             return View(viewModel);
         }
 
         [HttpGet("create")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(UserProfileCommentCreateViewModel viewModel)
+        public async Task<IActionResult> Create(UserProfileCommentCreateViewModel viewModel)
         {
             return View(viewModel);
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             return View();
         }
 
         [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(UserProfileCommentDeleteViewModel viewModel)
+        public async Task<IActionResult> Delete(UserProfileCommentDeleteViewModel viewModel)
         {
             return View(viewModel);
         }
