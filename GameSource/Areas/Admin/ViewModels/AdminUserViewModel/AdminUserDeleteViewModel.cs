@@ -4,6 +4,6 @@ namespace GameSource.Areas.Admin.ViewModels.UserViewModel
 {
     public class AdminUserDeleteViewModel
     {
-        public Models.GameSourceUser.User User { get; set; }
+        public User User { get; set; }
     }
 }

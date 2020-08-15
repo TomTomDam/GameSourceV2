@@ -1,7 +1,7 @@
 ﻿using GameSource.Models.GameSourceUser;
 using System.Collections.Generic;
 
-namespace GameSource.Areas.User.ViewModels.UserProfileCommentViewModel
+namespace GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel
 {
     public class UserProfileCommentIndexViewModel
     {

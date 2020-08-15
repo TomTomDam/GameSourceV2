@@ -1,0 +1,33 @@
+﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel.UserProfileCommentCreateViewModel
+
+@{
+    ViewData["Title"] = "Add a new Comment";
+}
+
+<h1 class="text-center">Add a new Comment</h1>
+
+<div class="container">
+    <div class="row">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserProfileComment.ID" />
+            <div class="form-group">
+                <label asp-for="UserProfileComment.UserProfile" class="control-label"></label>
+                <input asp-for="UserProfileComment.UserProfile" class="form-control" />
+                <span asp-validation-for="UserProfileComment.UserProfile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserProfileComment.Body" class="control-label"></label>
+                <input asp-for="UserProfileComment.Body" class="form-control" />
+                <span asp-validation-for="UserProfileComment.Body" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to Index</a>
+    </div>
+</div>

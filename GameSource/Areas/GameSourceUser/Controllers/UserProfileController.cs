@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GameSource.Areas.User.ViewModels.UserProfileViewModel;
+using GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.Areas.User.Controllers
+namespace GameSource.Areas.GameSourceUser.Controllers
 {
     [Area("User")]
     [Route("user/profile")]
@@ -27,7 +27,7 @@ namespace GameSource.Areas.User.Controllers
                 return NotFound();
             }
 
-            var user = await userService.GetByIDAsync((int)id);
+            User user = await userService.GetByIDAsync((int)id);
             if (user == null)
             {
                 return NotFound();

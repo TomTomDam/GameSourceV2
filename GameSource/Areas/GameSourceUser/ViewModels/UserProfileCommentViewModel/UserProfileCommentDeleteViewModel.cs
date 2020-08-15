@@ -1,6 +1,6 @@
 ﻿using GameSource.Models.GameSourceUser;
 
-namespace GameSource.Areas.User.ViewModels.UserProfileCommentViewModel
+namespace GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel
 {
     public class UserProfileCommentDeleteViewModel
     {
