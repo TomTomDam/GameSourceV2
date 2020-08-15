@@ -1,0 +1,19 @@
+﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel.UserProfileCommentIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <p>
+        <a class="btn btn-primary" asp-controller="UserProfileComment" asp-action="Create">Add a new Comment</a>
+    </p>
+
+    @foreach (var comment in Model.UserProfileComments)
+    {
+        <p>@comment.Body</p>
+        <a class="btn btn-primary" asp-action="Details" asp-route-id="@comment.ID">View</a>
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@comment.ID">Edit</a>
+        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@comment.ID">Delete</a>
+    }
+</div>

@@ -1,6 +1,6 @@
 ﻿using GameSource.Models.GameSourceUser;
 
-namespace GameSource.Areas.User.ViewModels.UserProfileViewModel
+namespace GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel
 {
     public class UserProfileEditViewModel
     {

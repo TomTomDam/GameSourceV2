@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GameSource.Areas.User.ViewModels.UserProfileCommentViewModel;
+using GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.Areas.User.Controllers
+namespace GameSource.Areas.GameSourceUser.Controllers
 {
     [Area("User")]
     [Route("user/profile/comment")]
