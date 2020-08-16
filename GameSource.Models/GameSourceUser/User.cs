@@ -1,4 +1,5 @@
 ﻿using GameSource.Models.GameSource;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace GameSource.Models.GameSourceUser
         [NotMapped]
         public string FullName { get { return $"{FirstName} {LastName}"; } }
 
+        [Display(Name = "Display Name")]
         public string DisplayName { get; set; }
 
         public int? Age { get; set; }
@@ -28,10 +30,11 @@ namespace GameSource.Models.GameSourceUser
 
         public DateTime DateCreated { get; set; }
 
-        //public string AvatarFilePath { get; set; }
+        public string AvatarFilePath { get; set; }
 
-        //[Display(Name = "Upload Image")]
-        //public IFormFile AvatarImage { get; set; }
+        [Display(Name = "Upload Image")]
+        [NotMapped]
+        public IFormFile AvatarImage { get; set; }
 
         public string Description { get; set; }
 
@@ -47,6 +50,6 @@ namespace GameSource.Models.GameSourceUser
 
         public ICollection<UserProfileComment> UserProfileCommentsCreated { get; set; }
 
-        public ICollection<NewsArticle> NewsArticlesCreated { get; set; }
+        public ICollection<NewsArticle> NewsArticlesAuthored { get; set; }
     }
 }

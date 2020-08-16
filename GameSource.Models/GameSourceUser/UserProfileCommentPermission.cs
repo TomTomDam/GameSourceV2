@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -9,8 +10,6 @@ namespace GameSource.Models.GameSourceUser
 
         public string Name { get; set; }
 
-        public int UserProfileID { get; set; }
-
-        public UserProfile UserProfile { get; set; }
+        public ICollection<UserProfile> UserProfile { get; set; }
     }
 }

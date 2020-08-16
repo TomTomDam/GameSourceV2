@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -10,13 +11,17 @@ namespace GameSource.Models.GameSourceUser
 
         public string Biography { get; set; }
 
-        public int Visibility { get; set; }
-
-        public int CommentPermission { get; set; }
-
         public int UserID { get; set; }
 
+        public int UserProfileVisibilityID { get; set; }
+
+        public int UserProfileCommentPermissionID { get; set; }
+
         public User User { get; set; }
+
+        public UserProfileVisibility UserProfileVisibility { get; set; }
+
+        public UserProfileCommentPermission UserProfileCommentPermission { get; set; }
 
         public ICollection<UserProfileComment> Comments { get; set; }
     }
