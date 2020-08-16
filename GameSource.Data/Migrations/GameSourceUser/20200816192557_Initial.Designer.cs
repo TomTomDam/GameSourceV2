@@ -4,20 +4,51 @@ using GameSource.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GameSource.Data.Migrations.GameSourceUser_DB
+namespace GameSource.Data.Migrations.GameSourceUser
 {
     [DbContext(typeof(GameSourceUser_DBContext))]
-    partial class GameSourceUser_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20200816192557_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("GameSource.Models.GameSource.NewsArticle", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AuthoredByID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AuthoredByID");
+
+                    b.ToTable("NewsArticle");
+                });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
@@ -43,6 +74,9 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -96,7 +130,7 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<int?>("UserRoleId")
+                    b.Property<int>("UserRoleID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserStatusID")
@@ -112,11 +146,100 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("UserRoleId");
+                    b.HasIndex("UserRoleID");
 
                     b.HasIndex("UserStatusID");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfile", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Biography")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserProfileCommentPermissionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserProfileVisibilityID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID")
+                        .IsUnique();
+
+                    b.HasIndex("UserProfileCommentPermissionID");
+
+                    b.HasIndex("UserProfileVisibilityID");
+
+                    b.ToTable("UserProfile");
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfileComment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CreatedByID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserProfileID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CreatedByID");
+
+                    b.HasIndex("UserProfileID");
+
+                    b.ToTable("UserProfileComment");
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfileCommentPermission", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserProfileCommentPermission");
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfileVisibility", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserProfileVisibility");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.UserRole", b =>
@@ -267,15 +390,62 @@ namespace GameSource.Data.Migrations.GameSourceUser_DB
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("GameSource.Models.GameSource.NewsArticle", b =>
+                {
+                    b.HasOne("GameSource.Models.GameSourceUser.User", "AuthoredBy")
+                        .WithMany("NewsArticlesAuthored")
+                        .HasForeignKey("AuthoredByID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.UserRole", "UserRole")
                         .WithMany("Users")
-                        .HasForeignKey("UserRoleId");
+                        .HasForeignKey("UserRoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSourceUser.UserStatus", "UserStatus")
                         .WithMany("Users")
                         .HasForeignKey("UserStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfile", b =>
+                {
+                    b.HasOne("GameSource.Models.GameSourceUser.User", "User")
+                        .WithOne("UserProfile")
+                        .HasForeignKey("GameSource.Models.GameSourceUser.UserProfile", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameSource.Models.GameSourceUser.UserProfileCommentPermission", "UserProfileCommentPermission")
+                        .WithMany("UserProfile")
+                        .HasForeignKey("UserProfileCommentPermissionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameSource.Models.GameSourceUser.UserProfileVisibility", "UserProfileVisibility")
+                        .WithMany("UserProfile")
+                        .HasForeignKey("UserProfileVisibilityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfileComment", b =>
+                {
+                    b.HasOne("GameSource.Models.GameSourceUser.User", "CreatedBy")
+                        .WithMany("UserProfileCommentsCreated")
+                        .HasForeignKey("CreatedByID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameSource.Models.GameSourceUser.UserProfile", "UserProfile")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

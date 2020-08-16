@@ -1,6 +1,7 @@
 ﻿using GameSource.Models.GameSourceUser;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSource
 {
@@ -17,8 +18,9 @@ namespace GameSource.Models.GameSource
 
         public DateTime? DateModified { get; set; }
 
-        public int CreatedByID { get; set; }
+        [ForeignKey("AuthoredBy")]
+        public int AuthoredByID { get; set; }
 
-        public User CreatedBy { get; set; }
+        public User AuthoredBy { get; set; }
     }
 }

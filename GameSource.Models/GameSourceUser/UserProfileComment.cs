@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -12,6 +13,7 @@ namespace GameSource.Models.GameSourceUser
 
         public DateTime DateCreated { get; set; }
 
+        [ForeignKey("CreatedBy")]
         public int CreatedByID { get; set; }
 
         public int UserProfileID { get; set; }

@@ -89,8 +89,8 @@ namespace GameSource.Controllers.GameSourceUser
                 UserProfile userProfile = new UserProfile
                 {
                     Biography = null,
-                    Visibility = (int)UserProfileVisibilityEnum.Everyone,
-                    CommentPermission = (int)UserProfileCommentPermissionEnum.Everyone
+                    UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                    UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
                 };
 
                 await userProfileService.InsertAsync(userProfile);

@@ -76,8 +76,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
 
             userProfile.Biography = viewModel.UserProfile.Biography;
-            userProfile.Visibility = viewModel.UserProfile.Visibility;
-            userProfile.CommentPermission = viewModel.UserProfile.CommentPermission;
+            userProfile.UserProfileVisibility = viewModel.UserProfile.UserProfileVisibility;
+            userProfile.UserProfileCommentPermission = viewModel.UserProfile.UserProfileCommentPermission;
 
             return RedirectToAction("Profile", userProfile);
         }

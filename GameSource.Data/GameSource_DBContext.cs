@@ -1,8 +1,5 @@
 ﻿using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameSource.Data
 {
@@ -10,6 +7,7 @@ namespace GameSource.Data
     {
         public GameSource_DBContext(DbContextOptions<GameSource_DBContext> options) : base(options)
         {
+
         }
 
         public DbSet<Game> Game { get; set; }
@@ -17,9 +15,11 @@ namespace GameSource.Data
         public DbSet<Developer> Developer { get; set; }
         public DbSet<Publisher> Publisher { get; set; }
         public DbSet<Platform> Platform { get; set; }
+        public DbSet<NewsArticle> NewsArticle { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
         }
     }
 }
