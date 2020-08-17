@@ -1,14 +1,12 @@
 ﻿using GameSource.Services.GameSourceUser.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSourceUser
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {
-
 
         public BaseService()
         {
@@ -30,7 +28,7 @@ namespace GameSource.Services.GameSourceUser
             throw new NotImplementedException();
         }
 
-        public Task<T> GetByIDAsync(int id)
+        public async Task<T> GetByIDAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -40,7 +38,7 @@ namespace GameSource.Services.GameSourceUser
             throw new NotImplementedException();
         }
 
-        public Task InsertAsync(T item)
+        public async Task InsertAsync(T item)
         {
             throw new NotImplementedException();
         }
@@ -50,7 +48,7 @@ namespace GameSource.Services.GameSourceUser
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(T item)
+        public async Task UpdateAsync(T item)
         {
             throw new NotImplementedException();
         }
@@ -60,7 +58,7 @@ namespace GameSource.Services.GameSourceUser
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }

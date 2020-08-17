@@ -41,9 +41,8 @@ namespace GameSource
             //Databases
             services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
-            services.AddDbContext<GameSourceUser_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSourceUser_DB")));
 
-            //ASP.NET Identity Core
+            //Configure ASP.NET Identity Core
             services.AddIdentity<User, UserRole>(options =>
             {
                 options.Password.RequiredLength = 10;
@@ -51,7 +50,7 @@ namespace GameSource
                 options.Password.RequireUppercase = false;
             })
                 .AddRoles<UserRole>()
-                .AddEntityFrameworkStores<GameSourceUser_DBContext>();
+                .AddEntityFrameworkStores<GameSource_DBContext>();
             
             //Services and their respective Repositories
             services.AddScoped<IGameRepository, GameRepository>();

@@ -18,9 +18,9 @@ namespace GameSource.Models.GameSource
 
         public DateTime? DateModified { get; set; }
 
-        [ForeignKey("AuthoredBy")]
-        public int AuthoredByID { get; set; }
+        [ForeignKey("CreatedBy")]
+        public int CreatedByID { get; set; }
 
-        public User AuthoredBy { get; set; }
+        public User CreatedBy { get; set; }
     }
 }
