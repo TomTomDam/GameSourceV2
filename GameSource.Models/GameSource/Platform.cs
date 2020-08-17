@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace GameSource.Models.GameSource
 {
@@ -17,7 +16,9 @@ namespace GameSource.Models.GameSource
         public int PlatformTypeID { get; set; }
 
         [Display(Name = "Platform Type")]
+
         public PlatformType PlatformType { get; set; }
+
         public ICollection<Game> Games { get; set; }
     }
 }

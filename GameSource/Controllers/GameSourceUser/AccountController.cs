@@ -85,16 +85,6 @@ namespace GameSource.Controllers.GameSourceUser
         {
             if (ModelState.IsValid)
             {
-                //Create a new UserProfile for each new User
-                UserProfile userProfile = new UserProfile
-                {
-                    Biography = null,
-                    UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
-                    UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
-                };
-
-                await userProfileService.InsertAsync(userProfile);
-
                 User user = new User
                 {
                     UserName = viewModel.Username,
@@ -103,8 +93,7 @@ namespace GameSource.Controllers.GameSourceUser
                     LastName = viewModel.LastName,
                     DateCreated = DateTime.Now,
                     UserStatusID = (int)UserStatusEnum.Active,
-                    UserRoleID = 11, //(int)UserRoleEnum.Member
-                    UserProfile = userProfile
+                    UserRoleID = (int)UserRoleEnum.Member
                 };
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);
@@ -115,6 +104,17 @@ namespace GameSource.Controllers.GameSourceUser
 
                     if (roleResult.Succeeded)
                     {
+                        //Create a new UserProfile after creating a new User
+                        UserProfile userProfile = new UserProfile
+                        {
+                            Biography = null,
+                            UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                            UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
+                        };
+
+                        await userProfileService.InsertAsync(userProfile);
+                        user.UserProfile = userProfile;
+
                         await signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index");
                     }

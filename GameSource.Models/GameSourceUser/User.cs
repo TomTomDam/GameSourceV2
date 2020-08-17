@@ -42,6 +42,8 @@ namespace GameSource.Models.GameSourceUser
 
         public int UserRoleID { get; set; }
 
+        public int UserProfileID { get; set; }
+
         public UserStatus UserStatus { get; set; }
 
         public UserRole UserRole { get; set; }
@@ -50,6 +52,6 @@ namespace GameSource.Models.GameSourceUser
 
         public ICollection<UserProfileComment> UserProfileCommentsCreated { get; set; }
 
-        public ICollection<NewsArticle> NewsArticlesAuthored { get; set; }
+        public ICollection<NewsArticle> NewsArticlesCreated { get; set; }
     }
 }

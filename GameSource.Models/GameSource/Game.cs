@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace GameSource.Models.GameSource
 {
@@ -19,8 +18,9 @@ namespace GameSource.Models.GameSource
         [Required]
         public string Description { get; set; }
 
-        //[Display(Name = "Upload Image")]
-        //public IFormFile CoverImage { get; set; }
+        [Display(Name = "Upload Image")]
+        [NotMapped]
+        public IFormFile CoverImage { get; set; }
 
         [Required]
         public int GenreID { get; set; }
@@ -35,8 +35,11 @@ namespace GameSource.Models.GameSource
         public int PlatformID { get; set; }
 
         public Genre Genre { get; set; }
+
         public Developer Developer { get; set; }
+
         public Publisher Publisher { get; set; }
+
         public Platform Platform { get; set; }
     }
 }
