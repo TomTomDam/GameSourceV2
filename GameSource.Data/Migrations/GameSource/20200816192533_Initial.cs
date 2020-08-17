@@ -306,7 +306,7 @@ namespace GameSource.Data.Migrations.GameSource
                         column: x => x.UserProfileID,
                         principalTable: "UserProfile",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

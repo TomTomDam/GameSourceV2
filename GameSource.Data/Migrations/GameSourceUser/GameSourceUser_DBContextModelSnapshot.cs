@@ -417,19 +417,19 @@ namespace GameSource.Data.Migrations.GameSourceUser
                     b.HasOne("GameSource.Models.GameSourceUser.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("GameSource.Models.GameSourceUser.UserProfile", "UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfileCommentPermission", "UserProfileCommentPermission")
                         .WithMany("UserProfile")
                         .HasForeignKey("UserProfileCommentPermissionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfileVisibility", "UserProfileVisibility")
                         .WithMany("UserProfile")
                         .HasForeignKey("UserProfileVisibilityID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -444,7 +444,7 @@ namespace GameSource.Data.Migrations.GameSourceUser
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfile", "UserProfile")
                         .WithMany("Comments")
                         .HasForeignKey("UserProfileID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -486,7 +486,7 @@ namespace GameSource.Data.Migrations.GameSourceUser
                     b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

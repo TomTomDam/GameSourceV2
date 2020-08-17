@@ -193,7 +193,7 @@ namespace GameSource.Data.Migrations.GameSourceUser
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,19 +258,19 @@ namespace GameSource.Data.Migrations.GameSourceUser
                         column: x => x.UserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserProfile_UserProfileCommentPermission_UserProfileCommentPermissionID",
                         column: x => x.UserProfileCommentPermissionID,
                         principalTable: "UserProfileCommentPermission",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserProfile_UserProfileVisibility_UserProfileVisibilityID",
                         column: x => x.UserProfileVisibilityID,
                         principalTable: "UserProfileVisibility",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

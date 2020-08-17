@@ -429,7 +429,7 @@ namespace GameSource.Data.Migrations.GameSource
                     b.HasOne("GameSource.Models.GameSourceUser.User", "AuthoredBy")
                         .WithMany("NewsArticlesAuthored")
                         .HasForeignKey("AuthoredByID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
                 });
 
@@ -489,7 +489,7 @@ namespace GameSource.Data.Migrations.GameSource
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfile", "UserProfile")
                         .WithMany("Comments")
                         .HasForeignKey("UserProfileID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
