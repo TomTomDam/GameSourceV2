@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\GameSourceUser\" />
-    <Folder Include="Migrations\GameSource\" />
   </ItemGroup>
 
 </Project>

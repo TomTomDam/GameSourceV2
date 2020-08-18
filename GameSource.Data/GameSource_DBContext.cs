@@ -31,6 +31,9 @@ namespace GameSource.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>(e => e.ToTable(name: "User"));
+            modelBuilder.Entity<UserRole>(e => e.ToTable(name: "UserRole"));
         }
     }
 }

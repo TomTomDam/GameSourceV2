@@ -23,9 +23,9 @@ namespace GameSource.Models.GameSourceUser
 
         public int UserID { get; set; }
 
-        public int UserProfileVisibilityID { get; set; }
+        public int? UserProfileVisibilityID { get; set; }
 
-        public int UserProfileCommentPermissionID { get; set; }
+        public int? UserProfileCommentPermissionID { get; set; }
 
         public User User { get; set; }
 

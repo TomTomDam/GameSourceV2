@@ -19,7 +19,7 @@ namespace GameSource.Models.GameSource
         public DateTime? DateModified { get; set; }
 
         [ForeignKey("CreatedBy")]
-        public int CreatedByID { get; set; }
+        public int? CreatedByID { get; set; }
 
         public User CreatedBy { get; set; }
     }
