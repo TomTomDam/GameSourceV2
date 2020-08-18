@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -8,7 +10,16 @@ namespace GameSource.Models.GameSourceUser
         [Key]
         public int ID { get; set; }
 
+        [Display(Name = "Display Name")]
+        public string DisplayName { get; set; }
+
         public string Biography { get; set; }
+
+        public string AvatarFilePath { get; set; }
+
+        [Display(Name = "Upload Image")]
+        [NotMapped]
+        public IFormFile AvatarImage { get; set; }
 
         public int UserID { get; set; }
 
