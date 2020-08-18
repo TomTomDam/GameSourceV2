@@ -9,10 +9,10 @@ namespace GameSource.Data.Repositories.GameSourceUser
 {
     public class UserProfileCommentRepository : BaseRepository<UserProfileComment>, IUserProfileCommentRepository
     {
-        private GameSourceUser_DBContext context;
+        private GameSource_DBContext context;
         private DbSet<UserProfileComment> entity;
 
-        public UserProfileCommentRepository(GameSourceUser_DBContext context) : base(context)
+        public UserProfileCommentRepository(GameSource_DBContext context) : base(context)
         {
             this.context = context;
             entity = context.Set<UserProfileComment>();

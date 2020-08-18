@@ -10,10 +10,10 @@ namespace GameSource.Data.Repositories.GameSourceUser
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private GameSourceUser_DBContext context;
+        private GameSource_DBContext context;
         private DbSet<T> entity;
 
-        public BaseRepository(GameSourceUser_DBContext context)
+        public BaseRepository(GameSource_DBContext context)
         {
             this.context = context;
             entity = context.Set<T>();

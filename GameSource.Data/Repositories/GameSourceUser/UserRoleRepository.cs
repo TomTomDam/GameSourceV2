@@ -11,10 +11,10 @@ namespace GameSource.Data.Repositories.GameSourceUser
 {
     public class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepository
     {
-        private GameSourceUser_DBContext context;
+        private GameSource_DBContext context;
         private DbSet<UserRole> entity;
 
-        public UserRoleRepository(GameSourceUser_DBContext context) : base(context)
+        public UserRoleRepository(GameSource_DBContext context) : base(context)
         {
             this.context = context;
             entity = context.Set<UserRole>();

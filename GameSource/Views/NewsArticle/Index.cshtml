@@ -15,7 +15,7 @@
     @foreach (var newsArticle in Model.NewsArticles)
     {
         <h2>@newsArticle.Title</h2>
-        <p>@newsArticle.AuthoredBy</p>
+        <p>@newsArticle.CreatedBy</p>
         <p>@newsArticle.DateCreated</p>
         <p>@newsArticle.DateModified</p>
         <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>

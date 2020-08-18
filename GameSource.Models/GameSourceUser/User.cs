@@ -26,13 +26,9 @@ namespace GameSource.Models.GameSourceUser
 
         public DateTime DateCreated { get; set; }
 
-        public string Description { get; set; }
-
         public int UserStatusID { get; set; }
 
         public int UserRoleID { get; set; }
-
-        public int UserProfileID { get; set; }
 
         public UserStatus UserStatus { get; set; }
 

@@ -251,9 +251,6 @@ namespace GameSource.Controllers.GameSourceUser
                 Email = user.Email,
                 Age = user.Age,
                 Location = user.Location,
-                //AvatarFilePath = user.AvatarFilePath,
-                //AvatarImage = user.AvatarImage,
-                Description = user.Description,
                 UserRoleID = user.UserRoleID,
                 UserRoles = userRolesSelectList,
                 UserStatusID = user.UserStatusID,
@@ -278,10 +275,6 @@ namespace GameSource.Controllers.GameSourceUser
             user.Email = viewModel.Email;
             user.Age = viewModel.Age;
             user.Location = viewModel.Location;
-            //user.AvatarFilePath = viewModel.AvatarFilePath;
-            //user.AvatarImage = viewModel.AvatarImage;
-            user.Description = viewModel.Description;
-            user.UserStatusID = viewModel.UserStatusID;
             user.UserRoleID = viewModel.UserRoleID;
 
             userService.Update(user);
