@@ -1,9 +1,7 @@
 ﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GameSource.Services.GameSource
 {
