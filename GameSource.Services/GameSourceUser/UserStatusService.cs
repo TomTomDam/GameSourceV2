@@ -1,9 +1,7 @@
 ﻿using GameSource.Data.Repositories.GameSourceUser.Contracts;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSourceUser
@@ -25,6 +23,11 @@ namespace GameSource.Services.GameSourceUser
         public UserStatus GetByID(int id)
         {
             return repo.GetByID(id);
+        }
+
+        public UserStatus GetByName(string name)
+        {
+            return repo.GetByName(name);
         }
 
         public void Insert(UserStatus userStatus)
@@ -50,6 +53,11 @@ namespace GameSource.Services.GameSourceUser
         public async Task<UserStatus> GetByIDAsync(int id)
         {
             return await repo.GetByIDAsync(id);
+        }
+
+        public async Task<UserStatus> GetByNameAsync(string name)
+        {
+            return await repo.GetByNameAsync(name);
         }
 
         public async Task InsertAsync(UserStatus userStatus)

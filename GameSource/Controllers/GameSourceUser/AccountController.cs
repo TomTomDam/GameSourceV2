@@ -104,16 +104,20 @@ namespace GameSource.Controllers.GameSourceUser
 
                     if (roleResult.Succeeded)
                     {
-                        //Create a new UserProfile after creating a new User
-                        UserProfile userProfile = new UserProfile
+                        if (user.UserProfile == null)
                         {
-                            Biography = null,
-                            UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
-                            UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
-                        };
+                            //Create a new UserProfile after creating a new User
+                            UserProfile userProfile = new UserProfile
+                            {
+                                UserID = user.Id,
+                                Biography = null,
+                                UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                                UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
+                            };
 
-                        await userProfileService.InsertAsync(userProfile);
-                        user.UserProfile = userProfile;
+                            await userProfileService.InsertAsync(userProfile);
+                            user.UserProfile = userProfile;
+                        }
 
                         await signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index");
@@ -310,18 +314,65 @@ namespace GameSource.Controllers.GameSourceUser
             User user = await userManager.FindByIdAsync(id.ToString());
             if (user != null)
             {
-                var result = await userManager.DeleteAsync(user);
-                if (result.Succeeded)
+                UserRole userRole = await userRoleService.GetByIDAsync(user.UserRoleID);
+                user.UserRole = userRole;
+
+                var userRoleResult = await userManager.RemoveFromRoleAsync(user, user.UserRole.Name);
+                if (userRoleResult.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    var result = await userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
 
-                foreach (var error in result.Errors)
+                foreach (var error in userRoleResult.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
 
+            return RedirectToAction("Index", userManager.Users);
+        }
+
+        [HttpGet("deactivate/{id}")]
+        public async Task<IActionResult> Deactivate(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost("deactivate/{id}"), ActionName("deactivate/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactivateConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                user.UserStatusID = (int)UserStatusEnum.Deactivated;
+            }
+            
             return RedirectToAction("Index", userManager.Users);
         }
 

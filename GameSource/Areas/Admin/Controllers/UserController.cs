@@ -208,19 +208,66 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var user = await userManager.FindByIdAsync(id.ToString());
+            User user = await userManager.FindByIdAsync(id.ToString());
             if (user != null)
             {
-                var result = await userManager.DeleteAsync(user);
-                if (result.Succeeded)
+                UserRole userRole = await userRoleService.GetByIDAsync(user.UserRoleID);
+                user.UserRole = userRole;
+
+                var userRoleResult = await userManager.RemoveFromRoleAsync(user, user.UserRole.Name);
+                if (userRoleResult.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    var result = await userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
 
-                foreach (var error in result.Errors)
+                foreach (var error in userRoleResult.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
+            }
+
+            return RedirectToAction("Index", userManager.Users);
+        }
+
+        [HttpGet("deactivate/{id}")]
+        public async Task<IActionResult> Deactivate(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost("deactivate/{id}"), ActionName("deactivate/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactivateConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                user.UserStatusID = (int)UserStatusEnum.Deactivated;
             }
 
             return RedirectToAction("Index", userManager.Users);

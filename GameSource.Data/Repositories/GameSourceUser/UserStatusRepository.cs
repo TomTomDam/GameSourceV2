@@ -1,10 +1,8 @@
 ﻿using GameSource.Data.Repositories.GameSourceUser.Contracts;
 using GameSource.Models.GameSourceUser;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSourceUser
@@ -28,6 +26,11 @@ namespace GameSource.Data.Repositories.GameSourceUser
         public UserStatus GetByID(int id)
         {
             return entity.Find(id);
+        }
+
+        public UserStatus GetByName(string name)
+        {
+            return entity.Where(x => x.Name == name).FirstOrDefault();
         }
 
         public void Insert(UserStatus userStatus)
@@ -57,6 +60,11 @@ namespace GameSource.Data.Repositories.GameSourceUser
         public async Task<UserStatus> GetByIDAsync(int id)
         {
             return await entity.FindAsync(id);
+        }
+
+        public async Task<UserStatus> GetByNameAsync(string name)
+        {
+            return await entity.Where(x => x.Name == name).FirstOrDefaultAsync();
         }
 
         public async Task InsertAsync(UserStatus userStatus)

@@ -1,28 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GameSource.Data.Migrations.GameSource
+namespace GameSource.Data.Migrations
 {
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Developer",
                 columns: table => new
@@ -102,6 +86,22 @@ namespace GameSource.Data.Migrations.GameSource
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserStatus",
                 columns: table => new
                 {
@@ -112,6 +112,26 @@ namespace GameSource.Data.Migrations.GameSource
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserStatus", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Platform",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    PlatformTypeID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Platform", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Platform_PlatformType_PlatformTypeID",
+                        column: x => x.PlatformTypeID,
+                        principalTable: "PlatformType",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,35 +148,15 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        name: "FK_AspNetRoleClaims_UserRole_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        principalTable: "UserRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Platform",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
-                    PlatformTypeID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Platform", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Platform_PlatformType_PlatformTypeID",
-                        column: x => x.PlatformTypeID,
-                        principalTable: "PlatformType",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -185,15 +185,15 @@ namespace GameSource.Data.Migrations.GameSource
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_AspNetRoles_UserRoleID",
+                        name: "FK_User_UserRole_UserRoleID",
                         column: x => x.UserRoleID,
-                        principalTable: "AspNetRoles",
+                        principalTable: "UserRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_UserStatus_UserStatusID",
+                        name: "FK_User_UserStatus_UserStatusID",
                         column: x => x.UserStatusID,
                         principalTable: "UserStatus",
                         principalColumn: "Id",
@@ -256,9 +256,9 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        name: "FK_AspNetUserClaims_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -276,9 +276,9 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        name: "FK_AspNetUserLogins_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -294,15 +294,15 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        name: "FK_AspNetUserRoles_UserRole_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        principalTable: "UserRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        name: "FK_AspNetUserRoles_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -320,9 +320,9 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        name: "FK_AspNetUserTokens_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -337,17 +337,17 @@ namespace GameSource.Data.Migrations.GameSource
                     Body = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
-                    CreatedByID = table.Column<int>(nullable: true)
+                    CreatedByID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NewsArticle", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_NewsArticle_AspNetUsers_CreatedByID",
+                        name: "FK_NewsArticle_User_CreatedByID",
                         column: x => x.CreatedByID,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -367,9 +367,9 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_UserProfile", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserProfile_AspNetUsers_UserID",
+                        name: "FK_UserProfile_User_UserID",
                         column: x => x.UserID,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -401,11 +401,11 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     table.PrimaryKey("PK_UserProfileComment", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserProfileComment_AspNetUsers_CreatedByID",
+                        name: "FK_UserProfileComment_User_CreatedByID",
                         column: x => x.CreatedByID,
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserProfileComment_UserProfile_UserProfileID",
                         column: x => x.UserProfileID,
@@ -418,13 +418,6 @@ namespace GameSource.Data.Migrations.GameSource
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -440,28 +433,6 @@ namespace GameSource.Data.Migrations.GameSource
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserRoleID",
-                table: "AspNetUsers",
-                column: "UserRoleID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserStatusID",
-                table: "AspNetUsers",
-                column: "UserStatusID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Game_DeveloperID",
@@ -494,6 +465,28 @@ namespace GameSource.Data.Migrations.GameSource
                 column: "PlatformTypeID");
 
             migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "User",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "User",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_UserRoleID",
+                table: "User",
+                column: "UserRoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_UserStatusID",
+                table: "User",
+                column: "UserStatusID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_UserID",
                 table: "UserProfile",
                 column: "UserID",
@@ -518,6 +511,13 @@ namespace GameSource.Data.Migrations.GameSource
                 name: "IX_UserProfileComment_UserProfileID",
                 table: "UserProfileComment",
                 column: "UserProfileID");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "UserRole",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -565,7 +565,7 @@ namespace GameSource.Data.Migrations.GameSource
                 name: "PlatformType");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "UserProfileCommentPermission");
@@ -574,7 +574,7 @@ namespace GameSource.Data.Migrations.GameSource
                 name: "UserProfileVisibility");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "UserRole");
 
             migrationBuilder.DropTable(
                 name: "UserStatus");
