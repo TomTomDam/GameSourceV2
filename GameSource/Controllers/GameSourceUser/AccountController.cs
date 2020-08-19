@@ -109,6 +109,7 @@ namespace GameSource.Controllers.GameSourceUser
                             //Create a new UserProfile after creating a new User
                             UserProfile userProfile = new UserProfile
                             {
+                                UserID = user.Id,
                                 Biography = null,
                                 UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
                                 UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
@@ -337,6 +338,41 @@ namespace GameSource.Controllers.GameSourceUser
                 }
             }
 
+            return RedirectToAction("Index", userManager.Users);
+        }
+
+        [HttpGet("deactivate/{id}")]
+        public async Task<IActionResult> Deactivate(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost("deactivate/{id}"), ActionName("deactivate/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactivateConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userManager.FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                user.UserStatusID = (int)UserStatusEnum.Deactivated;
+            }
+            
             return RedirectToAction("Index", userManager.Users);
         }
 

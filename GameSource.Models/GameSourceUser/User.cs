@@ -9,6 +9,11 @@ namespace GameSource.Models.GameSourceUser
 {
     public class User : IdentityUser<int>
     {
+        public User()
+        {
+
+        }
+
         [StringLength(20)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

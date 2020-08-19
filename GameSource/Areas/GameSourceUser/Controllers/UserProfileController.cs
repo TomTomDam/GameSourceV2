@@ -29,22 +29,21 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
-            if (userProfile == null)
+            User user = await userService.GetByIDAsync((int)id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-
-            User user = await userService.GetByIDAsync(userProfile.UserID);
-            if (user == null)
+            user.UserProfile = await userProfileService.GetByIDAsync(user.UserProfile.ID);
+            if (user.UserProfile == null)
             {
                 return NotFound();
             }
 
             UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
-                UserProfile = userProfile,
+                UserProfile = user.UserProfile,
                 User = user
             };
 
