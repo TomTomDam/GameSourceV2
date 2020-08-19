@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using GameSource.Data.Settings;
 using VueCliMiddleware;
 using Microsoft.AspNetCore.SpaServices;
+using System.Threading.Tasks;
 
 namespace GameSource
 {
@@ -117,7 +118,7 @@ namespace GameSource
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //SetUpDefaultRolesAndSuperUser(serviceProvider);
+            //SetUpDefaultUserAttributesAndSuperUser(serviceProvider);
 
             app.UseEndpoints(endpoints =>
             {
@@ -149,13 +150,16 @@ namespace GameSource
             });
         }
 
-        private void SetUpDefaultRolesAndSuperUser(IServiceProvider serviceProvider)
+        private void SetUpDefaultUserAttributesAndSuperUser(IServiceProvider serviceProvider)
         {
             //Initializing custom roles
             var roleManager = serviceProvider.GetRequiredService<RoleManager<UserRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            var userStatusService = serviceProvider.GetRequiredService<UserStatusService>();
             string[] roleNames = { "Member", "Moderator", "Admin" };
+            string[] statusNames = { "Active", "Deactivated" };
             IdentityResult roleResult;
+            Task statusResult;
 
             foreach (var roleName in roleNames)
             {
@@ -164,6 +168,15 @@ namespace GameSource
                 {
                     //Create the roles and seed them to the database
                     roleResult = roleManager.CreateAsync(new UserRole { Name = roleName }).Result;
+                }
+            }
+
+            foreach (var statusName in statusNames)
+            {
+                var statusExists = userStatusService.GetByNameAsync(statusName);
+                if (statusExists != null)
+                {
+                    statusResult = userStatusService.InsertAsync(new UserStatus { Name = statusName });
                 }
             }
 
