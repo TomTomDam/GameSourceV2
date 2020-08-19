@@ -2,6 +2,7 @@
 using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace GameSource.Data
 {
@@ -31,6 +32,13 @@ namespace GameSource.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //Change default delete behaviour from Cascade to Restrict.
+            //Prevents multiple cascading paths - you must then explicitly update/delete a given row's foreign keys, afterwards you may update/delete the given row
+            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
 
             modelBuilder.Entity<User>(e => e.ToTable(name: "User"));
             modelBuilder.Entity<UserRole>(e => e.ToTable(name: "UserRole"));

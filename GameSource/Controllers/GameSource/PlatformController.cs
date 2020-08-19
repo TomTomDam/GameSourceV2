@@ -50,7 +50,7 @@ namespace GameSource.Controllers.GameSource
             PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel
             {
                 Platform = platform,
-                PlatformType = platformTypeService.GetByID(platform.PlatformTypeID)
+                PlatformType = platformTypeService.GetByID((int)platform.PlatformTypeID)
             };
 
             return View(viewModel);
@@ -106,7 +106,7 @@ namespace GameSource.Controllers.GameSource
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
-            viewModel.PlatformTypeID = platform.PlatformTypeID;
+            viewModel.PlatformTypeID = (int)platform.PlatformTypeID;
 
             return View(viewModel);
         }
@@ -141,7 +141,7 @@ namespace GameSource.Controllers.GameSource
             PlatformDeleteViewModel viewModel = new PlatformDeleteViewModel
             {
                 Platform = platform,
-                PlatformType = platformTypeService.GetByID(platform.PlatformTypeID)
+                PlatformType = platformTypeService.GetByID((int)platform.PlatformTypeID)
             };
 
             return View(viewModel);

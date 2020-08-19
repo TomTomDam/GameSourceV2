@@ -4,16 +4,14 @@ using GameSource.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GameSource.Data.Migrations.GameSource
+namespace GameSource.Data.Migrations
 {
     [DbContext(typeof(GameSource_DBContext))]
-    [Migration("20200818211415_Initial")]
-    partial class Initial
+    partial class GameSource_DBContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,7 +104,7 @@ namespace GameSource.Data.Migrations.GameSource
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CreatedByID")
+                    b.Property<int>("CreatedByID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
@@ -137,7 +135,7 @@ namespace GameSource.Data.Migrations.GameSource
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<int>("PlatformTypeID")
+                    b.Property<int?>("PlatformTypeID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -200,9 +198,6 @@ namespace GameSource.Data.Migrations.GameSource
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -275,7 +270,7 @@ namespace GameSource.Data.Migrations.GameSource
 
                     b.HasIndex("UserStatusID");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfile", b =>
@@ -402,7 +397,7 @@ namespace GameSource.Data.Migrations.GameSource
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.UserStatus", b =>
@@ -552,16 +547,16 @@ namespace GameSource.Data.Migrations.GameSource
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.User", "CreatedBy")
                         .WithMany("NewsArticlesCreated")
-                        .HasForeignKey("CreatedByID");
+                        .HasForeignKey("CreatedByID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSource.Platform", b =>
                 {
                     b.HasOne("GameSource.Models.GameSource.PlatformType", "PlatformType")
                         .WithMany("Platforms")
-                        .HasForeignKey("PlatformTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlatformTypeID");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>

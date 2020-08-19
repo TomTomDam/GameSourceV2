@@ -13,7 +13,7 @@ namespace GameSource.Models.GameSource
         [StringLength(30, ErrorMessage = "The {0} cannot exceed {1} characters.")]
         public string Name { get; set; }
 
-        public int PlatformTypeID { get; set; }
+        public int? PlatformTypeID { get; set; }
 
         [Display(Name = "Platform Type")]
 
