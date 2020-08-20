@@ -25,7 +25,9 @@ namespace GameSource.Data.Repositories.GameSourceUser
 
         public UserProfile GetByID(int id)
         {
-            return entity.Find(id);
+            return entity
+                .Include(x => x.User)
+                .SingleOrDefault(x => x.ID == id);
         }
 
         public void Insert(UserProfile userProfile)
@@ -54,7 +56,9 @@ namespace GameSource.Data.Repositories.GameSourceUser
 
         public async Task<UserProfile> GetByIDAsync(int id)
         {
-            return await entity.FindAsync(id);
+            return await entity
+                .Include(x => x.User)
+                .SingleOrDefaultAsync(x => x.ID == id);
         }
 
         public async Task<UserProfile> InsertAsync(UserProfile userProfile)

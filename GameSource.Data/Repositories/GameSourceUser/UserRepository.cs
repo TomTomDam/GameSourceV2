@@ -25,7 +25,9 @@ namespace GameSource.Data.Repositories.GameSourceUser
 
         public User GetByID(int id)
         {
-            return entity.Find(id);
+            return entity
+                .Include(x => x.UserProfile)
+                .SingleOrDefault(x => x.Id == id);
         }
 
         public void Insert(User user)
@@ -42,7 +44,7 @@ namespace GameSource.Data.Repositories.GameSourceUser
 
         public void Delete(int id)
         {
-            var user = GetByID(id);
+            User user = GetByID(id);
             entity.Remove(user);
             context.SaveChanges();
         }
@@ -54,7 +56,9 @@ namespace GameSource.Data.Repositories.GameSourceUser
 
         public async Task<User> GetByIDAsync(int id)
         {
-            return await entity.FindAsync(id);
+            return await entity
+                .Include(x => x.UserProfile)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<User> InsertAsync(User user)
@@ -72,8 +76,8 @@ namespace GameSource.Data.Repositories.GameSourceUser
 
         public async Task DeleteAsync(int id)
         {
-            var userStatus = await GetByIDAsync(id);
-            entity.Remove(userStatus);
+            User user = await GetByIDAsync(id);
+            entity.Remove(user);
             await context.SaveChangesAsync();
         }
     }

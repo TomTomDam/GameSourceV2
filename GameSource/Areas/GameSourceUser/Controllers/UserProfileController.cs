@@ -30,13 +30,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             }
 
             User user = await userService.GetByIDAsync((int)id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            user.UserProfile = await userProfileService.GetByIDAsync(user.UserProfile.ID);
-            if (user.UserProfile == null)
+            if (user == null || user.UserProfile == null)
             {
                 return NotFound();
             }
