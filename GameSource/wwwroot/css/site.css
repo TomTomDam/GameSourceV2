@@ -88,7 +88,7 @@ body {
     }
 }
 
-/*Profile Settings + Account Settings*/
+/* UserProfile Settings + Account Settings */
 #settings-page {
     box-sizing: border-box;
 }
@@ -133,4 +133,9 @@ body {
 .menu a:hover:not(.active) {
     background-color: #555;
     color: white;
+}
+
+/* UserProfile */
+#userprofile-comment-header {
+    margin-bottom: 15px;
 }

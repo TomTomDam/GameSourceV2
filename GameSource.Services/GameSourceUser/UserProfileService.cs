@@ -9,6 +9,7 @@ namespace GameSource.Services.GameSourceUser
     public class UserProfileService : BaseService<UserProfile>, IUserProfileService
     {
         private IUserProfileRepository repo;
+        private IUserRepository userRepo;
 
         public UserProfileService(IUserProfileRepository repo)
         {
@@ -23,6 +24,12 @@ namespace GameSource.Services.GameSourceUser
         public UserProfile GetByID(int id)
         {
             return repo.GetByID(id);
+        }
+
+        public UserProfile GetByUserID(int id)
+        {
+            User user = userRepo.GetByID(id);
+            return repo.GetByID(user.UserProfile.ID);
         }
 
         public void Insert(UserProfile userProfile)
@@ -48,6 +55,12 @@ namespace GameSource.Services.GameSourceUser
         public async Task<UserProfile> GetByIDAsync(int id)
         {
             return await repo.GetByIDAsync(id);
+        }
+
+        public async Task<UserProfile> GetByUserIDAsync(int id)
+        {
+            User user = await userRepo.GetByIDAsync(id);
+            return await repo.GetByIDAsync(user.UserProfile.ID);
         }
 
         public async Task InsertAsync(UserProfile userProfile)
