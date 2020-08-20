@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Areas.GameSourceUser.Controllers
 {
-    [Area("User")]
+    [Area("GameSourceUser")]
     [Route("user/profile")]
     public class UserProfileController : Controller
     {
@@ -38,7 +39,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
                 UserProfile = user.UserProfile,
-                User = user
+                User = user,
+                UserProfileComments = user.UserProfileCommentsCreated.ToList()
             };
 
             return View(viewModel);

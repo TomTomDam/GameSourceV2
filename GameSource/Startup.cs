@@ -127,7 +127,7 @@ namespace GameSource
                     pattern: "{area:exists}/{controller=admin}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
-                    name: "user",
+                    name: "GameSourceUser",
                     pattern: "{area:exists}/{controller=user}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(

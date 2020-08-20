@@ -27,6 +27,10 @@ namespace GameSource.Data.Repositories.GameSourceUser
         {
             return entity
                 .Include(x => x.UserProfile)
+                .Include(x => x.UserProfileCommentsCreated)
+                .Include(x => x.UserRole)
+                .Include(x => x.UserStatus)
+                .Include(x => x.NewsArticlesCreated)
                 .SingleOrDefault(x => x.Id == id);
         }
 
@@ -58,6 +62,10 @@ namespace GameSource.Data.Repositories.GameSourceUser
         {
             return await entity
                 .Include(x => x.UserProfile)
+                .Include(x => x.UserProfileCommentsCreated)
+                .Include(x => x.UserRole)
+                .Include(x => x.UserStatus)
+                .Include(x => x.NewsArticlesCreated)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
