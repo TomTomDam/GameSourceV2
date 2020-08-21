@@ -521,25 +521,25 @@ namespace GameSource.Data.Migrations
                     b.HasOne("GameSource.Models.GameSource.Developer", "Developer")
                         .WithMany("Games")
                         .HasForeignKey("DeveloperID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Genre", "Genre")
                         .WithMany("Games")
                         .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Platform", "Platform")
                         .WithMany("Games")
                         .HasForeignKey("PlatformID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Publisher", "Publisher")
                         .WithMany("Games")
                         .HasForeignKey("PublisherID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .IsRequired();
                 });
 

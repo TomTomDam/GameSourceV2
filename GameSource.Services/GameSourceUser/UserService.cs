@@ -27,6 +27,11 @@ namespace GameSource.Services.GameSourceUser
             return repo.GetByID(id);
         }
 
+        public User GetByUserName(string username)
+        {
+            return repo.GetByUserName(username);
+        }
+
         public void Insert(User user)
         {
             repo.Insert(user);
@@ -50,6 +55,11 @@ namespace GameSource.Services.GameSourceUser
         public async Task<User> GetByIDAsync(int id)
         {
             return await repo.GetByIDAsync(id);
+        }
+
+        public async Task<User> GetByUserNameAsync(string username)
+        {
+            return await repo.GetByUserNameAsync(username);
         }
 
         public async Task<User> InsertAsync(User user)

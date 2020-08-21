@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GameSource.Models.GameSourceUser;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {
