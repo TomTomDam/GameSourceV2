@@ -34,6 +34,11 @@ namespace GameSource.Data.Repositories.GameSourceUser
                 .SingleOrDefault(x => x.Id == id);
         }
 
+        public User GetByUserName(string username)
+        {
+            return entity.Find(username);
+        }
+
         public void Insert(User user)
         {
             entity.Add(user);
@@ -67,6 +72,11 @@ namespace GameSource.Data.Repositories.GameSourceUser
                 .Include(x => x.UserStatus)
                 .Include(x => x.NewsArticlesCreated)
                 .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<User> GetByUserNameAsync(string username)
+        {
+            return await entity.FindAsync(username);
         }
 
         public async Task<User> InsertAsync(User user)

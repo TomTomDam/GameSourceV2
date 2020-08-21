@@ -221,25 +221,25 @@ namespace GameSource.Data.Migrations
                         column: x => x.DeveloperID,
                         principalTable: "Developer",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Game_Genre_GenreID",
                         column: x => x.GenreID,
                         principalTable: "Genre",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Game_Platform_PlatformID",
                         column: x => x.PlatformID,
                         principalTable: "Platform",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Game_Publisher_PublisherID",
                         column: x => x.PublisherID,
                         principalTable: "Publisher",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

@@ -135,9 +135,10 @@ namespace GameSource.Controllers.GameSourceUser
 
         [HttpGet("login")]
         [AllowAnonymous]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
-            return View();
+            AccountLoginViewModel viewModel = new AccountLoginViewModel();
+            return View(viewModel);
         }
 
         [HttpPost("login")]
@@ -148,8 +149,16 @@ namespace GameSource.Controllers.GameSourceUser
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(viewModel.UserName, viewModel.Password, viewModel.RememberMe, false);
+
                 if (result.Succeeded)
                 {
+                    User loggedInUser = await userManager.FindByNameAsync(viewModel.UserName);
+                    if (loggedInUser.UserStatusID == (int)UserStatusEnum.Deactivated)
+                    {
+                        loggedInUser.UserStatusID = (int)UserStatusEnum.Active;
+                        return RedirectToAction("Index", "Home");
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
 
