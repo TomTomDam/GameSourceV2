@@ -59,7 +59,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             };
 
             await userProfileCommentService.InsertAsync(userProfileComment);
-
             return View(viewModel);
         }
 

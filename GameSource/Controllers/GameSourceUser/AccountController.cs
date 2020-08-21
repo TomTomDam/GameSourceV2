@@ -149,10 +149,10 @@ namespace GameSource.Controllers.GameSourceUser
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(viewModel.UserName, viewModel.Password, viewModel.RememberMe, false);
-                User loggedInUser = await userManager.FindByNameAsync(viewModel.UserName);
 
                 if (result.Succeeded)
                 {
+                    User loggedInUser = await userManager.FindByNameAsync(viewModel.UserName);
                     if (loggedInUser.UserStatusID == (int)UserStatusEnum.Deactivated)
                     {
                         loggedInUser.UserStatusID = (int)UserStatusEnum.Active;
