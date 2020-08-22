@@ -40,7 +40,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileComment = new UserProfileComment()
             };
 
-            return View(viewModel);
+            return PartialView("_Create", viewModel);
         }
 
         [HttpPost("create")]
@@ -59,20 +59,44 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             };
 
             await userProfileCommentService.InsertAsync(userProfileComment);
-            return View(viewModel);
+            return RedirectToAction("Profile", "UserProfileComment", userProfileComment.UserProfileID);
         }
 
         [HttpGet("delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserProfileComment comment = await userProfileCommentService.GetByIDAsync((int)id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            UserProfileCommentDeleteViewModel viewModel = new UserProfileCommentDeleteViewModel
+            {
+                UserProfileComment = comment
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost("delete/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(UserProfileCommentDeleteViewModel viewModel)
         {
-            return View(viewModel);
+            UserProfileComment comment = await userProfileCommentService.GetByIDAsync(viewModel.UserProfileComment.ID);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            await userProfileCommentService.DeleteAsync(comment.ID);
+
+            return View();
         }
     }
 }
