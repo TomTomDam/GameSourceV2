@@ -1,6 +1,9 @@
 ﻿$(document).ready(function () {
-    userProfileCreateComment();
     $('#userprofile-create-comment').show();
+
+    $('#userprofile-create-comment-btn').on('click', function (e) {
+        userProfileCreateComment();
+    });
 
     function userProfileCreateComment() {
         $.ajax({

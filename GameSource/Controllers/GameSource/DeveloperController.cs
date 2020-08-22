@@ -119,8 +119,8 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(DeveloperDeleteViewModel viewModel)
         {
             Developer developer = developerService.GetByID(viewModel.Developer.ID);
-
             developerService.Delete(developer.ID);
+
             return RedirectToAction("Index");
         }
     }
