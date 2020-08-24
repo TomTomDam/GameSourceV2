@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel;
 using GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Areas.GameSourceUser.Controllers
@@ -15,11 +17,13 @@ namespace GameSource.Areas.GameSourceUser.Controllers
     {
         private readonly IUserService userService;
         private readonly IUserProfileService userProfileService;
+        private readonly UserManager<User> userManager;
 
-        public UserProfileController(IUserService userService, IUserProfileService userProfileService)
+        public UserProfileController(IUserService userService, IUserProfileService userProfileService, UserManager<User> userManager)
         {
             this.userService = userService;
             this.userProfileService = userProfileService;
+            this.userManager = userManager;
         }
 
         [HttpGet("{id}")]
@@ -43,6 +47,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileComments = user.UserProfileCommentsCreated.ToList()
             };
 
+            RedirectToAction("Create", "UserProfileComment", new { id = user.UserProfile.ID });
             return View(viewModel);
         }
 

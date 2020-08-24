@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.Areas.GameSourceUser.Controllers
 {
-    [Area("User")]
+    [Area("GameSourceUser")]
     [Route("user/profile/comment")]
     public class UserProfileCommentController : Controller
     {
@@ -33,10 +33,12 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("create")]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int id)
         {
             UserProfileCommentCreateViewModel viewModel = new UserProfileCommentCreateViewModel
             {
+                Author = await userManager.GetUserAsync(HttpContext.User),
+                UserProfile = await userProfileService.GetByIDAsync(id),
                 UserProfileComment = new UserProfileComment()
             };
 
@@ -51,11 +53,11 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             {
                 ID = viewModel.UserProfileComment.ID,
                 Body = viewModel.UserProfileComment.Body,
-                DateCreated = viewModel.UserProfileComment.DateCreated,
+                DateCreated = DateTime.Now,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
                 CreatedBy = await userManager.GetUserAsync(HttpContext.User),
-                UserProfileID = viewModel.UserProfileComment.UserProfileID,
-                UserProfile = viewModel.UserProfileComment.UserProfile
+                UserProfileID = viewModel.UserProfile.ID,
+                UserProfile = viewModel.UserProfile
             };
 
             await userProfileCommentService.InsertAsync(userProfileComment);
