@@ -139,3 +139,17 @@ body {
 #userprofile-comment-header {
     margin-bottom: 15px;
 }
+
+#userprofile-create-comment {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#userprofile-create-comment-body {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#userprofile-create-comment-btn {
+    float: right;
+}
