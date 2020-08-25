@@ -32,7 +32,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("create")]
+        [HttpGet("create/{id}")]
         public async Task<IActionResult> Create(int id)
         {
             UserProfileCommentCreateViewModel viewModel = new UserProfileCommentCreateViewModel
