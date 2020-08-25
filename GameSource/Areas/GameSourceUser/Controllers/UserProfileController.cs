@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel;
 using GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
@@ -94,5 +93,79 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
             return RedirectToAction("Profile", userProfile);
         }
+
+        #region Profile Settings
+        [HttpGet("profile-settings")]
+        public IActionResult ProfileSettings()
+        {
+            return View();
+        }
+
+        [HttpGet("general-settings/{id}")]
+        public async Task<IActionResult> GeneralSettings(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile
+            };
+
+            return PartialView("~/Views/Account/_GeneralSettings.cshtml", viewModel);
+        }
+
+        [HttpGet("avatar-settings/{id}")]
+        public async Task<IActionResult> AvatarSettings(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile
+            };
+
+            return PartialView("~/Views/Account/_AvatarSettings.cshtml", viewModel);
+        }
+
+        [HttpGet("profile-background-settings/{id}")]
+        public async Task<IActionResult> ProfileBackgroundSettings(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile
+            };
+
+            return PartialView("~/Views/Account/_ProfileBackgroundSettings.cshtml", viewModel);
+        }
+        #endregion
     }
 }

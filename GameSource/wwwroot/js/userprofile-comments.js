@@ -4,7 +4,6 @@
     userProfileCreateCommentPartialView(userProfileId);
 
     $('#userprofile-create-comment-btn').click(function () {
-        debugger;
         userProfileCreateComment();
     });
 

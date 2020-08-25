@@ -5,7 +5,7 @@
 }
 
 <div id="userprofile-create-comment">
-    <form method="post" asp-controller="UserProfileComment" asp-action="Create">
+    <div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="UserProfileComment.ID" />
         <div class="" id="userprofile-create-comment-author"></div>
@@ -16,7 +16,7 @@
         <div class="">
             <button class="btn btn-primary" id="userprofile-create-comment-btn">Post comment</button>
         </div>
-    </form>
+    </div>
 </div>
 
 @section scripts {
