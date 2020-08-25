@@ -30,7 +30,9 @@
 
   <ItemGroup>
     <Folder Include="Views\Account\AccountSettings\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\Games\CoverImage\" />
+    <Folder Include="wwwroot\images\NewsArticle\" />
+    <Folder Include="wwwroot\images\UserProfile\Avatar\" />
     <Folder Include="wwwroot\vue\" />
   </ItemGroup>
 

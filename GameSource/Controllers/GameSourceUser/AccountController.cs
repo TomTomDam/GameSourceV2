@@ -10,6 +10,8 @@ using GameSource.ViewModels.GameSourceUser.AccountViewModel;
 using GameSource.Models.GameSourceUser.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GameSource.Controllers.GameSourceUser
 {
@@ -22,8 +24,9 @@ namespace GameSource.Controllers.GameSourceUser
         private readonly IUserProfileService userProfileService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public AccountController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
@@ -31,6 +34,7 @@ namespace GameSource.Controllers.GameSourceUser
             this.userProfileService = userProfileService;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet("index")]
@@ -110,10 +114,19 @@ namespace GameSource.Controllers.GameSourceUser
                             UserProfile userProfile = new UserProfile
                             {
                                 UserID = user.Id,
+                                DisplayName = null,
                                 Biography = null,
                                 UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
                                 UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
                             };
+
+                            //Add a default UserProfile Avatar Image
+                            string fileName = Path.GetFileName("default_avatar");
+                            string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await userProfile.AvatarImage.CopyToAsync(fileStream);
+                            }
 
                             await userProfileService.InsertAsync(userProfile);
                             user.UserProfile = userProfile;

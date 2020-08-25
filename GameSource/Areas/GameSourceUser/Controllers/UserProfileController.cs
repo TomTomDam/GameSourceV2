@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel;
 using GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +20,14 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         private readonly IUserService userService;
         private readonly IUserProfileService userProfileService;
         private readonly UserManager<User> userManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserProfileController(IUserService userService, IUserProfileService userProfileService, UserManager<User> userManager)
+        public UserProfileController(IUserService userService, IUserProfileService userProfileService, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userProfileService = userProfileService;
             this.userManager = userManager;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet("{id}")]
@@ -47,7 +51,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileComments = user.UserProfileCommentsCreated.ToList()
             };
 
-            RedirectToAction("Create", "UserProfileComment", new { id = user.UserProfile.ID });
             return View(viewModel);
         }
 
@@ -75,9 +78,19 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
 
+            userProfile.DisplayName = viewModel.UserProfile.DisplayName;
             userProfile.Biography = viewModel.UserProfile.Biography;
             userProfile.UserProfileVisibility = viewModel.UserProfile.UserProfileVisibility;
             userProfile.UserProfileCommentPermission = viewModel.UserProfile.UserProfileCommentPermission;
+
+            string fileName = Path.GetFileName(viewModel.UserProfile.AvatarImage.FileName);
+            string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await viewModel.UserProfile.AvatarImage.CopyToAsync(fileStream);
+            }
+
+            userProfile.AvatarImage = viewModel.UserProfile.AvatarImage;
 
             return RedirectToAction("Profile", userProfile);
         }
