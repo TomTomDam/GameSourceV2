@@ -100,38 +100,40 @@ namespace GameSource.Controllers.GameSourceUser
                     UserRoleID = (int)UserRoleEnum.Member
                 };
 
+                if (user.UserProfile == null)
+                {
+                    //Create a new UserProfile - do not assign User to UserProfile until User is successfully created
+                    UserProfile userProfile = new UserProfile
+                    {
+                        DisplayName = null,
+                        Biography = null,
+                        UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                        UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
+                    };
+
+                    //Add a default UserProfile Avatar Image
+                    string fileName = Path.GetFileName("default_avatar.png");
+                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await userProfile.AvatarImage.CopyToAsync(fileStream);
+                    }
+
+                    user.UserProfile = userProfile;
+                }
+
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
+                    //Assign and create new UserProfile after user is created
+                    user.UserProfile.UserID = user.Id;
+                    await userProfileService.InsertAsync(user.UserProfile);
+
                     User newUser = await userManager.FindByNameAsync(user.UserName);
                     var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
 
                     if (roleResult.Succeeded)
                     {
-                        if (user.UserProfile == null)
-                        {
-                            //Create a new UserProfile after creating a new User
-                            UserProfile userProfile = new UserProfile
-                            {
-                                UserID = user.Id,
-                                DisplayName = null,
-                                Biography = null,
-                                UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
-                                UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
-                            };
-
-                            //Add a default UserProfile Avatar Image
-                            string fileName = Path.GetFileName("default_avatar");
-                            string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
-                            using (var fileStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await userProfile.AvatarImage.CopyToAsync(fileStream);
-                            }
-
-                            await userProfileService.InsertAsync(userProfile);
-                            user.UserProfile = userProfile;
-                        }
-
                         await signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index");
                     }
