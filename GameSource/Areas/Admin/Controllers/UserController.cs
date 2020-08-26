@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Areas.Admin.ViewModels.UserViewModel;
@@ -7,6 +8,7 @@ using GameSource.Models.GameSourceUser;
 using GameSource.Models.GameSourceUser.Enums;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,16 +23,20 @@ namespace GameSource.Areas.Admin.Controllers
         private readonly IUserService userService;
         private readonly IUserRoleService userRoleService;
         private readonly IUserStatusService userStatusService;
+        private readonly IUserProfileService userProfileService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, UserManager<User> userManager, SignInManager<User> signInManager) 
+        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
             this.userStatusService = userStatusService;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.webHostEnvironment = webHostEnvironment;
+            this.userProfileService = userProfileService;
         }
 
         [HttpGet("index")]
@@ -94,10 +100,36 @@ namespace GameSource.Areas.Admin.Controllers
                     UserRoleID = (int)UserRoleEnum.Member
                 };
 
+                if (user.UserProfile == null)
+                {
+                    //Create a new UserProfile after creating a new User - do not assign User to UserProfile until User is successfully created
+                    UserProfile userProfile = new UserProfile
+                    {
+                        DisplayName = null,
+                        Biography = null,
+                        UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                        UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
+                    };
+
+                    //Add a default UserProfile Avatar Image
+                    string fileName = Path.GetFileName("default_avatar.png");
+                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await userProfile.AvatarImage.CopyToAsync(fileStream);
+                    }
+
+                    user.UserProfile = userProfile;
+                }
+
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
-                    var newUser = await userManager.FindByNameAsync(user.UserName);
+                    //Assign new UserProfile after user is created
+                    user.UserProfile.UserID = user.Id;
+                    await userProfileService.InsertAsync(user.UserProfile);
+
+                    User newUser = await userManager.FindByNameAsync(user.UserName);
                     var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
 
                     if (roleResult.Succeeded)
