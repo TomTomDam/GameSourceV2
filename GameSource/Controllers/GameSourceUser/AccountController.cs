@@ -150,7 +150,7 @@ namespace GameSource.Controllers.GameSourceUser
 
         [HttpGet("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             AccountLoginViewModel viewModel = new AccountLoginViewModel();
             return View(viewModel);
