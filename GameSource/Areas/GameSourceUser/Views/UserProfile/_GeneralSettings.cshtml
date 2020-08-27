@@ -3,33 +3,20 @@
 @using GameSource.Models.GameSourceUser;
 @inject SignInManager<User> signInManager;
 
-@{
-    ViewData["Title"] = "Edit Profile";
-}
-
-<div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Edit Profile</div>
-<hr />
-
-<div id="userprofile-general-settings">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h2>General</h2>
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="UserProfile.ID" />
-                    <div class="form-group">
-                        <label asp-for="UserProfile.Biography" class="control-label"></label>
-                        <input asp-for="UserProfile.Biography" class="form-control" />
-                        <span asp-validation-for="UserProfile.Biography" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Save changes" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
+<div class="col-md-9 float-left" id="userprofile-general-settings">
+    <div class="sub-heading">General</div>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="UserProfile.ID" />
+        <div class="form-group">
+            <label asp-for="UserProfile.Biography" class="control-label"></label>
+            <input asp-for="UserProfile.Biography" class="form-control" />
+            <span asp-validation-for="UserProfile.Biography" class="text-danger"></span>
         </div>
-    </div>
+        <div class="form-group">
+            <input type="submit" value="Save changes" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
 @section Scripts {

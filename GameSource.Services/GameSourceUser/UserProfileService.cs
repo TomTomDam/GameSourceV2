@@ -11,9 +11,10 @@ namespace GameSource.Services.GameSourceUser
         private IUserProfileRepository repo;
         private IUserRepository userRepo;
 
-        public UserProfileService(IUserProfileRepository repo)
+        public UserProfileService(IUserProfileRepository repo, IUserRepository userRepo)
         {
             this.repo = repo;
+            this.userRepo = userRepo;
         }
 
         public IEnumerable<UserProfile> GetAll()

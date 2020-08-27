@@ -53,24 +53,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("edit/{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
-
-            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
-            {
-                UserProfile = userProfile
-            };
-
-            return View(viewModel);
-        }
-
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserProfileEditViewModel viewModel)
@@ -95,13 +77,25 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         #region Profile Settings
-        [HttpGet("profile-settings")]
-        public IActionResult ProfileSettings()
+        [HttpGet("{id}/profile-settings")]
+        public async Task<IActionResult> ProfileSettings(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile
+            };
+
+            return View(viewModel);
         }
 
-        [HttpGet("general-settings/{id}")]
+        [HttpGet("{id}/general-settings")]
         public async Task<IActionResult> GeneralSettings(int? id)
         {
             if (id == null)
@@ -120,10 +114,10 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfile = userProfile
             };
 
-            return PartialView("~/Views/Account/_GeneralSettings.cshtml", viewModel);
+            return PartialView("_GeneralSettings", viewModel);
         }
 
-        [HttpGet("avatar-settings/{id}")]
+        [HttpGet("{id}/avatar-settings")]
         public async Task<IActionResult> AvatarSettings(int? id)
         {
             if (id == null)
@@ -142,10 +136,10 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfile = userProfile
             };
 
-            return PartialView("~/Views/Account/_AvatarSettings.cshtml", viewModel);
+            return PartialView("_AvatarSettings", viewModel);
         }
 
-        [HttpGet("profile-background-settings/{id}")]
+        [HttpGet("{id}/profile-background-settings")]
         public async Task<IActionResult> ProfileBackgroundSettings(int? id)
         {
             if (id == null)
@@ -164,7 +158,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfile = userProfile
             };
 
-            return PartialView("~/Views/Account/_ProfileBackgroundSettings.cshtml", viewModel);
+            return PartialView("_ProfileBackgroundSettings", viewModel);
         }
         #endregion
     }
