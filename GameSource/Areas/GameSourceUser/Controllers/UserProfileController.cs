@@ -85,7 +85,11 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
@@ -103,7 +107,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
             if (userProfile == null)
             {
                 return NotFound();
@@ -125,7 +129,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
             if (userProfile == null)
             {
                 return NotFound();
@@ -147,7 +151,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
             if (userProfile == null)
             {
                 return NotFound();

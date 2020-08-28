@@ -4,7 +4,8 @@
 @inject SignInManager<User> signInManager;
 
 <div class="col-md-9 float-left" id="userprofile-profilebackground-settings">
-    <div class="sub-heading">Profile Background</div>
+    <h4 class="sub-heading">Profile Background</h4>
+    <hr />
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="UserProfile.ID" />

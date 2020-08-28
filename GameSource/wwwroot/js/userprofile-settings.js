@@ -16,7 +16,7 @@
         $('#userprofile-profile-background-settings').hide();
 
         $.ajax({
-            url: '/user/profile/' + userProfileId + 'general-settings',
+            url: '/user/profile/' + userProfileId + '/general-settings',
             type: 'GET',
             success: function (result) {
                 $('#userprofile-general-settings').html(result);
@@ -37,7 +37,7 @@
         $('#userprofile-profile-background-settings').hide();
 
         $.ajax({
-            url: '/user/profile/' + userProfileId + 'avatar-settings',
+            url: '/user/profile/' + userProfileId + '/avatar-settings',
             type: 'GET',
             success: function (result) {
                 $('#avatar-settings').html(result);
@@ -58,7 +58,7 @@
         $('#userprofile-avatar-settings').hide();
 
         $.ajax({
-            url: '/user/profile/' + userProfileId + 'privacy-settings',
+            url: '/user/profile/' + userProfileId + '/privacy-settings',
             type: 'GET',
             success: function (result) {
                 $('#userprofile-profile-background-settings').html(result);
