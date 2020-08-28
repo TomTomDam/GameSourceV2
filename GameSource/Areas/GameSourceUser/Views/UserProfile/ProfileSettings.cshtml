@@ -14,13 +14,13 @@
     <div class="page-content container clearfix" id="userprofile-settings-page-content">
         <div class="col-md-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Profile Settings">
-                <a class="menu-item active" onclick="generalSettings();" id="userprofile-general-settings-btn">
+                <a class="menu-item active" id="userprofile-general-settings-btn">
                     General
                 </a>
-                <a class="menu-item" onclick="avatarSettings();" id="userprofile-avatar-settings-btn">
+                <a class="menu-item" id="userprofile-avatar-settings-btn">
                     Avatar
                 </a>
-                <a class="menu-item" onclick="profileBackgroundSettings();" id="userprofile-profile-background-settings-btn">
+                <a class="menu-item" id="userprofile-profile-background-settings-btn">
                     Profile Background
                 </a>
             </nav>
@@ -53,7 +53,7 @@
                 $('#userprofile-profile-background-settings').hide();
 
                 $.ajax({
-                    url: '/user/profile/' + userProfileId + 'general-settings',
+                    url: '/user/profile/' + userProfileId + '/general-settings',
                     type: 'GET',
                     success: function (result) {
                         $('#userprofile-general-settings').html(result);
@@ -74,11 +74,11 @@
                 $('#userprofile-profile-background-settings').hide();
 
                 $.ajax({
-                    url: '/user/profile/' + userProfileId + 'avatar-settings',
+                    url: '/user/profile/' + userProfileId + '/avatar-settings',
                     type: 'GET',
                     success: function (result) {
-                        $('#avatar-settings').html(result);
-                        $('#avatar-settings').show();
+                        $('#userprofile-avatar-settings').html(result);
+                        $('#userprofile-avatar-settings').show();
                     },
                     error: function (xhr) {
                         console.log("Error: " + xhr.statusText);
@@ -95,7 +95,7 @@
                 $('#userprofile-avatar-settings').hide();
 
                 $.ajax({
-                    url: '/user/profile/' + userProfileId + 'privacy-settings',
+                    url: '/user/profile/' + userProfileId + '/profile-background-settings',
                     type: 'GET',
                     success: function (result) {
                         $('#userprofile-profile-background-settings').html(result);

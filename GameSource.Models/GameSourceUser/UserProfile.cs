@@ -15,6 +15,7 @@ namespace GameSource.Models.GameSourceUser
 
         public string Biography { get; set; }
 
+        [Display(Name = "Avatar File Path")]
         public string AvatarFilePath { get; set; }
 
         [Display(Name = "Upload Image")]
@@ -23,8 +24,10 @@ namespace GameSource.Models.GameSourceUser
 
         public int UserID { get; set; }
 
+        [Display(Name = "Profile Visibility")]
         public int? UserProfileVisibilityID { get; set; }
 
+        [Display(Name = "Comment Visibility")]
         public int? UserProfileCommentPermissionID { get; set; }
 
         public User User { get; set; }
