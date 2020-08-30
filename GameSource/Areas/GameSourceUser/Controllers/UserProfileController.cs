@@ -121,6 +121,17 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return PartialView("_GeneralSettings", viewModel);
         }
 
+        [HttpPost("{id}/general-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GeneralSettings(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            userProfile.Biography = viewModel.UserProfile.Biography;
+
+            return PartialView("_GeneralSettings", viewModel);
+        }
+
         [HttpGet("{id}/avatar-settings")]
         public async Task<IActionResult> AvatarSettings(int? id)
         {
@@ -143,6 +154,25 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return PartialView("_AvatarSettings", viewModel);
         }
 
+        [HttpPost("{id}/avatar-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AvatarSettings(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            string fileName = Path.GetFileName(viewModel.UserProfile.AvatarImage.FileName);
+            string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await viewModel.UserProfile.AvatarImage.CopyToAsync(fileStream);
+            }
+
+            userProfile.AvatarFilePath = filePath;
+            userProfile.AvatarImage = viewModel.UserProfile.AvatarImage;
+
+            return PartialView("_GeneralSettings", viewModel);
+        }
+
         [HttpGet("{id}/profile-background-settings")]
         public async Task<IActionResult> ProfileBackgroundSettings(int? id)
         {
@@ -161,6 +191,25 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             {
                 UserProfile = userProfile
             };
+
+            return PartialView("_ProfileBackgroundSettings", viewModel);
+        }
+
+        [HttpPost("{id}/profile-background-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProfileBackgroundSettings(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            //string fileName = Path.GetFileName(viewModel.UserProfile.ProfileBackgroundImage.FileName);
+            //string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background", fileName);
+            //using (var fileStream = new FileStream(filePath, FileMode.Create))
+            //{
+            //    await viewModel.UserProfile.ProfileBackgroundImage.CopyToAsync(fileStream);
+            //}
+
+            //userProfile.ProfileBackgroundFilePath = filePath;
+            //userProfile.ProfileBackgroundImage = viewModel.UserProfile.ProfileBackgroundImage
 
             return PartialView("_ProfileBackgroundSettings", viewModel);
         }
