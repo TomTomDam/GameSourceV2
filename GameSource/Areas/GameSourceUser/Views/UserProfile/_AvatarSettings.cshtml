@@ -3,12 +3,20 @@
 @using GameSource.Models.GameSourceUser;
 @inject SignInManager<User> signInManager;
 
+@{
+    var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
+}
+
 <div class="col-md-9 float-left" id="userprofile-avatar-settings">
     <h4 class="sub-heading">Avatar</h4>
     <hr />
     <form enctype="multipart/form-data" method="post" asp-action="AvatarSettings">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="UserProfile.ID" />
+        <div class="form-group">
+            <label asp-for="UserProfile.AvatarFilePath" class="control-label"></label>
+            <img id="userprofile-avatar-settings-thumbnail" src="@avatarImageFilePath" asp-append-version="true" />
+        </div>
         <div class="form-group">
             <label asp-for="UserProfile.AvatarImage" class="control-label"></label>
             <input asp-for="UserProfile.AvatarImage" class="form-control" />

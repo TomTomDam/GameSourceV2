@@ -5,13 +5,15 @@
 @{
     ViewData["Title"] = Model.UserProfile.User.UserName + "'s Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
 }
 
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="" id="userprofile-avatar">
-                <img src="@Url.Content(Model.UserProfile.AvatarFilePath)" />
+            <div class="userprofile-avatar-image">
+                <img src="@avatarImageFilePath" asp-append-version="true" />
             </div>
         </div>
         <div class="col-md-8">

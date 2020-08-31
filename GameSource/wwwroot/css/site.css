@@ -88,6 +88,30 @@ body {
     }
 }
 
+/* UserProfile */
+#userprofile-comment-header {
+    margin-bottom: 15px;
+}
+
+#userprofile-create-comment {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#userprofile-create-comment-body {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#userprofile-create-comment-btn {
+    float: right;
+}
+
+.userprofile-avatar-image > img {
+    height: 250px;
+    width: auto;
+}
+
 /* UserProfile Settings + Account Settings */
 #settings-page {
     box-sizing: border-box;
@@ -135,21 +159,7 @@ body {
     color: white;
 }
 
-/* UserProfile */
-#userprofile-comment-header {
-    margin-bottom: 15px;
-}
-
-#userprofile-create-comment {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-#userprofile-create-comment-body {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#userprofile-create-comment-btn {
-    float: right;
+#userprofile-avatar-settings-thumbnail {
+    height: 200px;
+    width: auto;
 }

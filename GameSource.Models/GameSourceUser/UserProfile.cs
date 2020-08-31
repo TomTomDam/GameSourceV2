@@ -15,7 +15,7 @@ namespace GameSource.Models.GameSourceUser
 
         public string Biography { get; set; }
 
-        [Display(Name = "Avatar File Path")]
+        [Display(Name = "Current Avatar Image")]
         public string AvatarFilePath { get; set; }
 
         [Display(Name = "Upload Image")]
