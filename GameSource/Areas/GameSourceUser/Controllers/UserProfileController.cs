@@ -53,29 +53,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return View(viewModel);
         }
 
-        [HttpPost("edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserProfileEditViewModel viewModel)
-        {
-            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
-
-            userProfile.DisplayName = viewModel.UserProfile.DisplayName;
-            userProfile.Biography = viewModel.UserProfile.Biography;
-            userProfile.UserProfileVisibility = viewModel.UserProfile.UserProfileVisibility;
-            userProfile.UserProfileCommentPermission = viewModel.UserProfile.UserProfileCommentPermission;
-
-            string fileName = Path.GetFileName(viewModel.UserProfile.AvatarImage.FileName);
-            string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await viewModel.UserProfile.AvatarImage.CopyToAsync(fileStream);
-            }
-
-            userProfile.AvatarImage = viewModel.UserProfile.AvatarImage;
-
-            return RedirectToAction("Profile", userProfile);
-        }
-
         #region Profile Settings
         [HttpGet("{id}/profile-settings")]
         public async Task<IActionResult> ProfileSettings(int? id)
@@ -121,6 +98,18 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return PartialView("_GeneralSettings", viewModel);
         }
 
+        [HttpPost("{id}/general-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GeneralSettings(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            userProfile.Biography = viewModel.UserProfile.Biography;
+            await userProfileService.UpdateAsync(userProfile);
+
+            return RedirectToAction("Profile", new { id = userProfile.UserID });
+        }
+
         [HttpGet("{id}/avatar-settings")]
         public async Task<IActionResult> AvatarSettings(int? id)
         {
@@ -143,6 +132,28 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return PartialView("_AvatarSettings", viewModel);
         }
 
+        [HttpPost("{id}/avatar-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AvatarSettings(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            string uniqueFileName = null;
+            string avatarImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar");
+            if (viewModel.UserProfile.AvatarImage != null)
+            {
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.UserProfile.AvatarImage.FileName;
+                string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
+                await viewModel.UserProfile.AvatarImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+                userProfile.AvatarFilePath = uniqueFileName;
+                userProfile.AvatarImage = viewModel.UserProfile.AvatarImage;
+                await userProfileService.UpdateAsync(userProfile);
+            }
+
+            return RedirectToAction("Profile", new { id = userProfile.UserID });
+        }
+
         [HttpGet("{id}/profile-background-settings")]
         public async Task<IActionResult> ProfileBackgroundSettings(int? id)
         {
@@ -163,6 +174,28 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             };
 
             return PartialView("_ProfileBackgroundSettings", viewModel);
+        }
+
+        [HttpPost("{id}/profile-background-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProfileBackgroundSettings(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            //string uniqueFileName = null;
+            //string profileBackgroundImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background");
+            //if (viewModel.UserProfile.AvatarImage != null)
+            //{
+            //    uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.UserProfile.ProfileBackgroundImage.FileName;
+            //    string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
+            //    await viewModel.UserProfile.ProfileBackgroundImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+            //    userProfile.ProfileBackgroundFilePath = uniqueFileName;
+            //    userProfile.ProfileBackgroundImage = viewModel.UserProfile.ProfileBackgroundImage;
+            //    await userProfileService.UpdateAsync(userProfile);
+            //}
+
+            return RedirectToAction("Profile", new { id = userProfile.UserID });
         }
         #endregion
     }
