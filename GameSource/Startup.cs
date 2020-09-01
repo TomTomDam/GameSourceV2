@@ -20,6 +20,11 @@ using GameSource.Data.Settings;
 using VueCliMiddleware;
 using Microsoft.AspNetCore.SpaServices;
 using System.Threading.Tasks;
+using System.Reflection;
+using GameSource.API.Controllers;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.Extensions.FileProviders;
 
 namespace GameSource
 {

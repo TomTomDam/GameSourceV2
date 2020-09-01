@@ -1,7 +1,7 @@
 ﻿<template>
     <div id="browse-games-page">
-        <BrowseGamesByGenre></BrowseGamesByGenre>
-        <BrowseGamesByPlatform></BrowseGamesByPlatform>
+        <browse-games-by-genre></browse-games-by-genre>
+        <browse-games-by-platform></browse-games-by-platform>
     </div>
 </template>
 
@@ -10,10 +10,9 @@
     import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue';
 
     export default {
-        data() {
-            return {
-
-            }
+        components: {
+            'browse-games-by-genre': BrowseGamesByGenre,
+            'browse-games-by-platform': BrowseGamesByPlatform
         }
     }
 </script>

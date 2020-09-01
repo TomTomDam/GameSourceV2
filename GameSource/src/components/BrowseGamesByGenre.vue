@@ -7,6 +7,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         data: function () {
             return {
@@ -15,13 +17,13 @@
         },
         methods: {
             getAllGenres() {
-                this.$api.get('genre/GetAll')
+                axios.get('http://localhost:44375/api/genre/GetAll')
                     .then(res => {
                         this.genres = res.data;
-                        console.log("genre/GetAll Success: " + res);
+                        console.log("api/genre/GetAll Success: " + res);
                     })
                     .catch(err => {
-                        console.log("genre/GetAll Error: " + err);
+                        console.log("api/genre/GetAll Error: " + err);
                     });
             }
         },

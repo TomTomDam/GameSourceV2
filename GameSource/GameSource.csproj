@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GameSource.API\GameSource.API.csproj" />
     <ProjectReference Include="..\GameSource.Data\GameSource.Data.csproj" />
     <ProjectReference Include="..\GameSource.Services\GameSource.Services.csproj" />
   </ItemGroup>
@@ -31,7 +32,9 @@
   <ItemGroup>
     <Folder Include="Views\Account\AccountSettings\" />
     <Folder Include="wwwroot\images\Games\CoverImage\" />
-    <Folder Include="wwwroot\images\NewsArticle\" />
+    <Folder Include="wwwroot\images\Games\GameImages\" />
+    <Folder Include="wwwroot\images\NewsArticle\CoverImage\" />
+    <Folder Include="wwwroot\images\NewsArticle\ArticleImages\" />
     <Folder Include="wwwroot\images\UserProfile\Avatar\" />
     <Folder Include="wwwroot\vue\" />
   </ItemGroup>
