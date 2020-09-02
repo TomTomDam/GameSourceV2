@@ -7,8 +7,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
-
     export default {
         data: function () {
             return {
@@ -17,7 +15,7 @@
         },
         methods: {
             getAllGenres() {
-                axios.get('http://localhost:44375/api/genre/GetAll')
+                this.$baseURL.get('api/genre/GetAll')
                     .then(res => {
                         this.genres = res.data;
                         console.log("api/genre/GetAll Success: " + res);

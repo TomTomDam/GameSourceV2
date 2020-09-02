@@ -22,9 +22,14 @@ const api = axios.create({
     baseURL: 'http://localhost:52817/api/'
 });
 
+const baseURL = axios.create({
+    baseURL: 'http://localhost:44375/'
+});
+
 const axiosPlugin = {
     install(Vue) {
         Vue.prototype.$api = api;
+        Vue.prototype.$baseURL = baseURL;
     }
 }
 
