@@ -40,11 +40,15 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse Games</a>
                             <ul class="dropdown-menu dropdown-columns" aria-labelledby="navbarDropdown">
-                                <div id="browse-games-page"></div>
+                                @*<div id="browse-games-page"></div>*@
 
-                                @*<li><a class="dropdown-header font-weight-bold">Platforms</a></li>
+                                <li><a class="dropdown-header font-weight-bold">By Genre</a></li>
                                 <li><div class="dropdown-divider"></div></li>
-                                <li><a class="dropdown-item">PC</a></li>*@
+                                <li><a class="dropdown-item">Sci-Fi</a></li>
+
+                                <li><a class="dropdown-header font-weight-bold">By Platforms</a></li>
+                                <li><div class="dropdown-divider"></div></li>
+                                <li><a class="dropdown-item">PC</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -66,7 +70,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
                         @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
-
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -75,7 +79,7 @@
                                 <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
                             </ul>
                         </li>
-
+                        
 
                         @if (signInManager.IsSignedIn(User))
                         {
@@ -120,7 +124,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/login-system.js"></script>
 

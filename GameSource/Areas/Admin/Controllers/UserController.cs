@@ -26,15 +26,17 @@ namespace GameSource.Areas.Admin.Controllers
         private readonly IUserProfileService userProfileService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly RoleManager<UserRole> roleManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment webHostEnvironment)
+        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<UserRole> roleManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
             this.userStatusService = userStatusService;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
             this.webHostEnvironment = webHostEnvironment;
             this.userProfileService = userProfileService;
         }
@@ -208,10 +210,43 @@ namespace GameSource.Areas.Admin.Controllers
             user.Age = viewModel.Age;
             user.Location = viewModel.Location;
             user.UserStatusID = viewModel.UserStatusID;
-            user.UserRoleID = viewModel.UserRoleID;
 
-            userService.Update(user);
-            return RedirectToAction("Index", user);
+            UserRole newUserRole = await userRoleService.GetByIDAsync(viewModel.UserRoleID);
+            if (newUserRole == null)
+            {
+                return NotFound();
+            }
+
+            var newRoleResult = await userManager.AddToRoleAsync(user, newUserRole.Name);
+            if (newRoleResult.Succeeded)
+            {
+                UserRole oldUserRole = await userRoleService.GetByIDAsync(user.UserRoleID);
+                if (oldUserRole == null)
+                {
+                    return NotFound();
+                }
+
+                var removeRoleResult = await userManager.RemoveFromRoleAsync(user, oldUserRole.Name);
+                if (removeRoleResult.Succeeded)
+                {
+                    user.UserRoleID = viewModel.UserRoleID;
+
+                    await userService.UpdateAsync(user);
+                    return RedirectToAction("Index", user);
+                }
+
+                foreach (var error in removeRoleResult.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            foreach (var error in newRoleResult.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View();
         }
 
         [HttpGet("delete/{id}")]
