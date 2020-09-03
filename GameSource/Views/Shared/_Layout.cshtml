@@ -69,8 +69,8 @@
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
-                        @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
-                        
+                        @if (signInManager.IsSignedIn(User))
+                        {
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -79,7 +79,7 @@
                                 <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
                             </ul>
                         </li>
-                        
+                        }
 
                         @if (signInManager.IsSignedIn(User))
                         {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameSource.Areas.Admin.ViewModels.UserViewModel
+namespace GameSource.Areas.Admin.ViewModels.AdminUserViewModel
 {
     public class AdminUserSettingsViewModel
     {

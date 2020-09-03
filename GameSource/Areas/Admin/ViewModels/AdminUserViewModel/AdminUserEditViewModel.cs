@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
-namespace GameSource.Areas.Admin.ViewModels.UserViewModel
+namespace GameSource.Areas.Admin.ViewModels.AdminUserViewModel
 {
     public class AdminUserEditViewModel
     {
@@ -11,6 +12,7 @@ namespace GameSource.Areas.Admin.ViewModels.UserViewModel
         {
             UserRoles = new List<SelectListItem>();
             UserStatuses = new List<SelectListItem>();
+            Claims = new List<Claim>();
         }
 
         public int ID { get; set; }
@@ -20,6 +22,8 @@ namespace GameSource.Areas.Admin.ViewModels.UserViewModel
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
 
         public string Email { get; set; }
 
@@ -44,5 +48,7 @@ namespace GameSource.Areas.Admin.ViewModels.UserViewModel
         public List<SelectListItem> UserStatuses { get; set; }
 
         public List<SelectListItem> UserRoles { get; set; }
+
+        public IList<Claim> Claims { get; set; }
     }
 }

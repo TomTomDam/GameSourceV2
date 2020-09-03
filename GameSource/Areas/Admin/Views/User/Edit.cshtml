@@ -1,4 +1,4 @@
-﻿@model GameSource.Areas.Admin.ViewModels.UserViewModel.AdminUserEditViewModel
+﻿@model GameSource.Areas.Admin.ViewModels.AdminUserViewModel.AdminUserEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>User</h4>
+<h4>@Model.FullName</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -52,6 +52,19 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
+            <hr />
+            <div class="form-group">
+                <h4>User Claims</h4>
+                @foreach (var claim in Model.Claims)
+                {
+                    <ul>
+                        <li>@claim.Type</li>
+                    </ul>
+                }
+                <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="ManageUserClaims" asp-route-id="@Model.ID">Manage Claims</a>
+            </div>
+            <hr />
         </form>
     </div>
 </div>

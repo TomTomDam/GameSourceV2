@@ -255,31 +255,13 @@ namespace GameSource.Controllers.GameSourceUser
                 return NotFound();
             }
 
-            IEnumerable<UserRole> userRoles = await userRoleService.GetAllAsync();
-            List<SelectListItem> userRolesSelectList = userRoles.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-
-            IEnumerable<UserStatus> userStatuses = await userStatusService.GetAllAsync();
-            List<SelectListItem> userStatusesSelectList = userStatuses.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-
             AccountEditViewModel viewModel = new AccountEditViewModel
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
                 Age = user.Age,
-                Location = user.Location,
-                UserRoleID = user.UserRoleID,
-                UserRoles = userRolesSelectList,
-                UserStatusID = user.UserStatusID,
-                UserStatuses = userStatusesSelectList
+                Location = user.Location
             };
 
             return View(viewModel);
@@ -300,7 +282,6 @@ namespace GameSource.Controllers.GameSourceUser
             user.Email = viewModel.Email;
             user.Age = viewModel.Age;
             user.Location = viewModel.Location;
-            user.UserRoleID = viewModel.UserRoleID;
 
             userService.Update(user);
             return RedirectToAction("Index", user);
