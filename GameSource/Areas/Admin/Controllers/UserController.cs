@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using GameSource.Areas.Admin.ViewModels.UserViewModel;
+using GameSource.Areas.Admin.ViewModels.AdminUserViewModel;
+using GameSource.Data.Repositories.GameSourceUser;
 using GameSource.Models.GameSourceUser;
 using GameSource.Models.GameSourceUser.Enums;
 using GameSource.Services.GameSourceUser.Contracts;
@@ -26,19 +28,17 @@ namespace GameSource.Areas.Admin.Controllers
         private readonly IUserProfileService userProfileService;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<UserRole> roleManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<UserRole> roleManager, IWebHostEnvironment webHostEnvironment)
+        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
             this.userStatusService = userStatusService;
+            this.userProfileService = userProfileService;
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
             this.webHostEnvironment = webHostEnvironment;
-            this.userProfileService = userProfileService;
         }
 
         [HttpGet("index")]
@@ -178,8 +178,11 @@ namespace GameSource.Areas.Admin.Controllers
                 Value = x.Id.ToString()
             }).ToList();
 
+            var existingUserClaims = await userManager.GetClaimsAsync(user);
+
             AdminUserEditViewModel viewModel = new AdminUserEditViewModel
             {
+                ID = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -188,7 +191,8 @@ namespace GameSource.Areas.Admin.Controllers
                 UserRoleID = user.UserRoleID,
                 UserRoles = userRolesSelectList,
                 UserStatusID = user.UserStatusID,
-                UserStatuses = userStatusesSelectList
+                UserStatuses = userStatusesSelectList,
+                Claims = existingUserClaims
             };
 
             return View(viewModel);
@@ -338,6 +342,70 @@ namespace GameSource.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index", userManager.Users);
+        }
+
+        [HttpGet("manage-user-claims/{id}")]
+        public async Task<IActionResult> ManageUserClaims(int id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var existingUserClaims = await userManager.GetClaimsAsync(user);
+            AdminUserClaimsViewModel viewModel = new AdminUserClaimsViewModel
+            {
+                ID = id
+            };
+
+            foreach (Claim claim in UserClaimsStore.AllClaims)
+            {
+                UserClaim userClaim = new UserClaim
+                {
+                    ClaimType = claim.Type
+                };
+
+                if (existingUserClaims.Any(c => c.Type == claim.Type))
+                {
+                    userClaim.IsSelected = true;
+                }
+
+                viewModel.Claims.Add(userClaim);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost("manage-user-claims/{id}")]
+        public async Task<IActionResult> ManageUserClaims(AdminUserClaimsViewModel viewModel)
+        {
+            var user = await userManager.FindByIdAsync(viewModel.ID.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var claims = await userManager.GetClaimsAsync(user);
+            var removeClaims = await userManager.RemoveClaimsAsync(user, claims);
+            if (!removeClaims.Succeeded)
+            {
+                ModelState.AddModelError("", "Could not remove existing claims for this user.");
+                return View(viewModel);
+            }
+
+            removeClaims = await userManager.AddClaimsAsync(user, 
+                viewModel.Claims
+                    .Where(c => c.IsSelected)
+                    .Select(c => new Claim(c.ClaimType, c.ClaimType)));
+
+            if (!removeClaims.Succeeded)
+            {
+                ModelState.AddModelError("", "Could not add selected claims for this user.");
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Edit", new { id = viewModel.ID });
         }
 
         [HttpGet("access-denied")]

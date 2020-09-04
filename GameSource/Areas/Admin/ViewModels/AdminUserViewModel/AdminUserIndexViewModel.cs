@@ -1,7 +1,7 @@
 ﻿using GameSource.Models.GameSourceUser;
 using System.Collections.Generic;
 
-namespace GameSource.Areas.Admin.ViewModels.UserViewModel
+namespace GameSource.Areas.Admin.ViewModels.AdminUserViewModel
 {
     public class AdminUserIndexViewModel
     {
