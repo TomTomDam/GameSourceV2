@@ -398,6 +398,7 @@ namespace GameSource.Areas.Admin.Controllers
                 viewModel.Claims
                     .Where(c => c.IsSelected)
                     .Select(c => new Claim(c.ClaimType, c.ClaimType)));
+
             if (!removeClaims.Succeeded)
             {
                 ModelState.AddModelError("", "Could not add selected claims for this user.");

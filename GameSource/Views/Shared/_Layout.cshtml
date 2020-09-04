@@ -69,6 +69,7 @@
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
+                        @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
                         @if (signInManager.IsSignedIn(User))
                         {
                         <li class="nav-item dropdown">
