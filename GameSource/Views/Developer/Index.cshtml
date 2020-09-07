@@ -1,5 +1,8 @@
 ﻿@model GameSource.ViewModels.GameSource.DeveloperViewModel.DeveloperIndexViewModel
-
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject UserManager<User> userManager;
+@inject SignInManager<User> signInManager;
 
 @{
     ViewData["Title"] = "Index";
@@ -8,9 +11,12 @@
 <h1 class="text-center">Index</h1>
 
 <div class="container">
-    <p>
-        <a class="btn btn-primary" asp-controller="Developer" asp-action="Create">Add a new Developer</a>
-    </p>
+    @if (signInManager.IsSignedIn(User))
+    {
+        <p>
+            <a class="btn btn-primary" asp-controller="Developer" asp-action="Create">Add a new Developer</a>
+        </p>
+    }
 
     <table class="table" id="developerIndexTable">
         <thead>
@@ -36,5 +42,5 @@
 </div>
 
 @section scripts {
-<script src="~/js/index-datatables.js"></script>
+    <script src="~/js/index-datatables.js"></script>
 }

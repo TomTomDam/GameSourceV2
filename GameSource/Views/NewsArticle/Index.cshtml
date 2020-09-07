@@ -1,4 +1,8 @@
 ﻿@model GameSource.ViewModels.GameSource.NewsArticleViewModel.NewsArticleIndexViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject UserManager<User> userManager;
+@inject SignInManager<User> signInManager;
 
 @{
     ViewData["Title"] = "Index";
@@ -8,9 +12,12 @@
 <h1 class="text-center">Index</h1>
 
 <div class="container">
-    <p>
-        <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
-    </p>
+    @if (signInManager.IsSignedIn(User))
+    {
+        <p>
+            <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
+        </p>
+    }
 
     @foreach (var newsArticle in Model.NewsArticles)
     {

@@ -39,6 +39,13 @@ namespace GameSource
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+            //Policy-based authorization
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("CreateGenrePolicy",
+                    policy => policy.RequireClaim("Create Genre"));
+            });
+
             //Databases
             services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
