@@ -1,15 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using GameSource.Models.GameSource;
+﻿using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using GameSource.ViewModels.GameSource.GenreViewModel;
-using System.Threading.Tasks;
-using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameSource.Controllers.GameSource
 {
+    [Authorize(Roles = "Admin")]
     [Route("genre")]
     public class GenreController : Controller
     {
@@ -73,6 +70,7 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpPost("create")]
+        [Authorize(Policy = "CreateGenrePolicy")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(GenreCreateViewModel viewModel)
         {

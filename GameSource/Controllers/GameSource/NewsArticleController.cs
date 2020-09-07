@@ -2,6 +2,7 @@
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.NewsArticleViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System;
 namespace GameSource.Controllers.GameSource
 {
     [Route("news-article")]
+    [AllowAnonymous]
     public class NewsArticleController : Controller
     {
         private readonly INewsArticleService newsArticleService;
