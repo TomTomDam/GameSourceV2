@@ -114,11 +114,16 @@ namespace GameSource.Areas.Admin.Controllers
                     };
 
                     //Add a default UserProfile Avatar Image
-                    string fileName = Path.GetFileName("default_avatar.png");
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", fileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    string uniqueFileName = null;
+                    string avatarImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar");
+                    if (userProfile.AvatarImage != null)
                     {
-                        await userProfile.AvatarImage.CopyToAsync(fileStream);
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + "default_avatar.png";
+                        string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
+                        await userProfile.AvatarImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+                        userProfile.AvatarFilePath = uniqueFileName;
+                        await userProfileService.UpdateAsync(userProfile);
                     }
 
                     user.UserProfile = userProfile;
