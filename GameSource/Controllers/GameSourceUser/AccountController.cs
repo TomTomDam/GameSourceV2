@@ -112,7 +112,7 @@ namespace GameSource.Controllers.GameSourceUser
                     };
 
                     //Add a default UserProfile Avatar Image
-                    string defaultAvatarImageFileName = Path.GetFileName("default_avatar.png");
+                    string defaultAvatarImageFileName = "default_avatar.png";
                     string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", defaultAvatarImageFileName);
 
                     user.UserProfile = userProfile;
