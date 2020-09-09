@@ -1,6 +1,8 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileDetailsViewModel
-@using GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel
-@using GameSource.Models.GameSourceUser
+@using GameSource.Models.GameSourceUser;
+@using GameSource.Models.GameSourceUser.Enums;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> signInManager;
 
 @{
     ViewData["Title"] = Model.UserProfile.User.UserName + "'s Profile";
@@ -9,6 +11,8 @@
     var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
 }
 
+@if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Everyone)
+{
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -17,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <input type="hidden" asp-for="UserProfile.ID" id="userProfileId"/>
+            <input type="hidden" asp-for="UserProfile.ID" id="userProfileId" />
 
             @{
                 if (Model.UserProfile.DisplayName == null)
@@ -39,6 +43,8 @@
 
             <div id="userprofile-create-comment"></div>
 
+            @*@if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Everyone)*@
+            
             @foreach (var comment in Model.UserProfileComments)
             {
                 <div class="" id="userprofile-comment-section">
@@ -46,9 +52,49 @@
                     <p class="">@comment.Body</p>
                 </div>
             }
+            
+            @*else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Private)
+        {
+            <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
+        }
+        else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.FriendsOnly)
+        {
+            <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
+        }*@
         </div>
     </div>
 </div>
+}
+else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Private)
+{
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="userprofile-avatar-image">
+                <img src="@avatarImageFilePath" asp-append-version="true" />
+            </div>
+        </div>
+        <div class="col-md-8">
+            <input type="hidden" asp-for="UserProfile.ID" id="userProfileId" />
+
+            @{
+                if (Model.UserProfile.DisplayName == null)
+                {
+                    <h1 class="page-heading-username">@Model.UserProfile.User.UserName</h1>
+                }
+                else
+                {
+                    <h1 class="page-heading-username">@Model.UserProfile.DisplayName</h1>
+                }
+            }
+            <p>This profile is set to <span>@Model.UserProfile.UserProfileVisibility.Name</span>.</p>
+        </div>
+    </div>
+</div>
+}
+else if (Model.User.UserProfile.UserProfileVisibility.ID == (int)UserProfileVisibilityEnum.FriendsOnly)
+{
+}
 
 @section scripts {
     <script src="~/js/userprofile-comments.js"></script>

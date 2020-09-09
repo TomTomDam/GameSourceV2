@@ -14,6 +14,8 @@ namespace GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel
 
         public User User { get; set; }
 
+        public UserProfileVisibility UserProfileVisibility { get; set; }
+
         public UserProfileComment UserProfileComment { get; set; }
 
         public List<UserProfileComment> UserProfileComments { get; set; }

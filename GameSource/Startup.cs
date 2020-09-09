@@ -94,6 +94,9 @@ namespace GameSource
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             services.AddScoped<IUserProfileService, UserProfileService>();
 
+            services.AddScoped<IUserProfileVisibilityRepository, UserProfileVisibilityRepository>();
+            services.AddScoped<IUserProfileVisibilityService, UserProfileVisibilityService>();
+
             services.AddScoped<IUserProfileCommentRepository, UserProfileCommentRepository>();
             services.AddScoped<IUserProfileCommentService, UserProfileCommentService>();
         }
