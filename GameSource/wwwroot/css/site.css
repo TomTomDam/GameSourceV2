@@ -113,7 +113,7 @@ body {
 }
 
 /* UserProfile Settings + Account Settings */
-#settings-page {
+#userprofile-profile-settings-page, #userprofile-account-settings-page {
     box-sizing: border-box;
 }
 

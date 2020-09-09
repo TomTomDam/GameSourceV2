@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="userprofile-settings-page">
+<div id="userprofile-profile-settings-page">
     <div class="page-heading text-dark text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Profile Settings</div>
     <div class="page-content container clearfix" id="userprofile-settings-page-content">
         <div class="col-md-3 float-left pr-4">
@@ -23,6 +23,9 @@
                 <a class="menu-item" id="userprofile-profile-background-settings-btn">
                     Profile Background
                 </a>
+                <a class="menu-item" id="userprofile-privacy-settings-btn">
+                    Privacy
+                </a>
             </nav>
         </div>
 
@@ -30,6 +33,7 @@
         <div id="userprofile-general-settings"></div>
         <div id="userprofile-avatar-settings"></div>
         <div id="userprofile-profile-background-settings"></div>
+        <div id="userprofile-privacy-settings"></div>
     </div>
 </div>
 
@@ -43,6 +47,7 @@
             $('#userprofile-general-settings').show();
             $('#userprofile-avatar-settings').hide();
             $('#userprofile-profile-background-settings').hide();
+            $('#userprofile-privacy-settings').hide();
 
             $('#userprofile-general-settings-btn').on('click', function (e) {
                 generalSettings(userProfileId);
@@ -51,6 +56,7 @@
             function generalSettings(userProfileId) {
                 $('#userprofile-avatar-settings').hide();
                 $('#userprofile-profile-background-settings').hide();
+                $('#userprofile-privacy-settings').hide();
 
                 $.ajax({
                     url: '/user/profile/' + userProfileId + '/general-settings',
@@ -72,6 +78,7 @@
             function avatarSettings(userProfileId) {
                 $('#userprofile-general-settings').hide();
                 $('#userprofile-profile-background-settings').hide();
+                $('#userprofile-privacy-settings').hide();
 
                 $.ajax({
                     url: '/user/profile/' + userProfileId + '/avatar-settings',
@@ -93,6 +100,7 @@
             function profileBackgroundSettings(userProfileId) {
                 $('#userprofile-general-settings').hide();
                 $('#userprofile-avatar-settings').hide();
+                $('#userprofile-privacy-settings').hide();
 
                 $.ajax({
                     url: '/user/profile/' + userProfileId + '/profile-background-settings',
@@ -100,6 +108,28 @@
                     success: function (result) {
                         $('#userprofile-profile-background-settings').html(result);
                         $('#userprofile-profile-background-settings').show();
+                    },
+                    error: function (xhr) {
+                        console.log("Error: " + xhr.statusText);
+                    }
+                });
+            }
+
+            $('#userprofile-privacy-settings-btn').on('click', function (e) {
+                privacySettings(userProfileId);
+            });
+
+            function privacySettings(userProfileId) {
+                $('#userprofile-general-settings').hide();
+                $('#userprofile-avatar-settings').hide();
+                $('#userprofile-profile-background-settings').hide();
+
+                $.ajax({
+                    url: '/user/profile/' + userProfileId + '/privacy-settings',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#userprofile-privacy-settings').html(result);
+                        $('#userprofile-privacy-settings').show();
                     },
                     error: function (xhr) {
                         console.log("Error: " + xhr.statusText);

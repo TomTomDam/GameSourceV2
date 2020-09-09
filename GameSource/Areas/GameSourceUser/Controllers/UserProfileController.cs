@@ -6,8 +6,8 @@ using GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameSource.Areas.GameSourceUser.Controllers
 {
@@ -19,16 +19,14 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         private readonly IUserProfileService userProfileService;
         private readonly IUserProfileVisibilityService userProfileVisibilityService;
         private readonly IUserProfileCommentPermissionService userProfileCommentPermissionService;
-        private readonly UserManager<User> userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserProfileController(IUserService userService, IUserProfileService userProfileService, IUserProfileVisibilityService userProfileVisibilityService, IUserProfileCommentPermissionService userProfileCommentPermissionService, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
+        public UserProfileController(IUserService userService, IUserProfileService userProfileService, IUserProfileVisibilityService userProfileVisibilityService, IUserProfileCommentPermissionService userProfileCommentPermissionService, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userProfileService = userProfileService;
             this.userProfileVisibilityService = userProfileVisibilityService;
             this.userProfileCommentPermissionService = userProfileCommentPermissionService;
-            this.userManager = userManager;
             this.webHostEnvironment = webHostEnvironment;
         }
 
@@ -94,7 +92,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("{id}/general-settings")]
-        public async Task<IActionResult> GeneralSettings(int? id)
+        public async Task<IActionResult> GeneralSettingsPartial(int? id)
         {
             if (id == null)
             {
@@ -117,18 +115,19 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
         [HttpPost("{id}/general-settings")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GeneralSettings(UserProfileEditViewModel viewModel)
+        public async Task<IActionResult> GeneralSettingsPartial(UserProfileEditViewModel viewModel)
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
 
             userProfile.Biography = viewModel.UserProfile.Biography;
+
             await userProfileService.UpdateAsync(userProfile);
 
             return RedirectToAction("Profile", new { id = userProfile.UserID });
         }
 
         [HttpGet("{id}/avatar-settings")]
-        public async Task<IActionResult> AvatarSettings(int? id)
+        public async Task<IActionResult> AvatarSettingsPartial(int? id)
         {
             if (id == null)
             {
@@ -151,7 +150,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
         [HttpPost("{id}/avatar-settings")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AvatarSettings(UserProfileEditViewModel viewModel)
+        public async Task<IActionResult> AvatarSettingsPartial(UserProfileEditViewModel viewModel)
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
 
@@ -165,54 +164,205 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
                 userProfile.AvatarFilePath = uniqueFileName;
                 userProfile.AvatarImage = viewModel.UserProfile.AvatarImage;
+
                 await userProfileService.UpdateAsync(userProfile);
             }
 
             return RedirectToAction("Profile", new { id = userProfile.UserID });
         }
 
-        [HttpGet("{id}/profile-background-settings")]
-        public async Task<IActionResult> ProfileBackgroundSettings(int? id)
+        [HttpGet("{id}/privacy-settings")]
+        public async Task<IActionResult> PrivacySettingsPartial(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
             if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            var visibilityList = await userProfileVisibilityService.GetAllAsync();
+            var visibilitySelectList = visibilityList.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+
+            var commentPermissionList = await userProfileCommentPermissionService.GetAllAsync();
+            var commentPermissionSelectList = commentPermissionList.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile,
+                UserProfileVisibilityList = visibilitySelectList,
+                UserProfileCommentPermissionList = commentPermissionSelectList
+            };
+
+            return PartialView("_PrivacySettings");
+        }
+
+        [HttpPost("{id}/privacy-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PrivacySettingsPartial(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+            userProfile.UserProfileVisibility = viewModel.UserProfile.UserProfileVisibility;
+            userProfile.UserProfileCommentPermission = viewModel.UserProfile.UserProfileCommentPermission;
+
+            await userProfileService.UpdateAsync(userProfile);
+
+            return RedirectToAction("Profile", new { id = userProfile.UserID });
+        }
+
+        //[HttpGet("{id}/profile-background-settings")]
+        //public async Task<IActionResult> ProfileBackgroundSettingsPartial(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+        //    if (userProfile == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+        //    {
+        //        UserProfile = userProfile
+        //    };
+
+        //    return PartialView("_ProfileBackgroundSettings", viewModel);
+        //}
+
+        //[HttpPost("{id}/profile-background-settings")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> ProfileBackgroundSettingsPartial(UserProfileEditViewModel viewModel)
+        //{
+        //    UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+
+        //    string uniqueFileName = null;
+        //    string profileBackgroundImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background");
+        //    if (viewModel.UserProfile.AvatarImage != null)
+        //    {
+        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.UserProfile.ProfileBackgroundImage.FileName;
+        //        string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
+        //        await viewModel.UserProfile.ProfileBackgroundImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+        //        userProfile.ProfileBackgroundFilePath = uniqueFileName;
+        //        userProfile.ProfileBackgroundImage = viewModel.UserProfile.ProfileBackgroundImage;
+
+        //        await userProfileService.UpdateAsync(userProfile);
+        //    }
+
+        //    return RedirectToAction("Profile", new { id = userProfile.UserID });
+        //}
+        #endregion
+
+        #region AccountSettings
+        [HttpGet("{id}/account")]
+        public async Task<IActionResult> AccountSettings(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userService.GetByIDAsync((int)id);
+            if (user == null)
             {
                 return NotFound();
             }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
-                UserProfile = userProfile
+                User = user
             };
 
-            return PartialView("_ProfileBackgroundSettings", viewModel);
+            return View(viewModel);
         }
 
-        [HttpPost("{id}/profile-background-settings")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProfileBackgroundSettings(UserProfileEditViewModel viewModel)
+        [HttpGet("{id}/account-settings")]
+        public async Task<IActionResult> AccountSettingsPartial(int? id)
         {
-            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            //string uniqueFileName = null;
-            //string profileBackgroundImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background");
-            //if (viewModel.UserProfile.AvatarImage != null)
-            //{
-            //    uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.UserProfile.ProfileBackgroundImage.FileName;
-            //    string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
-            //    await viewModel.UserProfile.ProfileBackgroundImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+            User user = await userService.GetByIDAsync((int)id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-            //    userProfile.ProfileBackgroundFilePath = uniqueFileName;
-            //    userProfile.ProfileBackgroundImage = viewModel.UserProfile.ProfileBackgroundImage;
-            //    await userProfileService.UpdateAsync(userProfile);
-            //}
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                User = user
+            };
 
-            return RedirectToAction("Profile", new { id = userProfile.UserID });
+            return PartialView("_AccountSettings");
+        }
+
+        [HttpPost("{id}/account-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AccountSettingsPartial(UserProfileEditViewModel viewModel)
+        {
+            User user = await userService.GetByIDAsync(viewModel.User.Id);
+
+            user.FirstName = viewModel.User.FirstName;
+            user.LastName = viewModel.User.LastName;
+            user.Age = viewModel.User.Age;
+            user.Location = viewModel.User.Location;
+
+            await userService.UpdateAsync(user);
+
+            return RedirectToAction("Profile", new { id = user.Id });
+        }
+
+        [HttpGet("{id}/email-settings")]
+        public async Task<IActionResult> EmailSettingsPartial(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = await userService.GetByIDAsync((int)id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                User = user
+            };
+
+            return PartialView("_EmailSettings");
+        }
+
+        [HttpPost("{id}/email-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EmailSettingsPartial(UserProfileEditViewModel viewModel)
+        {
+            User user = await userService.GetByIDAsync(viewModel.User.Id);
+
+            user.Email = viewModel.User.Email;
+
+            await userService.UpdateAsync(user);
+
+            return RedirectToAction("Profile", new { id = user.Id });
         }
         #endregion
     }
