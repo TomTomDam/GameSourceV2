@@ -116,7 +116,7 @@ namespace GameSource.Controllers.GameSourceUser
                     string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", defaultAvatarImageFileName);
 
                     user.UserProfile = userProfile;
-                    user.UserProfile.AvatarFilePath = filePath;
+                    user.UserProfile.AvatarFilePath = defaultAvatarImageFileName;
                 }
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);
