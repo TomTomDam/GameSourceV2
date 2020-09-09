@@ -1,0 +1,25 @@
+﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject SignInManager<User> signInManager;
+
+<div class="col-md-9 float-left" id="userprofile-email-settings">
+    <h4 class="sub-heading">Email</h4>
+    <hr />
+    <form method="post" asp-action="EmailSettings">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="User.Id" />
+        <div class="form-group">
+            <label asp-for="User.Email" class="control-label"></label>
+            <input asp-for="User.Email" class="form-control" />
+            <span asp-validation-for="User.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save changes" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

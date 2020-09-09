@@ -1,0 +1,40 @@
+﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject SignInManager<User> signInManager;
+
+<div class="col-md-9 float-left" id="userprofile-account-settings">
+    <h4 class="sub-heading">Account</h4>
+    <hr />
+    <form method="post" asp-action="AccountSettings">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="User.Id" />
+        <div class="form-group">
+            <label asp-for="User.FirstName" class="control-label"></label>
+            <input asp-for="User.FirstName" class="form-control" />
+            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.LastName" class="control-label"></label>
+            <input asp-for="User.LastName" class="form-control" />
+            <span asp-validation-for="User.LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Age" class="control-label"></label>
+            <input asp-for="User.Age" class="form-control" />
+            <span asp-validation-for="User.Age" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Location" class="control-label"></label>
+            <input asp-for="User.Location" class="form-control" />
+            <span asp-validation-for="User.Location" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save changes" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
