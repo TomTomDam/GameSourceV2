@@ -1,4 +1,5 @@
 ﻿using GameSource.Models.GameSourceUser;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,13 @@ namespace GameSource.Models.GameSource
         public DateTime DateCreated { get; set; }
 
         public DateTime? DateModified { get; set; }
+
+        //[Display(Name = "Upload Image")]
+        //[NotMapped]
+        //public IFormFile CoverImage { get; set; }
+
+        //[Display(Name = "Current Cover Image")]
+        //public string CoverImageFilePath { get; set; }
 
         [ForeignKey("CreatedBy")]
         public int CreatedByID { get; set; }

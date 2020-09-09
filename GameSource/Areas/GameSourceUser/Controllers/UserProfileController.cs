@@ -17,13 +17,15 @@ namespace GameSource.Areas.GameSourceUser.Controllers
     {
         private readonly IUserService userService;
         private readonly IUserProfileService userProfileService;
+        private readonly IUserProfileVisibilityService userProfileVisibilityService;
         private readonly UserManager<User> userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserProfileController(IUserService userService, IUserProfileService userProfileService, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
+        public UserProfileController(IUserService userService, IUserProfileService userProfileService, IUserProfileVisibilityService userProfileVisibilityService, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userProfileService = userProfileService;
+            this.userProfileVisibilityService = userProfileVisibilityService;
             this.userManager = userManager;
             this.webHostEnvironment = webHostEnvironment;
         }
@@ -42,11 +44,18 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
+            UserProfileVisibility userProfileVisibility = await userProfileVisibilityService.GetByUserProfileIDAsync(user.UserProfile.ID);
+            if (userProfileVisibility == null)
+            {
+                return NotFound();
+            }
+
             UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
                 UserProfile = user.UserProfile,
                 User = user,
-                UserProfileComments = user.UserProfileCommentsCreated.ToList()
+                UserProfileComments = user.UserProfileCommentsCreated.ToList(),
+                UserProfileVisibility = userProfileVisibility
             };
 
             return View(viewModel);
