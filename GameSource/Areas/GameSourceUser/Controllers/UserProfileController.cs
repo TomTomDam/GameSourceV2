@@ -18,14 +18,16 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         private readonly IUserService userService;
         private readonly IUserProfileService userProfileService;
         private readonly IUserProfileVisibilityService userProfileVisibilityService;
+        private readonly IUserProfileCommentPermissionService userProfileCommentPermissionService;
         private readonly UserManager<User> userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserProfileController(IUserService userService, IUserProfileService userProfileService, IUserProfileVisibilityService userProfileVisibilityService, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
+        public UserProfileController(IUserService userService, IUserProfileService userProfileService, IUserProfileVisibilityService userProfileVisibilityService, IUserProfileCommentPermissionService userProfileCommentPermissionService, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userProfileService = userProfileService;
             this.userProfileVisibilityService = userProfileVisibilityService;
+            this.userProfileCommentPermissionService = userProfileCommentPermissionService;
             this.userManager = userManager;
             this.webHostEnvironment = webHostEnvironment;
         }
@@ -50,12 +52,19 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
+            UserProfileCommentPermission userProfileCommentPermission = await userProfileCommentPermissionService.GetByIDAsync((int)user.UserProfile.UserProfileCommentPermissionID);
+            if (userProfileCommentPermission == null)
+            {
+                return NotFound();
+            }
+
             UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
                 UserProfile = user.UserProfile,
                 User = user,
                 UserProfileComments = user.UserProfileCommentsCreated.ToList(),
-                UserProfileVisibility = userProfileVisibility
+                UserProfileVisibility = userProfileVisibility,
+                UserProfileCommentPermission = userProfileCommentPermission
             };
 
             return View(viewModel);

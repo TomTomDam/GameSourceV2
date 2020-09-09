@@ -99,6 +99,9 @@ namespace GameSource
 
             services.AddScoped<IUserProfileCommentRepository, UserProfileCommentRepository>();
             services.AddScoped<IUserProfileCommentService, UserProfileCommentService>();
+
+            services.AddScoped<IUserProfileCommentPermissionRepository, UserProfileCommentPermissionRepository>();
+            services.AddScoped<IUserProfileCommentPermissionService, UserProfileCommentPermissionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
