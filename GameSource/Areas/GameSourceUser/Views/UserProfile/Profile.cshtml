@@ -43,24 +43,24 @@
 
             <div id="userprofile-create-comment"></div>
 
-            @*@if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Everyone)*@
-            
-            @foreach (var comment in Model.UserProfileComments)
+            @if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Everyone)
             {
-                <div class="" id="userprofile-comment-section">
-                    <p class="text-bold">@comment.CreatedBy <span class="small">@comment.DateCreated</span></p>
-                    <p class="">@comment.Body</p>
-                </div>
+                @foreach (var comment in Model.UserProfileComments)
+                {
+                    <div class="" id="userprofile-comment-section">
+                        <p class="text-bold">@comment.CreatedBy <span class="small">@comment.DateCreated</span></p>
+                        <p class="">@comment.Body</p>
+                    </div>
+                }
             }
-            
-            @*else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Private)
-        {
-            <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
-        }
-        else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.FriendsOnly)
-        {
-            <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
-        }*@
+            else if (Model.User.UserProfile.UserProfileCommentPermissionID == (int)UserProfileCommentPermissionEnum.Nobody)
+            {
+                <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
+            }
+            else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileCommentPermissionEnum.FriendsOnly)
+            {
+                <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
+            }
         </div>
     </div>
 </div>

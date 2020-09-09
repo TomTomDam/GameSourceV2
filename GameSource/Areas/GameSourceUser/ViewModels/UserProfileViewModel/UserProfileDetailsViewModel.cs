@@ -18,6 +18,8 @@ namespace GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel
 
         public UserProfileComment UserProfileComment { get; set; }
 
+        public UserProfileCommentPermission UserProfileCommentPermission { get; set; }
+
         public List<UserProfileComment> UserProfileComments { get; set; }
     }
 }
