@@ -1,7 +1,6 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
 @using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
-@inject SignInManager<User> signInManager;
 
 <div class="col-md-9 float-left" id="userprofile-profilebackground-settings">
     <h4 class="sub-heading">Profile Background</h4>
@@ -21,5 +20,5 @@
 </div>
 
 @section scripts {
-
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 } 

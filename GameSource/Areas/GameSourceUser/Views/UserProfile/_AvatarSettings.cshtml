@@ -1,7 +1,6 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
 @using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
-@inject SignInManager<User> signInManager;
 
 @{
     var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
