@@ -10,7 +10,7 @@ using System;
 namespace GameSource.Controllers.GameSource
 {
     [Route("news-article")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public class NewsArticleController : Controller
     {
         private readonly INewsArticleService newsArticleService;
@@ -23,6 +23,7 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("index")]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             NewsArticleIndexViewModel viewModel = new NewsArticleIndexViewModel
@@ -34,6 +35,7 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("details/{id}")]
+        [AllowAnonymous]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -58,6 +60,7 @@ namespace GameSource.Controllers.GameSource
 
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
+        
         public IActionResult Create(NewsArticleCreateViewModel viewModel)
         {
             NewsArticle newsArticle = new NewsArticle

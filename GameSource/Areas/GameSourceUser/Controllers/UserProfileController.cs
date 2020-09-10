@@ -346,7 +346,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
-                User = user
+                User = user,
+                EmailAddress = user.Email
             };
 
             return PartialView("_EmailSettings", viewModel);
@@ -356,13 +357,18 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EmailSettingsPartial(UserProfileEditViewModel viewModel)
         {
-            User user = await userService.GetByIDAsync(viewModel.User.Id);
+            if (ModelState.IsValid)
+            {
+                User user = await userService.GetByIDAsync(viewModel.User.Id);
 
-            user.Email = viewModel.User.Email;
+                user.Email = viewModel.EmailAddress;
 
-            await userService.UpdateAsync(user);
+                await userService.UpdateAsync(user);
 
-            return RedirectToAction("Profile", new { id = user.Id });
+                return RedirectToAction("Profile", new { id = user.Id });
+            }
+
+            return PartialView("_EmailSettings", viewModel);
         }
         #endregion
     }
