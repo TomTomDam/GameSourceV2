@@ -311,7 +311,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 User = user
             };
 
-            return PartialView("_AccountSettings");
+            return PartialView("_AccountSettings", viewModel);
         }
 
         [HttpPost("{id}/account-settings")]
@@ -349,7 +349,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 User = user
             };
 
-            return PartialView("_EmailSettings");
+            return PartialView("_EmailSettings", viewModel);
         }
 
         [HttpPost("{id}/email-settings")]
