@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameSource.Data.Migrations
 {
     [DbContext(typeof(GameSource_DBContext))]
-    [Migration("20200819105239_Initial")]
+    [Migration("20200912115653_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace GameSource.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImageFilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CreatedByID")
@@ -289,6 +292,9 @@ namespace GameSource.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileBackgroundImageFilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID")

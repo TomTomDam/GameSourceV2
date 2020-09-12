@@ -104,6 +104,9 @@ namespace GameSource.Data.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CoverImageFilePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CreatedByID")
                         .HasColumnType("int");
 
@@ -287,6 +290,9 @@ namespace GameSource.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileBackgroundImageFilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID")
@@ -521,25 +527,25 @@ namespace GameSource.Data.Migrations
                     b.HasOne("GameSource.Models.GameSource.Developer", "Developer")
                         .WithMany("Games")
                         .HasForeignKey("DeveloperID")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Genre", "Genre")
                         .WithMany("Games")
                         .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Platform", "Platform")
                         .WithMany("Games")
                         .HasForeignKey("PlatformID")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Publisher", "Publisher")
                         .WithMany("Games")
                         .HasForeignKey("PublisherID")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

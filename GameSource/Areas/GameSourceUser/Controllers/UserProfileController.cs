@@ -223,50 +223,50 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             return RedirectToAction("Profile", new { id = userProfile.UserID });
         }
 
-        //[HttpGet("{id}/profile-background-settings")]
-        //public async Task<IActionResult> ProfileBackgroundSettingsPartial(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet("{id}/profile-background-settings")]
+        public async Task<IActionResult> ProfileBackgroundSettingsPartial(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
-        //    if (userProfile == null)
-        //    {
-        //        return NotFound();
-        //    }
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
 
-        //    UserProfileEditViewModel viewModel = new UserProfileEditViewModel
-        //    {
-        //        UserProfile = userProfile
-        //    };
+            UserProfileEditViewModel viewModel = new UserProfileEditViewModel
+            {
+                UserProfile = userProfile
+            };
 
-        //    return PartialView("_ProfileBackgroundSettings", viewModel);
-        //}
+            return PartialView("_ProfileBackgroundSettings", viewModel);
+        }
 
-        //[HttpPost("{id}/profile-background-settings")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ProfileBackgroundSettingsPartial(UserProfileEditViewModel viewModel)
-        //{
-        //    UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+        [HttpPost("{id}/profile-background-settings")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProfileBackgroundSettingsPartial(UserProfileEditViewModel viewModel)
+        {
+            UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
 
-        //    string uniqueFileName = null;
-        //    string profileBackgroundImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background");
-        //    if (viewModel.UserProfile.AvatarImage != null)
-        //    {
-        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.UserProfile.ProfileBackgroundImage.FileName;
-        //        string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
-        //        await viewModel.UserProfile.ProfileBackgroundImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+            string uniqueFileName = null;
+            string profileBackgroundImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background");
+            if (viewModel.UserProfile.AvatarImage != null)
+            {
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.UserProfile.ProfileBackgroundImage.FileName;
+                string filePath = Path.Combine(profileBackgroundImageFolder, uniqueFileName);
+                await viewModel.UserProfile.ProfileBackgroundImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
 
-        //        userProfile.ProfileBackgroundFilePath = uniqueFileName;
-        //        userProfile.ProfileBackgroundImage = viewModel.UserProfile.ProfileBackgroundImage;
+                userProfile.ProfileBackgroundImageFilePath = uniqueFileName;
+                userProfile.ProfileBackgroundImage = viewModel.UserProfile.ProfileBackgroundImage;
 
-        //        await userProfileService.UpdateAsync(userProfile);
-        //    }
+                await userProfileService.UpdateAsync(userProfile);
+            }
 
-        //    return RedirectToAction("Profile", new { id = userProfile.UserID });
-        //}
+            return RedirectToAction("Profile", new { id = userProfile.UserID });
+        }
         #endregion
 
         #region AccountSettings
