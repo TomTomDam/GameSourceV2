@@ -221,25 +221,25 @@ namespace GameSource.Data.Migrations
                         column: x => x.DeveloperID,
                         principalTable: "Developer",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Genre_GenreID",
                         column: x => x.GenreID,
                         principalTable: "Genre",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Platform_PlatformID",
                         column: x => x.PlatformID,
                         principalTable: "Platform",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Game_Publisher_PublisherID",
                         column: x => x.PublisherID,
                         principalTable: "Publisher",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,6 +337,7 @@ namespace GameSource.Data.Migrations
                     Body = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
+                    CoverImageFilePath = table.Column<string>(nullable: true),
                     CreatedByID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -359,6 +360,7 @@ namespace GameSource.Data.Migrations
                     DisplayName = table.Column<string>(nullable: true),
                     Biography = table.Column<string>(nullable: true),
                     AvatarFilePath = table.Column<string>(nullable: true),
+                    ProfileBackgroundImageFilePath = table.Column<string>(nullable: true),
                     UserID = table.Column<int>(nullable: false),
                     UserProfileVisibilityID = table.Column<int>(nullable: true),
                     UserProfileCommentPermissionID = table.Column<int>(nullable: true)

@@ -102,45 +102,34 @@ namespace GameSource.Areas.Admin.Controllers
                     UserRoleID = (int)UserRoleEnum.Member
                 };
 
-                if (user.UserProfile == null)
+                //Create a new UserProfile after creating a new User - do not assign User to UserProfile until User is successfully created
+                UserProfile userProfile = new UserProfile
                 {
-                    //Create a new UserProfile after creating a new User - do not assign User to UserProfile until User is successfully created
-                    UserProfile userProfile = new UserProfile
-                    {
-                        DisplayName = null,
-                        Biography = null,
-                        UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
-                        UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
-                    };
+                    DisplayName = null,
+                    Biography = null,
+                    UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                    UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
+                };
 
-                    //Add a default UserProfile Avatar Image
-                    string uniqueFileName = null;
-                    string avatarImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar");
-                    if (userProfile.AvatarImage != null)
-                    {
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + "default_avatar.png";
-                        string filePath = Path.Combine(avatarImageFolder, uniqueFileName);
-                        await userProfile.AvatarImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+                //Add a default UserProfile Avatar Image
+                string defaultAvatarImageFileName = "default_avatar.png";
+                string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", defaultAvatarImageFileName);
 
-                        userProfile.AvatarFilePath = uniqueFileName;
-                        await userProfileService.UpdateAsync(userProfile);
-                    }
-
-                    user.UserProfile = userProfile;
-                }
+                user.UserProfile = userProfile;
+                user.UserProfile.AvatarFilePath = defaultAvatarImageFileName;
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
-                    //Assign new UserProfile after user is created
-                    user.UserProfile.UserID = user.Id;
-                    await userProfileService.InsertAsync(user.UserProfile);
-
                     User newUser = await userManager.FindByNameAsync(user.UserName);
                     var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
 
                     if (roleResult.Succeeded)
                     {
+                        //Assign new UserProfile after user is created
+                        user.UserProfile.UserID = user.Id;
+                        await userProfileService.InsertAsync(user.UserProfile);
+
                         await signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index");
                     }

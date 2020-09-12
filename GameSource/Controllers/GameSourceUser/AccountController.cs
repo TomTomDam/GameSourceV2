@@ -100,37 +100,35 @@ namespace GameSource.Controllers.GameSourceUser
                     UserRoleID = (int)UserRoleEnum.Member
                 };
 
-                if (user.UserProfile == null)
+                //Create a new UserProfile - do not assign User to UserProfile until User is successfully created
+                UserProfile userProfile = new UserProfile
                 {
-                    //Create a new UserProfile - do not assign User to UserProfile until User is successfully created
-                    UserProfile userProfile = new UserProfile
-                    {
-                        DisplayName = null,
-                        Biography = null,
-                        UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
-                        UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone
-                    };
+                    DisplayName = null,
+                    Biography = null,
+                    UserProfileVisibilityID = (int)UserProfileVisibilityEnum.Everyone,
+                    UserProfileCommentPermissionID = (int)UserProfileCommentPermissionEnum.Everyone,
+                };
 
-                    //Add a default UserProfile Avatar Image
-                    string defaultAvatarImageFileName = "default_avatar.png";
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", defaultAvatarImageFileName);
+                //Add a default UserProfile Avatar Image
+                string defaultAvatarImageFileName = "default_avatar.png";
+                string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", defaultAvatarImageFileName);
 
-                    user.UserProfile = userProfile;
-                    user.UserProfile.AvatarFilePath = defaultAvatarImageFileName;
-                }
+                user.UserProfile = userProfile;
+                user.UserProfile.AvatarFilePath = defaultAvatarImageFileName;
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
                 {
-                    //Assign and create new UserProfile after user is created
-                    user.UserProfile.UserID = user.Id;
-                    await userProfileService.InsertAsync(user.UserProfile);
-
                     User newUser = await userManager.FindByNameAsync(user.UserName);
                     var roleResult = await userManager.AddToRoleAsync(newUser, "Member");
 
                     if (roleResult.Succeeded)
                     {
+                        //Assign and create new UserProfile after user is created
+                        user.UserProfile.UserID = user.Id;
+                        user.UserProfile.User = user;
+                        await userProfileService.InsertAsync(user.UserProfile);
+
                         await signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index");
                     }

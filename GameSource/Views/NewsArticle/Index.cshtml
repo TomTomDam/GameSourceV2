@@ -12,7 +12,7 @@
 <h1 class="text-center">Index</h1>
 
 <div class="container">
-    @if (signInManager.IsSignedIn(User))
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
     {
         <p>
             <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>

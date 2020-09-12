@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GameSource.Controllers.GameSource
 {
-    [Authorize(Roles = "Admin")]
     [Route("genre")]
     public class GenreController : Controller
     {

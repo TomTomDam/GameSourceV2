@@ -163,3 +163,7 @@ body {
     height: 200px;
     width: auto;
 }
+
+.resizable-input {
+    resize: both;
+}
