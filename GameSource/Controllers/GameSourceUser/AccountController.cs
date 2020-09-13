@@ -113,8 +113,7 @@ namespace GameSource.Controllers.GameSourceUser
                 string defaultAvatarImageFileName = "default_avatar.png";
                 string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar", defaultAvatarImageFileName);
 
-                user.UserProfile = userProfile;
-                user.UserProfile.AvatarFilePath = defaultAvatarImageFileName;
+                userProfile.AvatarFilePath = defaultAvatarImageFileName;
 
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 if (result.Succeeded)
@@ -125,12 +124,11 @@ namespace GameSource.Controllers.GameSourceUser
                     if (roleResult.Succeeded)
                     {
                         //Assign and create new UserProfile after user is created
-                        user.UserProfile.UserID = user.Id;
-                        user.UserProfile.User = user;
-                        await userProfileService.InsertAsync(user.UserProfile);
+                        userProfile.UserID = user.Id;
+                        await userProfileService.InsertAsync(userProfile);
 
                         await signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
 

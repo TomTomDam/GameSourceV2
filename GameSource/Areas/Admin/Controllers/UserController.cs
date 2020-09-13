@@ -273,30 +273,33 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            User user = await userManager.FindByIdAsync(id.ToString());
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                UserRole userRole = await userRoleService.GetByIDAsync(user.UserRoleID);
-                user.UserRole = userRole;
-
-                var userRoleResult = await userManager.RemoveFromRoleAsync(user, user.UserRole.Name);
-                if (userRoleResult.Succeeded)
+                User user = await userManager.FindByIdAsync(id.ToString());
+                if (user != null)
                 {
-                    var result = await userManager.DeleteAsync(user);
-                    if (result.Succeeded)
+                    UserRole userRole = await userRoleService.GetByIDAsync(user.UserRoleID);
+                    user.UserRole = userRole;
+
+                    var userRoleResult = await userManager.RemoveFromRoleAsync(user, user.UserRole.Name);
+                    if (userRoleResult.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        var result = await userManager.DeleteAsync(user);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
+
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
                     }
 
-                    foreach (var error in result.Errors)
+                    foreach (var error in userRoleResult.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                }
-
-                foreach (var error in userRoleResult.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
                 }
             }
 
