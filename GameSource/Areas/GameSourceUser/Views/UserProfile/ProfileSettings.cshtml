@@ -40,6 +40,11 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+            $(".menu-item").on("click", function () {
+                $(".menu-item").removeClass("active");
+                $(this).addClass("active");
+            });
+
             var userProfileId = $('#userProfileId').val();
             console.log("userProfileId: " + userProfileId);
 
