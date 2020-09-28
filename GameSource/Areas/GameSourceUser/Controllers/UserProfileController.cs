@@ -122,7 +122,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             userProfile.Biography = viewModel.UserProfile.Biography;
 
             await userProfileService.UpdateAsync(userProfile);
-
             return RedirectToAction("Profile", new { id = userProfile.UserID });
         }
 
@@ -219,7 +218,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             userProfile.UserProfileCommentPermission = viewModel.UserProfile.UserProfileCommentPermission;
 
             await userProfileService.UpdateAsync(userProfile);
-
             return RedirectToAction("Profile", new { id = userProfile.UserID });
         }
 
@@ -326,7 +324,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             user.Location = viewModel.User.Location;
 
             await userService.UpdateAsync(user);
-
             return RedirectToAction("Profile", new { id = user.Id });
         }
 
@@ -364,7 +361,6 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 user.Email = viewModel.EmailAddress;
 
                 await userService.UpdateAsync(user);
-
                 return RedirectToAction("Profile", new { id = user.Id });
             }
 

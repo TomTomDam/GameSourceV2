@@ -32,6 +32,11 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+            $(".menu-item").on("click", function () {
+                $(".menu-item").removeClass("active");
+                $(this).addClass("active");
+            });
+
             var userId = $('#userId').val();
             console.log("userId: " + userId);
 
@@ -77,6 +82,11 @@
                     }
                 });
             }
+
+            $(".menu-item").on("click", function () {
+                $(".menu-item").removeClass("active");
+                $(this).addClass("active");
+            });
         });
     </script>
 }
