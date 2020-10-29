@@ -15,8 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GameSource</title>
     <environment include="Development">
-        <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     </environment>
     <environment exclude="Development">
@@ -25,7 +25,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameSource</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,10 +35,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse Games</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse Games</a>
                             <ul class="dropdown-menu dropdown-columns" aria-labelledby="navbarDropdown">
                                 @*<div id="browse-games-page"></div>*@
 
@@ -52,18 +52,18 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Database</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Database</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link text-dark" asp-controller="Games" asp-action="Index">View All Games</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="Genre" asp-action="Index">View All Genres</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="Developer" asp-action="Index">View All Developers</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="Publisher" asp-action="Index">View All Publishers</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="Platform" asp-action="Index">View All Platforms</a></li>
-                                <li><a class="nav-link text-dark" asp-controller="PlatformType" asp-action="Index">View All Platform Types</a></li>
+                                <li><a class="nav-link" asp-controller="Games" asp-action="Index">View All Games</a></li>
+                                <li><a class="nav-link" asp-controller="Genre" asp-action="Index">View All Genres</a></li>
+                                <li><a class="nav-link" asp-controller="Developer" asp-action="Index">View All Developers</a></li>
+                                <li><a class="nav-link" asp-controller="Publisher" asp-action="Index">View All Publishers</a></li>
+                                <li><a class="nav-link" asp-controller="Platform" asp-action="Index">View All Platforms</a></li>
+                                <li><a class="nav-link" asp-controller="PlatformType" asp-action="Index">View All Platform Types</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="NewsArticle" asp-action="Index">News</a>
+                            <a class="nav-link" asp-area="" asp-controller="NewsArticle" asp-action="Index">News</a>
                         </li>
                     </ul>
                 </div>
@@ -72,11 +72,11 @@
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">View All Users</a></li>
-                                <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
-                                <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
+                                <li><a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index">View All Users</a></li>
+                                <li><a class="nav-link" asp-area="Admin" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
+                                <li><a class="nav-link" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
                             </ul>
                         </li>
                         }
@@ -84,22 +84,22 @@
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link text-dark" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="Profile" asp-route-id="@ViewBag.UserID">View my profile</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="ProfileSettings" asp-route-id="@ViewBag.UserID">Profile settings</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="AccountSettings" asp-route-id="@ViewBag.UserID">Account settings</a></li>
-                                    <li><a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                    <li><a class="nav-link" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="Profile" asp-route-id="@ViewBag.UserID">View my profile</a></li>
+                                    <li><a class="nav-link" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="ProfileSettings" asp-route-id="@ViewBag.UserID">Profile settings</a></li>
+                                    <li><a class="nav-link" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="AccountSettings" asp-route-id="@ViewBag.UserID">Account settings</a></li>
+                                    <li><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
                                 </ul>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                         }
                     </ul>
@@ -113,7 +113,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
             &copy; 2020 - GameSource - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

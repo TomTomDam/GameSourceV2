@@ -88,6 +88,23 @@ body {
     }
 }
 
+/* Layout */
+body {
+    background-color: #373636;
+    color: #fff;
+}
+
+.navbar > .container > .navbar-brand {
+    color: #fff;
+}
+
+.navbar > .container > .navbar-collapse > .navbar-nav > .nav-item > .nav-link {
+    color: #fff;
+}
+
+/* Homepage */
+
+
 /* UserProfile */
 #userprofile-comment-header {
     margin-bottom: 15px;
