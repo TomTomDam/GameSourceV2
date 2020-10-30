@@ -90,20 +90,69 @@ body {
 
 /* Layout */
 body {
-    background-color: #373636;
+    background-color: #1b2838;
     color: #fff;
 }
 
-.navbar > .container > .navbar-brand {
-    color: #fff;
+a {
+    text-decoration: none;
 }
 
-.navbar > .container > .navbar-collapse > .navbar-nav > .nav-item > .nav-link {
-    color: #fff;
+.navbar,
+.navbar-brand {
+    background-color: #171a21;
+    color: #66c0f4;
+}
+
+.nav-link,
+.navbar-brand:hover {
+    color: #66c0f4;
+}
+
+.nav-link:hover, 
+#navbarDropdown:hover {
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #c7d5e0;
+}
+
+.dropdown-header {
+    color: #4f94bc;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+.dropdown-item:hover, 
+.dropdown-menu > li:hover:not(.dropdown-header) {
+    background-color: #171a21;
+    color: white;
+}
+
+.footer {
+    background-color: #171a21;
+    color: #8F98A0;
+    line-height: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.divider {
+    border-top: 1px solid #363c44;
+}
+
+.footer-links > a {
+    color: #C6D4DF;
 }
 
 /* Homepage */
-
+.homepage-section {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
 
 /* UserProfile */
 #userprofile-comment-header {

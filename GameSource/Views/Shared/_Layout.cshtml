@@ -42,11 +42,11 @@
                             <ul class="dropdown-menu dropdown-columns" aria-labelledby="navbarDropdown">
                                 @*<div id="browse-games-page"></div>*@
 
-                                <li><a class="dropdown-header font-weight-bold">By Genre</a></li>
+                                <div><p class="dropdown-header font-weight-bold">By Genre</p></div>
                                 <li><div class="dropdown-divider"></div></li>
                                 <li><a class="dropdown-item">Sci-Fi</a></li>
 
-                                <li><a class="dropdown-header font-weight-bold">By Platforms</a></li>
+                                <div><p class="dropdown-header font-weight-bold">By Platforms</p></div>
                                 <li><div class="dropdown-divider"></div></li>
                                 <li><a class="dropdown-item">PC</a></li>
                             </ul>
@@ -54,12 +54,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Database</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link" asp-controller="Games" asp-action="Index">View All Games</a></li>
-                                <li><a class="nav-link" asp-controller="Genre" asp-action="Index">View All Genres</a></li>
-                                <li><a class="nav-link" asp-controller="Developer" asp-action="Index">View All Developers</a></li>
-                                <li><a class="nav-link" asp-controller="Publisher" asp-action="Index">View All Publishers</a></li>
-                                <li><a class="nav-link" asp-controller="Platform" asp-action="Index">View All Platforms</a></li>
-                                <li><a class="nav-link" asp-controller="PlatformType" asp-action="Index">View All Platform Types</a></li>
+                                <li><a class="nav-link dropdown-item" asp-controller="Games" asp-action="Index">View All Games</a></li>
+                                <li><a class="nav-link dropdown-item" asp-controller="Genre" asp-action="Index">View All Genres</a></li>
+                                <li><a class="nav-link dropdown-item" asp-controller="Developer" asp-action="Index">View All Developers</a></li>
+                                <li><a class="nav-link dropdown-item" asp-controller="Publisher" asp-action="Index">View All Publishers</a></li>
+                                <li><a class="nav-link dropdown-item" asp-controller="Platform" asp-action="Index">View All Platforms</a></li>
+                                <li><a class="nav-link dropdown-item" asp-controller="PlatformType" asp-action="Index">View All Platform Types</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -113,9 +113,16 @@
         </main>
     </div>
 
-    <footer class="footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2020 - GameSource - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="divider"></div>
+            <div class="footer-content">
+                &copy; 2020 - GameSource
+            </div>
+            <div class="divider"></div>
+            <div class="footer-links">
+                <a asp-area="" asp-controller="Home" asp-action="About">About GameSource</a>  |  <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
