@@ -232,9 +232,10 @@ a {
 
 
 /* News Article */
-
 .resizable-input {
-    resize: both;
+    min-height: 50px;
+    resize: vertical;
+    overflow: hidden;
 }
 
 #news-article-create-body {
