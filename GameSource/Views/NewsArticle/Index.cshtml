@@ -5,11 +5,11 @@
 @inject SignInManager<User> signInManager;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Index</h1>
+<h1 class="text-center">All News</h1>
 
 <div class="container">
     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))

@@ -230,6 +230,14 @@ a {
     width: auto;
 }
 
+
+/* News Article */
+
 .resizable-input {
     resize: both;
+}
+
+#news-article-create-body {
+    height: 400px;
+    width: 800px;
 }
