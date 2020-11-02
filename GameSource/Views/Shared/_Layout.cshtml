@@ -74,9 +74,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index">View All Users</a></li>
-                                <li><a class="nav-link" asp-area="Admin" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
-                                <li><a class="nav-link" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
+                                <li><a class="nav-link dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">View All Users</a></li>
+                                <li><a class="nav-link dropdown-item" asp-area="Admin" asp-controller="UserRole" asp-action="Index">View All User Roles</a></li>
+                                <li><a class="nav-link dropdown-item" asp-area="Admin" asp-controller="UserStatus" asp-action="Index">View All User Statuses</a></li>
                             </ul>
                         </li>
                         }
@@ -86,10 +86,10 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="nav-link" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="Profile" asp-route-id="@ViewBag.UserID">View my profile</a></li>
-                                    <li><a class="nav-link" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="ProfileSettings" asp-route-id="@ViewBag.UserID">Profile settings</a></li>
-                                    <li><a class="nav-link" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="AccountSettings" asp-route-id="@ViewBag.UserID">Account settings</a></li>
-                                    <li><a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                    <li><a class="nav-link dropdown-item" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="Profile" asp-route-id="@ViewBag.UserID">View my profile</a></li>
+                                    <li><a class="nav-link dropdown-item" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="ProfileSettings" asp-route-id="@ViewBag.UserID">Profile settings</a></li>
+                                    <li><a class="nav-link dropdown-item" asp-area="GameSourceUser" asp-controller="UserProfile" asp-action="AccountSettings" asp-route-id="@ViewBag.UserID">Account settings</a></li>
+                                    <li><a class="nav-link dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
                                 </ul>
                             </li>
                         }

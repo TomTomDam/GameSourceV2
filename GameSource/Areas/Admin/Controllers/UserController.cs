@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GameSource.Areas.Admin.ViewModels.AdminUserViewModel;
-using GameSource.Data.Repositories.GameSourceUser;
 using GameSource.Models.GameSourceUser;
 using GameSource.Models.GameSourceUser.Enums;
 using GameSource.Services.GameSourceUser.Contracts;
