@@ -20,14 +20,16 @@
     }
 
     <div class="divider"></div>
-    <div class="" id="news-article-post-block">
+    <div class="news-article-post-block" id="">
         @foreach (var newsArticle in Model.NewsArticles)
         {
-            <h2>@newsArticle.Title</h2>
-            <p>@newsArticle.Body</p>
-            <p>@newsArticle.CreatedBy</p>
-            <p>@newsArticle.DateCreated</p>
-            <p>@newsArticle.DateModified</p>
+            <div class="news-article-post-header" id="">
+                <span id="news-article-post-title font-weight-bold">@newsArticle.Title</span>
+                <span class="news-article-post-dateCreated" id="">@newsArticle.DateCreated</span>
+                <p id="news-article-post-createdBy">@newsArticle.CreatedBy</p>
+            </div>
+            <p id="news-article-post-body">@newsArticle.Body</p>
+            <p id="news-article-post-dateModified">@newsArticle.DateModified</p>
             <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
 
             @if (User.IsInRole("Admin"))
