@@ -18,16 +18,26 @@
             <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
         </p>
     }
-
     @foreach (var newsArticle in Model.NewsArticles)
     {
-        <h2>@newsArticle.Title</h2>
-        <p>@newsArticle.CreatedBy</p>
-        <p>@newsArticle.DateCreated</p>
-        <p>@newsArticle.DateModified</p>
-        <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
-        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
-        <br />
+        <div class="divider"></div>
+        <div class="news-article-post-block" id="">
+            <div class="news-article-post-header" id="">
+                <span id="news-article-post-title font-weight-bold">@newsArticle.Title</span>
+                <span class="news-article-post-dateCreated" id="">@newsArticle.DateCreated</span>
+                <p id="news-article-post-createdBy">@newsArticle.CreatedBy</p>
+            </div>
+            <p id="news-article-post-body">@newsArticle.Body</p>
+            <p id="news-article-post-dateModified">@newsArticle.DateModified</p>
+            <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
+                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
+            }
+            <br />
+        </div>
+        <div class="divider"></div>
     }
 </div>

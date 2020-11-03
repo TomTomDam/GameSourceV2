@@ -60,7 +60,6 @@ namespace GameSource.Controllers.GameSource
 
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
-        
         public IActionResult Create(NewsArticleCreateViewModel viewModel)
         {
             NewsArticle newsArticle = new NewsArticle

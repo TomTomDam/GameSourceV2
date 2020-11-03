@@ -9,8 +9,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    <div class="page-heading text-bold"><span class="page-heading-username">@User.Identity.Name</span> > Account Settings</div>
+<div id="userprofile-account-settings-page">
+    <div class="page-heading page-heading-bottom-border text-bold" id="userprofile-account-settings-page-heading">
+        <span id="userprofile-account-settings-page-heading-username">@User.Identity.Name</span> > Account Settings
+    </div>
     <div id="account-settings-page"></div>
     @*<div class="page-content container clearfix">
         <div class="col-md-3 float-left pr-4">

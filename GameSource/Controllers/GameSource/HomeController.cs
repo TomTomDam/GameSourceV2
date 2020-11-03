@@ -25,10 +25,5 @@ namespace GameSource.Controllers.GameSource
         {
             return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }
