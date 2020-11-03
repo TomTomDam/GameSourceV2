@@ -18,11 +18,10 @@
             <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
         </p>
     }
-
-    <div class="divider"></div>
-    <div class="news-article-post-block" id="">
-        @foreach (var newsArticle in Model.NewsArticles)
-        {
+    @foreach (var newsArticle in Model.NewsArticles)
+    {
+        <div class="divider"></div>
+        <div class="news-article-post-block" id="">
             <div class="news-article-post-header" id="">
                 <span id="news-article-post-title font-weight-bold">@newsArticle.Title</span>
                 <span class="news-article-post-dateCreated" id="">@newsArticle.DateCreated</span>
@@ -38,7 +37,7 @@
                 <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
             }
             <br />
-        }
-    </div>
-    <div class="divider"></div>
+        </div>
+        <div class="divider"></div>
+    }
 </div>
