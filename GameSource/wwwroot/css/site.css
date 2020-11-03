@@ -186,11 +186,10 @@ a {
 .page-heading {
     padding: 8px 16px;
     margin-top: 0;
-    margin-bottom: 0;
-    font-size: inherit;
+    margin-bottom: 16px;
     font-weight: 600;
     border-bottom: 1px solid #808080;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .page-heading-username {
@@ -241,4 +240,14 @@ a {
 #news-article-create-body {
     height: 400px;
     width: 800px;
+}
+
+#news-article-dateCreated {
+    float: right;
+    font-size: 16px;
+}
+
+#news-article-post-block {
+    padding-top: 5px;
+    padding-bottom: 15px;
 }

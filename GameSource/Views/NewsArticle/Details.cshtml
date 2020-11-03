@@ -5,16 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <label asp-for="NewsArticle.Title" class="control-label font-weight-bold"></label><p>@Model.NewsArticle.Title</p>
-            <label asp-for="NewsArticle.Body" class="control-label font-weight-bold"></label><p>@Model.NewsArticle.Body</p>
-            <label asp-for="NewsArticle.CreatedBy" class="control-label font-weight-bold"></label><p>@Model.NewsArticle.CreatedBy</p>
-            <label asp-for="NewsArticle.DateCreated" class="control-label font-weight-bold"></label><p>@Model.NewsArticle.DateCreated</p>
-            <label asp-for="NewsArticle.DateModified" class="control-label font-weight-bold"></label><p>@Model.NewsArticle.DateModified</p>
+            <p class="page-heading">
+                <span class="font-weight-bold" id="news-article-title">@Model.NewsArticle.Title</span>
+                <span id="news-article-dateCreated">@Model.NewsArticle.DateCreated</span>
+            </p>
+            <p class="" id="news-article-createdBy">@Model.NewsArticle.CreatedBy</p>
+            <p class="" id="news-article-body">@Model.NewsArticle.Body</p>
         </div>
     </div>
 </div>
