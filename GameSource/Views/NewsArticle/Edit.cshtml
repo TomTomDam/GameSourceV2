@@ -1,7 +1,7 @@
 ﻿@model GameSource.ViewModels.GameSource.NewsArticleViewModel.NewsArticleEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit News Article";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,18 +10,18 @@
 <hr />
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8 offset-md-2">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="NewsArticle.ID" />
                 <div class="form-group">
                     <label asp-for="NewsArticle.Title" class="control-label"></label>
-                    <input asp-for="NewsArticle.Title" class="form-control" />
+                    <input asp-for="NewsArticle.Title" class="form-control" id="news-article-edit-title" />
                     <span asp-validation-for="NewsArticle.Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="NewsArticle.Body" class="control-label"></label>
-                    <input asp-for="NewsArticle.Body" class="form-control" />
+                    <textarea asp-for="NewsArticle.Body" class="form-control resizable-input news-article-textarea" id="" oninput="autoGrow(this)"></textarea>
                     <span asp-validation-for="NewsArticle.Body" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -31,12 +31,20 @@
         </div>
     </div>
 
-    <div>
-        <a asp-action="Index">Back to Index</a>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <a asp-action="Index">Back to Index</a>
+        </div>
     </div>
 </div>
 
-
-@section Scripts {
+@section scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function autoGrow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight) + "px";
+        };
+    </script>
 }
