@@ -144,6 +144,11 @@ a {
     border-top: 1px solid #363c44;
 }
 
+.divider-margin {
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
 .footer-links > a {
     color: #C6D4DF;
 }
@@ -196,11 +201,13 @@ a {
 }
 
 /* UserProfile Settings + Account Settings */
-#userprofile-profile-settings-page, #userprofile-account-settings-page {
+#userprofile-profile-settings-page,
+#userprofile-account-settings-page {
     box-sizing: border-box;
 }
 
-#userprofile-account-settings-page-heading-username, #userprofile-profile-settings-page-heading-username {
+#userprofile-account-settings-page-heading-username,
+#userprofile-profile-settings-page-heading-username {
     font-size: 30px;
 }
 
@@ -240,9 +247,12 @@ a {
     overflow: hidden;
 }
 
-#news-article-create-body {
+.news-article-textarea {
     height: 400px;
-    width: 800px;
+}
+
+#news-article-container {
+    word-wrap: break-word;
 }
 
 #news-article-dateCreated {
