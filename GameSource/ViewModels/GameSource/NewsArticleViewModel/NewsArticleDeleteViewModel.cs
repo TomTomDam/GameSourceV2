@@ -5,5 +5,6 @@ namespace GameSource.ViewModels.GameSource.NewsArticleViewModel
     public class NewsArticleDeleteViewModel
     {
         public NewsArticle NewsArticle { get; set; }
+        public NewsArticleCategory NewsArticleCategory { get; set; }
     }
 }

@@ -19,7 +19,11 @@ namespace GameSource.Models.GameSource
 
         public DateTime? DateModified { get; set; }
 
+        //public int CategoryID { get; set; }
+
+        //[Display(Name = "Category")]
         //public NewsArticleCategory Category { get; set; }
+
 
         [Display(Name = "Upload Image")]
         [NotMapped]

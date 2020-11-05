@@ -28,7 +28,8 @@ namespace GameSource.Controllers.GameSource
         {
             NewsArticleIndexViewModel viewModel = new NewsArticleIndexViewModel
             {
-                NewsArticles = newsArticleService.GetAll()
+                NewsArticles = newsArticleService.GetAll(),
+                //NewsArticleCategory = newsArticleCategoryService.GetAll()
             };
 
             return View(viewModel);
@@ -43,8 +44,23 @@ namespace GameSource.Controllers.GameSource
                 return NotFound();
             }
 
-            NewsArticleDetailsViewModel viewModel = new NewsArticleDetailsViewModel();
-            viewModel.NewsArticle = newsArticleService.GetByID((int)id);
+            NewsArticle newsArticle = newsArticleService.GetByID((int)id);
+            if (newsArticle == null)
+            {
+                return NotFound();
+            }
+
+            //NewsArticleCategory newsArticleCategory = newsArticleCategoryService.GetByID((int)newsArticle.CategoryID);
+            //if (newsArticleCategory == null)
+            //{
+            //    return NotFound();
+            //}
+
+            NewsArticleDetailsViewModel viewModel = new NewsArticleDetailsViewModel
+            {
+                NewsArticle = newsArticle,
+                //NewsArticleCategory = newsArticleCategory
+            };
 
             return View(viewModel);
         }
@@ -52,10 +68,13 @@ namespace GameSource.Controllers.GameSource
         [HttpGet("create")]
         public IActionResult Create()
         {
-            NewsArticleCreateViewModel viewModel = new NewsArticleCreateViewModel()
-            {
-                NewsArticle = new NewsArticle()
-            };
+            NewsArticleCreateViewModel viewModel = new NewsArticleCreateViewModel();
+            viewModel.NewsArticle = new NewsArticle();
+            //viewModel.NewsArticleCategory = newsArticleCategoryService.GetAll().Select(x => new SelectListItem()
+            //{
+            //    Text = x.Name,
+            //    Value = x.ID.ToString()
+            //}).ToList();
 
             return View(viewModel);
         }
@@ -73,6 +92,7 @@ namespace GameSource.Controllers.GameSource
                 DateModified = null,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
                 CreatedBy = userManager.GetUserAsync(HttpContext.User).Result,
+                //NewsArticleCategory = viewModel.NewsArticle.CategoryID
             };
 
             newsArticleService.Insert(newsArticle);
@@ -87,8 +107,20 @@ namespace GameSource.Controllers.GameSource
                 return NotFound();
             }
 
+            NewsArticle newsArticle = newsArticleService.GetByID((int)id);
+            if (newsArticle == null)
+            {
+                return NotFound();
+            }
+
             NewsArticleEditViewModel viewModel = new NewsArticleEditViewModel();
-            viewModel.NewsArticle = newsArticleService.GetByID((int)id);
+            viewModel.NewsArticle = newsArticle;
+            //viewModel.NewsArticleCategories = newsArticleCategoryService.GetAll().Select(x => new SelectListItem
+            //{
+            //    Text = x.Name,
+            //    Value = x.ID.ToString()
+            //}).ToList();
+            //viewModel.NewsArticleCategoryID = (int)newsArticle.CategoryID;
 
             return View(viewModel);
         }
@@ -102,6 +134,7 @@ namespace GameSource.Controllers.GameSource
             newsArticle.Title = viewModel.NewsArticle.Title;
             newsArticle.Body = viewModel.NewsArticle.Body;
             newsArticle.DateModified = DateTime.Now;
+            //newsArticle.CategoryID = viewModel.NewsArticle.CategoryID;
 
             newsArticleService.Update(newsArticle);
             return RedirectToAction("Details", newsArticle);
@@ -121,9 +154,16 @@ namespace GameSource.Controllers.GameSource
                 return NotFound();
             }
 
+            //NewsArticleCategory newsArticleCategory = newsArticleService.GetByID((int)id);
+            //if (newsArticleCategory == null)
+            //{
+            //    return NotFound();
+            //}
+
             NewsArticleDeleteViewModel viewModel = new NewsArticleDeleteViewModel
             {
-                NewsArticle = newsArticle
+                NewsArticle = newsArticle,
+                //NewsArticleCategory = newsArticleCategory
             };
 
             return View(viewModel);

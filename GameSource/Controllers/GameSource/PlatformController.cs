@@ -47,10 +47,16 @@ namespace GameSource.Controllers.GameSource
                 return NotFound();
             }
 
+            PlatformType platformType = platformTypeService.GetByID((int)platform.PlatformTypeID);
+            if (platformType == null)
+            {
+                return NotFound();
+            }
+
             PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel
             {
                 Platform = platform,
-                PlatformType = platformTypeService.GetByID((int)platform.PlatformTypeID)
+                PlatformType = platformType
             };
 
             return View(viewModel);
