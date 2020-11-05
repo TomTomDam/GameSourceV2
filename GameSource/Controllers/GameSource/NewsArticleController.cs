@@ -52,8 +52,10 @@ namespace GameSource.Controllers.GameSource
         [HttpGet("create")]
         public IActionResult Create()
         {
-            NewsArticleCreateViewModel viewModel = new NewsArticleCreateViewModel();
-            viewModel.NewsArticle = new NewsArticle();
+            NewsArticleCreateViewModel viewModel = new NewsArticleCreateViewModel()
+            {
+                NewsArticle = new NewsArticle()
+            };
 
             return View(viewModel);
         }
@@ -70,7 +72,7 @@ namespace GameSource.Controllers.GameSource
                 DateCreated = DateTime.Now,
                 DateModified = null,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
-                CreatedBy = userManager.GetUserAsync(HttpContext.User).Result
+                CreatedBy = userManager.GetUserAsync(HttpContext.User).Result,
             };
 
             newsArticleService.Insert(newsArticle);
