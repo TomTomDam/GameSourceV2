@@ -2,7 +2,6 @@
 using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace GameSource.Data
 {
@@ -21,6 +20,7 @@ namespace GameSource.Data
         public DbSet<Platform> Platform { get; set; }
         public DbSet<PlatformType> PlatformType { get; set; }
         public DbSet<NewsArticle> NewsArticle { get; set; }
+        public DbSet<NewsArticleCategory> NewsArticleCategory { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserStatus> UserStatus { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
