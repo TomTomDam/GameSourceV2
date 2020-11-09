@@ -82,6 +82,9 @@ namespace GameSource
             services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
             services.AddScoped<INewsArticleService, NewsArticleService>();
 
+            services.AddScoped<INewsArticleCategoryRepository, NewsArticleCategoryRepository>();
+            services.AddScoped<INewsArticleCategoryService, NewsArticleCategoryService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 

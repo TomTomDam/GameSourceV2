@@ -14,11 +14,13 @@ namespace GameSource.Controllers.GameSource
     public class NewsArticleController : Controller
     {
         private readonly INewsArticleService newsArticleService;
+        private readonly INewsArticleCategoryService newsArticleCategoryService;
         private readonly UserManager<User> userManager;
 
-        public NewsArticleController(INewsArticleService newsArticleService, UserManager<User> userManager)
+        public NewsArticleController(INewsArticleService newsArticleService, INewsArticleCategoryService newsArticleCategoryService, UserManager<User> userManager)
         {
             this.newsArticleService = newsArticleService;
+            this.newsArticleCategoryService = newsArticleCategoryService;
             this.userManager = userManager;
         }
 
