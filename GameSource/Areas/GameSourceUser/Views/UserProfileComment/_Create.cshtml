@@ -5,20 +5,23 @@
 }
 
 <div id="userprofile-create-comment">
-    <div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="UserProfileComment.ID" />
-        <div class="" id="userprofile-create-comment-author"></div>
-        <div class="" id="userprofile-create-comment-body">
-            <input id="userprofile-create-comment-body-input" asp-for="UserProfileComment.Body" class="form-control" placeholder="Create a comment..." />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="UserProfileComment.ID" />
+    <h2 class="font-weight-bold userprofile-comments-header">Comments</h2>
+    <div class="userprofile-create-comment-entry">
+        <div class="userprofile-comment-user-avatar">
+            <img src="" />
+        </div>
+        <div class="userprofile-create-comment-box">
+            <input id="userprofile-create-comment-input" asp-for="UserProfileComment.Body" class="form-control" placeholder="Create a comment..." />
             <span asp-validation-for="UserProfileComment.Body" class="text-danger"></span>
         </div>
-        <div class="">
-            <button class="btn btn-primary" id="userprofile-create-comment-btn">Post comment</button>
-        </div>
+    </div>
+    <div class="">
+        <button class="btn btn-primary" id="userprofile-create-comment-btn">Post comment</button>
     </div>
 </div>
 
 @section scripts {
     <script src="~/js/userprofile-comments.js"></script>
-} 
+}

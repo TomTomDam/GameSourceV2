@@ -15,8 +15,10 @@ namespace GameSource.Models.GameSource
 
         public string Body { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
+        [Display(Name = "Date Modified")]
         public DateTime? DateModified { get; set; }
 
         //public int? CategoryID { get; set; }
@@ -35,6 +37,7 @@ namespace GameSource.Models.GameSource
         [ForeignKey("CreatedBy")]
         public int CreatedByID { get; set; }
 
+        [Display(Name = "Author")]
         public User CreatedBy { get; set; }
     }
 }
