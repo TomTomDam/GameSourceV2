@@ -25,7 +25,7 @@
     function userProfileCreateComment() {
         debugger;
         var userProfileCommentObject = {
-            "body": $('#userprofile-create-comment-body-input').val(),
+            "body": $('#userprofile-create-comment-input').val(),
             "userProfileID": userProfileId
         };
 

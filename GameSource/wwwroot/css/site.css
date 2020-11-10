@@ -177,18 +177,38 @@ a {
 }
 
 /* UserProfile */
-#userprofile-comment-header {
-    margin-bottom: 15px;
-}
-
 #userprofile-create-comment {
-    margin-top: 15px;
+    margin-top: 80px;
     margin-bottom: 15px;
 }
 
-#userprofile-create-comment-body {
+.userprofile-comments-header {
+    margin-bottom: 15px;
+}
+
+.userprofile-create-comment-entry {
+    position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.userprofile-comment-user-avatar {
+    float: left;
+    margin-right: 8px;
+}
+
+.userprofile-comment-user-avatar > img {
+    width: 40px;
+    height: 40px;
+    padding: 1px;
+    border-radius: 0;
+    border: none;
+}
+
+.userprofile-create-comment-box {
+    display: inline-block;
+    width: 90%;
+    margin-top: 2px;
 }
 
 #userprofile-create-comment-btn {
