@@ -358,7 +358,6 @@ input.dialog-input {
 .news-article-post-block {
     word-wrap: break-word;
     padding-top: 5px;
-    padding-bottom: 15px;
 }
 
 .news-article-post-dateCreated {
@@ -370,4 +369,8 @@ input.dialog-input {
     margin-top: 0;
     font-weight: 600;
     font-size: 24px;
+}
+
+.news-article-post-body {
+    padding-top: 5px;
 }

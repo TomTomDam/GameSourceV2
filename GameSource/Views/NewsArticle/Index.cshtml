@@ -21,22 +21,25 @@
     @foreach (var newsArticle in Model.NewsArticles)
     {
         <div class="divider"></div>
-        <div class="news-article-post-block" id="">
-            <div class="news-article-post-header" id="">
-                <span id="news-article-post-title font-weight-bold">@newsArticle.Title</span>
-                <span class="news-article-post-dateCreated" id="">@newsArticle.DateCreated</span>
-                <p id="news-article-post-createdBy">@newsArticle.CreatedBy</p>
+        <div class="news-article-post-block">
+            <div class="news-article-post-header">
+                <span class="news-article-post-title font-weight-bold">@newsArticle.Title</span>
+                <span class="news-article-post-dateCreated">@newsArticle.DateCreated</span>
+                <span class="news-article-post-dateModified">@newsArticle.DateModified</span>
+                <span class="news-article-post-createdBy">@newsArticle.CreatedBy</span>
             </div>
-            <p id="news-article-post-body">@newsArticle.Body</p>
-            <p id="news-article-post-dateModified">@newsArticle.DateModified</p>
-            <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
+            <div class="news-article-post-body">
+                <p>@newsArticle.Body</p>
+            </div>
 
-            @if (User.IsInRole("Admin"))
-            {
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
-                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
-            }
-            <br />
+            <p>
+                <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
+                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
+                }
+            </p>
         </div>
         <div class="divider"></div>
         <div class="divider-margin"></div>
