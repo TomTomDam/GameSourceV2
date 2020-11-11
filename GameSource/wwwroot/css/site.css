@@ -153,6 +153,58 @@ a {
     color: #C6D4DF;
 }
 
+hr {
+    border-color: #363c44;
+}
+
+.dialog-label {
+    font-weight: 300;
+    color: #969696;
+    text-transform: uppercase;
+    line-height: 19px;
+    font-size: 13px;
+    margin-bottom: 4px;
+    user-select: none;
+    letter-spacing: initial;
+}
+
+input.dialog-input-base {
+    box-shadow: inset 1px 1px 0px #000a;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.dialog-input-base {
+    background: rgba(59, 63, 72, 0.5);
+    color: #dfe3e6;
+    font-size: 14px;
+    font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0px 0px 0px #0000;
+    transition: all .2s ease-in-out;
+}
+
+input.dialog-input {
+    flex: 1;
+}
+
+.dialog-input {
+    display: block;
+    line-height: 22px;
+    padding: 10px;
+}
+
+.dialog-textarea {
+    color: #909090;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
 /* Page formatting */
 .page-heading {
     padding: 8px 16px;
@@ -190,25 +242,23 @@ a {
     position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .userprofile-comment-user-avatar {
-    float: left;
-    margin-right: 8px;
+    flex: 0 0 50px;
 }
 
 .userprofile-comment-user-avatar > img {
     width: 40px;
     height: 40px;
-    padding: 1px;
     border-radius: 0;
     border: none;
 }
 
 .userprofile-create-comment-box {
-    display: inline-block;
-    width: 90%;
-    margin-top: 2px;
+    flex: auto;
 }
 
 #userprofile-create-comment-btn {
@@ -258,16 +308,25 @@ a {
 #userprofile-avatar-settings-thumbnail {
     height: 200px;
     width: auto;
+    padding: 10px;
 }
 
 /* News Article */
 .resizable-input {
-    min-height: 50px;
-    resize: vertical;
-    overflow: hidden;
+
 }
 
-.news-article-textarea {
+.ck-editor__editable {
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    color: #909090;
+    font-size: 14px;
+    line-height: 1.4em;
+    box-shadow: inset 1px 1px 0px #000a;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 12px;
     height: 400px;
 }
 
