@@ -7,9 +7,8 @@
 }
 
 <div class="col-md-9 float-left" id="userprofile-avatar-settings">
-    <h4 class="sub-heading">Avatar</h4>
-    <hr />
-    <form enctype="multipart/form-data" method="post" asp-action="AvatarSettings">
+    <div class="sub-heading">Avatar</div>
+    <form enctype="multipart/form-data" method="post" asp-action="AvatarSettings" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="UserProfile.ID" />
         <div class="form-group">

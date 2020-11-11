@@ -4,13 +4,13 @@
     ViewData["Title"] = "Game";
 }
 
-<h1>Game</h1>
+<label asp-for="Game.Name" class="control-label font-weight-bold"></label><h1>@Model.Game.Name</h1>
+<hr />
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <label asp-for="Game.ID" class="control-label font-weight-bold"></label><p>@Model.Game.ID</p>
-            <label asp-for="Game.Name" class="control-label font-weight-bold"></label><p>@Model.Game.Name</p>
             <label asp-for="Game.Description" class="control-label font-weight-bold"></label><p>@Model.Game.Description</p>
             <label asp-for="Game.Genre" class="control-label font-weight-bold"></label><p>@Model.Genre.Name</p>
             <label asp-for="Game.Developer" class="control-label font-weight-bold"></label><p>@Model.Developer.Name</p>

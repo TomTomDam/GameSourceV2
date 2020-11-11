@@ -3,9 +3,8 @@
 @using GameSource.Models.GameSourceUser;
 
 <div class="col-md-9 float-left" id="userprofile-general-settings">
-    <h4 class="sub-heading">General</h4>
-    <hr />
-    <form method="post" asp-action="GeneralSettings">
+    <div class="sub-heading">General</div>
+    <form method="post" asp-action="GeneralSettings" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="UserProfile.ID" />
         <div class="form-group">
