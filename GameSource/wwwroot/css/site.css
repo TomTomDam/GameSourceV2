@@ -153,8 +153,24 @@ a {
     color: #C6D4DF;
 }
 
+.sub-heading {
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-transform: uppercase;
+    color: #E4E4E4;
+    padding: 0px 0px 6px 10px;
+    border-bottom: 2px solid rgba(228, 228, 228, 0.1);
+}
+
 hr {
     border-color: #363c44;
+}
+
+.dialog-form {
+    flex: 1;
+    align-items: center;
+    padding: 24px 20px;
 }
 
 .dialog-label {

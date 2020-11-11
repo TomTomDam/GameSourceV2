@@ -3,9 +3,8 @@
 @using GameSource.Models.GameSourceUser;
 
 <div class="col-md-9 float-left" id="userprofile-privacy-settings">
-    <h4 class="sub-heading">Privacy</h4>
-    <hr />
-    <form method="post" asp-action="PrivacySettings">
+    <div class="sub-heading">Privacy</div>
+    <form method="post" asp-action="PrivacySettings" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="User.Id" />
         <div class="form-group">

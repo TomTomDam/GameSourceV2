@@ -1,9 +1,12 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
 
 <div class="col-md-9 float-left" id="userprofile-email-settings">
-    <h4 class="sub-heading">Email</h4>
-    <hr />
-    <form id="userprofile-email-settings-form" asp-action="EmailSettingsPartial" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#userprofile-email-settings-form">
+    <div class="sub-heading">Email</div>
+    <form class="dialog-form" id="userprofile-email-settings-form" asp-action="EmailSettingsPartial" 
+          data-ajax="true" 
+          data-ajax-method="POST" 
+          data-ajax-mode="replace" 
+          data-ajax-update="#userprofile-email-settings-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="User.Id" />
         <div class="form-group">
