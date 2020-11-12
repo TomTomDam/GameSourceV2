@@ -236,6 +236,25 @@ input.dialog-input {
     color: #dfe3e6;
 }
 
+/* CKEditor Textarea */
+.ck-toolbar {
+    background-color: #E4E4E4 !important;
+}
+
+.ck-editor__editable_inline {
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    color: #909090;
+    font-size: 14px;
+    line-height: 1.4em;
+    box-shadow: inset 1px 1px 0px #000a;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.25) !important;
+    padding: 12px;
+    height: 400px;
+}
+
 /* Page formatting */
 .page-heading {
     padding: 8px 16px;
@@ -465,20 +484,6 @@ input.dialog-input {
 
 /* News Article */
 .resizable-input {
-}
-
-.ck-editor__editable {
-    resize: none;
-    overflow: hidden;
-    outline: none;
-    color: #909090;
-    font-size: 14px;
-    line-height: 1.4em;
-    box-shadow: inset 1px 1px 0px #000a;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.25);
-    padding: 12px;
-    height: 400px;
 }
 
 #news-article-container {

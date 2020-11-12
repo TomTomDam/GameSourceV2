@@ -30,7 +30,6 @@
             </form>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <a asp-action="Index">Back to Index</a>
@@ -42,7 +41,9 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
-            .create(document.querySelector('#editor'))
+            .create(document.querySelector('#editor'), {
+
+            })
             .catch(error => {
                 console.error(error);
             });
