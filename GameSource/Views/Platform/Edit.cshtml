@@ -10,17 +10,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="Edit" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Platform.ID" />
                 <div class="form-group">
                     <label asp-for="Platform.Name" class="control-label dialog-label"></label>
-                    <input asp-for="Platform.Name" class="form-control  dialog-input dialog-input-base" />
+                    <input asp-for="Platform.Name" class="form-control dialog-input dialog-input-base" />
                     <span asp-validation-for="Platform.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Platform.PlatformType" class="control-label dialog-label"></label>
-                    <select asp-for="PlatformTypeID" asp-items="@Model.PlatformTypes" class="form-control  dialog-input dialog-input-base">
+                    <select asp-for="PlatformTypeID" asp-items="@Model.PlatformTypes" class="form-control dialog-input dialog-input-base">
                         <option value="">Select a Platform/Platforms</option>
                     </select>
                     <span asp-validation-for="Platform.PlatformType" class="text-danger"></span>

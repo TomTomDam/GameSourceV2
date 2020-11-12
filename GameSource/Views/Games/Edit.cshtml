@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="Edit" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Game.ID" />
                 <div class="form-group">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Description" class="control-label dialog-label"></label>
-                    <input asp-for="Game.Description" class="form-control dialog-input dialog-input-base" />
+                    <textarea asp-for="Game.Description" class="form-control dialog-input dialog-input-base dialog-textarea"></textarea>
                     <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
