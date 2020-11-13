@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Account\AccountSettings\" />
     <Folder Include="wwwroot\images\Games\CoverImage\" />
     <Folder Include="wwwroot\images\Games\GameImages\" />
     <Folder Include="wwwroot\images\NewsArticle\CoverImage\" />
