@@ -4,26 +4,26 @@
     ViewData["Title"] = "Add a new Publisher";
 }
 
-<h1 class="text-center">Add a new Publisher</h1>
-<hr />
-
-<div class="container">
-    <div class="row">
-        <form asp-action="Create" class="dialog-form">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Publisher.ID" />
-            <div class="form-group">
-                <label asp-for="Publisher.Name" class="control-label dialog-label"></label>
-                <input asp-for="Publisher.Name" class="form-control dialog-input dialog-input-base" />
-                <span asp-validation-for="Publisher.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-
-    <div class="row">
-        <a asp-action="Index">Back to Index</a>
+<div class="container create-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading">Add a new Publisher</div>
+            <hr />
+            <form asp-action="Create" class="dialog-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Publisher.ID" />
+                <div class="form-group">
+                    <label asp-for="Publisher.Name" class="control-label dialog-label"></label>
+                    <input asp-for="Publisher.Name" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Publisher.Name" class="text-danger"></span>
+                </div>
+                <div class="submit-btn-section">
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                    <a class="index-link" asp-action="Index">Back to Index</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
