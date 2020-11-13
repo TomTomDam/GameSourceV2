@@ -159,6 +159,10 @@ a:hover {
     color: #C6D4DF;
 }
 
+.footer-links > a:hover {
+    color: #fff;
+}
+
 .sub-heading {
     font-size: 16px;
     line-height: 28px;
