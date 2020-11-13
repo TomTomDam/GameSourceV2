@@ -5,12 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Create a new News Article</h1>
-<hr />
-
-<div class="container ck-content">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
+<div class="container create-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="page-heading">Create a new News Article</div>
+            <hr />
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="NewsArticle.ID" />
@@ -24,15 +23,13 @@
                     <textarea asp-for="NewsArticle.Body" class="form-control dialog-input-base dialog-textarea" id="editor" oninput="autoGrow(this)"></textarea>
                     <span asp-validation-for="NewsArticle.Body" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                <div class="submit-btn-section">
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                    <a class="index-link" asp-action="Index">Back to Index</a>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <a asp-action="Index">Back to Index</a>
         </div>
     </div>
 </div>

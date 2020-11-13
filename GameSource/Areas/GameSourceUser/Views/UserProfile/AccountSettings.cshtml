@@ -10,7 +10,7 @@
 }
 
 <div id="userprofile-account-settings-page">
-    <div class="page-heading page-heading-bottom-border text-bold" id="userprofile-account-settings-page-heading">
+    <div class="userprofile-page-heading page-heading-bottom-border" id="userprofile-account-settings-page-heading">
         <span id="userprofile-account-settings-page-heading-username">@User.Identity.Name</span> > Account Settings
     </div>
     <div class="page-content container clearfix" id="userprofile-settings-page-content">
@@ -24,7 +24,6 @@
                 </a>
             </nav>
         </div>
-
         <input type="hidden" asp-for="User.Id" id="userId" />
         <div id="userprofile-account-settings"></div>
         <div id="userprofile-email-settings"></div>

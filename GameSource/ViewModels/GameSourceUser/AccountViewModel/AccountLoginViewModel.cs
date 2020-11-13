@@ -1,5 +1,4 @@
-﻿using GameSource.Models.GameSourceUser;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GameSource.ViewModels.GameSourceUser.AccountViewModel
 {

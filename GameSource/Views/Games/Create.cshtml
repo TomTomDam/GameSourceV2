@@ -4,65 +4,65 @@
     ViewData["Title"] = "Add a new Game";
 }
 
-<h1 class="text-center">Add a new Game</h1>
-<hr />
-
-<div class="container">
-    <div class="row">
-        <form asp-action="Create" enctype="multipart/form-data" class="dialog-form">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Game.ID" id="gameId" />
-            <div class="form-group">
-                <label asp-for="Game.Name" class="control-label dialog-label"></label>
-                <input asp-for="Game.Name" class="form-control dialog-input dialog-input-base" />
-                <span asp-validation-for="Game.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Game.Description" class="control-label dialog-label"></label>
-                <textarea asp-for="Game.Description" class="form-control dialog-input dialog-input-base dialog-textarea"></textarea>
-                <span asp-validation-for="Game.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Game.Genre" class="control-label dialog-label" for="ajax"></label>
-                <select asp-for="Game.GenreID" asp-items="@Model.Genres" class="form-control dialog-input dialog-input-base">
-                    <option value="">Select a Genre/Genres</option>
-                </select>
-                <span asp-validation-for="Game.Genre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Game.Developer" class="control-label dialog-label"></label>
-                <select asp-for="Game.DeveloperID" asp-items="@Model.Developers" class="form-control dialog-input dialog-input-base">
-                    <option value="">Select a Developer</option>
-                </select>
-                <span asp-validation-for="Game.Developer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Game.Publisher" class="control-label dialog-label"></label>
-                <select asp-for="Game.PublisherID" asp-items="@Model.Publishers" class="form-control dialog-input dialog-input-base">
-                    <option value="">Select a Publisher</option>
-                </select>
-                <span asp-validation-for="Game.Publisher" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Game.Platform" class="control-label dialog-label"></label>
-                <select asp-for="Game.PlatformID" asp-items="@Model.Platforms" class="form-control dialog-input dialog-input-base">
-                    <option value="">Select a Platform/Platforms</option>
-                </select>
-                <span asp-validation-for="Game.Platform" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
-                <input asp-for="Game.CoverImage" class="control-label dialog-input dialog-input-base"/>
-                <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-
-    <div class="row">
-        <a asp-action="Index">Back to Index</a>
+<div class="container create-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="page-heading">Add a new Game</div>
+            <hr />
+            <form asp-action="Create" enctype="multipart/form-data" class="dialog-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Game.ID" id="gameId" />
+                <div class="form-group">
+                    <label asp-for="Game.Name" class="control-label dialog-label"></label>
+                    <input asp-for="Game.Name" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Game.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.Description" class="control-label dialog-label"></label>
+                    <textarea asp-for="Game.Description" class="form-control dialog-input dialog-input-base dialog-textarea"></textarea>
+                    <span asp-validation-for="Game.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.Genre" class="control-label dialog-label" for="ajax"></label>
+                    <select asp-for="Game.GenreID" asp-items="@Model.Genres" class="form-control dialog-input dialog-input-base">
+                        <option value="">Select a Genre/Genres</option>
+                    </select>
+                    <span asp-validation-for="Game.Genre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.Developer" class="control-label dialog-label"></label>
+                    <select asp-for="Game.DeveloperID" asp-items="@Model.Developers" class="form-control dialog-input dialog-input-base">
+                        <option value="">Select a Developer</option>
+                    </select>
+                    <span asp-validation-for="Game.Developer" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.Publisher" class="control-label dialog-label"></label>
+                    <select asp-for="Game.PublisherID" asp-items="@Model.Publishers" class="form-control dialog-input dialog-input-base">
+                        <option value="">Select a Publisher</option>
+                    </select>
+                    <span asp-validation-for="Game.Publisher" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.Platform" class="control-label dialog-label"></label>
+                    <select asp-for="Game.PlatformID" asp-items="@Model.Platforms" class="form-control dialog-input dialog-input-base">
+                        <option value="">Select a Platform/Platforms</option>
+                    </select>
+                    <span asp-validation-for="Game.Platform" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
+                    <input asp-for="Game.CoverImage" class="control-label dialog-input dialog-input-base"/>
+                    <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
+                </div>*@
+                <div class="submit-btn-section">
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                    <a class="index-link" asp-action="Index">Back to Index</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

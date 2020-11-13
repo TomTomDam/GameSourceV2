@@ -261,11 +261,14 @@ input.dialog-input {
 
 /* Page formatting */
 .page-heading {
-    padding: 8px 16px;
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-weight: 600;
-    font-size: 24px;
+    text-transform: uppercase;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 34px;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    text-align: center;
 }
 
 .page-heading-bottom-border {
@@ -325,9 +328,12 @@ input.dialog-input {
 }
 
 /* UserProfile Settings + Account Settings */
-#userprofile-profile-settings-page,
-#userprofile-account-settings-page {
-    box-sizing: border-box;
+.userprofile-page-heading {
+    padding: 8px 16px;
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 24px;
 }
 
 #userprofile-account-settings-page-heading-username,
@@ -366,6 +372,10 @@ input.dialog-input {
 }
 
 /* Login Page */
+.login-page {
+
+}
+
 .login-left-col {
     min-height: 352px;
     padding: 40px 20px 20px 20px;
@@ -390,27 +400,26 @@ input.dialog-input {
 
 .login-label {
     text-align: left;
-    justify-content: left;
     font-size: 16px;
     color: #b8b6b4;
     margin-bottom: 5px;
 }
 
-.login-sign-in-section {
+.login-btn-section {
     margin-top: 20px;
 }
 
 .login-btn {
     border-radius: 2px;
     border: none;
-    padding: 1px;
+    padding: 5px;
     display: inline-block;
     cursor: pointer;
     text-decoration: none !important;
 }
 
 .login-btn > span {
-    padding: 3px 80px;
+    padding: 0 50px;
     font-size: 15px;
     line-height: 30px;
 }
@@ -484,6 +493,50 @@ input.dialog-input {
     background: transparent;
     border: 1px solid rgba(255,255,255,0.4);
     border-radius: 2px;
+}
+
+/* Register Page */
+.register-title {
+    text-transform: uppercase;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 34px;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.register-page {
+    padding-top: 40px;
+}
+
+.register-label {
+    text-align: left;
+    font-size: 16px;
+    color: #b8b6b4;
+    margin-bottom: 5px;
+}
+
+.register-btn-section {
+    margin-top: 20px;
+}
+
+.register-btn {
+    margin: 10px 0 0 0;
+    padding: 8px 40px;
+}
+
+#register-login-link {
+    margin: 20px 0 0 0;
+    display: block;
+    font-size: 15px;
+}
+
+#admin-register-user-list-link {
+    margin: 20px 0 0 0;
+    display: block;
+    font-size: 15px;
 }
 
 /* News Article */
