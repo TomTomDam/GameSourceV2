@@ -286,6 +286,32 @@ input.dialog-input {
 }
 
 /* UserProfile */
+.profile-heading {
+
+}
+
+.profile-heading-username {
+
+}
+
+.role-tag-base {
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px;
+    width: 60px;
+    margin-left: 5px;
+}
+
+.admin-role-tag {
+    background-color: gold;
+    color: black;
+}
+
+.moderator-role-tag {
+    background-color: blue;
+    color: white;
+}
+
 #userprofile-create-comment {
     margin-top: 80px;
     margin-bottom: 15px;
@@ -322,7 +348,7 @@ input.dialog-input {
     float: right;
 }
 
-.userprofile-avatar-image > img {
+.profile-avatar-image > img {
     height: 250px;
     width: auto;
 }
