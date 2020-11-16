@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -178,7 +179,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return NotFound();
             }
 
-            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
             if (userProfile == null)
             {
                 return NotFound();
@@ -205,7 +206,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileCommentPermissionList = commentPermissionSelectList
             };
 
-            return PartialView("_PrivacySettings");
+            return PartialView("_PrivacySettings", viewModel);
         }
 
         [HttpPost("{id}/privacy-settings")]

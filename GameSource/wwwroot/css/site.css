@@ -226,7 +226,12 @@ input.dialog-input {
 .dialog-input {
     display: block;
     line-height: 22px;
-    padding: 10px;
+    padding: 8px;
+}
+
+.dialog-input > option {
+    background-color: #363c44;
+    color: white;
 }
 
 .dialog-textarea {
@@ -287,7 +292,7 @@ input.dialog-input {
 
 /* UserProfile */
 .profile-heading {
-
+    margin-bottom: 5px;
 }
 
 .profile-heading-username {

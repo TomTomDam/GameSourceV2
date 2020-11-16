@@ -7,6 +7,12 @@ namespace GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel
 {
     public class UserProfileEditViewModel
     {
+        public UserProfileEditViewModel()
+        {
+            UserProfileVisibilityList = new List<SelectListItem>();
+            UserProfileCommentPermissionList = new List<SelectListItem>();
+        }
+
         public UserProfile UserProfile { get; set; }
 
         public List<SelectListItem> UserProfileVisibilityList { get; set; }
