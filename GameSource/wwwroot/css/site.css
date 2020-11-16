@@ -291,14 +291,15 @@ input.dialog-input {
 }
 
 .profile-heading-username {
-
+    font-size: 32px;
 }
 
 .role-tag-base {
+    text-transform: uppercase;
     text-align: center;
     display: inline-block;
     border-radius: 5px;
-    width: 60px;
+    width: 120px;
     margin-left: 5px;
 }
 
