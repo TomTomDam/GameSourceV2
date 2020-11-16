@@ -16,23 +16,36 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="userprofile-avatar-image">
+            <div class="profile-avatar-image">
                 <img src="@avatarImageFilePath" asp-append-version="true" />
             </div>
         </div>
         <div class="col-md-8">
             <input type="hidden" asp-for="UserProfile.ID" id="userProfileId" />
+            <div class="profile-heading">
+                @{
+                    <div class="profile-heading-username">
+                        @if (Model.UserProfile.DisplayName == null)
+                        {
+                            @Model.UserProfile.User.UserName
+                        }
+                        else
+                        {
+                            @Model.UserProfile.DisplayName
+                        }
 
-            @{
-                if (Model.UserProfile.DisplayName == null)
-                {
-                    <h1 class="page-heading-username">@Model.UserProfile.User.UserName</h1>
+                        @if (Model.User.UserRoleID == (int)UserRoleEnum.Admin)
+                        {
+                            <div class="role-tag-base admin-role-tag">Admin</div>
+                        }
+
+                        @if (Model.User.UserRoleID == (int)UserRoleEnum.Moderator)
+                        {
+                            <div class="role-tag-base moderator-role-tag">Moderator</div>
+                        }
+                    </div>
                 }
-                else
-                {
-                    <h1 class="page-heading-username">@Model.UserProfile.DisplayName</h1>
-                }
-            }
+            </div>
             <p>@Model.User.FullName</p>
             <p>@Model.UserProfile.Biography</p>
         </div>
