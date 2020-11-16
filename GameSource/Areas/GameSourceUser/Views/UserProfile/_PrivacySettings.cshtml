@@ -4,17 +4,17 @@
 
 <div class="col-md-9 float-left" id="userprofile-privacy-settings">
     <div class="sub-heading">Privacy</div>
-    <form method="post" asp-action="PrivacySettings" class="dialog-form">
+    <form method="post" asp-action="PrivacySettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="User.Id" />
         <div class="form-group">
-            <label asp-for="UserProfile.UserProfileVisibilityID" class="control-label"></label>
-            <select asp-for="UserProfile.UserProfileVisibilityID" class="form-control" asp-items="@Model.UserProfileVisibilityList"></select>
+            <label asp-for="UserProfile.UserProfileVisibilityID" class="control-label dialog-label"></label>
+            <select asp-for="UserProfile.UserProfileVisibilityID" class="form-control dialog-input dialog-input-base" asp-items="@Model.UserProfileVisibilityList"></select>
             <span asp-validation-for="UserProfile.UserProfileVisibilityID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="UserProfile.UserProfileCommentPermissionID" class="control-label"></label>
-            <select asp-for="UserProfile.UserProfileCommentPermissionID" class="form-control" asp-items="@Model.UserProfileCommentPermissionList"></select>
+            <label asp-for="UserProfile.UserProfileCommentPermissionID" class="control-label dialog-label"></label>
+            <select asp-for="UserProfile.UserProfileCommentPermissionID" class="form-control dialog-input dialog-input-base" asp-items="@Model.UserProfileCommentPermissionList"></select>
             <span asp-validation-for="UserProfile.UserProfileCommentPermissionID" class="text-danger"></span>
         </div>
         <div class="form-group">
