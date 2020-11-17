@@ -58,7 +58,7 @@
             {
                 @foreach (var comment in Model.UserProfileComments)
                 {
-                    <div class="" id="userprofile-comment-section">
+                    <div class="profile-comment-section" id="">
                         <p class="text-bold">@comment.CreatedBy <span class="small">@comment.DateCreated</span></p>
                         <p class="">@comment.Body</p>
                     </div>
@@ -66,11 +66,15 @@
             }
             else if (Model.User.UserProfile.UserProfileCommentPermissionID == (int)UserProfileCommentPermissionEnum.Nobody)
             {
-                <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
+                <p>
+                    <span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span>
+                </p>
             }
             else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileCommentPermissionEnum.FriendsOnly)
             {
-                <p><span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span></p>
+                <p>
+                    <span>@Model.UserProfile.User.UserName</span>'s comments are <span>@Model.UserProfile.UserProfileVisibility.Name</span>
+                </p>
             }
         </div>
     </div>
@@ -78,27 +82,41 @@
 }
 else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Private)
 {
-<div class="container">
+<div class="container page-content">
     <div class="row">
-        <div class="col-md-4">
-            <div class="userprofile-avatar-image">
+        <div class="col-md-4 text-center">
+            <div class="profile-avatar-image">
                 <img src="@avatarImageFilePath" asp-append-version="true" />
             </div>
         </div>
         <div class="col-md-8">
             <input type="hidden" asp-for="UserProfile.ID" id="userProfileId" />
+            <div class="profile-heading">
+                @{
+                    <div class="profile-heading-username">
+                        @if (Model.UserProfile.DisplayName == null)
+                        {
+                            @Model.UserProfile.User.UserName
+                        }
+                        else
+                        {
+                            @Model.UserProfile.DisplayName
+                        }
 
-            @{
-                if (Model.UserProfile.DisplayName == null)
-                {
-                    <h1 class="page-heading-username">@Model.UserProfile.User.UserName</h1>
+                        @if (Model.User.UserRoleID == (int)UserRoleEnum.Admin)
+                        {
+                            <div class="role-tag-base admin-role-tag">Admin</div>
+                        }
+
+                        @if (Model.User.UserRoleID == (int)UserRoleEnum.Moderator)
+                        {
+                            <div class="role-tag-base moderator-role-tag">Moderator</div>
+                        }
+                    </div>
                 }
-                else
-                {
-                    <h1 class="page-heading-username">@Model.UserProfile.DisplayName</h1>
-                }
-            }
-            <p>This profile is set to <span>@Model.UserProfile.UserProfileVisibility.Name</span>.</p>
+            </div>
+            <div>@Model.User.FullName</div>
+            <div id="private-profile-text">This user is <span>@Model.User.UserProfile.UserProfileVisibility.Name</span>.</div>
         </div>
     </div>
 </div>
