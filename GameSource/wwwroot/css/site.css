@@ -175,6 +175,18 @@ hr {
 }
 
 .link-section {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.index-link {
+    background-color: #E4E4E4;
+    color: black;
+}
+
+.submit-btn-section {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .dialog-form {
@@ -359,8 +371,9 @@ table.dataTable thead,
     flex: auto;
 }
 
-#userprofile-create-comment-btn {
-    float: right;
+.post-comment-btn-section {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .profile-avatar-image > img {

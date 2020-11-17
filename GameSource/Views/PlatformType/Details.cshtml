@@ -1,24 +1,22 @@
 ﻿@model GameSource.ViewModels.GameSource.PlatformTypeViewModel.PlatformTypeDetailsViewModel
 
 @{
-    ViewData["Title"] = "Platform Type";
+    ViewData["Title"] = Model.PlatformType.Name;
 }
 
-<div class="container">
-    <div class="page-heading text-center">Platform Type</div>
-    <hr />
-    <div class="row">
-        <div class="col-md-12">
+<div class="container details-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading">Platform Type</div>
+            <hr />
             <label asp-for="PlatformType.ID" class="control-label font-weight-bold"></label>
             <p>@Model.PlatformType.ID</p>
             <label asp-for="PlatformType.Name" class="control-label font-weight-bold"></label>
             <p>@Model.PlatformType.Name</p>
             <hr />
-        </div>
-    </div>
-    <div class="row link-section">
-        <div class="col-md-12">
-            <a class="index-link" asp-action="Index">Back to Index</a>
+            <div class="link-section">
+                <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+            </div>
         </div>
     </div>
 </div>

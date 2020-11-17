@@ -1,21 +1,30 @@
 ﻿@model GameSource.ViewModels.GameSource.GameViewModel.GameDetailsViewModel
 
 @{
-    ViewData["Title"] = "Game";
+    ViewData["Title"] = Model.Game.Name;
 }
 
-<label asp-for="Game.Name" class="control-label font-weight-bold"></label><h1>@Model.Game.Name</h1>
-<hr />
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <label asp-for="Game.ID" class="control-label font-weight-bold"></label><p>@Model.Game.ID</p>
-            <label asp-for="Game.Description" class="control-label font-weight-bold"></label><p>@Model.Game.Description</p>
-            <label asp-for="Game.Genre" class="control-label font-weight-bold"></label><p>@Model.Genre.Name</p>
-            <label asp-for="Game.Developer" class="control-label font-weight-bold"></label><p>@Model.Developer.Name</p>
-            <label asp-for="Game.Publisher" class="control-label font-weight-bold"></label><p>@Model.Publisher.Name</p>
-            <label asp-for="Game.Platform" class="control-label font-weight-bold"></label><p>@Model.Platform.Name</p>
+<div class="container details-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading">Game</div>
+            <hr />
+            <label asp-for="Game.ID" class="control-label font-weight-bold"></label>
+            <p>@Model.Game.ID</p>
+            <label asp-for="Game.Description" class="control-label font-weight-bold"></label>
+            <p>@Model.Game.Description</p>
+            <label asp-for="Game.Genre" class="control-label font-weight-bold"></label>
+            <p>@Model.Genre.Name</p>
+            <label asp-for="Game.Developer" class="control-label font-weight-bold"></label>
+            <p>@Model.Developer.Name</p>
+            <label asp-for="Game.Publisher" class="control-label font-weight-bold"></label>
+            <p>@Model.Publisher.Name</p>
+            <label asp-for="Game.Platform" class="control-label font-weight-bold"></label>
+            <p>@Model.Platform.Name</p>
+            <hr />
+            <div class="link-section">
+                <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+            </div>
         </div>
     </div>
 </div>

@@ -1,12 +1,12 @@
 ﻿@model GameSource.ViewModels.GameSource.NewsArticleViewModel.NewsArticleDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.NewsArticle.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" id="news-article-container">
-    <div class="row">
+<div class="container details-page page-content" id="news-article-container">
+    <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="page-heading" id="news-article-header">
                 <span class="font-weight-bold" id="news-article-title">@Model.NewsArticle.Title</span>
@@ -15,6 +15,10 @@
             <hr />
             <p class="" id="news-article-createdBy">@Model.NewsArticle.CreatedBy</p>
             <p class="" id="news-article-body">@Model.NewsArticle.Body</p>
+            <hr />
+            <div class="link-section">
+                <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+            </div>
         </div>
     </div>
 </div>
