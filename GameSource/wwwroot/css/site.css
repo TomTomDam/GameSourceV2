@@ -8,9 +8,6 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
 
 .btn-primary {
   color: #fff;
@@ -96,7 +93,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #ffffff;
+    color: #fff;
 }
 
 a:hover {
@@ -177,6 +174,9 @@ hr {
     border-color: #363c44;
 }
 
+.link-section {
+}
+
 .dialog-form {
     flex: 1;
     align-items: center;
@@ -243,6 +243,15 @@ input.dialog-input {
 .dialog-textarea:focus {
     background-color: rgba(0, 0, 0, 0.25);
     color: #dfe3e6;
+}
+
+/* DataTables */
+.dataTables_length, 
+.dataTables_filter, 
+table.dataTable thead, 
+.dataTables_info, 
+#platformTypeIndexTable_paginate > a {
+    color: white !important;
 }
 
 /* CKEditor Textarea */
@@ -357,6 +366,10 @@ input.dialog-input {
 .profile-avatar-image > img {
     height: 250px;
     width: auto;
+}
+
+#private-profile-text {
+    color: red;
 }
 
 /* UserProfile Settings + Account Settings */

@@ -8,38 +8,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Index</h1>
-<hr />
-
 <div class="container">
-    @if (signInManager.IsSignedIn(User))
-    {
-        <p>
-            <a class="btn btn-primary" asp-controller="PlatformType" asp-action="Create">Add a new Platform Type</a>
-        </p>
-    }
-
-    <table class="table" id="platformTypeIndexTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var platformType in Model.PlatformTypes)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-heading text-center">Index</div>
+            <hr />
+            @if (signInManager.IsSignedIn(User))
             {
-                <tr>
-                    <td>@platformType.Name</td>
-                    <td>
-                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@platformType.ID">View</a>
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@platformType.ID">Edit</a>
-                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@platformType.ID">Delete</a>
-                    </td>
-                </tr>
+                <p>
+                    <a class="btn btn-primary" asp-controller="PlatformType" asp-action="Create">Add a new Platform Type</a>
+                </p>
+                <hr />
             }
-        </tbody>
-    </table>
+
+            <table class="table" id="platformTypeIndexTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var platformType in Model.PlatformTypes)
+                    {
+                        <tr>
+                            <td>@platformType.Name</td>
+                            <td>
+                                <a class="btn btn-primary" asp-action="Details" asp-route-id="@platformType.ID">View</a>
+                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@platformType.ID">Edit</a>
+                                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@platformType.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @section scripts {

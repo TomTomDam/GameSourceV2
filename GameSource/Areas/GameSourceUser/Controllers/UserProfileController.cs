@@ -213,6 +213,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PrivacySettingsPartial(UserProfileEditViewModel viewModel)
         {
+            //BUG - It's not returning the viewModel at this method
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
 
             userProfile.UserProfileVisibility = viewModel.UserProfile.UserProfileVisibility;
