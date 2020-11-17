@@ -8,48 +8,52 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Index</h1>
-<hr />
-
-<div class="container">
-    @if (signInManager.IsSignedIn(User))
-    {
-        <p>
-            <a class="btn btn-primary" asp-controller="Games" asp-action="Create">Add a new Game</a>
-        </p>
-    }
-
-    <table class="table" id="gameIndexTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Genre</th>
-                <th>Developer</th>
-                <th>Publisher</th>
-                <th>Description</th>
-                <th>Platforms</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var game in Model.Games)
+<div class="container index-page page-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-heading text-center">Index</div>
+            <hr />
+            @if (signInManager.IsSignedIn(User))
             {
-                <tr>
-                    <td>@game.Name</td>
-                    <td>@game.Genre.Name</td>
-                    <td>@game.Developer.Name</td>
-                    <td>@game.Publisher.Name</td>
-                    <td>@game.Description</td>
-                    <td>@game.Platform.Name</td>
-                    <td>
-                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@game.ID">View</a>
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@game.ID">Edit</a>
-                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@game.ID">Delete</a>
-                    </td>
-                </tr>
+                <p>
+                    <a class="btn btn-primary" asp-controller="Games" asp-action="Create">Add a new Game</a>
+                </p>
+                <hr />
             }
-        </tbody>
-    </table>
+
+            <table class="table" id="gameIndexTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Genre</th>
+                        <th>Developer</th>
+                        <th>Publisher</th>
+                        <th>Description</th>
+                        <th>Platforms</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var game in Model.Games)
+                    {
+                        <tr>
+                            <td>@game.Name</td>
+                            <td>@game.Genre.Name</td>
+                            <td>@game.Developer.Name</td>
+                            <td>@game.Publisher.Name</td>
+                            <td>@game.Description</td>
+                            <td>@game.Platform.Name</td>
+                            <td>
+                                <a class="btn btn-primary" asp-action="Details" asp-route-id="@game.ID">View</a>
+                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@game.ID">Edit</a>
+                                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@game.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @section scripts {

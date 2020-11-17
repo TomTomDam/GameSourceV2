@@ -9,40 +9,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">All News</h1>
-<hr />
+<div class="container page-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-heading text-center">All News</div>
+            <hr />
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <p>
+                    <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
+                </p>
+            }
+            @foreach (var newsArticle in Model.NewsArticles)
+            {
+                <div class="divider"></div>
+                <div class="news-article-post-block">
+                    <div class="news-article-post-header">
+                        <span class="news-article-post-title font-weight-bold">@newsArticle.Title</span>
+                        <span class="news-article-post-dateCreated">@newsArticle.DateCreated</span>
+                        <span class="news-article-post-dateModified">@newsArticle.DateModified</span>
+                        <span class="news-article-post-createdBy">@newsArticle.CreatedBy</span>
+                    </div>
+                    <div class="news-article-post-body">
+                        <p>@newsArticle.Body</p>
+                    </div>
 
-<div class="container">
-    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-    {
-        <p>
-            <a class="btn btn-primary" asp-controller="NewsArticle" asp-action="Create">Create a new News Article</a>
-        </p>
-    }
-    @foreach (var newsArticle in Model.NewsArticles)
-    {
-        <div class="divider"></div>
-        <div class="news-article-post-block">
-            <div class="news-article-post-header">
-                <span class="news-article-post-title font-weight-bold">@newsArticle.Title</span>
-                <span class="news-article-post-dateCreated">@newsArticle.DateCreated</span>
-                <span class="news-article-post-dateModified">@newsArticle.DateModified</span>
-                <span class="news-article-post-createdBy">@newsArticle.CreatedBy</span>
-            </div>
-            <div class="news-article-post-body">
-                <p>@newsArticle.Body</p>
-            </div>
-
-            <p>
-                <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
-                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
-                }
-            </p>
+                    <p>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@newsArticle.ID">View</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@newsArticle.ID">Edit</a>
+                            <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
+                        }
+                    </p>
+                </div>
+                <div class="divider"></div>
+                <div class="divider-margin"></div>
+            }
         </div>
-        <div class="divider"></div>
-        <div class="divider-margin"></div>
-    }
+    </div>
 </div>
