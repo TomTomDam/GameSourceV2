@@ -177,6 +177,11 @@ hr {
 .link-section {
 }
 
+.submit-btn-section {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .dialog-form {
     flex: 1;
     align-items: center;
@@ -359,8 +364,9 @@ table.dataTable thead,
     flex: auto;
 }
 
-#userprofile-create-comment-btn {
-    float: right;
+.post-comment-btn-section {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .profile-avatar-image > img {
