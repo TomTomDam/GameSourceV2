@@ -1,16 +1,22 @@
 ﻿@model GameSource.ViewModels.GameSource.DeveloperViewModel.DeveloperDetailsViewModel
 
 @{
-    ViewData["Title"] = "Developer";
+    ViewData["Title"] = Model.Developer.Name;
 }
 
-<label asp-for="Developer.Name" class="control-label font-weight-bold"></label><h1 class="text-center">@Model.Developer.Name</h1>
-<hr />
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <label asp-for="Developer.ID" class="control-label font-weight-bold"></label><p>@Model.Developer.ID</p>
+<div class="container details-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading">Developer</div>
+            <hr />
+            <label asp-for="Developer.ID" class="control-label font-weight-bold"></label>
+            <p>@Model.Developer.ID</p>
+            <label asp-for="Developer.Name" class="control-label font-weight-bold"></label>
+            <p>@Model.Developer.Name</p>
+            <hr />
+            <div class="link-section">
+                <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+            </div>
         </div>
     </div>
 </div>

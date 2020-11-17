@@ -4,15 +4,21 @@
     ViewData["Title"] = "Platform";
 }
 
-<div class="page-heading text-center">@Model.Platform.Name</div>
-<hr />
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <label asp-for="Platform.ID" class="control-label font-weight-bold"></label><p>@Model.Platform.ID</p>
-            <label asp-for="Platform.Name" class="control-label font-weight-bold"></label><p>@Model.Platform.Name</p>
-            <label asp-for="Platform.PlatformType" class="control-label font-weight-bold"></label><p>@Model.PlatformType.Name</p>
+<div class="container details-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading">Platform</div>
+            <hr />
+            <label asp-for="Platform.ID" class="control-label font-weight-bold"></label>
+            <p>@Model.Platform.ID</p>
+            <label asp-for="Platform.Name" class="control-label font-weight-bold"></label>
+            <p>@Model.Platform.Name</p>
+            <label asp-for="Platform.PlatformType" class="control-label font-weight-bold"></label>
+            <p>@Model.PlatformType.Name</p>
+            <hr />
+            <div class="link-section">
+                <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+            </div>
         </div>
     </div>
 </div>

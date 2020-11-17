@@ -175,6 +175,13 @@ hr {
 }
 
 .link-section {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.index-link {
+    background-color: #E4E4E4;
+    color: black;
 }
 
 .submit-btn-section {
