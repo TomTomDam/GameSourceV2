@@ -320,7 +320,7 @@ table.dataTable thead,
     font-size: 32px;
 }
 
-.role-tag-base {
+.role-tag {
     text-transform: uppercase;
     text-align: center;
     display: inline-block;
