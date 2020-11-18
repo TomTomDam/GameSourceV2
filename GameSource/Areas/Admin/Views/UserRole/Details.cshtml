@@ -1,31 +1,42 @@
 ﻿@model GameSource.Areas.Admin.ViewModels.UserRoleViewModel.AdminUserRoleDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.UserRole.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>User Role</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserRole.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserRole.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserRole.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserRole.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-area="Admin" asp-controller="UserRole" asp-action="Edit" asp-route-id="@Model.UserRole.Id">Edit</a> |
-    <a asp-area="Admin" asp-controller="UserRole" asp-action="Index">Back to List</a>
+<div class="container details-page page-content text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading text-capitalize">@Model.UserRole.Name</div>
+            <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="UserRole.Id" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.UserRole.Id</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="UserRole.Name" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.UserRole.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <hr />
+            <div class="link-section">
+                <div class="form-group">
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.UserRole.Id">Edit</a>
+                    <a class="btn btn-primary index-link" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

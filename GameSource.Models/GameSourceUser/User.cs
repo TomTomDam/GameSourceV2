@@ -29,14 +29,17 @@ namespace GameSource.Models.GameSourceUser
 
         public string Location { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         public int UserStatusID { get; set; }
 
         public int UserRoleID { get; set; }
 
+        [Display(Name = "User Status")]
         public UserStatus UserStatus { get; set; }
 
+        [Display(Name = "User Role")]
         public UserRole UserRole { get; set; }
 
         public UserProfile UserProfile { get; set; }

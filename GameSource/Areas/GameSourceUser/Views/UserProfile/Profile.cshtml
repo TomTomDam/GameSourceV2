@@ -36,12 +36,12 @@
 
                         @if (Model.User.UserRoleID == (int)UserRoleEnum.Admin)
                         {
-                            <div class="role-tag-base admin-role-tag">Admin</div>
+                            <div class="role-tag admin-role-tag">Admin</div>
                         }
 
                         @if (Model.User.UserRoleID == (int)UserRoleEnum.Moderator)
                         {
-                            <div class="role-tag-base moderator-role-tag">Moderator</div>
+                            <div class="role-tag moderator-role-tag">Moderator</div>
                         }
                     </div>
                 }

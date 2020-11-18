@@ -1,25 +1,42 @@
 ﻿@model GameSource.Areas.Admin.ViewModels.UserStatusViewModel.AdminUserStatusDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.UserStatus.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>User Status</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserStatus.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserStatus.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-area="Admin" asp-controller="UserStatus" asp-action="Edit" asp-route-id="@Model.UserStatus.Id">Edit</a> |
-    <a asp-area="Admin" asp-controller="UserStatus" asp-action="Index">Back to List</a>
+<div class="container details-page page-content text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading text-capitalize">@Model.UserStatus.Name</div>
+            <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="UserStatus.Id" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.UserStatus.Id</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="UserStatus.Name" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.UserStatus.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <hr />
+            <div class="link-section">
+                <div class="form-group">
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.UserStatus.Id">Edit</a>
+                    <a class="btn btn-primary index-link" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

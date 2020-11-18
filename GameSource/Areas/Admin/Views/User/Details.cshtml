@@ -1,79 +1,106 @@
 ﻿@model GameSource.Areas.Admin.ViewModels.AdminUserViewModel.AdminUserDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.User.UserName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Age)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Age)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Location)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Location)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.DateCreated)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.DateCreated)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserStatus)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserStatus.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserRole)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserRole.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.UserName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.UserName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@Model.User.Id">Edit</a> |
-    <a asp-area="Admin" asp-controller="User" asp-action="Index">Back to List</a>
+<div class="container details-page page-content text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading text-lowercase">@Model.User.UserName</div>
+            <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.Id" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.Id</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.UserName" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.UserName</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.Email" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.Email</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.UserStatus" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.UserStatus.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.UserRole" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.UserRole.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.FirstName" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.FirstName</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.LastName" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.LastName</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.Age" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.Age</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.Location" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.Location</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-md-2">
+            <label asp-for="User.DateCreated" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-md-2">
+            <div>@Model.User.DateCreated</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <hr />
+            <div class="link-section">
+                <div class="form-group">
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.User.Id">Edit</a>
+                    <a class="btn btn-primary index-link" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

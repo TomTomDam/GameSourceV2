@@ -5,14 +5,14 @@
 @inject SignInManager<User> signInManager;
 
 @{
-    ViewData["Title"] = "News";
+    ViewData["Title"] = "All News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container page-content">
+<div class="container news-index page-content">
     <div class="row">
         <div class="col-md-12">
-            <div class="page-heading text-center">All News</div>
+            <div class="page-heading">All News</div>
             <hr />
             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
@@ -24,13 +24,13 @@
             @foreach (var newsArticle in Model.NewsArticles)
             {
                 <div class="divider"></div>
-                <div class="news-article-post-block">
-                    <div class="news-article-post-header">
+                <article class="news-article-post-block">
+                    <header class="news-article-post-header">
                         <span class="news-article-post-title font-weight-bold">@newsArticle.Title</span>
                         <span class="news-article-post-dateCreated">@newsArticle.DateCreated</span>
                         <span class="news-article-post-dateModified">@newsArticle.DateModified</span>
                         <span class="news-article-post-createdBy">@newsArticle.CreatedBy</span>
-                    </div>
+                    </header>
                     <div class="news-article-post-body">
                         <p>@newsArticle.Body</p>
                     </div>
@@ -43,7 +43,7 @@
                             <a class="btn btn-primary" asp-action="Delete" asp-route-id="@newsArticle.ID">Delete</a>
                         }
                     </p>
-                </div>
+                </article>
                 <div class="divider"></div>
                 <div class="divider-margin"></div>
             }
