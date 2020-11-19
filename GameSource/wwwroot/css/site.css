@@ -166,8 +166,7 @@ a:hover {
     letter-spacing: 0em;
     text-transform: uppercase;
     color: #E4E4E4;
-    padding: 0px 0px 6px 10px;
-    border-bottom: 2px solid rgba(228, 228, 228, 0.1);
+    /*padding: 0px 0px 6px 10px;*/
 }
 
 hr {
@@ -566,7 +565,7 @@ table.dataTable thead,
 }
 
 .register-page {
-    padding-top: 40px;
+
 }
 
 .register-label {
@@ -628,4 +627,21 @@ table.dataTable thead,
 
 .news-article-post-body {
     padding-top: 5px;
+}
+
+/* Admin Area */
+#manage-user-claims-btn {
+    margin-top: 10px;
+}
+
+.edit-model-heading {
+    text-transform: none;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 24px;
+    color: #ffffff;
+    margin-top: -15px;
+    margin-bottom: 30px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    text-align: center;
 }

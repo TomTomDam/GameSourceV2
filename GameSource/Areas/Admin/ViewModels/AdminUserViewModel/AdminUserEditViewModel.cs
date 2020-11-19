@@ -17,6 +17,8 @@ namespace GameSource.Areas.Admin.ViewModels.AdminUserViewModel
 
         public int ID { get; set; }
 
+        public string Username { get; set; }
+
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -36,8 +38,6 @@ namespace GameSource.Areas.Admin.ViewModels.AdminUserViewModel
 
         [Display(Name = "Avatar Image")]
         public IFormFile AvatarImage { get; set; }
-
-        public string Description { get; set; }
 
         [Display(Name = "User Status")]
         public int UserStatusID { get; set; }
