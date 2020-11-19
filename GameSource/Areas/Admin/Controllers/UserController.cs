@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -176,6 +175,7 @@ namespace GameSource.Areas.Admin.Controllers
             AdminUserEditViewModel viewModel = new AdminUserEditViewModel
             {
                 ID = user.Id,
+                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,

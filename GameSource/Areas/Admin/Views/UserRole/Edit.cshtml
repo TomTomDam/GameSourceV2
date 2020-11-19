@@ -1,37 +1,43 @@
 ﻿@model GameSource.Areas.Admin.ViewModels.UserRoleViewModel.AdminUserRoleEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit " + Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>User Role</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-area="Admin" asp-controller="UserRole" asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container edit-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="page-heading">Edit User Role</div>
+            <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-area="Admin" asp-controller="UserRole" asp-action="Edit" class="dialog-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label dialog-label"></label>
+                    <input asp-for="Name" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label dialog-label"></label>
+                    <input asp-for="Description" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="submit-btn-section">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a class="btn btn-primary index-link" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-area="Admin" asp-controller="UserRole" asp-action="Index">Back to List</a>
-</div>
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,75 +1,78 @@
 ﻿@model GameSource.Areas.Admin.ViewModels.AdminUserViewModel.AdminUserEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit " + Model.Username;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>@Model.FullName</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-area="Admin" asp-controller="User" asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserStatusID" class="control-label"></label>
-                <select asp-for="UserStatusID" class="form-control" asp-items="@Model.UserStatuses"></select>
-                <span asp-validation-for="UserStatusID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserRoleID" class="control-label"></label>
-                <select asp-for="UserRoleID" class="form-control" asp-items="@Model.UserRoles"></select>
-                <span asp-validation-for="UserRoleID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-
+<div class="container edit-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="page-heading">Edit User</div>
+            <div class="edit-model-heading">@Model.Username</div>
             <hr />
-            <div class="form-group">
-                <h4>User Claims</h4>
-                @foreach (var claim in Model.Claims)
-                {
-                    <ul>
-                        <li>@claim.Type</li>
-                    </ul>
-                }
-                <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="ManageUserClaims" asp-route-id="@Model.ID">Manage Claims</a>
-            </div>
-            <hr />
-        </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <form asp-area="Admin" asp-controller="User" asp-action="Edit" class="dialog-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label dialog-label"></label>
+                    <input asp-for="FirstName" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label dialog-label"></label>
+                    <input asp-for="LastName" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label dialog-label"></label>
+                    <input asp-for="Age" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Location" class="control-label dialog-label"></label>
+                    <input asp-for="Location" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserStatusID" class="control-label dialog-label"></label>
+                    <select asp-for="UserStatusID" class="form-control dialog-input dialog-input-base" asp-items="@Model.UserStatuses"></select>
+                    <span asp-validation-for="UserStatusID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserRoleID" class="control-label dialog-label"></label>
+                    <select asp-for="UserRoleID" class="form-control dialog-input dialog-input-base" asp-items="@Model.UserRoles"></select>
+                    <span asp-validation-for="UserRoleID" class="text-danger"></span>
+                </div>
+                <div class="submit-btn-section">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a class="btn btn-primary index-link" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h2>User Claims</h2>
+                    @foreach (var claim in Model.Claims)
+                    {
+                        <ul>
+                            <li>@claim.Type</li>
+                        </ul>
+                    }
+                    <div class="form-group">
+                        <a class="btn btn-primary" id="manage-user-claims-btn" asp-action="ManageUserClaims" asp-route-id="@Model.ID">Manage Claims</a>
+                    </div>
+                </div>
+                <hr />
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-area="Admin" asp-controller="User" asp-action="Index">Back to List</a>
-</div>
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
