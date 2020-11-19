@@ -260,6 +260,12 @@ namespace GameSource.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            UserRole userRole = await userRoleService.GetByIDAsync(user.UserStatusID);
+            user.UserRole = userRole;
+
+            UserStatus userStatus = await userStatusService.GetByIDAsync(user.UserStatusID);
+            user.UserStatus = userStatus;
+
             return View(user);
         }
 
