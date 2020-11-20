@@ -1,16 +1,21 @@
 ﻿@model GameSource.Areas.Admin.ViewModels.UserStatusViewModel.AdminUserStatusCreateViewModel
 
 @{
-    ViewData["Title"] = "Admin - Create a new User Status";
+    ViewData["Title"] = "Admin - Create User Status";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container create-page page-content">
+<div class="create-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="page-heading">Admin - Create a new User Status</div>
+        <div class="col-4">
+            <div class="page-heading">Admin</div>
+            <div class="page-sub-heading">Create User Status</div>
             <hr />
-            <form asp-area="Admin" asp-controller="UserStatus" asp-action="Create" class="dialog-form">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form asp-action="Create" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label dialog-label"></label>
