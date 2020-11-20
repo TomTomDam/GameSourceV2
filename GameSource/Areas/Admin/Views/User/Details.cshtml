@@ -5,95 +5,95 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container details-page page-content text-center">
+<div class="details-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="page-heading text-lowercase">@Model.User.UserName</div>
+        <div class="col-4">
+            <div class="page-heading username-heading">@Model.User.UserName</div>
             <hr />
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.Id" class="control-label font-weight-bold">ID</label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.Id</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.UserName" class="control-label font-weight-bold">Username</label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.UserName</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.Email" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.Email</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.UserStatus" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.UserStatus.Name</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.UserRole" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.UserRole.Name</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.FirstName" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.FirstName</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.LastName" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.LastName</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.Age" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.Age</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.Location" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.Location</div>
         </div>
     </div>
     <div class="row justify-content-center text-left">
-        <div class="col-md-2">
+        <div class="col-2">
             <label asp-for="User.DateCreated" class="control-label font-weight-bold"></label>
         </div>
-        <div class="col-md-2">
+        <div class="col-2">
             <div>@Model.User.DateCreated</div>
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <hr />
             <div class="link-section">
                 <div class="form-group">

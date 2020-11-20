@@ -1,7 +1,7 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
 
 <div class="col-md-9 float-left" id="userprofile-account-settings">
-    <div class="sub-heading">Account</div>
+    <div class="settings-sub-heading">Account</div>
     <form method="post" asp-action="AccountSettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="User.Id" />

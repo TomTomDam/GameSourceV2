@@ -1,6 +1,6 @@
 ﻿<template>
     <div id="privacy-settings">
-        <div class="sub-heading">Privacy</div>
+        <div class="settings-sub-heading">Privacy</div>
         <div>
 
         </div>

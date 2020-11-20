@@ -1,6 +1,6 @@
 ﻿<template>
     <div id="email-settings">
-        <div class="sub-heading">Email</div>
+        <div class="settings-sub-heading">Email</div>
         <div>
 
         </div>

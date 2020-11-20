@@ -5,16 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container edit-page page-content">
+<div class="edit-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-5">
             <div class="page-heading">Edit User</div>
-            <div class="edit-model-heading">@Model.Username</div>
+            <div class="model-heading">@Model.Username</div>
             <hr />
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-5">
             <form asp-area="Admin" asp-controller="User" asp-action="Edit" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />

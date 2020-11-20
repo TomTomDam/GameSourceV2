@@ -1,6 +1,6 @@
 ﻿<template>
     <div id="account-settings">
-        <div class="sub-heading">Account</div>
+        <div class="settings-sub-heading">Account</div>
         <div>
 
         </div>
