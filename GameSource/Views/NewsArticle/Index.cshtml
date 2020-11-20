@@ -9,9 +9,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container news-index page-content">
+<div class="news-index page-content">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="page-heading">All News</div>
             <hr />
             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))

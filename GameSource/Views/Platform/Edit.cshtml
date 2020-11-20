@@ -4,11 +4,15 @@
     ViewData["Title"] = "Edit " + Model.Platform.Name;
 }
 
-<div class="container edit-page page-content">
+<div class="edit-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <div class="page-heading">Edit Platform</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <form asp-action="Edit" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Platform.ID" />

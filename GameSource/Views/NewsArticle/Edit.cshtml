@@ -5,11 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container edit-page page-content">
+<div class="edit-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-8">
             <div class="page-heading">Edit News Article</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-8">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="NewsArticle.ID" />

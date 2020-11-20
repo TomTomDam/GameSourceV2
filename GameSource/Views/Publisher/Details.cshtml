@@ -4,11 +4,16 @@
     ViewData["Title"] = Model.Publisher.Name;
 }
 
-<div class="container details-page page-content">
+<div class="details-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <div class="page-heading">Publisher</div>
+            <div class="page-sub-heading">@Model.Publisher.Name</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <label asp-for="Publisher.ID" class="control-label font-weight-bold"></label>
             <p>@Model.Publisher.ID</p>
             <label asp-for="Publisher.Name" class="control-label font-weight-bold"></label>

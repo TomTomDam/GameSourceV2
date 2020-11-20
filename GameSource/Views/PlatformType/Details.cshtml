@@ -4,11 +4,16 @@
     ViewData["Title"] = Model.PlatformType.Name;
 }
 
-<div class="container details-page page-content">
+<div class="details-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <div class="page-heading">Platform Type</div>
+            <div class="page-sub-heading">@Model.PlatformType.Name</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <label asp-for="PlatformType.ID" class="control-label font-weight-bold"></label>
             <p>@Model.PlatformType.ID</p>
             <label asp-for="PlatformType.Name" class="control-label font-weight-bold"></label>
