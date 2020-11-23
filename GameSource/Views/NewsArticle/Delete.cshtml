@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="NewsArticle.Body" class="control-label font-weight-bold"></label>
-                    <p>@Model.NewsArticle.Body</p>
+                    <p>@Html.Raw(@Model.NewsArticle.Body)</p>
                 </div>
                 <hr />
                 <div class="link-section">
