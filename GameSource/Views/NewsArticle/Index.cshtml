@@ -28,11 +28,10 @@
                     <header class="news-article-post-header">
                         <span class="news-article-post-title font-weight-bold">@newsArticle.Title</span>
                         <span class="news-article-post-dateCreated">@newsArticle.DateCreated</span>
-                        <span class="news-article-post-dateModified">@newsArticle.DateModified</span>
                         <span class="news-article-post-createdBy">@newsArticle.CreatedBy</span>
                     </header>
                     <div class="news-article-post-body">
-                        <p>@newsArticle.Body</p>
+                        <p>@Html.Raw(@newsArticle.Body)</p>
                     </div>
 
                     <p>

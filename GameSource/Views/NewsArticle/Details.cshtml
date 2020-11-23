@@ -18,7 +18,7 @@
     <hr />
     <div class="row justify-content-center">
         <div class="col-12">
-            <p class="" id="news-article-body">@Model.NewsArticle.Body</p>
+            <p class="" id="news-article-body">@Html.Raw(@Model.NewsArticle.Body)</p>
             <hr />
             <div class="link-section">
                 <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
