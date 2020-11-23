@@ -4,23 +4,64 @@
     ViewData["Title"] = Model.Game.Name;
 }
 
-<div class="container details-page page-content">
+<div class="details-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <div class="page-heading">Game</div>
+            <div class="page-sub-heading">@Model.Game.Name</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Game.ID" class="control-label font-weight-bold"></label>
-            <p>@Model.Game.ID</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Game.ID</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Game.Description" class="control-label font-weight-bold"></label>
-            <p>@Model.Game.Description</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Game.Description</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Game.Genre" class="control-label font-weight-bold"></label>
-            <p>@Model.Genre.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Genre.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Game.Developer" class="control-label font-weight-bold"></label>
-            <p>@Model.Developer.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Developer.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Game.Publisher" class="control-label font-weight-bold"></label>
-            <p>@Model.Publisher.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Publisher.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Game.Platform" class="control-label font-weight-bold"></label>
-            <p>@Model.Platform.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Platform.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <hr />
             <div class="link-section">
                 <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>

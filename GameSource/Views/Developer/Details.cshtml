@@ -4,15 +4,32 @@
     ViewData["Title"] = Model.Developer.Name;
 }
 
-<div class="container details-page page-content">
+<div class="details-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <div class="page-heading">Developer</div>
+            <div class="page-sub-heading">@Model.Developer.Name</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Developer.ID" class="control-label font-weight-bold"></label>
-            <p>@Model.Developer.ID</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Developer.ID</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Developer.Name" class="control-label font-weight-bold"></label>
-            <p>@Model.Developer.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Developer.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <hr />
             <div class="link-section">
                 <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>

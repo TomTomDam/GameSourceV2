@@ -5,15 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<article class="container details-page page-content" id="news-article-container">
+<article class="details-page page-content" id="news-article-container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-12">
             <header class="page-heading" id="news-article-header">
                 <div class="" id="news-article-title">@Model.NewsArticle.Title</div>
                 <span class="" id="news-article-dateCreated">@Model.NewsArticle.DateCreated</span>
                 <span class="" id="news-article-createdBy">@Model.NewsArticle.CreatedBy</span>
             </header>
-            <hr />
+        </div>
+    </div>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-12">
             <p class="" id="news-article-body">@Model.NewsArticle.Body</p>
             <hr />
             <div class="link-section">

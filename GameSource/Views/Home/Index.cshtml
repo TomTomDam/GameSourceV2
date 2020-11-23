@@ -2,13 +2,12 @@
     ViewData["Title"] = "Welcome to Game Source";
 }
 
-<div class="container">
-    <div class="text-center homepage-section" id="homepage-header-section">
-        <h1 class="">Games, games and more games.</h1>
-        <p>A place for databasing and discussing all things games.</p>
-    </div>
-
-    <div class="homepage-section" id="homepage-featured-games-section">
+<div class="page-content">
+    <section class="text-center homepage-section" id="homepage-header-section">
+        <div class="display-4">Games, games and more games.</div>
+        <p class="lead">A place for databasing and discussing all things games.</p>
+    </section>
+    <section class="homepage-section" id="homepage-featured-games-section">
         <h2 class="">Featured Games</h2>
         <div class="carousel slide" id="featuredgamesCarousel" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -42,14 +41,13 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-    </div>
-
-    <div class="homepage-section" id="homepage-news-section">
+    </section>
+    <section class="homepage-section" id="homepage-news-section">
         <h3 class="">Latest News</h3>
         <div class="">
 
         </div>
-    </div>
+    </section>
 </div>
 
 @section scripts {

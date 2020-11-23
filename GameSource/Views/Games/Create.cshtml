@@ -4,11 +4,15 @@
     ViewData["Title"] = "Add a new Game";
 }
 
-<div class="container create-page page-content">
+<div class="create-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-6">
             <div class="page-heading">Add a new Game</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
             <form asp-action="Create" enctype="multipart/form-data" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Game.ID" id="gameId" />
@@ -51,10 +55,10 @@
                     <span asp-validation-for="Game.Platform" class="text-danger"></span>
                 </div>
                 @*<div class="form-group">
-                    <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
-                    <input asp-for="Game.CoverImage" class="control-label dialog-input dialog-input-base"/>
-                    <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
-                </div>*@
+                        <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
+                        <input asp-for="Game.CoverImage" class="control-label dialog-input dialog-input-base"/>
+                        <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
+                    </div>*@
                 <div class="submit-btn-section">
                     <div class="form-group">
                         <input type="submit" value="Submit" class="btn btn-primary" />

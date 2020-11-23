@@ -1,20 +1,43 @@
 ﻿@model GameSource.ViewModels.GameSource.PlatformViewModel.PlatformDetailsViewModel
 
 @{
-    ViewData["Title"] = "Platform";
+    ViewData["Title"] = Model.Platform.Name;
 }
 
-<div class="container details-page page-content">
+<div class="details-page page-content">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-4">
             <div class="page-heading">Platform</div>
+            <div class="page-sub-heading">@Model.Platform.Name</div>
             <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Platform.ID" class="control-label font-weight-bold"></label>
-            <p>@Model.Platform.ID</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Platform.ID</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Platform.Name" class="control-label font-weight-bold"></label>
-            <p>@Model.Platform.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.Platform.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
             <label asp-for="Platform.PlatformType" class="control-label font-weight-bold"></label>
-            <p>@Model.PlatformType.Name</p>
+        </div>
+        <div class="col-2">
+            <div>@Model.PlatformType.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <hr />
             <div class="link-section">
                 <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
