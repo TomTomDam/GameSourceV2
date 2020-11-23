@@ -12,14 +12,32 @@
             <hr />
         </div>
     </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="Platform.ID" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.Platform.ID</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="Platform.Name" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.Platform.Name</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="Platform.PlatformType" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.PlatformType.Name</div>
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-4">
-            <label asp-for="Platform.ID" class="control-label font-weight-bold"></label>
-            <p>@Model.Platform.ID</p>
-            <label asp-for="Platform.Name" class="control-label font-weight-bold"></label>
-            <p>@Model.Platform.Name</p>
-            <label asp-for="Platform.PlatformType" class="control-label font-weight-bold"></label>
-            <p>@Model.PlatformType.Name</p>
             <hr />
             <div class="link-section">
                 <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>

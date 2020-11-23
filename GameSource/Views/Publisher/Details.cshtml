@@ -12,15 +12,29 @@
             <hr />
         </div>
     </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="Publisher.ID" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.Publisher.ID</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="Publisher.Name" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.Publisher.Name</div>
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-4">
-            <label asp-for="Publisher.ID" class="control-label font-weight-bold"></label>
-            <p>@Model.Publisher.ID</p>
-            <label asp-for="Publisher.Name" class="control-label font-weight-bold"></label>
-            <p>@Model.Publisher.Name</p>
             <hr />
             <div class="link-section">
-                <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+                <div class="form-group">
+                    <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+                </div>
             </div>
         </div>
     </div>
