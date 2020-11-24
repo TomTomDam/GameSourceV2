@@ -10,11 +10,11 @@
 }
 
 <div id="userprofile-profile-settings-page">
-    <div class="userprofile-page-heading page-heading-bottom-border" id="userprofile-profile-settings-page-heading">
-        <span id="userprofile-profile-settings-page-heading-username">@User.Identity.Name</span> > Profile Settings
+    <div class="settings-page-heading page-heading-bottom-border">
+        <span class="settings-page-heading-username">@User.Identity.Name</span> > Profile Settings
     </div>
-    <div class="page-content container clearfix" id="userprofile-settings-page-content">
-        <div class="col-md-3 float-left pr-4">
+    <div class="settings-page-content clearfix">
+        <div class="col-3 float-left pr-4">
             <nav class="menu position-relative" aria-label="Profile Settings">
                 <a class="menu-item active" id="userprofile-general-settings-btn">
                     General
@@ -127,7 +127,6 @@
             });
 
             function privacySettings(userProfileId) {
-                debugger;
                 $('#userprofile-general-settings').hide();
                 $('#userprofile-avatar-settings').hide();
                 $('#userprofile-profile-background-settings').hide();
