@@ -160,16 +160,6 @@ a:hover {
     color: #fff;
 }
 
-.settings-sub-heading {
-    font-size: 16px;
-    line-height: 28px;
-    letter-spacing: 0em;
-    text-transform: uppercase;
-    color: #E4E4E4;
-    padding: 0px 0px 6px 10px;
-    border-bottom: 2px solid rgba(228, 228, 228, 0.1);
-}
-
 hr {
     border-color: #363c44;
 }
@@ -182,11 +172,6 @@ hr {
 .index-link {
     background-color: #E4E4E4;
     color: black;
-}
-
-.submit-btn-section {
-    display: flex;
-    justify-content: flex-end;
 }
 
 .dialog-form {
@@ -397,7 +382,7 @@ table.dataTable thead,
 }
 
 /* UserProfile Settings + Account Settings */
-.userprofile-page-heading {
+.settings-page-heading {
     padding: 8px 16px;
     margin-top: 0;
     margin-bottom: 16px;
@@ -405,9 +390,22 @@ table.dataTable thead,
     font-size: 24px;
 }
 
-#userprofile-account-settings-page-heading-username,
-#userprofile-profile-settings-page-heading-username {
+.settings-sub-heading {
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-transform: uppercase;
+    color: #E4E4E4;
+    padding: 0px 0px 6px 10px;
+    border-bottom: 2px solid rgba(228, 228, 228, 0.1);
+}
+
+.settings-page-heading-username {
     font-size: 30px;
+}
+
+.settings-page-content {
+    padding-top: 30px;
 }
 
 .menu {
