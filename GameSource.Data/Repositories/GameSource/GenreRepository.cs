@@ -3,6 +3,7 @@ using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSource
 {
@@ -44,6 +45,36 @@ namespace GameSource.Data.Repositories.GameSource
             var genre = GetByID(id);
             entity.Remove(genre);
             context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Genre>> GetAllAsync()
+        {
+            return await entity.ToListAsync();
+        }
+
+        public async Task<Genre> GetByIDAsync(int id)
+        {
+            return await entity.FindAsync(id);
+        }
+
+        public async Task<Genre> InsertAsync(Genre genre)
+        {
+            await entity.AddAsync(genre);
+            await context.SaveChangesAsync();
+            return genre;
+        }
+
+        public async Task UpdateAsync(Genre genre)
+        {
+            entity.Update(genre);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            Genre genre = await GetByIDAsync(id);
+            entity.Remove(genre);
+            await context.SaveChangesAsync();
         }
     }
 }

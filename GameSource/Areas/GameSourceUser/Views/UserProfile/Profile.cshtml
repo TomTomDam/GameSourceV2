@@ -9,18 +9,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
+    var backgroundImageFilePath = "~/Images/UserProfile/Background/" + (Model.UserProfile.ProfileBackgroundImageFilePath ?? null);
 }
 
 @if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Everyone)
 {
-<div class="container page-content">
+<div class="page-content">
     <div class="row">
-        <div class="col-md-4 text-center">
+        <div class="col-4 text-center">
             <div class="profile-avatar-image">
                 <img src="@avatarImageFilePath" asp-append-version="true" />
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-8">
             <input type="hidden" asp-for="UserProfile.ID" id="userProfileId" />
             <div class="profile-heading">
                 @{
@@ -51,7 +52,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-6">
             <div id="userprofile-create-comment"></div>
 
             @if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Everyone)
@@ -82,14 +83,14 @@
 }
 else if (Model.User.UserProfile.UserProfileVisibilityID == (int)UserProfileVisibilityEnum.Private)
 {
-<div class="container page-content">
+<div class="page-content">
     <div class="row">
-        <div class="col-md-4 text-center">
+        <div class="col-4 text-center">
             <div class="profile-avatar-image">
                 <img src="@avatarImageFilePath" asp-append-version="true" />
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-8">
             <input type="hidden" asp-for="UserProfile.ID" id="userProfileId" />
             <div class="profile-heading">
                 @{

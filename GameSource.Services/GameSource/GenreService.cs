@@ -59,5 +59,30 @@ namespace GameSource.Services.GameSource
         {
             repo.Delete(id);
         }
+
+        public async Task<IEnumerable<Genre>> GetAllAsync()
+        {
+            return await repo.GetAllAsync();
+        }
+
+        public async Task<Genre> GetByIDAsync(int id)
+        {
+            return await repo.GetByIDAsync(id);
+        }
+
+        public async Task<Genre> InsertAsync(Genre genre)
+        {
+            return await repo.InsertAsync(genre);
+        }
+
+        public async Task UpdateAsync(Genre genre)
+        {
+            await repo.UpdateAsync(genre);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await repo.DeleteAsync(id);
+        }
     }
 }

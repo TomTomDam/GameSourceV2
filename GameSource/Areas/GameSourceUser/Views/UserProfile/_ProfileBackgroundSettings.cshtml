@@ -2,18 +2,28 @@
 @using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
 
-<div class="col-md-9 float-left" id="userprofile-profilebackground-settings">
-    <div class="sub-heading">Profile Background</div>
-    <form method="post" asp-action="ProfileBackgroundSettingsPartial" class="dialog-form">
+@{
+    var backgroundImageFilePath = "~/Images/UserProfile/Background/" + (Model.UserProfile.ProfileBackgroundImageFilePath ?? null);
+}
+
+<div class="col-9 float-left" id="userprofile-background-settings">
+    <div class="settings-sub-heading">Profile Background</div>
+    <form enctype="multipart/form-data" method="post" asp-action="ProfileBackgroundSettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="UserProfile.ID" />
         <div class="form-group">
-            <label asp-for="UserProfile.Biography" class="control-label dialog-label"></label>
-            <input asp-for="UserProfile.Biography" class="form-control dialog-input dialog-input-base" />
-            <span asp-validation-for="UserProfile.Biography" class="text-danger"></span>
+            <label asp-for="UserProfile.ProfileBackgroundImageFilePath" class="control-label dialog-label"></label>
+            <img id="userprofile-background-settings-thumbnail" src="@backgroundImageFilePath" asp-append-version="true" />
         </div>
         <div class="form-group">
-            <input type="submit" value="Save changes" class="btn btn-primary" />
+            <label asp-for="UserProfile.ProfileBackgroundImage" class="control-label dialog-label"></label>
+            <input asp-for="UserProfile.ProfileBackgroundImage" class="form-control dialog-input dialog-input-base" />
+            <span asp-validation-for="UserProfile.ProfileBackgroundImage" class="text-danger"></span>
+        </div>
+        <div class="link-section">
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
