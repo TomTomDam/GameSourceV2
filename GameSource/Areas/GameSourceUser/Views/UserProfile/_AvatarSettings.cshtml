@@ -6,7 +6,7 @@
     var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
 }
 
-<div class="col-md-9 float-left" id="userprofile-avatar-settings">
+<div class="col-9 float-left" id="userprofile-avatar-settings">
     <div class="settings-sub-heading">Avatar</div>
     <form enctype="multipart/form-data" method="post" asp-action="AvatarSettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -20,8 +20,14 @@
             <input asp-for="UserProfile.AvatarImage" class="form-control dialog-input dialog-input-base" />
             <span asp-validation-for="UserProfile.AvatarImage" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Save changes" class="btn btn-primary" />
+        <div class="link-section">
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
+
+@section scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

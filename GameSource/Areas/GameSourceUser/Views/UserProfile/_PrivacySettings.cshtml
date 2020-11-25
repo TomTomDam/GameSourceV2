@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
 
-<div class="col-md-9 float-left" id="userprofile-privacy-settings">
+<div class="col-9 float-left" id="userprofile-privacy-settings">
     <div class="settings-sub-heading">Privacy</div>
     <form method="post" asp-action="PrivacySettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -17,8 +17,10 @@
             <select asp-for="UserProfile.UserProfileCommentPermissionID" class="form-control dialog-input dialog-input-base" asp-items="@Model.UserProfileCommentPermissionList"></select>
             <span asp-validation-for="UserProfile.UserProfileCommentPermissionID" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Save changes" class="btn btn-primary" />
+        <div class="link-section">
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>

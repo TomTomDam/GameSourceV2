@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity;
 @using GameSource.Models.GameSourceUser;
 
-<div class="col-md-9 float-left" id="userprofile-general-settings">
+<div class="col-9 float-left" id="userprofile-general-settings">
     <div class="settings-sub-heading">General</div>
     <form method="post" asp-action="GeneralSettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -12,8 +12,10 @@
             <input asp-for="UserProfile.Biography" class="form-control dialog-input dialog-input-base" />
             <span asp-validation-for="UserProfile.Biography" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Save changes" class="btn btn-primary" />
+        <div class="link-section">
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>

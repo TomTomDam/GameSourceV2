@@ -35,6 +35,7 @@
     <Folder Include="wwwroot\images\NewsArticle\CoverImage\" />
     <Folder Include="wwwroot\images\NewsArticle\ArticleImages\" />
     <Folder Include="wwwroot\images\UserProfile\Avatar\" />
+    <Folder Include="wwwroot\images\UserProfile\Background\" />
     <Folder Include="wwwroot\vue\" />
   </ItemGroup>
 

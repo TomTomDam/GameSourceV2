@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using GameSource.Models.GameSource;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using GameSource.Models;
+using GameSource.Models.Enums;
 using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +19,14 @@ namespace GameSource.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Genre> GetAll()
+        public async Task<ApiResponse> GetAll()
         {
-            return genreService.GetAll();
+            var result = await genreService.GetAllAsync();
+
+            if (result.Any())
+                return new ApiResponse(ResponseStatusCode.Success, "Successfully returned Users list.");
+
+            return new ApiResponse(ResponseStatusCode.Error, "Could not return Users list.");
         }
     }
 }

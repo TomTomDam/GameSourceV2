@@ -1,13 +1,14 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileCommentViewModel.UserProfileCommentIndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Comments";
 }
 
-<div class="container">
+<div class="page-content index-page">
     <p>
         <a class="btn btn-primary" asp-controller="UserProfileComment" asp-action="Create">Add a new Comment</a>
     </p>
+    <hr />
 
     @foreach (var comment in Model.UserProfileComments)
     {

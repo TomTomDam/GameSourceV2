@@ -1,6 +1,6 @@
 ﻿@model GameSource.Areas.GameSourceUser.ViewModels.UserProfileViewModel.UserProfileEditViewModel
 
-<div class="col-md-9 float-left" id="userprofile-account-settings">
+<div class="col-9 float-left" id="userprofile-account-settings">
     <div class="settings-sub-heading">Account</div>
     <form method="post" asp-action="AccountSettingsPartial" class="dialog-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,8 +25,10 @@
             <input asp-for="User.Location" class="form-control dialog-input dialog-input-base" />
             <span asp-validation-for="User.Location" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Save changes" class="btn btn-primary" />
+        <div class="link-section">
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-primary" />
+            </div>
         </div>
     </form>
 </div>
