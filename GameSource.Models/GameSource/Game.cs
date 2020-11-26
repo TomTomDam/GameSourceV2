@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,7 +10,7 @@ namespace GameSource.Models.GameSource
         public int ID { get; set; }
 
         [Required]
-        [StringLength(40, ErrorMessage = "The {0} cannot exceed {1} characters.")]
+        [StringLength(60, ErrorMessage = "The {0} cannot exceed {1} characters.")]
         public string Name { get; set; }
 
         [Required]
