@@ -5,7 +5,9 @@ using GameSource.ViewModels.GameSource.NewsArticleViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Linq;
 
 namespace GameSource.Controllers.GameSource
 {
@@ -31,7 +33,7 @@ namespace GameSource.Controllers.GameSource
             NewsArticleIndexViewModel viewModel = new NewsArticleIndexViewModel
             {
                 NewsArticles = newsArticleService.GetAll(),
-                //NewsArticleCategory = newsArticleCategoryService.GetAll()
+                NewsArticleCategories = newsArticleCategoryService.GetAll()
             };
 
             return View(viewModel);
@@ -42,26 +44,18 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             NewsArticle newsArticle = newsArticleService.GetByID((int)id);
             if (newsArticle == null)
-            {
                 return NotFound();
-            }
 
-            //NewsArticleCategory newsArticleCategory = newsArticleCategoryService.GetByID((int)newsArticle.CategoryID);
-            //if (newsArticleCategory == null)
-            //{
-            //    return NotFound();
-            //}
+            NewsArticleCategory newsArticleCategory = newsArticleCategoryService.GetByID(newsArticle.CategoryID);
 
             NewsArticleDetailsViewModel viewModel = new NewsArticleDetailsViewModel
             {
                 NewsArticle = newsArticle,
-                //NewsArticleCategory = newsArticleCategory
+                NewsArticleCategory = newsArticleCategory
             };
 
             return View(viewModel);
@@ -72,11 +66,11 @@ namespace GameSource.Controllers.GameSource
         {
             NewsArticleCreateViewModel viewModel = new NewsArticleCreateViewModel();
             viewModel.NewsArticle = new NewsArticle();
-            //viewModel.NewsArticleCategory = newsArticleCategoryService.GetAll().Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.ID.ToString()
-            //}).ToList();
+            viewModel.NewsArticleCategory = newsArticleCategoryService.GetAll().Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
 
             return View(viewModel);
         }
@@ -94,7 +88,7 @@ namespace GameSource.Controllers.GameSource
                 DateModified = null,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
                 CreatedBy = userManager.GetUserAsync(HttpContext.User).Result,
-                //NewsArticleCategory = viewModel.NewsArticle.CategoryID
+                CategoryID = viewModel.NewsArticle.CategoryID
             };
 
             newsArticleService.Insert(newsArticle);
@@ -105,24 +99,20 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             NewsArticle newsArticle = newsArticleService.GetByID((int)id);
             if (newsArticle == null)
-            {
                 return NotFound();
-            }
 
             NewsArticleEditViewModel viewModel = new NewsArticleEditViewModel();
             viewModel.NewsArticle = newsArticle;
-            //viewModel.NewsArticleCategories = newsArticleCategoryService.GetAll().Select(x => new SelectListItem
-            //{
-            //    Text = x.Name,
-            //    Value = x.ID.ToString()
-            //}).ToList();
-            //viewModel.NewsArticleCategoryID = (int)newsArticle.CategoryID;
+            viewModel.NewsArticleCategories = newsArticleCategoryService.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.ID.ToString()
+            }).ToList();
+            viewModel.NewsArticleCategoryID = newsArticle.CategoryID;
 
             return View(viewModel);
         }
@@ -136,7 +126,7 @@ namespace GameSource.Controllers.GameSource
             newsArticle.Title = viewModel.NewsArticle.Title;
             newsArticle.Body = viewModel.NewsArticle.Body;
             newsArticle.DateModified = DateTime.Now;
-            //newsArticle.CategoryID = viewModel.NewsArticle.CategoryID;
+            newsArticle.CategoryID = viewModel.NewsArticleCategoryID;
 
             newsArticleService.Update(newsArticle);
             return RedirectToAction("Details", newsArticle);
@@ -146,26 +136,18 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             NewsArticle newsArticle = newsArticleService.GetByID((int)id);
             if (newsArticle == null)
-            {
                 return NotFound();
-            }
 
-            //NewsArticleCategory newsArticleCategory = newsArticleService.GetByID((int)id);
-            //if (newsArticleCategory == null)
-            //{
-            //    return NotFound();
-            //}
+            NewsArticleCategory newsArticleCategory = newsArticleCategoryService.GetByID((int)id);
 
             NewsArticleDeleteViewModel viewModel = new NewsArticleDeleteViewModel
             {
                 NewsArticle = newsArticle,
-                //NewsArticleCategory = newsArticleCategory
+                NewsArticleCategory = newsArticleCategory
             };
 
             return View(viewModel);

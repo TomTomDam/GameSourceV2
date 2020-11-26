@@ -22,7 +22,7 @@ namespace GameSource.Data.Repositories.GameSource
             return entity.ToList();
         }
 
-        public NewsArticleCategory GetByID(int id)
+        public NewsArticleCategory GetByID(int? id)
         {
             return entity.Find(id);
         }

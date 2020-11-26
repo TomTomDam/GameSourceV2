@@ -19,7 +19,7 @@ namespace GameSource.Services.GameSource
             return repo.GetAll();
         }
 
-        public NewsArticleCategory GetByID(int id)
+        public NewsArticleCategory GetByID(int? id)
         {
             return repo.GetByID(id);
         }
