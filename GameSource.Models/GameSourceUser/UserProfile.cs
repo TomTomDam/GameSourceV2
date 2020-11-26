@@ -10,6 +10,7 @@ namespace GameSource.Models.GameSourceUser
         [Key]
         public int ID { get; set; }
 
+        [StringLength(40)]
         [Display(Name = "Display Name")]
         public string DisplayName { get; set; }
 

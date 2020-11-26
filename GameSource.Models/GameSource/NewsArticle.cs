@@ -21,10 +21,10 @@ namespace GameSource.Models.GameSource
         [Display(Name = "Date Modified")]
         public DateTime? DateModified { get; set; }
 
-        //public int? CategoryID { get; set; }
+        public int? CategoryID { get; set; }
 
-        //[Display(Name = "Category")]
-        //public NewsArticleCategory Category { get; set; }
+        [Display(Name = "Category")]
+        public NewsArticleCategory Category { get; set; }
 
 
         [Display(Name = "Upload Image")]

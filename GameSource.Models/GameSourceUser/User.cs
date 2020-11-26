@@ -14,11 +14,11 @@ namespace GameSource.Models.GameSourceUser
 
         }
 
-        [StringLength(20)]
+        [StringLength(40)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [StringLength(20)]
+        [StringLength(40)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 

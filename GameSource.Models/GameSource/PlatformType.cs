@@ -9,7 +9,7 @@ namespace GameSource.Models.GameSource
         public int ID { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} cannot exceed {1} characters.")]
+        [StringLength(40, ErrorMessage = "The {0} cannot exceed {1} characters.")]
         public string Name { get; set; }
 
         public ICollection<Platform> Platforms { get; set; }
