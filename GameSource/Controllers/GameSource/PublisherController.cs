@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GameSource.Models.GameSource;
+﻿using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.PublisherViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -131,6 +128,8 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(PublisherDeleteViewModel viewModel)
         {
             Publisher publisher = publisherService.GetByID(viewModel.Publisher.ID);
+            if (publisher == null)
+                return NotFound();
 
             publisherService.Delete(publisher.ID);
             return RedirectToAction("Index");

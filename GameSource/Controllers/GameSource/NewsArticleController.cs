@@ -158,6 +158,8 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(NewsArticleDeleteViewModel viewModel)
         {
             NewsArticle newsArticle = newsArticleService.GetByID(viewModel.NewsArticle.ID);
+            if (newsArticle == null)
+                return NotFound();
 
             newsArticleService.Delete(newsArticle.ID);
             return RedirectToAction("Index");

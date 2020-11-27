@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GameSource.Models.GameSource;
+﻿using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.PlatformTypeViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -132,6 +129,8 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(PlatformTypeDeleteViewModel viewModel)
         {
             PlatformType platformType = platformTypeService.GetByID(viewModel.PlatformType.ID);
+            if (platformType == null)
+                return NotFound();
 
             platformTypeService.Delete(platformType.ID);
             return RedirectToAction("Index");

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using GameSource.ViewModels.GameSource.GenreViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GameSource.Controllers.GameSource
 {
@@ -144,6 +145,8 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(GenreDeleteViewModel viewModel)
         {
             Genre genre = genreService.GetByID(viewModel.Genre.ID);
+            if (genre == null)
+                return NotFound();
 
             genreService.Delete(genre.ID);
             return RedirectToAction("Index");

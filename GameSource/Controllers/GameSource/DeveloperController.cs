@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GameSource.Models.GameSource;
+﻿using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.DeveloperViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -119,8 +116,10 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(DeveloperDeleteViewModel viewModel)
         {
             Developer developer = developerService.GetByID(viewModel.Developer.ID);
-            developerService.Delete(developer.ID);
+            if (developer == null)
+                return NotFound();
 
+            developerService.Delete(developer.ID);
             return RedirectToAction("Index");
         }
     }

@@ -34,7 +34,7 @@ namespace GameSource.Services.GameSource
             repo.Update(newsArticleCategory);
         }
 
-        public void Delete(int id)
+        public void Delete(int? id)
         {
             repo.Delete(id);
         }

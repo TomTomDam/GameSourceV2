@@ -223,9 +223,7 @@ namespace GameSource.Controllers.GameSource
         {
             Game game = gameService.GetByID(viewModel.Game.ID);
             if (game == null)
-            {
                 return NotFound();
-            }
 
             gameService.Delete(game.ID);
             return RedirectToAction("Index");

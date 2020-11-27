@@ -39,7 +39,7 @@ namespace GameSource.Data.Repositories.GameSource
             context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(int? id)
         {
             var newsArticleCategory = GetByID(id);
             entity.Remove(newsArticleCategory);
