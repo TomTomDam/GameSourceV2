@@ -158,6 +158,8 @@ namespace GameSource.Controllers.GameSource
         public IActionResult Delete(PlatformDeleteViewModel viewModel)
         {
             Platform platform = platformService.GetByID(viewModel.Platform.ID);
+            if (platform == null)
+                return NotFound();
 
             platformService.Delete(platform.ID);
             return RedirectToAction("Index");

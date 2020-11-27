@@ -9,6 +9,6 @@ namespace GameSource.Data.Repositories.GameSource.Contracts
         public NewsArticleCategory GetByID(int? id);
         public void Insert(NewsArticleCategory newsArticleCategory);
         public void Update(NewsArticleCategory newsArticleCategory);
-        public void Delete(int id);
+        public void Delete(int? id);
     }
 }
