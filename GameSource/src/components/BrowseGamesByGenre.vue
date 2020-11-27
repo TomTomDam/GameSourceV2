@@ -1,6 +1,6 @@
 ﻿<template>
     <div>
-        <li><a class="dropdown-header font-weight-bold">By Genre</a></li>
+        <div><p class="dropdown-header font-weight-bold">By Genre</p></div>
         <li><div class="dropdown-divider"></div></li>
         <li><a class="dropdown-item" v-for="genre in genres" :key="genre.id">{{ genre.name }}</a></li>
     </div>

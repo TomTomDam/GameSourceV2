@@ -43,18 +43,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("details/{id}")]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Genre genre = genreService.GetByID((int)id);
+            Genre genre = genreService.GetByID(id);
             if (genre == null)
-            {
                 return NotFound();
-            }
 
             GenreDetailsViewModel viewModel = new GenreDetailsViewModel();
             viewModel.Genre = genre;
@@ -87,18 +83,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Genre genre = genreService.GetByID((int)id);
+            Genre genre = genreService.GetByID(id);
             if (genre == null)
-            {
                 return NotFound();
-            }
 
             GenreEditViewModel viewModel = new GenreEditViewModel();
             viewModel.Genre = genre;
@@ -119,18 +111,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Genre genre = genreService.GetByID((int)id);
+            Genre genre = genreService.GetByID(id);
             if (genre == null)
-            {
                 return NotFound();
-            }
 
             GenreDeleteViewModel viewModel = new GenreDeleteViewModel
             {
