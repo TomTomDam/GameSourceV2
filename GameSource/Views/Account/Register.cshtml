@@ -5,23 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container register-page">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-5">
-            <div class="register-title">Create a new account</div>
+<div class="register-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="page-heading">Create a new account</div>
             <hr />
-            <form asp-action="Register" method="post" class="register-form">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form asp-action="Register" method="post" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @*<div class="form-group">
-                    <label asp-for="FirstName" class="control-label register-label"></label>
-                    <input asp-for="FirstName" class="form-control dialog-input dialog-input-base" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastName" class="control-label register-label"></label>
-                    <input asp-for="LastName" class="form-control dialog-input dialog-input-base" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>*@
                 <div class="form-group">
                     <label asp-for="Username" class="control-label register-label"></label>
                     <input asp-for="Username" class="form-control dialog-input dialog-input-base" />

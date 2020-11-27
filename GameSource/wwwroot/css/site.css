@@ -563,17 +563,6 @@ table.dataTable thead,
 }
 
 /* Register Page */
-.register-title {
-    text-transform: uppercase;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 34px;
-    color: #ffffff;
-    margin-bottom: 30px;
-    font-weight: 200;
-    letter-spacing: 2px;
-    text-align: center;
-}
-
 .register-page {
 
 }

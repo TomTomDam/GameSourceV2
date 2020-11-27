@@ -44,18 +44,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("details/{id}")]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Game game = gameService.GetByID((int)id);
+            Game game = gameService.GetByID(id);
             if (game == null)
-            {
                 return NotFound();
-            }
 
             GameDetailsViewModel viewModel = new GameDetailsViewModel
             {
@@ -127,18 +123,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Game game = gameService.GetByID((int)id);
+            Game game = gameService.GetByID(id);
             if (game == null)
-            {
                 return NotFound();
-            }
 
             GameEditViewModel viewModel = new GameEditViewModel();
             viewModel.Game = game;
@@ -192,22 +184,18 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Game game = gameService.GetByID((int)id);
+            Game game = gameService.GetByID(id);
             if (game == null)
-            {
                 return NotFound();
-            }
 
             GameDeleteViewModel viewModel = new GameDeleteViewModel
             {
-                Game = gameService.GetByID((int)id),
+                Game = gameService.GetByID(id),
                 Genre = genreService.GetByID(game.GenreID),
                 Developer = developerService.GetByID(game.DeveloperID),
                 Publisher = publisherService.GetByID(game.PublisherID),

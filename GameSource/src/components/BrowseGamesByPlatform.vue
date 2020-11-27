@@ -1,6 +1,6 @@
 ﻿<template>
     <div>
-        <li><a class="dropdown-header font-weight-bold">By Platform</a></li>
+        <div><a class="dropdown-header font-weight-bold">By Platform</a></div>
         <li><div class="dropdown-divider"></div></li>
         <li><a class="dropdown-item" v-for="platform in platforms" :key="platform.id">{{ platform.name }}</a></li>
     </div>

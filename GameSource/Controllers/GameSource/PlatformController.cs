@@ -34,29 +34,21 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("details/{id}")]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Platform platform = platformService.GetByID((int)id);
+            Platform platform = platformService.GetByID(id);
             if (platform == null)
-            {
                 return NotFound();
-            }
 
             PlatformType platformType = platformTypeService.GetByID((int)platform.PlatformTypeID);
-            if (platformType == null)
-            {
-                return NotFound();
-            }
 
             PlatformDetailsViewModel viewModel = new PlatformDetailsViewModel
             {
                 Platform = platform,
-                PlatformType = platformType
+                PlatformType = platformType ?? null
             };
 
             return View(viewModel);
@@ -84,7 +76,7 @@ namespace GameSource.Controllers.GameSource
             {
                 ID = viewModel.Platform.ID,
                 Name = viewModel.Platform.Name,
-                PlatformTypeID = viewModel.Platform.PlatformTypeID
+                PlatformTypeID = viewModel.Platform.PlatformTypeID ?? null
             };
 
             platformService.Insert(platform);
@@ -92,18 +84,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Platform platform = platformService.GetByID((int)id);
+            Platform platform = platformService.GetByID(id);
             if (platform == null)
-            {
                 return NotFound();
-            }
 
             PlatformEditViewModel viewModel = new PlatformEditViewModel();
             viewModel.Platform = platform;
@@ -112,7 +100,7 @@ namespace GameSource.Controllers.GameSource
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
-            viewModel.PlatformTypeID = (int)platform.PlatformTypeID;
+            viewModel.PlatformTypeID = platform.PlatformTypeID ?? null;
 
             return View(viewModel);
         }
@@ -124,30 +112,26 @@ namespace GameSource.Controllers.GameSource
             Platform platform = platformService.GetByID(viewModel.Platform.ID);
 
             platform.Name = viewModel.Platform.Name;
-            platform.PlatformTypeID = viewModel.Platform.PlatformTypeID;
+            platform.PlatformTypeID = viewModel.Platform.PlatformTypeID ?? null;
 
             platformService.Update(platform);
             return RedirectToAction("Details", platform);
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Platform platform = platformService.GetByID((int)id);
+            Platform platform = platformService.GetByID(id);
             if (platform == null)
-            {
                 return NotFound();
-            }
 
             PlatformDeleteViewModel viewModel = new PlatformDeleteViewModel
             {
                 Platform = platform,
-                PlatformType = platformTypeService.GetByID((int)platform.PlatformTypeID)
+                PlatformType = platformTypeService.GetByID((int)platform.PlatformTypeID) ?? null
             };
 
             return View(viewModel);

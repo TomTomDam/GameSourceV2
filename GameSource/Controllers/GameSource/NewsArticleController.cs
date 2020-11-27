@@ -41,21 +41,21 @@ namespace GameSource.Controllers.GameSource
 
         [HttpGet("details/{id}")]
         [AllowAnonymous]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
+            if (id == 0)
                 return NotFound();
 
-            NewsArticle newsArticle = newsArticleService.GetByID((int)id);
+            NewsArticle newsArticle = newsArticleService.GetByID(id);
             if (newsArticle == null)
                 return NotFound();
 
-            NewsArticleCategory newsArticleCategory = newsArticleCategoryService.GetByID(newsArticle.CategoryID);
+            NewsArticleCategory category = newsArticleCategoryService.GetByID(newsArticle.CategoryID);
 
             NewsArticleDetailsViewModel viewModel = new NewsArticleDetailsViewModel
             {
                 NewsArticle = newsArticle,
-                NewsArticleCategory = newsArticleCategory
+                NewsArticleCategory = category ?? null
             };
 
             return View(viewModel);
@@ -88,7 +88,7 @@ namespace GameSource.Controllers.GameSource
                 DateModified = null,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
                 CreatedBy = userManager.GetUserAsync(HttpContext.User).Result,
-                CategoryID = viewModel.NewsArticle.CategoryID
+                CategoryID = viewModel.NewsArticle.CategoryID ?? null
             };
 
             newsArticleService.Insert(newsArticle);
@@ -96,12 +96,12 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
                 return NotFound();
 
-            NewsArticle newsArticle = newsArticleService.GetByID((int)id);
+            NewsArticle newsArticle = newsArticleService.GetByID(id);
             if (newsArticle == null)
                 return NotFound();
 
@@ -112,7 +112,7 @@ namespace GameSource.Controllers.GameSource
                 Text = x.Name,
                 Value = x.ID.ToString()
             }).ToList();
-            viewModel.NewsArticleCategoryID = newsArticle.CategoryID;
+            viewModel.CategoryID = newsArticle.CategoryID ?? null;
 
             return View(viewModel);
         }
@@ -126,28 +126,28 @@ namespace GameSource.Controllers.GameSource
             newsArticle.Title = viewModel.NewsArticle.Title;
             newsArticle.Body = viewModel.NewsArticle.Body;
             newsArticle.DateModified = DateTime.Now;
-            newsArticle.CategoryID = viewModel.NewsArticleCategoryID;
+            newsArticle.CategoryID = viewModel.CategoryID ?? null;
 
             newsArticleService.Update(newsArticle);
             return RedirectToAction("Details", newsArticle);
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
                 return NotFound();
 
-            NewsArticle newsArticle = newsArticleService.GetByID((int)id);
+            NewsArticle newsArticle = newsArticleService.GetByID(id);
             if (newsArticle == null)
                 return NotFound();
 
-            NewsArticleCategory newsArticleCategory = newsArticleCategoryService.GetByID((int)id);
+            NewsArticleCategory category = newsArticleCategoryService.GetByID(id);
 
             NewsArticleDeleteViewModel viewModel = new NewsArticleDeleteViewModel
             {
                 NewsArticle = newsArticle,
-                NewsArticleCategory = newsArticleCategory
+                NewsArticleCategory = category ?? null
             };
 
             return View(viewModel);

@@ -26,18 +26,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("details/{id}")]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Publisher publisher = publisherService.GetByID((int)id);
+            Publisher publisher = publisherService.GetByID(id);
             if (publisher == null)
-            {
                 return NotFound();
-            }
 
             PublisherDetailsViewModel viewModel = new PublisherDetailsViewModel();
             viewModel.Publisher = publisher;
@@ -70,18 +66,14 @@ namespace GameSource.Controllers.GameSource
 
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Publisher publisher = publisherService.GetByID((int)id);
+            Publisher publisher = publisherService.GetByID(id);
             if (publisher == null)
-            {
                 return NotFound();
-            }
 
             PublisherEditViewModel viewModel = new PublisherEditViewModel();
             viewModel.Publisher = publisher;
@@ -102,18 +94,14 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("delete/{id}")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            Publisher publisher = publisherService.GetByID((int)id);
+            Publisher publisher = publisherService.GetByID(id);
             if (publisher == null)
-            {
                 return NotFound();
-            }
 
             PublisherDeleteViewModel viewModel = new PublisherDeleteViewModel
             {

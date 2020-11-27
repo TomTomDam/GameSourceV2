@@ -31,8 +31,11 @@ namespace GameSource.Controllers.GameSource
 
         [HttpGet("details/{id}")]
         [AllowAnonymous]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
+            if (id == 0 || id == null)
+                return NotFound();
+
             NewsArticleCategory category = newsArticleCategoryService.GetByID((int)id);
             if (category == null)
                 return NotFound();
@@ -71,8 +74,11 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("edit/{id}")]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == 0 || id == null)
+                return NotFound();
+
             NewsArticleCategory category = newsArticleCategoryService.GetByID((int)id);
             if (category == null)
                 return NotFound();
@@ -100,8 +106,11 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
+            if (id == 0 || id == null)
+                return NotFound();
+
             NewsArticleCategory category = newsArticleCategoryService.GetByID((int)id);
             if (category == null)
                 return NotFound();
