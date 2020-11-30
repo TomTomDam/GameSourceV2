@@ -5,7 +5,6 @@
         <li><a class="dropdown-item" v-for="platform in platforms" :key="platform.id">{{ platform.name }}</a></li>
     </div>
 </template>
-
 <script>
     import axios from 'axios';
 

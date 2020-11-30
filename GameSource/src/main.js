@@ -1,19 +1,23 @@
 //Registered modules
 import Vue from 'vue';
 import axios from 'axios';
-import router from './router/router.js';
-//Account Settings
-import AccountSettingsPage from './AccountSettingsPage.vue'
-import AccountSettings from './components/AccountSettings.vue'
-import EmailSettings from './components/EmailSettings.vue'
-import PrivacySettings from './components/PrivacySettings.vue'
-//Browse Games
-import BrowseGamesPage from './BrowseGamesPage.vue'
-import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
-import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
+//import router from './router/router.js';
+////Account Settings
+//import AccountSettingsPage from './AccountSettingsPage.vue'
+//import AccountSettings from './components/AccountSettings.vue'
+//import EmailSettings from './components/EmailSettings.vue'
+//import PrivacySettings from './components/PrivacySettings.vue'
+////Browse Games
+//import BrowseGamesPage from './BrowseGamesPage.vue'
+//import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
+//import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
 //Game Grid
 //import GameCard from './components/GameCard.vue'
 //import GamesCardGrid from './components/GamesCardGrid.vue'
+//News Article
+import NewsIndexPage from './NewsIndexPage.vue';
+import NewsCategories from './components/NewsCategories.vue';
+import NewsCalendar from './components/NewsCalendar.vue';
 
 Vue.config.productionTip = false;
 
@@ -36,24 +40,33 @@ const axiosPlugin = {
 Vue.use(axiosPlugin);
 
 //Vue Instances
-new Vue({
-    el: '#account-settings-page',
-    components: {
-        AccountSettings,
-        EmailSettings,
-        PrivacySettings
-    },
-    router,
-    render: h => h(AccountSettingsPage)
-});
+//new Vue({
+//    el: '#account-settings-page',
+//    components: {
+//        AccountSettings,
+//        EmailSettings,
+//        PrivacySettings
+//    },
+//    router,
+//    render: h => h(AccountSettingsPage)
+//});
+
+//new Vue({
+//    el: '#browse-games-page',
+//    components: {
+//        BrowseGamesByGenre,
+//        BrowseGamesByPlatform
+//    },
+//    render: h => h(BrowseGamesPage)
+//});
 
 new Vue({
-    el: '#browse-games-page',
+    el: '#news-index-menu',
     components: {
-        BrowseGamesByGenre,
-        BrowseGamesByPlatform
+        NewsCategories,
+        NewsCalendar
     },
-    render: h => h(BrowseGamesPage)
+    render: h => h(NewsIndexPage)
 });
 
 window.Vue = Vue;

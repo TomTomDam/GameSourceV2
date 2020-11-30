@@ -5,7 +5,6 @@
         <li><a class="dropdown-item" v-for="genre in genres" :key="genre.id">{{ genre.name }}</a></li>
     </div>
 </template>
-
 <script>
     export default {
         data: function () {
