@@ -1,5 +1,5 @@
 ﻿<template>
-    <div class="container">
+    <div class="page-content">
         <div class="row" v-if="games.length > 0">
             <div class="col-3" v-for="game in games" v-bind:key="game">
                 <game-card :game="game"></game-card>
