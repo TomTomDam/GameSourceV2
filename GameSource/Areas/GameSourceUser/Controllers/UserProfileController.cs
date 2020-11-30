@@ -21,6 +21,9 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         private readonly IUserProfileCommentPermissionService userProfileCommentPermissionService;
         private readonly IWebHostEnvironment webHostEnvironment;
 
+        private const string accountSettingsPath = "~/Areas/GameSourceUser/Views/UserProfile/AccountSettings/";
+        private const string profileSettingsPath = "~/Areas/GameSourceUser/Views/UserProfile/ProfileSettings/";
+
         public UserProfileController(IUserService userService, IUserProfileService userProfileService, IUserProfileVisibilityService userProfileVisibilityService, IUserProfileCommentPermissionService userProfileCommentPermissionService, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
@@ -31,30 +34,22 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Profile(int? id)
+        public async Task<IActionResult> Profile(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            User user = await userService.GetByIDAsync((int)id);
+            User user = await userService.GetByIDAsync(id);
             if (user == null || user.UserProfile == null)
-            {
                 return NotFound();
-            }
 
             UserProfileVisibility userProfileVisibility = await userProfileVisibilityService.GetByUserProfileIDAsync(user.UserProfile.ID);
             if (userProfileVisibility == null)
-            {
                 return NotFound();
-            }
 
             UserProfileCommentPermission userProfileCommentPermission = await userProfileCommentPermissionService.GetByIDAsync((int)user.UserProfile.UserProfileCommentPermissionID);
             if (userProfileCommentPermission == null)
-            {
                 return NotFound();
-            }
 
             UserProfileDetailsViewModel viewModel = new UserProfileDetailsViewModel
             {
@@ -65,52 +60,45 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileCommentPermission = userProfileCommentPermission
             };
 
-            return View(viewModel);
+            return View(profileSettingsPath + "Profile.cshtml", viewModel);
         }
 
         #region Profile Settings
         [HttpGet("{id}/profile-settings")]
-        public async Task<IActionResult> ProfileSettings(int? id)
+        public async Task<IActionResult> ProfileSettings(int id)
         {
-            if (id == null)
-            {
+            //First check for User
+            if (id == 0)
                 return NotFound();
-            }
 
-            UserProfile userProfile = await userProfileService.GetByUserIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByUserIDAsync(id);
             if (userProfile == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
                 UserProfile = userProfile
             };
 
-            return View(viewModel);
+            return View(profileSettingsPath + "ProfileSettings.cshtml", viewModel);
         }
 
         [HttpGet("{id}/general-settings")]
-        public async Task<IActionResult> GeneralSettingsPartial(int? id)
+        public async Task<IActionResult> GeneralSettingsPartial(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync(id);
             if (userProfile == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
                 UserProfile = userProfile
             };
 
-            return PartialView("_GeneralSettings", viewModel);
+            return PartialView(profileSettingsPath + "_GeneralSettings.cshtml", viewModel);
         }
 
         [HttpPost("{id}/general-settings")]
@@ -118,6 +106,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         public async Task<IActionResult> GeneralSettingsPartial(UserProfileEditViewModel viewModel)
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+            if (userProfile == null)
+                return NotFound();
 
             userProfile.Biography = viewModel.UserProfile.Biography;
 
@@ -126,25 +116,21 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("{id}/avatar-settings")]
-        public async Task<IActionResult> AvatarSettingsPartial(int? id)
+        public async Task<IActionResult> AvatarSettingsPartial(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync(id);
             if (userProfile == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
                 UserProfile = userProfile
             };
 
-            return PartialView("_AvatarSettings", viewModel);
+            return PartialView(profileSettingsPath + "_AvatarSettings.cshtml", viewModel);
         }
 
         [HttpPost("{id}/avatar-settings")]
@@ -152,6 +138,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         public async Task<IActionResult> AvatarSettingsPartial(UserProfileEditViewModel viewModel)
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+            if (userProfile == null)
+                return NotFound();
 
             string uniqueFileName = null;
             string avatarImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Avatar");
@@ -171,18 +159,14 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("{id}/privacy-settings")]
-        public async Task<IActionResult> PrivacySettingsPartial(int? id)
+        public async Task<IActionResult> PrivacySettingsPartial(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync(id);
             if (userProfile == null)
-            {
                 return NotFound();
-            }
 
             var visibilityList = await userProfileVisibilityService.GetAllAsync();
             var visibilitySelectList = visibilityList.Select(x => new SelectListItem()
@@ -205,7 +189,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileCommentPermissionList = commentPermissionSelectList
             };
 
-            return PartialView("_PrivacySettings", viewModel);
+            return PartialView(profileSettingsPath + "_PrivacySettings.cshtml", viewModel);
         }
 
         [HttpPost("{id}/privacy-settings")]
@@ -213,6 +197,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         public async Task<IActionResult> PrivacySettingsPartial(UserProfileEditViewModel viewModel)
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+            if (userProfile == null)
+                return NotFound();
 
             userProfile.UserProfileVisibility = viewModel.UserProfile.UserProfileVisibility;
             userProfile.UserProfileCommentPermission = viewModel.UserProfile.UserProfileCommentPermission;
@@ -222,25 +208,21 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("{id}/profile-background-settings")]
-        public async Task<IActionResult> ProfileBackgroundSettingsPartial(int? id)
+        public async Task<IActionResult> ProfileBackgroundSettingsPartial(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            UserProfile userProfile = await userProfileService.GetByIDAsync((int)id);
+            UserProfile userProfile = await userProfileService.GetByIDAsync(id);
             if (userProfile == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
                 UserProfile = userProfile
             };
 
-            return PartialView("_ProfileBackgroundSettings", viewModel);
+            return PartialView(profileSettingsPath + "_ProfileBackgroundSettings.cshtml", viewModel);
         }
 
         [HttpPost("{id}/profile-background-settings")]
@@ -248,6 +230,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         public async Task<IActionResult> ProfileBackgroundSettingsPartial(UserProfileEditViewModel viewModel)
         {
             UserProfile userProfile = await userProfileService.GetByIDAsync(viewModel.UserProfile.ID);
+            if (userProfile == null)
+                return NotFound();
 
             string uniqueFileName = null;
             string profileBackgroundImageFolder = Path.Combine(webHostEnvironment.WebRootPath, "images\\UserProfile\\Background");
@@ -269,47 +253,39 @@ namespace GameSource.Areas.GameSourceUser.Controllers
 
         #region AccountSettings
         [HttpGet("{id}/account")]
-        public async Task<IActionResult> AccountSettings(int? id)
+        public async Task<IActionResult> AccountSettings(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
             User user = await userService.GetByIDAsync((int)id);
             if (user == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
                 User = user
             };
 
-            return View(viewModel);
+            return View(accountSettingsPath + "AccountSettings.cshtml", viewModel);
         }
 
         [HttpGet("{id}/account-settings")]
-        public async Task<IActionResult> AccountSettingsPartial(int? id)
+        public async Task<IActionResult> AccountSettingsPartial(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            User user = await userService.GetByIDAsync((int)id);
+            User user = await userService.GetByIDAsync(id);
             if (user == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
                 User = user
             };
 
-            return PartialView("_AccountSettings", viewModel);
+            return PartialView(accountSettingsPath + "_AccountSettings.cshtml", viewModel);
         }
 
         [HttpPost("{id}/account-settings")]
@@ -328,18 +304,14 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         }
 
         [HttpGet("{id}/email-settings")]
-        public async Task<IActionResult> EmailSettingsPartial(int? id)
+        public async Task<IActionResult> EmailSettingsPartial(int id)
         {
-            if (id == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
 
-            User user = await userService.GetByIDAsync((int)id);
+            User user = await userService.GetByIDAsync(id);
             if (user == null)
-            {
                 return NotFound();
-            }
 
             UserProfileEditViewModel viewModel = new UserProfileEditViewModel
             {
@@ -347,7 +319,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 EmailAddress = user.Email
             };
 
-            return PartialView("_EmailSettings", viewModel);
+            return PartialView(accountSettingsPath + "_EmailSettings.cshtml", viewModel);
         }
 
         [HttpPost("{id}/email-settings")]
@@ -357,6 +329,8 @@ namespace GameSource.Areas.GameSourceUser.Controllers
             if (ModelState.IsValid)
             {
                 User user = await userService.GetByIDAsync(viewModel.User.Id);
+                if (user == null)
+                    return NotFound();
 
                 user.Email = viewModel.EmailAddress;
 
@@ -364,7 +338,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 return RedirectToAction("Profile", new { id = user.Id });
             }
 
-            return PartialView("_EmailSettings", viewModel);
+            return PartialView(accountSettingsPath + "_EmailSettings.cshtml", viewModel);
         }
         #endregion
     }
