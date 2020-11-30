@@ -4,7 +4,6 @@
         <browse-games-by-platform></browse-games-by-platform>
     </div>
 </template>
-
 <script>
     import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue';
     import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue';
@@ -16,7 +15,6 @@
         }
     }
 </script>
-
 <style>
 
 </style>
