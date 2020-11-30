@@ -30,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\GameSourceUser\Views\UserProfile\ProfileSettings\" />
+    <Folder Include="Views\NewsArticleCategory\" />
     <Folder Include="wwwroot\images\Games\CoverImage\" />
     <Folder Include="wwwroot\images\Games\GameImages\" />
     <Folder Include="wwwroot\images\NewsArticle\CoverImage\" />

@@ -11,9 +11,13 @@
 
 <div class="news-index page-content">
     <div class="row">
-        <div class="col-12">
+        <div class="col-10">
             <div class="page-heading">All News</div>
             <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 <p>
@@ -46,6 +50,10 @@
                 <div class="divider"></div>
                 <div class="divider-margin"></div>
             }
+        </div>
+        <div class="col-2">
+            <div id="news-categories"></div>
+            <div id="news-calendar"></div>
         </div>
     </div>
 </div>
