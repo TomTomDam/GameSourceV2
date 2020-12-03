@@ -3,6 +3,7 @@ using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSource
 {
@@ -44,6 +45,36 @@ namespace GameSource.Data.Repositories.GameSource
             var newsArticleCategory = GetByID(id);
             entity.Remove(newsArticleCategory);
             context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<NewsArticleCategory>> GetAllAsync()
+        {
+            return await entity.ToListAsync();
+        }
+
+        public async Task<NewsArticleCategory> GetByIDAsync(int? id)
+        {
+            return await entity.FindAsync(id);
+        }
+
+        public async Task<NewsArticleCategory> InsertAsync(NewsArticleCategory newsArticleCategory)
+        {
+            await entity.AddAsync(newsArticleCategory);
+            await context.SaveChangesAsync();
+            return newsArticleCategory;
+        }
+
+        public async Task UpdateAsync(NewsArticleCategory newsArticleCategory)
+        {
+            entity.Update(newsArticleCategory);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int? id)
+        {
+            NewsArticleCategory newsArticleCategory = await GetByIDAsync(id);
+            entity.Remove(newsArticleCategory);
+            await context.SaveChangesAsync();
         }
     }
 }

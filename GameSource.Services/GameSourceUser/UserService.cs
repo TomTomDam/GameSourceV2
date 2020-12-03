@@ -64,7 +64,8 @@ namespace GameSource.Services.GameSourceUser
 
         public async Task<User> InsertAsync(User user)
         {
-            return await repo.InsertAsync(user);
+            await repo.InsertAsync(user);
+            return user;
         }
 
         public async Task UpdateAsync(User user)
