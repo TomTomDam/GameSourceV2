@@ -13,7 +13,7 @@ namespace GameSource.Services.GameSource.Contracts
         public void Delete(int? id);
         public Task<IEnumerable<NewsArticleCategory>> GetAllAsync();
         public Task<NewsArticleCategory> GetByIDAsync(int? id);
-        public Task InsertAsync(NewsArticleCategory newsArticleCategory);
+        public Task<NewsArticleCategory> InsertAsync(NewsArticleCategory newsArticleCategory);
         public Task UpdateAsync(NewsArticleCategory newsArticleCategory);
         public Task DeleteAsync(int? id);
     }

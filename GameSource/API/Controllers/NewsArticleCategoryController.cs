@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GameSource.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/news-article-category")]
     [ApiController]
     public class NewsArticleCategoryController : ControllerBase
     {

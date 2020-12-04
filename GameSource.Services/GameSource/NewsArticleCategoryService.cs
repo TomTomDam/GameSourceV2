@@ -50,7 +50,7 @@ namespace GameSource.Services.GameSource
             throw new System.NotImplementedException();
         }
 
-        public async Task InsertAsync(NewsArticleCategory newsArticleCategory)
+        public async Task<NewsArticleCategory> InsertAsync(NewsArticleCategory newsArticleCategory)
         {
             throw new System.NotImplementedException();
         }
