@@ -150,20 +150,24 @@ namespace GameSource
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                //endpoints.MapToVueCliProxy(
-                //    "{*path}",
-                //    new SpaOptions { SourcePath = "src" },
-                //    npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
-                //    regex: "Completed successfully",
-                //    forceKill: true);
+                endpoints.MapControllerRoute(
+                    name: "api",
+                    pattern: "api/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapToVueCliProxy(
+                    "{*path}",
+                    new SpaOptions { SourcePath = "src" },
+                    npmScript: (System.Diagnostics.Debugger.IsAttached) ? "serve" : null,
+                    regex: "Completed successfully",
+                    forceKill: true);
 
                 endpoints.MapRazorPages();
             });
 
-            //app.UseSpa(spa => 
-            //{
-            //    spa.Options.SourcePath = "src";
-            //});
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "src";
+            });
         }
 
         private void SetUpDefaultUserAttributesAndSuperUser(IServiceProvider serviceProvider)

@@ -13,13 +13,13 @@
         },
         methods: {
             getAllCategories() {
-                this.$baseURL.get('api/news-article-category/GetAll')
+                this.$baseURL.get('api/news-article-category/GetAllAsync')
                     .then(res => {
                         this.categories = res.data;
-                        console.log("api/news-article-category/GetAll Success: " + res);
+                        console.log("api/news-article-category/GetAllAsync Success: " + res);
                     })
                     .catch(err => {
-                        console.log("api/news-article-category/GetAll Error: " + err);
+                        console.log("api/news-article-category/GetAllAsync Error: " + err);
                     });
             }
         },
