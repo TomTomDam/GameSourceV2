@@ -8,7 +8,7 @@ namespace GameSource.Services.GameSource
 {
     public class NewsArticleCategoryService : INewsArticleCategoryService
     {
-        INewsArticleCategoryRepository repo;
+        private INewsArticleCategoryRepository repo;
 
         public NewsArticleCategoryService(INewsArticleCategoryRepository repo)
         {
@@ -42,27 +42,27 @@ namespace GameSource.Services.GameSource
 
         public async Task<IEnumerable<NewsArticleCategory>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await repo.GetAllAsync();
         }
 
         public async Task<NewsArticleCategory> GetByIDAsync(int? id)
         {
-            throw new System.NotImplementedException();
+            return await repo.GetByIDAsync(id);
         }
 
         public async Task<NewsArticleCategory> InsertAsync(NewsArticleCategory newsArticleCategory)
         {
-            throw new System.NotImplementedException();
+            return await repo.InsertAsync(newsArticleCategory);
         }
 
         public async Task UpdateAsync(NewsArticleCategory newsArticleCategory)
         {
-            throw new System.NotImplementedException();
+            await repo.UpdateAsync(newsArticleCategory);
         }
 
         public async Task DeleteAsync(int? id)
         {
-            throw new System.NotImplementedException();
+            await repo.DeleteAsync(id);
         }
     }
 }

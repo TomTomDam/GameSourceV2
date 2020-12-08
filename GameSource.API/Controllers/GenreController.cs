@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Services.GameSource.Contracts;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Controllers
 {
     [Route("api/genre")]
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class GenreController : ControllerBase
     {
         private readonly IGenreService genreService;
@@ -18,15 +20,15 @@ namespace GameSource.API.Controllers
             this.genreService = genreService;
         }
 
-        [HttpGet]
-        public async Task<ApiResponse> GetAll()
+        [HttpGet("GetAllAsync")]
+        public async Task<ApiResponse> GetAllAsync()
         {
             var result = await genreService.GetAllAsync();
 
-            if (result.Any())
-                return new ApiResponse(ResponseStatusCode.Success, "Successfully returned Users list.");
+            if (result != null)
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Genre list.");
 
-            return new ApiResponse(ResponseStatusCode.Error, "Could not return Users list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Genre list.");
         }
     }
 }

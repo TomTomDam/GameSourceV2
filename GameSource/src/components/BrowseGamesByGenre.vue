@@ -14,13 +14,13 @@
         },
         methods: {
             getAllGenres() {
-                this.$baseURL.get('api/genre/GetAll')
+                this.$api.get('api/genre/GetAllAsync')
                     .then(res => {
                         this.genres = res.data;
-                        console.log("api/genre/GetAll Success: " + res);
+                        console.log("api/genre/GetAllAsync Success: " + res);
                     })
                     .catch(err => {
-                        console.log("api/genre/GetAll Error: " + err);
+                        console.log("api/genre/GetAllAsync Error: " + err);
                     });
             }
         },

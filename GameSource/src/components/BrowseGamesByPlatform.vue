@@ -16,13 +16,13 @@
         },
         methods: {
             getAllPlatforms() {
-                axios.get('http://localhost:44375/api/platform/GetAll')
+                axios.get('http://localhost:44375/api/platform/GetAllAsync')
                     .then(res => {
                         this.platforms = res.data;
-                        console.log("api/platform/GetAll Success: " + res);
+                        console.log("api/platform/GetAllAsync Success: " + res);
                     })
                     .catch(err => {
-                        console.log("api/platform/GetAll Error: " + err);
+                        console.log("api/platform/GetAllAsync Error: " + err);
                     });
             }
         },
