@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
+using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace GameSource.API.Controllers
         [HttpGet("GetAllAsync")]
         public async Task<ApiResponse> GetAllAsync()
         {
-            var result = await genreService.GetAllAsync();
+            IEnumerable<Genre> result = await genreService.GetAllAsync();
 
             if (result != null)
                 return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Genre list.");

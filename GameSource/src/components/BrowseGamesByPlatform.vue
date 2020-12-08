@@ -6,8 +6,6 @@
     </div>
 </template>
 <script>
-    import axios from 'axios';
-
     export default {
         data: function () {
             return {
@@ -16,7 +14,7 @@
         },
         methods: {
             getAllPlatforms() {
-                axios.get('http://localhost:44375/api/platform/GetAllAsync')
+                this.$api.get('platform/GetAllAsync')
                     .then(res => {
                         this.platforms = res.data;
                         console.log("api/platform/GetAllAsync Success: " + res);

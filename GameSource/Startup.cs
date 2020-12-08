@@ -31,6 +31,7 @@ namespace GameSource
         }
 
         public IConfiguration Configuration { get; }
+        readonly string AllowOrigin = "AllowOrigin";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -44,6 +45,16 @@ namespace GameSource
             {
                 options.AddPolicy("CreateGenrePolicy",
                     policy => policy.RequireClaim("Create Genre"));
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowOrigin,
+                    builder => {
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyMethod();
+                        builder.AllowAnyHeader();
+                    });
             });
 
             //Databases
@@ -125,12 +136,7 @@ namespace GameSource
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseRouting();
-            app.UseCors(options =>
-            {
-                options.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-            });
+            app.UseCors(AllowOrigin);
             app.UseAuthentication();
             app.UseAuthorization();
 

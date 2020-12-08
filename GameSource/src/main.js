@@ -18,7 +18,7 @@ Vue.config.productionTip = false;
 
 //Axios
 const api = axios.create({
-    baseURL: 'https://localhost:52817/api/'
+    baseURL: 'http://localhost:52817/api/'
 });
 
 const baseURL = axios.create({

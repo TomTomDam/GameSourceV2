@@ -14,7 +14,7 @@
         },
         methods: {
             getAllGenres() {
-                this.$api.get('api/genre/GetAllAsync')
+                this.$api.get('genre/GetAllAsync')
                     .then(res => {
                         this.genres = res.data;
                         console.log("api/genre/GetAllAsync Success: " + res);

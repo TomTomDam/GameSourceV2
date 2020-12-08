@@ -1,10 +1,9 @@
 ﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSource
 {
@@ -43,9 +42,37 @@ namespace GameSource.Data.Repositories.GameSource
 
         public void Delete(int id)
         {
-            var platform = GetByID(id);
+            Platform platform = GetByID(id);
             entity.Remove(platform);
             context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Platform>> GetAllAsync()
+        {
+            return await entity.ToListAsync();
+        }
+
+        public async Task<Platform> GetByIDAsync(int id)
+        {
+            return await entity.FindAsync(id);
+        }
+
+        public async Task InsertAsync(Platform platform)
+        {
+            await entity.AddAsync(platform);
+        }
+
+        public async Task UpdateAsync(Platform platform)
+        {
+            entity.Update(platform);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            Platform platform = await GetByIDAsync(id);
+            entity.Remove(platform);
+            await context.SaveChangesAsync();
         }
     }
 }

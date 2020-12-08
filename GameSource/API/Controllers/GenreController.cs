@@ -2,15 +2,12 @@
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Services.GameSource.Contracts;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace GameSource.API.Controllers
 {
     [Route("api/genre")]
     [ApiController]
-    [EnableCors("AllowOrigin")]
     public class GenreController : ControllerBase
     {
         private readonly IGenreService genreService;

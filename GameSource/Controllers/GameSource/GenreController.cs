@@ -3,13 +3,11 @@ using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using GameSource.ViewModels.GameSource.GenreViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GameSource.Controllers.GameSource
 {
     [Route("genre")]
-    [EnableCors("AllowOrigin")]
     public class GenreController : Controller
     {
         public IGenreService genreService;
