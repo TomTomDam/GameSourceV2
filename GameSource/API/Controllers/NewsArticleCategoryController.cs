@@ -1,7 +1,7 @@
 ﻿using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource;
+using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,9 @@ namespace GameSource.API.Controllers
     [ApiController]
     public class NewsArticleCategoryController : ControllerBase
     {
-        private readonly NewsArticleCategoryService newsArticleCategoryService;
+        private readonly INewsArticleCategoryService newsArticleCategoryService;
 
-        public NewsArticleCategoryController(NewsArticleCategoryService newsArticleCategoryService)
+        public NewsArticleCategoryController(INewsArticleCategoryService newsArticleCategoryService)
         {
             this.newsArticleCategoryService = newsArticleCategoryService;
         }
@@ -26,28 +26,15 @@ namespace GameSource.API.Controllers
             return newsArticleCategoryService.GetAll();
         }
 
-        //[HttpGet("GetAllAsync")]
-        //public async Task<ApiResponse> GetAllAsync()
-        //{
-        //    var result = await newsArticleCategoryService.GetAllAsync();
-
-        //    if (result.Any())
-        //        return new ApiResponse(ResponseStatusCode.Success, "Successfully returned Users list.");
-
-        //    return new ApiResponse(ResponseStatusCode.Error, "Could not return Users list.");
-        //}
-
         [HttpGet("GetAllAsync")]
-        public async Task<IEnumerable<NewsArticleCategory>> GetAllAsync()
+        public async Task<ApiResponse> GetAllAsync()
         {
-            return await newsArticleCategoryService.GetAllAsync();
+            var result = await newsArticleCategoryService.GetAllAsync();
 
-            //var result = await newsArticleCategoryService.GetAllAsync();
+            if (result != null)
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Users list.");
 
-            //if (result.Any())
-            //    return new ApiResponse(ResponseStatusCode.Success, "Successfully returned Users list.");
-
-            //return new ApiResponse(ResponseStatusCode.Error, "Could not return Users list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Users list.");
         }
     }
 }

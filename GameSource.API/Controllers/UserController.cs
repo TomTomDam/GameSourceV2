@@ -25,9 +25,9 @@ namespace GameSource.API.Controllers
             var result = await userService.GetAllAsync();
 
             if (result.Any())
-                return new ApiResponse(ResponseStatusCode.Success, "Successfully returned Users list.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Users list.");
 
-            return new ApiResponse(ResponseStatusCode.Error, "Could not return Users list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Users list.");
         }
 
         [HttpGet("{id}")]
@@ -36,9 +36,9 @@ namespace GameSource.API.Controllers
             var result = await userService.GetByIDAsync(id);
 
             if (result != null)
-                return new ApiResponse(ResponseStatusCode.Success, "Successfully returned a User.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
 
-            return new ApiResponse(ResponseStatusCode.Error, "Could not return a User.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User.");
         }
 
         [HttpPost]
@@ -47,9 +47,9 @@ namespace GameSource.API.Controllers
             var result = await userService.InsertAsync(user);
 
             if (result != null)
-                return new ApiResponse(ResponseStatusCode.Success, "Successfully created a User.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully created a User.");
 
-            return new ApiResponse(ResponseStatusCode.Error, "Could not create a User.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not create a User.");
         }
 
         [HttpPost]

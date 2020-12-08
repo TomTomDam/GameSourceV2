@@ -8,7 +8,7 @@ namespace GameSource.Services.GameSource
 {
     public class NewsArticleCategoryService : INewsArticleCategoryService
     {
-        INewsArticleCategoryRepository repo;
+        private INewsArticleCategoryRepository repo;
 
         public NewsArticleCategoryService(INewsArticleCategoryRepository repo)
         {

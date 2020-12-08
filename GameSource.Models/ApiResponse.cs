@@ -4,11 +4,13 @@ namespace GameSource.Models
 {
     public class ApiResponse
     {
+        public object Data { get; set; }
         public ResponseStatusCode ResponseStatusCode { get; set; }
         public string Message { get; set; }
 
-        public ApiResponse(ResponseStatusCode responseStatusCode, string message = null)
+        public ApiResponse(object data, ResponseStatusCode responseStatusCode, string message = null)
         {
+            Data = data;
             ResponseStatusCode = responseStatusCode;
             Message = message ?? GetDefaultMessageForStatusCode(responseStatusCode);
         }

@@ -3,9 +3,9 @@ import Vue from 'vue';
 import axios from 'axios';
 //import router from './router/router.js';
 ////Browse Games
-//import BrowseGamesPage from './BrowseGamesPage.vue'
-//import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
-//import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
+import BrowseGamesPage from './BrowseGamesPage.vue'
+import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
+import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
 //Game Grid
 //import GameCard from './components/GameCard.vue'
 //import GamesCardGrid from './components/GamesCardGrid.vue'
@@ -35,6 +35,15 @@ const axiosPlugin = {
 Vue.use(axiosPlugin);
 
 //Vue Instances
+new Vue({
+    el: '#browse-games-page',
+    components: {
+        BrowseGamesByGenre,
+        BrowseGamesByPlatform
+    },
+    render: h => h(BrowseGamesPage)
+});
+
 new Vue({
     el: '#news-index-menu',
     components: {

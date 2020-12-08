@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
         <div>News Categories</div>
-        <li><a class="dropdown-item" v-for="category in categories" :key="category.id">{{ category.name }}</a></li>
+        <div v-for="category in categories" :key="category.id">{{ category.name }}</div>
     </div>
 </template>
 <script>
