@@ -30,8 +30,6 @@ namespace GameSource.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             services.AddCors(options =>
             {
                 options.AddPolicy(name: AllowOrigin,
@@ -41,6 +39,8 @@ namespace GameSource.API
                         builder.AllowAnyHeader();
                     });
             });
+
+            services.AddControllers();
 
             services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
@@ -64,13 +64,9 @@ namespace GameSource.API
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseCors(AllowOrigin);
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -31,11 +31,11 @@ namespace GameSource
         }
 
         public IConfiguration Configuration { get; }
-        readonly string AllowOrigin = "AllowOrigin";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddSpaStaticFiles(option => option.RootPath = "wwwroot/vue");
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
@@ -45,16 +45,6 @@ namespace GameSource
             {
                 options.AddPolicy("CreateGenrePolicy",
                     policy => policy.RequireClaim("Create Genre"));
-            });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: AllowOrigin,
-                    builder => {
-                        builder.AllowAnyOrigin();
-                        builder.AllowAnyMethod();
-                        builder.AllowAnyHeader();
-                    });
             });
 
             //Databases
@@ -136,7 +126,6 @@ namespace GameSource
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseRouting();
-            app.UseCors(AllowOrigin);
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -155,10 +144,6 @@ namespace GameSource
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "api",
-                    pattern: "api/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapToVueCliProxy(
                     "{*path}",
