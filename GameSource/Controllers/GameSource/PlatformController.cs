@@ -2,14 +2,12 @@
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.PlatformViewModel;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameSource.Controllers.GameSource
 {
     [Route("platform")]
-    [EnableCors("AllowOrigin")]
     public class PlatformController : Controller
     {
         private IPlatformService platformService;
