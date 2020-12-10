@@ -13,9 +13,9 @@
         },
         methods: {
             getAllCategories() {
-                this.$baseURL.get('api/news-article-category/GetAllAsync')
+                this.$api.get('news-article-category/GetAllAsync')
                     .then(res => {
-                        this.categories = res.data;
+                        this.categories = res.data.data;
                         console.log("api/news-article-category/GetAllAsync Success: " + res);
                     })
                     .catch(err => {
