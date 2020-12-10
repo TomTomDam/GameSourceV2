@@ -16,5 +16,21 @@
     }
 </script>
 <style>
+    .dropdown-menu {
+        background-color: #c7d5e0;
+    }
 
+    .dropdown-header {
+        color: #4f94bc;
+    }
+
+    .dropdown-item {
+        color: black;
+    }
+
+    .dropdown-item:hover,
+    .dropdown-menu > li:hover:not(.dropdown-header) {
+        background-color: #171a21;
+        color: white;
+    }
 </style>
