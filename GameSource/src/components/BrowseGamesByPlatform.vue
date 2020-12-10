@@ -16,7 +16,7 @@
             getAllPlatforms() {
                 this.$api.get('platform/GetAllAsync')
                     .then(res => {
-                        this.platforms = res.data;
+                        this.platforms = res.data.data;
                         console.log("api/platform/GetAllAsync Success: " + res);
                     })
                     .catch(err => {
