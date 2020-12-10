@@ -60,7 +60,7 @@ namespace GameSource.Areas.GameSourceUser.Controllers
                 UserProfileCommentPermission = userProfileCommentPermission
             };
 
-            return View(profileSettingsPath + "Profile.cshtml", viewModel);
+            return View(viewModel);
         }
 
         #region Profile Settings

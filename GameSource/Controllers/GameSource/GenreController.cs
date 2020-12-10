@@ -66,7 +66,6 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpPost("create")]
-        [Authorize(Policy = "CreateGenrePolicy")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(GenreCreateViewModel viewModel)
         {
