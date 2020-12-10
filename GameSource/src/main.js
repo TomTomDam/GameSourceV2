@@ -2,11 +2,11 @@
 import Vue from 'vue';
 import axios from 'axios';
 //import router from './router/router.js';
-////Browse Games
+//Browse Games
 import BrowseGamesPage from './BrowseGamesPage.vue'
 import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
 import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
-//Game Grid
+////Game Grid
 //import GameCard from './components/GameCard.vue'
 //import GamesCardGrid from './components/GamesCardGrid.vue'
 //News Article
@@ -21,16 +21,14 @@ const api = axios.create({
     baseURL: 'https://localhost:44386/api/'
 });
 
-const baseURL = axios.create({
-    baseURL: 'https://localhost:44375/'
-});
-
 const axiosPlugin = {
     install(Vue) {
         Vue.prototype.$api = api;
-        Vue.prototype.$baseURL = baseURL;
     }
 }
+
+const baseURL = 'https://localhost:44375/';
+Vue.prototype.$baseURL = baseURL;
 
 Vue.use(axiosPlugin);
 
