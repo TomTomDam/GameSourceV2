@@ -242,6 +242,10 @@ input.dialog-input {
     color: #dfe3e6;
 }
 
+.game-cover-image {
+    padding: 10px;
+}
+
 /* DataTables */
 .dataTables_length, 
 .dataTables_filter, 
@@ -299,6 +303,12 @@ table.dataTable thead,
 
 .page-content {
     padding-top: 20px;
+}
+
+.image-thumbnail {
+    height: 200px;
+    width: auto;
+    padding: 10px;
 }
 
 /* Homepage */
@@ -430,12 +440,6 @@ table.dataTable thead,
 .menu a:hover:not(.active) {
     background-color: #555;
     color: white;
-}
-
-#userprofile-avatar-settings-thumbnail {
-    height: 200px;
-    width: auto;
-    padding: 10px;
 }
 
 /* Login Page */
@@ -636,4 +640,3 @@ table.dataTable thead,
 .username-heading {
     text-transform: none;
 }
-

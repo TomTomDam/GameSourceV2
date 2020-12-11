@@ -16,12 +16,12 @@ namespace GameSource.Models.GameSource
         [Required]
         public string Description { get; set; }
 
-        //[Display(Name = "Upload Image")]
-        //[NotMapped]
-        //public IFormFile CoverImage { get; set; }
+        [Display(Name = "Upload Image")]
+        [NotMapped]
+        public IFormFile CoverImage { get; set; }
 
-        //[Display(Name = "Current Cover Image")]
-        //public string CoverImageFilePath { get; set; }
+        [Display(Name = "Current Cover Image")]
+        public string CoverImageFilePath { get; set; }
 
         [Required]
         public int GenreID { get; set; }

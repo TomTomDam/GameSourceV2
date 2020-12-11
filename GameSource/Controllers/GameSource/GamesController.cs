@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.GameViewModel;
@@ -106,17 +109,14 @@ namespace GameSource.Controllers.GameSource
                 GenreID = viewModel.Game.GenreID,
                 DeveloperID = viewModel.Game.DeveloperID,
                 PublisherID = viewModel.Game.PublisherID,
-                PlatformID = viewModel.Game.PlatformID
+                PlatformID = viewModel.Game.PlatformID,
+                CoverImageFilePath = null
             };
 
-            //var fileName = Path.GetFileName(viewModel.Game.CoverImage.FileName);
-            //var filePath = Path.Combine(hostingEnv.WebRootPath, "images\\Game", fileName);
-            //using (var fileStream = new FileStream(filePath, FileMode.Create))
-            //{
-            //    viewModel.Game.CoverImage.CopyToAsync(fileStream);
-            //}
+            string coverImageFileName = Path.GetFileName(viewModel.Game.CoverImage.FileName);
+            string filePath = Path.Combine(hostingEnv.WebRootPath, "images\\Game\\CoverImage", coverImageFileName);
 
-            //game.CoverImage = viewModel.Game.CoverImage;
+            game.CoverImageFilePath = coverImageFileName;
 
             gameService.Insert(game);
             return RedirectToAction("Index");
@@ -168,7 +168,7 @@ namespace GameSource.Controllers.GameSource
 
         [HttpPost("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(GameEditViewModel viewModel)
+        public async Task<IActionResult> Edit(GameEditViewModel viewModel)
         {
             Game game = gameService.GetByID(viewModel.Game.ID);
 
@@ -179,7 +179,20 @@ namespace GameSource.Controllers.GameSource
             game.PublisherID = viewModel.PublisherID;
             game.PlatformID = viewModel.PlatformID;
 
-            gameService.Update(game);
+            string uniqueFileName = null;
+            string coverImageFolder = Path.Combine(hostingEnv.WebRootPath, "images\\Game\\CoverImage");
+            if (viewModel.Game.CoverImage != null)
+            {
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.Game.CoverImage.FileName;
+                string filePath = Path.Combine(coverImageFolder, uniqueFileName);
+                await viewModel.Game.CoverImage.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+                game.CoverImageFilePath = uniqueFileName;
+                game.CoverImage = viewModel.Game.CoverImage;
+
+                gameService.Update(game);
+            }
+
             return RedirectToAction("Details", game);
         }
 

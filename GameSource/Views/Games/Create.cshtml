@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Add a new Game";
+
+    var coverImageFilePath = "~/images/Game/CoverImage/" + (Model.Game.CoverImageFilePath ?? "default_game_cover_image.png");
 }
 
 <div class="create-page page-content">
@@ -54,11 +56,15 @@
                     </select>
                     <span asp-validation-for="Game.Platform" class="text-danger"></span>
                 </div>
-                @*<div class="form-group">
-                        <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
-                        <input asp-for="Game.CoverImage" class="control-label dialog-input dialog-input-base"/>
-                        <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
-                    </div>*@
+                <div class="form-group">
+                    <label asp-for="Game.CoverImageFilePath" class="control-label dialog-label"></label>
+                    <img class="image-thumbnail" src="@coverImageFilePath" asp-append-version="true" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
+                    <input asp-for="Game.CoverImage" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
+                </div>
                 <div class="link-section">
                     <div class="form-group">
                         <input type="submit" value="Submit" class="btn btn-primary" />

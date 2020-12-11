@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Edit " + Model.Game.Name;
+
+    var coverImageFilePath = "~/images/Game/CoverImage/" + (Model.Game.CoverImageFilePath ?? "default_game_cover_image.png");
 }
 
 <div class="edit-page page-content">
@@ -13,7 +15,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-4">
-            <form asp-action="Edit" class="dialog-form">
+            <form asp-action="Edit" enctype="multipart/form-data" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Game.ID" />
                 <div class="form-group">
@@ -53,6 +55,15 @@
                     <label asp-for="Game.Description" class="control-label dialog-label"></label>
                     <textarea asp-for="Game.Description" class="form-control dialog-input dialog-input-base dialog-textarea"></textarea>
                     <span asp-validation-for="Game.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.CoverImageFilePath" class="control-label dialog-label"></label>
+                    <img class="image-thumbnail" src="@coverImageFilePath" asp-append-version="true" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Game.CoverImage" class="control-label dialog-label"></label>
+                    <input asp-for="Game.CoverImage" class="form-control dialog-input dialog-input-base" />
+                    <span asp-validation-for="Game.CoverImage" class="text-danger"></span>
                 </div>
                 <div class="link-section">
                     <div class="form-group">
