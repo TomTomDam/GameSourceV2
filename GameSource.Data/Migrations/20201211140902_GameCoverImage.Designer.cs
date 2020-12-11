@@ -4,14 +4,16 @@ using GameSource.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GameSource.Data.Migrations
 {
     [DbContext(typeof(GameSource_DBContext))]
-    partial class GameSource_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20201211140902_GameCoverImage")]
+    partial class GameCoverImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

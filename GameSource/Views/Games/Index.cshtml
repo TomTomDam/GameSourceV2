@@ -24,6 +24,7 @@
             <table class="table" id="gameIndexTable">
                 <thead>
                     <tr>
+                        <th>Cover Image</th>
                         <th>Name</th>
                         <th>Genre</th>
                         <th>Developer</th>
@@ -36,7 +37,10 @@
                 <tbody>
                     @foreach (var game in Model.Games)
                     {
+                        var coverImageFilePath = "~/Images/Game/CoverImage/" + (game.CoverImageFilePath ?? "default_game_cover_image.png");
+
                         <tr>
+                            <td><img class="image-thumbnail" src="@coverImageFilePath" asp-append-version="true"/></td>
                             <td>@game.Name</td>
                             <td>@game.Genre.Name</td>
                             <td>@game.Developer.Name</td>
