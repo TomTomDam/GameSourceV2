@@ -9,6 +9,7 @@ namespace GameSource.Controllers.GameSource
     public class PublisherController : Controller
     {
         private IPublisherService publisherService;
+
         public PublisherController(IPublisherService publisherService)
         {
             this.publisherService = publisherService;

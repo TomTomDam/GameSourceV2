@@ -1,4 +1,5 @@
-﻿using GameSource.Services.GameSource.Contracts;
+﻿using GameSource.Data.Repositories.GameSource.Contracts;
+using GameSource.Services.GameSource.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,11 +8,11 @@ namespace GameSource.Services.GameSource
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {
+        public IBaseRepository<T> repo;
 
-
-        public BaseService()
+        public BaseService(IBaseRepository<T> repo)
         {
-
+            this.repo = repo;
         }
 
         public IEnumerable<T> GetAll()
