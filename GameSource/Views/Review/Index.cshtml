@@ -1,0 +1,54 @@
+﻿@model GameSource.ViewModels.GameSource.ReviewViewModel.ReviewIndexViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject UserManager<User> userManager;
+@inject SignInManager<User> signInManager;
+
+@{
+    ViewData["Title"] = "All Reviews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="index-page page-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-heading">All Reviews</div>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            @if (signInManager.IsSignedIn(User))
+            {
+                <p>
+                    <a class="btn btn-primary" asp-action="Create">Create a new Review</a>
+                </p>
+                <hr />
+            }
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="divider"></div>
+                <article class="review-post-block">
+                    <header class="review-post-header">
+                        <span class="review-post-title font-weight-bold">@review.Title</span>
+                        <span class="review-post-dateCreated">@review.DateCreated</span>
+                        <span class="review-post-createdBy">@review.CreatedBy</span>
+                    </header>
+                    <div class="review-post-body">
+                        <p>@Html.Raw(review.Body)</p>
+                    </div>
+                    <p>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@review.ID">View</a>
+                        @if (User.IsInRole("Admin")) //If currently signed in User ID matches Review author's User ID
+                        {
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@review.ID">Edit</a>
+                            <a class="btn btn-primary" asp-action="Delete" asp-route-id="@review.ID">Delete</a>
+                        }
+                    </p>
+                </article>
+                <div class="divider"></div>
+                <div class="divider-margin"></div>
+            }
+        </div>
+    </div>
+</div>

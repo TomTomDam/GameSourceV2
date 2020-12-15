@@ -30,8 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\GameSource\NewFolder\" />
-    <Folder Include="ViewModels\GameSource\ReviewCommentViewModel\" />
     <Folder Include="Views\NewsArticleCategory\" />
     <Folder Include="wwwroot\images\Game\GameImages\" />
     <Folder Include="wwwroot\images\NewsArticle\CoverImage\" />
