@@ -1,5 +1,6 @@
 ﻿using GameSource.Models.GameSourceUser;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSource
@@ -11,7 +12,8 @@ namespace GameSource.Models.GameSource
 
         }
 
-        public int Id { get; set; }
+        [Key]
+        public int ID { get; set; }
 
         public string Body { get; set; }
 

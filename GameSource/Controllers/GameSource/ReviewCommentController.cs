@@ -100,7 +100,7 @@ namespace GameSource.Controllers.GameSource
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ReviewCommentEditViewModel viewModel)
         {
-            ReviewComment comment = reviewCommentService.GetByID(viewModel.ReviewComment.Id);
+            ReviewComment comment = reviewCommentService.GetByID(viewModel.ReviewComment.ID);
 
             comment.Body = viewModel.ReviewComment.Body;
 
@@ -131,11 +131,11 @@ namespace GameSource.Controllers.GameSource
         [ValidateAntiForgeryToken]
         public IActionResult Delete(ReviewCommentDeleteViewModel viewModel)
         {
-            ReviewComment comment = reviewCommentService.GetByID(viewModel.ReviewComment.Id);
+            ReviewComment comment = reviewCommentService.GetByID(viewModel.ReviewComment.ID);
             if (comment == null)
                 return NotFound();
 
-            reviewCommentService.Delete(comment.Id);
+            reviewCommentService.Delete(comment.ID);
 
             return RedirectToAction("Index");
         }

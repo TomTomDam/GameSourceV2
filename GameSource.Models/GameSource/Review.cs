@@ -1,6 +1,7 @@
 ﻿using GameSource.Models.GameSourceUser;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSource
@@ -12,7 +13,8 @@ namespace GameSource.Models.GameSource
             ReviewComments = new List<ReviewComment>();
         }
 
-        public int Id { get; set; }
+        [Key]
+        public int ID { get; set; }
 
         public string Title { get; set; }
 
@@ -23,6 +25,10 @@ namespace GameSource.Models.GameSource
         public DateTime? DateModified { get; set; }
 
         public decimal Rating { get; set; }
+
+        public Game Game { get; set; }
+
+        public int GameID { get; set; }
 
         public User CreatedBy { get; set; }
 
