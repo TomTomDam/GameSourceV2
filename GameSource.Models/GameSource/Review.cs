@@ -26,6 +26,8 @@ namespace GameSource.Models.GameSource
 
         public decimal Rating { get; set; }
 
+        public int Helpful { get; set; }
+
         public Game Game { get; set; }
 
         public int GameID { get; set; }

@@ -72,6 +72,7 @@ namespace GameSource.Controllers.GameSource
                 DateCreated = DateTime.Now,
                 DateModified = null,
                 Rating = 0,
+                Helpful = 0,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
                 CreatedBy = userManager.GetUserAsync(HttpContext.User).Result,
                 ReviewComments = new List<ReviewComment>() ?? null
