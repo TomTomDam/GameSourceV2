@@ -1,8 +1,49 @@
-﻿
+﻿@model GameSource.ViewModels.GameSource.ReviewCommentViewModel.ReviewCommentDetailsViewModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Review Comment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
+<div class="details-page page-content">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="page-heading">Review Comment</div>
+            <hr />
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="ReviewComment.ID" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.ReviewComment.ID</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="ReviewComment.DateCreated" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.ReviewComment.DateCreated</div>
+        </div>
+    </div>
+    <div class="row justify-content-center text-left">
+        <div class="col-2">
+            <label asp-for="ReviewComment.Body" class="control-label font-weight-bold"></label>
+        </div>
+        <div class="col-2">
+            <div>@Model.ReviewComment.Body</div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <hr />
+            <div class="link-section">
+                <div class="form-group">
+                    <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
