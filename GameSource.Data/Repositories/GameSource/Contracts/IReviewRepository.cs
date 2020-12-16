@@ -10,5 +10,6 @@ namespace GameSource.Data.Repositories.GameSource.Contracts
         public void Insert(Review review);
         public void Update(Review review);
         public void Delete(int id);
+        public IEnumerable<ReviewComment> GetReviewComments(Review review);
     }
 }
