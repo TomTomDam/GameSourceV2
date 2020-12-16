@@ -29,6 +29,14 @@
                 <div>@Model.Review.DateModified</div>
             </div>
         </div>
+        <div class="row justify-content-center text-left">
+            <div class="col-2">
+                <label asp-for="Review.Helpful" class="control-label font-weight-bold"></label>
+            </div>
+            <div class="col-2">
+                <div>@Html.Raw(Model.Review.Helpful)</div>
+            </div>
+        </div>
         @*<div class="row justify-content-center text-left">
             <div class="col-2">
                 <label asp-for="Review.Game" class="control-label font-weight-bold"></label>

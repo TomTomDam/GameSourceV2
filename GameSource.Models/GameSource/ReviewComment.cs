@@ -7,11 +7,6 @@ namespace GameSource.Models.GameSource
 {
     public class ReviewComment
     {
-        public ReviewComment()
-        {
-
-        }
-
         [Key]
         public int ID { get; set; }
 
