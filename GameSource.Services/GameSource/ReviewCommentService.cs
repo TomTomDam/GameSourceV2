@@ -1,8 +1,9 @@
 ﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
+using GameSource.Services.GameSource.Contracts;
 using System.Collections.Generic;
 
-namespace GameSource.Services.GameSource.Contracts
+namespace GameSource.Services.GameSource
 {
     public class ReviewCommentService : IReviewCommentService
     {
@@ -36,6 +37,11 @@ namespace GameSource.Services.GameSource.Contracts
         public void Delete(int id)
         {
             repo.Delete(id);
+        }
+
+        public Review GetReview(ReviewComment comment)
+        {
+            return repo.GetReview(comment);
         }
     }
 }

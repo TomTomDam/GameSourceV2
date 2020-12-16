@@ -1,6 +1,7 @@
 ﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace GameSource.Data.Repositories.GameSource
 {
@@ -13,6 +14,15 @@ namespace GameSource.Data.Repositories.GameSource
         {
             this.context = context;
             entity = context.Set<ReviewComment>();
+        }
+
+        public Review GetReview(ReviewComment comment)
+        {
+            ReviewComment commentWithReview = entity
+                .Include(x => x.Review)
+                .SingleOrDefault(y => y.ID == comment.ID);
+
+            return commentWithReview.Review;
         }
     }
 }
