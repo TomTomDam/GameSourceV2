@@ -1,0 +1,31 @@
+﻿@model GameSource.ViewModels.GameSource.ReviewCommentViewModel.ReviewCommentCreateViewModel
+
+@{
+    ViewData["Title"] = "Add a new Review Comment";
+}
+
+@{
+    var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
+}
+
+<div id="review-create-comment">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ReviewComment.ID" />
+    <h2 class="font-weight-bold review-comments-header">Comments</h2>
+    <div class="review-create-comment-entry">
+        <div class="review-comment-user-avatar">
+            <img src="@avatarImageFilePath" asp-append-version="true" />
+        </div>
+        <div class="review-create-comment-box">
+            <input id="review-create-comment-input" asp-for="ReviewComment.Body" class="form-control" placeholder="Create a comment..." />
+            <span asp-validation-for="ReviewComment.Body" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="post-comment-btn-section">
+        <button class="btn btn-primary" id="review-create-comment-btn">Post comment</button>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/review-comments.js"></script>
+}
