@@ -6,6 +6,6 @@ namespace GameSource.ViewModels.GameSource.ReviewCommentViewModel
     public class ReviewCommentCreateViewModel
     {
         public ReviewComment ReviewComment { get; set; }
-        public UserProfile UserProfile { get; set; }
+        public User User { get; set; }
     }
 }

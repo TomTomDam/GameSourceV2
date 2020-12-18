@@ -1,4 +1,8 @@
 ﻿@model GameSource.ViewModels.GameSource.GameViewModel.GameDetailsViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject UserManager<User> userManager;
+@inject SignInManager<User> signInManager;
 
 @{
     ViewData["Title"] = Model.Game.Name;
@@ -67,6 +71,15 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-4">
+            @if (signInManager.IsSignedIn(User))
+            {
+                <hr />
+                <div id="create-review"></div>
+            }
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
             <hr />
             <div class="link-section">
                 <a class="btn btn-primary index-link" asp-action="Index">Back to Index</a>
@@ -74,3 +87,7 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/js/review.js"></script>
+}
