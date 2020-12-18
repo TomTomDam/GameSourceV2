@@ -58,7 +58,8 @@ namespace GameSource.Controllers.GameSource
         {
             ReviewCreateViewModel viewModel = new ReviewCreateViewModel()
             {
-                Review = new Review()
+                Review = new Review(),
+                User = userManager.GetUserAsync(HttpContext.User).Result
             };
 
             return View();
@@ -70,15 +71,18 @@ namespace GameSource.Controllers.GameSource
         {
             Review review = new Review()
             {
+                ID = viewModel.Review.ID,
                 Title = viewModel.Review.Title,
                 Body = viewModel.Review.Body,
                 DateCreated = DateTime.Now,
                 DateModified = null,
                 Rating = 0,
                 Helpful = 0,
-                CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
-                CreatedBy = userManager.GetUserAsync(HttpContext.User).Result,
-                ReviewComments = new List<ReviewComment>() ?? null
+                CreatedByID = viewModel.User.Id,
+                CreatedBy = viewModel.User,
+                ReviewComments = new List<ReviewComment>() ?? null,
+                //GameID = 0,
+                //Game = null
             };
 
             reviewService.Insert(review);

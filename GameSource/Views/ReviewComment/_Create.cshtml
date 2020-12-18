@@ -5,12 +5,13 @@
 }
 
 @{
-    var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.UserProfile.AvatarFilePath ?? "default_avatar.png");
+    var avatarImageFilePath = "~/Images/UserProfile/Avatar/" + (Model.User.UserProfile.AvatarFilePath ?? "default_avatar.png");
 }
 
 <div id="review-create-comment">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="ReviewComment.ID" />
+    <input type="hidden" asp-for="User.Id" id="userId"/>
     <h2 class="font-weight-bold review-comments-header">Comments</h2>
     <div class="review-create-comment-entry">
         <div class="review-comment-user-avatar">

@@ -1,16 +1,16 @@
 ﻿$(document).ready(function () {
-    var userProfileId = $('#userProfileId').val();
+    var userId = $('#userId').val();
 
-    reviewCreateCommentPartialView(userProfileId);
+    reviewCreateCommentPartialView(userId);
 
     $('#review-create-comment-btn').click(function () {
         debugger;
         reviewCreateComment();
     });
 
-    function reviewCreateCommentPartialView(userProfileId) {
+    function reviewCreateCommentPartialView(userId) {
         $.ajax({
-            url: '/review-comment/create/' + userProfileId,
+            url: '/review-comment/create/' + userId,
             type: 'GET',
             success: function (result) {
                 $('#review-create-comment').html(result);
@@ -18,7 +18,7 @@
                 console.log("GET /review-comment/create/ Success!")
             },
             error: function (xhr) {
-                console.log("GET /review-comment/create/" + userProfileId + " Error: " + xhr.statusText);
+                console.log("GET /review-comment/create/" + userId + " Error: " + xhr.statusText);
             }
         });
     }
@@ -27,7 +27,7 @@
         debugger;
         var reviewCommentObject = {
             "body": $('#review-create-comment-input').val(),
-            "userProfileID": userProfileId
+            "userProfileID": userId
         };
 
         $.ajax({

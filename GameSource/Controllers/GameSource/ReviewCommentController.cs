@@ -69,6 +69,7 @@ namespace GameSource.Controllers.GameSource
         {
             ReviewComment comment = new ReviewComment()
             {
+                ID = viewModel.ReviewComment.ID,
                 Body = viewModel.ReviewComment.Body,
                 DateCreated = DateTime.Now,
                 CreatedByID = userManager.GetUserAsync(HttpContext.User).Result.Id,
