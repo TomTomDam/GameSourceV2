@@ -1,6 +1,7 @@
 ﻿using GameSource.Models.GameSource;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
+using GameSource.Services.GameSourceUser.Contracts;
 using GameSource.ViewModels.GameSource.ReviewViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace GameSource.Controllers.GameSource
     public class ReviewController : Controller
     {
         private IReviewService reviewService;
+        private IUserService userService;
         private UserManager<User> userManager;
 
-        public ReviewController(IReviewService reviewService, UserManager<User> userManager)
+        public ReviewController(IReviewService reviewService, IUserService userService, UserManager<User> userManager)
         {
             this.reviewService = reviewService;
+            this.userService = userService;
             this.userManager = userManager;
         }
 
@@ -54,15 +57,15 @@ namespace GameSource.Controllers.GameSource
         }
 
         [HttpGet("create")]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             ReviewCreateViewModel viewModel = new ReviewCreateViewModel()
             {
                 Review = new Review(),
-                User = userManager.GetUserAsync(HttpContext.User).Result
+                User = userService.GetByID(id)
             };
 
-            return View();
+            return PartialView(viewModel);
         }
 
         [HttpPost("create")]

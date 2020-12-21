@@ -1,8 +1,5 @@
 ﻿using GameSource.Models.GameSource;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GameSource.Models.GameSourceUser;
 
 namespace GameSource.ViewModels.GameSource.GameViewModel
 {
@@ -17,5 +14,7 @@ namespace GameSource.ViewModels.GameSource.GameViewModel
         public Developer Developer { get; set; }
         public Publisher Publisher { get; set; }
         public Platform Platform { get; set; }
+        public Review Review { get; set; }
+        public User SignedInUser { get; set; }
     }
 }

@@ -11,7 +11,7 @@
             <form asp-action="Create" method="post" class="dialog-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Review.ID" />
-                <input type="hidden" asp-for="User.Id"/>
+                <input type="hidden" asp-for="User.Id" />
                 <div class="form-group">
                     <label asp-for="Review.Title" class="control-label dialog-label"></label>
                     <input asp-for="Review.Title" class="form-control dialog-input dialog-input-base" id="create-review-title-input" />
@@ -32,3 +32,7 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/js/review.js"></script>
+}

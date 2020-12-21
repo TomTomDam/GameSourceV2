@@ -71,11 +71,9 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-4">
-            @if (signInManager.IsSignedIn(User))
-            {
-                <hr />
-                <div id="create-review"></div>
-            }
+            <hr />
+            <input type="hidden" asp-for="SignedInUser.Id" id="userId"/>
+            <div id="create-review"></div>
         </div>
     </div>
     <div class="row justify-content-center">

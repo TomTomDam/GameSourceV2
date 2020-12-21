@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Models.GameSource;
+using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.ViewModels.GameSource.GameViewModel;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,15 +21,19 @@ namespace GameSource.Controllers.GameSource
         private IDeveloperService developerService;
         private IPublisherService publisherService;
         private IPlatformService platformService;
+        private IReviewService reviewService;
         private IHostingEnvironment hostingEnv;
+        private UserManager<User> userManager;
 
-        public GamesController(IGameService gameService, IGenreService genreService, IDeveloperService developerService, IPublisherService publisherService, IPlatformService platformService, IHostingEnvironment hostingEnv)
+        public GamesController(IGameService gameService, IGenreService genreService, IDeveloperService developerService, IPublisherService publisherService, IPlatformService platformService, IHostingEnvironment hostingEnv, IReviewService reviewService, UserManager<User> userManager)
         {
             this.gameService = gameService;
             this.genreService = genreService;
             this.developerService = developerService;
             this.publisherService = publisherService;
             this.platformService = platformService;
+            this.reviewService = reviewService;
+            this.userManager = userManager;
             this.hostingEnv = hostingEnv;
         }
 
@@ -40,7 +46,8 @@ namespace GameSource.Controllers.GameSource
                 Genres = genreService.GetAll(),
                 Developers = developerService.GetAll(),
                 Publishers = publisherService.GetAll(),
-                Platforms = platformService.GetAll()
+                Platforms = platformService.GetAll(),
+                Reviews = reviewService.GetAll()
             };
 
             return View(viewModel);
@@ -62,7 +69,9 @@ namespace GameSource.Controllers.GameSource
                 Genre = genreService.GetByID(game.GenreID),
                 Developer = developerService.GetByID(game.DeveloperID),
                 Publisher = publisherService.GetByID(game.PublisherID),
-                Platform = platformService.GetByID(game.PlatformID)
+                Platform = platformService.GetByID(game.PlatformID),
+                Review = reviewService.GetByID(game.Reviews.Select(x => x.GameID = game.ID).FirstOrDefault()),
+                SignedInUser = userManager.GetUserAsync(HttpContext.User).Result ?? null
             };
 
             return View(viewModel);
@@ -110,6 +119,7 @@ namespace GameSource.Controllers.GameSource
                 DeveloperID = viewModel.Game.DeveloperID,
                 PublisherID = viewModel.Game.PublisherID,
                 PlatformID = viewModel.Game.PlatformID,
+                Reviews = viewModel.Game.Reviews,
                 CoverImageFilePath = null
             };
 
@@ -212,7 +222,8 @@ namespace GameSource.Controllers.GameSource
                 Genre = genreService.GetByID(game.GenreID),
                 Developer = developerService.GetByID(game.DeveloperID),
                 Publisher = publisherService.GetByID(game.PublisherID),
-                Platform = platformService.GetByID(game.PlatformID)
+                Platform = platformService.GetByID(game.PlatformID),
+                Reviews = reviewService.GetAll()
             };
 
             return View(viewModel);
