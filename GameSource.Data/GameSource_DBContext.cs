@@ -28,6 +28,8 @@ namespace GameSource.Data
         public DbSet<UserProfileVisibility> UserProfileVisibility { get; set; }
         public DbSet<UserProfileComment> UserProfileComment { get; set; }
         public DbSet<UserProfileCommentPermission> UserProfileCommentPermission { get; set; }
+        public DbSet<Review> Review { get; set; }
+        public DbSet<ReviewComment> ReviewComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +44,8 @@ namespace GameSource.Data
 
             modelBuilder.Entity<User>(e => e.ToTable(name: "User"));
             modelBuilder.Entity<UserRole>(e => e.ToTable(name: "UserRole"));
+
+            modelBuilder.Entity<Review>().Property(p => p.Rating).HasColumnType("decimal(18,2)");
         }
     }
 }

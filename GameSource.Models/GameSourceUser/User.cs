@@ -44,6 +44,8 @@ namespace GameSource.Models.GameSourceUser
 
         public UserProfile UserProfile { get; set; }
 
+        public ICollection<Review> ReviewsCreated { get; set; }
+
         public ICollection<UserProfileComment> UserProfileCommentsCreated { get; set; }
 
         public ICollection<NewsArticle> NewsArticlesCreated { get; set; }

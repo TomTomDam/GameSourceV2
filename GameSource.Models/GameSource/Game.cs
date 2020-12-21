@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,11 @@ namespace GameSource.Models.GameSource
 {
     public class Game
     {
+        public Game()
+        {
+            Reviews = new List<Review>();
+        }
+
         [Key]
         public int ID { get; set; }
 
@@ -42,5 +48,7 @@ namespace GameSource.Models.GameSource
         public Publisher Publisher { get; set; }
 
         public Platform Platform { get; set; }
+
+        public IEnumerable<Review> Reviews { get; set; }
     }
 }
