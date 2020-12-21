@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameSource.Data.Migrations
 {
     [DbContext(typeof(GameSource_DBContext))]
-    [Migration("20201221150853_Review")]
+    [Migration("20201221155129_Review")]
     partial class Review
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -274,7 +274,7 @@ namespace GameSource.Data.Migrations
 
                     b.HasIndex("ReviewID");
 
-                    b.ToTable("ReviewComment");
+                    b.ToTable("ReviewComments");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
@@ -683,7 +683,7 @@ namespace GameSource.Data.Migrations
             modelBuilder.Entity("GameSource.Models.GameSource.ReviewComment", b =>
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.User", "CreatedBy")
-                        .WithMany()
+                        .WithMany("ReviewCommentsCreated")
                         .HasForeignKey("CreatedByID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

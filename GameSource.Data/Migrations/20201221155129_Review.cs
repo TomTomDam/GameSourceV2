@@ -40,7 +40,7 @@ namespace GameSource.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReviewComment",
+                name: "ReviewComments",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -52,15 +52,15 @@ namespace GameSource.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReviewComment", x => x.ID);
+                    table.PrimaryKey("PK_ReviewComments", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ReviewComment_User_CreatedByID",
+                        name: "FK_ReviewComments_User_CreatedByID",
                         column: x => x.CreatedByID,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ReviewComment_Review_ReviewID",
+                        name: "FK_ReviewComments_Review_ReviewID",
                         column: x => x.ReviewID,
                         principalTable: "Review",
                         principalColumn: "ID",
@@ -78,20 +78,20 @@ namespace GameSource.Data.Migrations
                 column: "GameID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReviewComment_CreatedByID",
-                table: "ReviewComment",
+                name: "IX_ReviewComments_CreatedByID",
+                table: "ReviewComments",
                 column: "CreatedByID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReviewComment_ReviewID",
-                table: "ReviewComment",
+                name: "IX_ReviewComments_ReviewID",
+                table: "ReviewComments",
                 column: "ReviewID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ReviewComment");
+                name: "ReviewComments");
 
             migrationBuilder.DropTable(
                 name: "Review");

@@ -272,7 +272,7 @@ namespace GameSource.Data.Migrations
 
                     b.HasIndex("ReviewID");
 
-                    b.ToTable("ReviewComment");
+                    b.ToTable("ReviewComments");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
@@ -681,7 +681,7 @@ namespace GameSource.Data.Migrations
             modelBuilder.Entity("GameSource.Models.GameSource.ReviewComment", b =>
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.User", "CreatedBy")
-                        .WithMany()
+                        .WithMany("ReviewCommentsCreated")
                         .HasForeignKey("CreatedByID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
