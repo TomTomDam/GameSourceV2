@@ -56,7 +56,7 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet("create")]
+        [HttpGet("create/{id}")]
         public IActionResult Create(int id)
         {
             ReviewCreateViewModel viewModel = new ReviewCreateViewModel()
@@ -65,7 +65,7 @@ namespace GameSource.Controllers.GameSource
                 User = userService.GetByID(id)
             };
 
-            return PartialView(viewModel);
+            return PartialView("_Create", viewModel);
         }
 
         [HttpPost("create")]

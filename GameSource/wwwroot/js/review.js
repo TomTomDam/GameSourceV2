@@ -4,7 +4,6 @@
     createReviewPartialView(userId);
 
     $('#create-review-btn').click(function () {
-        debugger;
         createReview();
     });
 
@@ -24,7 +23,6 @@
     }
 
     function createReview() {
-        debugger;
         var reviewObject = {
             "title": $('#create-review-title-input').val(),
             "body": $('#create-review-body-input').val(),
