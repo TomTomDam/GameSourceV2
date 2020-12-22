@@ -56,15 +56,15 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 200px;
 }
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
 /*Layout navbar dropdown columns*/
@@ -169,6 +169,11 @@ hr {
     justify-content: flex-end;
 }
 
+.link-section-centered {
+    display: flex;
+    justify-content: center;
+}
+
 .index-link {
     background-color: #E4E4E4;
     color: black;
@@ -242,15 +247,26 @@ input.dialog-input {
     color: #dfe3e6;
 }
 
+/* Game */
 .game-cover-image {
     padding: 10px;
 }
 
+/* Review */
+#create-review {
+    margin-bottom: -30px;
+}
+
+#create-review-btn {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
 /* DataTables */
-.dataTables_length, 
-.dataTables_filter, 
-table.dataTable thead, 
-.dataTables_info, 
+.dataTables_length,
+.dataTables_filter,
+table.dataTable thead,
+.dataTables_info,
 #platformTypeIndexTable_paginate > a {
     color: white !important;
 }
