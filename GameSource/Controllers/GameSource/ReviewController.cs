@@ -84,8 +84,8 @@ namespace GameSource.Controllers.GameSource
                 CreatedByID = viewModel.User.Id,
                 CreatedBy = viewModel.User,
                 ReviewComments = new List<ReviewComment>() ?? null,
-                //GameID = 0,
-                //Game = null
+                GameID = viewModel.Review.GameID,
+                Game = viewModel.Review.Game
             };
 
             reviewService.Insert(review);
