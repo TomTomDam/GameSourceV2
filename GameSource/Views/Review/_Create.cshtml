@@ -1,14 +1,17 @@
 ﻿@model GameSource.ViewModels.GameSource.ReviewViewModel.ReviewCreateViewModel
+@using Microsoft.AspNetCore.Identity;
+@using GameSource.Models.GameSourceUser;
+@inject UserManager<User> userManager;
+@inject SignInManager<User> signInManager;
 
 <div id="create-review">
     <div class="row justify-content-center text-left">
         <div class="page-heading">Add a new Review</div>
     </div>
     <div class="row justify-content-center">
-        <form asp-controller="Review" asp-action="Create" method="post" class="dialog-form">
+        <form method="post" asp-action="Create" class="dialog-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Review.ID" />
-            <input type="hidden" asp-for="User.Id" />
             <div class="form-group">
                 <label asp-for="Review.Title" class="control-label dialog-label"></label>
                 <input asp-for="Review.Title" class="form-control dialog-input dialog-input-base" id="create-review-title-input" />
@@ -21,7 +24,7 @@
             </div>
             <div class="link-section-centered">
                 <div class="form-group">
-                    <input type="submit" value="Submit Review" class="btn btn-primary" id="create-review-btn" />
+                    <input type="submit" value="Submit Review" class="btn btn-primary" />
                 </div>
             </div>
         </form>

@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Models.GameSource;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
+using GameSource.Services.GameSourceUser.Contracts;
 using GameSource.ViewModels.GameSource.GameViewModel;
+using GameSource.ViewModels.GameSource.ReviewViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +25,19 @@ namespace GameSource.Controllers.GameSource
         private IPublisherService publisherService;
         private IPlatformService platformService;
         private IReviewService reviewService;
-        private IHostingEnvironment hostingEnv;
+        private IUserService userService;
+        private IWebHostEnvironment hostingEnv;
         private UserManager<User> userManager;
 
-        public GamesController(IGameService gameService, IGenreService genreService, IDeveloperService developerService, IPublisherService publisherService, IPlatformService platformService, IHostingEnvironment hostingEnv, IReviewService reviewService, UserManager<User> userManager)
+        public GamesController(IGameService gameService, 
+            IGenreService genreService, 
+            IDeveloperService developerService, 
+            IPublisherService publisherService, 
+            IPlatformService platformService, 
+            IReviewService reviewService, 
+            IUserService userService,
+            IWebHostEnvironment hostingEnv, 
+            UserManager<User> userManager)
         {
             this.gameService = gameService;
             this.genreService = genreService;
@@ -33,8 +45,9 @@ namespace GameSource.Controllers.GameSource
             this.publisherService = publisherService;
             this.platformService = platformService;
             this.reviewService = reviewService;
-            this.userManager = userManager;
+            this.userService = userService;
             this.hostingEnv = hostingEnv;
+            this.userManager = userManager;
         }
 
         [HttpGet("index")]

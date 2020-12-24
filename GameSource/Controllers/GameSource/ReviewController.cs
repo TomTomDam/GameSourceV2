@@ -56,13 +56,13 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet("create/{id}")]
-        public IActionResult Create(int id)
+        [HttpGet("create")]
+        public IActionResult Create()
         {
             ReviewCreateViewModel viewModel = new ReviewCreateViewModel()
             {
                 Review = new Review(),
-                User = userService.GetByID(id)
+                SignedInUser = userManager.GetUserAsync(HttpContext.User).Result
             };
 
             return PartialView("_Create", viewModel);
@@ -81,8 +81,8 @@ namespace GameSource.Controllers.GameSource
                 DateModified = null,
                 Rating = 0,
                 Helpful = 0,
-                CreatedByID = viewModel.User.Id,
-                CreatedBy = viewModel.User,
+                CreatedByID = viewModel.SignedInUser.Id,
+                CreatedBy = viewModel.SignedInUser,
                 ReviewComments = new List<ReviewComment>() ?? null,
                 GameID = viewModel.Review.GameID,
                 Game = viewModel.Review.Game
