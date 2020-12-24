@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {
-    var userId = $('#userId').val();
+    //var userId = $('#userId').val();
 
-    createReviewPartialView(userId);
+    createReviewPartialView();
 
-    $('#create-review-btn').on('click', function (e) {
-        createReview(userId);
-    });
+    //$('#create-review-btn').on('click', function (e) {
+    //    createReview(userId);
+    //});
 
-    function createReviewPartialView(userId) {
+    function createReviewPartialView() {
         $.ajax({
-            url: '/review/create/' + userId,
+            url: '/review/create/',
             type: 'GET',
             success: function (result) {
                 $('#create-review').html(result);
@@ -17,28 +17,28 @@
                 console.log("GET /review/create/ Success!")
             },
             error: function (xhr) {
-                console.log("GET /review/create/" + userId + " Error: " + xhr.statusText);
+                console.log("GET /review/create/" + " Error: " + xhr.statusText);
             }
         });
     }
 
-    function createReview(userId) {
-        var reviewObject = {
-            "title": $('#create-review-title-input').val(),
-            "body": $('#create-review-body-input').val(),
-            "userId": userId
-        };
+    //function createReview(userId) {
+    //    var reviewObject = {
+    //        "title": $('#create-review-title-input').val(),
+    //        "body": $('#create-review-body-input').val(),
+    //        "userId": userId
+    //    };
 
-        $.ajax({
-            url: '/review/create',
-            data: JSON.stringify(reviewObject),
-            type: 'POST',
-            success: function (result) {
-                console.log("POST /review/create" + " Success!")
-            },
-            error: function (xhr) {
-                console.log("POST /review/create/" + " Error: " + xhr.statusText);
-            }
-        });
-    }
+    //    $.ajax({
+    //        url: '/review/create/',
+    //        data: JSON.stringify(reviewObject),
+    //        type: 'POST',
+    //        success: function (result) {
+    //            console.log("POST /review/create/" + " Success!")
+    //        },
+    //        error: function (xhr) {
+    //            console.log("POST /review/create/" + " Error: " + xhr.statusText);
+    //        }
+    //    });
+    //}
 });
