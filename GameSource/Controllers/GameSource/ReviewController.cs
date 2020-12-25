@@ -1,7 +1,6 @@
 ﻿using GameSource.Models.GameSource;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
-using GameSource.Services.GameSourceUser.Contracts;
 using GameSource.ViewModels.GameSource.ReviewViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,17 +9,20 @@ using System.Collections.Generic;
 
 namespace GameSource.Controllers.GameSource
 {
-    [Route("review")]
+    [Route("game/review")]
     public class ReviewController : Controller
     {
         private IReviewService reviewService;
-        private IUserService userService;
+        private IGameService gameService;
         private UserManager<User> userManager;
 
-        public ReviewController(IReviewService reviewService, IUserService userService, UserManager<User> userManager)
+        public ReviewController(
+            IReviewService reviewService, 
+            IGameService gameService,
+            UserManager<User> userManager)
         {
             this.reviewService = reviewService;
-            this.userService = userService;
+            this.gameService = gameService;
             this.userManager = userManager;
         }
 
@@ -56,13 +58,16 @@ namespace GameSource.Controllers.GameSource
             return View(viewModel);
         }
 
-        [HttpGet("create")]
-        public IActionResult Create()
+        [HttpGet("{gameId}/create")]
+        public IActionResult Create(int gameId)
         {
+            if (gameId == 0)
+                return NotFound();
+
             ReviewCreateViewModel viewModel = new ReviewCreateViewModel()
             {
                 Review = new Review(),
-                SignedInUser = userManager.GetUserAsync(HttpContext.User).Result
+                Game = gameService.GetByID(gameId)
             };
 
             return PartialView("_Create", viewModel);
@@ -72,6 +77,9 @@ namespace GameSource.Controllers.GameSource
         [ValidateAntiForgeryToken]
         public IActionResult Create(ReviewCreateViewModel viewModel)
         {
+            User signedInUser = userManager.GetUserAsync(HttpContext.User).Result;
+            Game reviewedGame = gameService.GetByID(viewModel.Game.ID);
+
             Review review = new Review()
             {
                 ID = viewModel.Review.ID,
@@ -81,11 +89,11 @@ namespace GameSource.Controllers.GameSource
                 DateModified = null,
                 Rating = 0,
                 Helpful = 0,
-                CreatedByID = viewModel.SignedInUser.Id,
-                CreatedBy = viewModel.SignedInUser,
+                CreatedByID = signedInUser.Id,
+                CreatedBy = signedInUser,
                 ReviewComments = new List<ReviewComment>() ?? null,
-                GameID = viewModel.Review.GameID,
-                Game = viewModel.Review.Game
+                GameID = reviewedGame.ID,
+                Game = reviewedGame
             };
 
             reviewService.Insert(review);

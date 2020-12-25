@@ -1,43 +1,43 @@
 ﻿$(document).ready(function () {
-    //var userId = $('#userId').val();
+    var gameId = $('#gameId').val();
 
-    createReviewPartialView();
+    createReviewPartialView(gameId);
 
     //$('#create-review-btn').on('click', function (e) {
     //    createReview(userId);
     //});
 
-    function createReviewPartialView() {
+    function createReviewPartialView(gameId) {
         $.ajax({
-            url: '/review/create/',
+            url: '/game/review/' + gameId + '/create/',
             type: 'GET',
             success: function (result) {
                 $('#create-review').html(result);
                 $('#create-review').show();
-                console.log("GET /review/create/ Success!")
+                console.log("GET /game/review/create/ Success!")
             },
             error: function (xhr) {
-                console.log("GET /review/create/" + " Error: " + xhr.statusText);
+                console.log("GET /game/review/create/" + " Error: " + xhr.statusText);
             }
         });
     }
 
-    //function createReview(userId) {
+    //function createReview(gameId) {
     //    var reviewObject = {
     //        "title": $('#create-review-title-input').val(),
     //        "body": $('#create-review-body-input').val(),
-    //        "userId": userId
+    //        "gameId": gameId
     //    };
 
     //    $.ajax({
-    //        url: '/review/create/',
+    //        url: '/game/review/create/',
     //        data: JSON.stringify(reviewObject),
     //        type: 'POST',
     //        success: function (result) {
-    //            console.log("POST /review/create/" + " Success!")
+    //            console.log("POST /game/review/create/" + " Success!")
     //        },
     //        error: function (xhr) {
-    //            console.log("POST /review/create/" + " Error: " + xhr.statusText);
+    //            console.log("POST /game/review/create/" + " Error: " + xhr.statusText);
     //        }
     //    });
     //}
