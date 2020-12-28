@@ -16,13 +16,11 @@ namespace GameSource.Data.Repositories.GameSource
             entity = context.Set<ReviewComment>();
         }
 
-        public Review GetReview(ReviewComment comment)
+        public ReviewComment GetByID(int id)
         {
-            ReviewComment commentWithReview = entity
+            return entity
                 .Include(x => x.Review)
-                .SingleOrDefault(y => y.ID == comment.ID);
-
-            return commentWithReview.Review;
+                .SingleOrDefault(x => x.ID == id);
         }
     }
 }

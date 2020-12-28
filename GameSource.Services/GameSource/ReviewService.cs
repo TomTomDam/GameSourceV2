@@ -38,10 +38,5 @@ namespace GameSource.Services.GameSource
         {
             repo.Delete(id);
         }
-
-        public IEnumerable<ReviewComment> GetReviewComments(Review review)
-        {
-            return repo.GetReviewComments(review);
-        }
     }
 }

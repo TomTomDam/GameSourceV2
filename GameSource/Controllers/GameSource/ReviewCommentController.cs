@@ -41,12 +41,10 @@ namespace GameSource.Controllers.GameSource
             if (comment == null)
                 return NotFound();
 
-            Review commentReview = reviewCommentService.GetReview(comment);
-
             ReviewCommentDetailsViewModel viewModel = new ReviewCommentDetailsViewModel()
             {
                 ReviewComment = comment,
-                Review = commentReview
+                Review = comment.Review
             };
 
             return View(comment);
@@ -92,12 +90,10 @@ namespace GameSource.Controllers.GameSource
             if (comment == null)
                 return NotFound();
 
-            Review commentReview = reviewCommentService.GetReview(comment);
-
             ReviewCommentEditViewModel viewModel = new ReviewCommentEditViewModel()
             {
                 ReviewComment = comment,
-                Review = commentReview
+                Review = comment.Review
             };
 
             return View(viewModel);
@@ -126,12 +122,10 @@ namespace GameSource.Controllers.GameSource
             if (comment == null)
                 return NotFound();
 
-            Review commentReview = reviewCommentService.GetReview(comment);
-
             ReviewCommentDeleteViewModel viewModel = new ReviewCommentDeleteViewModel()
             {
                 ReviewComment = comment,
-                Review = commentReview
+                Review = comment.Review
             };
 
             return View(viewModel);
