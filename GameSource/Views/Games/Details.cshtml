@@ -69,13 +69,16 @@
             <div>@Model.Platform.Name</div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <hr />
-            <input type="hidden" asp-for="Game.ID" id="gameId" />
-            <div id="create-review"></div>
+    @if (signInManager.IsSignedIn(User))
+    {
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <hr />
+                <input type="hidden" asp-for="Game.ID" id="gameId" />
+                <div id="create-review"></div>
+            </div>
         </div>
-    </div>
+    }
     <div class="row justify-content-center">
         <div class="col-4">
             <hr />
