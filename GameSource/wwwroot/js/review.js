@@ -4,7 +4,7 @@
     createReviewPartialView(gameId);
 
     //$('#create-review-btn').on('click', function (e) {
-    //    createReview(userId);
+    //    createReview(gameId);
     //});
 
     function createReviewPartialView(gameId) {

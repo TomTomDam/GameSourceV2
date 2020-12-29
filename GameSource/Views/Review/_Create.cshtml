@@ -9,9 +9,10 @@
         <div class="page-heading">Add a new Review</div>
     </div>
     <div class="row justify-content-center">
-        <form method="post" asp-action="Create" class="dialog-form">
+        <form asp-action="Create" asp-controller="Review" class="dialog-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Review.ID" />
+            <input type="hidden" asp-for="Game.ID" />
             <div class="form-group">
                 <label asp-for="Review.Title" class="control-label dialog-label"></label>
                 <input asp-for="Review.Title" class="form-control dialog-input dialog-input-base" id="create-review-title-input" />
@@ -24,7 +25,7 @@
             </div>
             <div class="link-section-centered">
                 <div class="form-group">
-                    <input type="submit" value="Submit Review" class="btn btn-primary" />
+                    <input type="submit" value="Submit Review" class="btn btn-primary" id="create-review-btn" />
                 </div>
             </div>
         </form>

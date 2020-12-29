@@ -71,11 +71,14 @@ namespace GameSource.Controllers.GameSource
             return PartialView("_Create", viewModel);
         }
 
-        [HttpPost("create")]
+        [HttpPost("{gameId}/create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ReviewCreateViewModel viewModel)
         {
             User signedInUser = userManager.GetUserAsync(HttpContext.User).Result;
+
+            if (viewModel.Game.ID == 0)
+                return NotFound();
             Game reviewedGame = gameService.GetByID(viewModel.Game.ID);
 
             Review review = new Review()

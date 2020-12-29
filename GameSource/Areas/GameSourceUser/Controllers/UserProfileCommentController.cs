@@ -18,7 +18,11 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         private readonly IUserService userService;
         private readonly UserManager<User> userManager;
 
-        public UserProfileCommentController(IUserProfileCommentService userProfileCommentService, IUserProfileService userProfileService, IUserService userService, UserManager<User> userManager)
+        public UserProfileCommentController(
+            IUserProfileCommentService userProfileCommentService,
+            IUserProfileService userProfileService,
+            IUserService userService,
+            UserManager<User> userManager)
         {
             this.userProfileCommentService = userProfileCommentService;
             this.userProfileService = userProfileService;

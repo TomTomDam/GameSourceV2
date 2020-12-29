@@ -28,7 +28,14 @@ namespace GameSource.Areas.Admin.Controllers
         private readonly SignInManager<User> signInManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UserController(IUserService userService, IUserRoleService userRoleService, IUserStatusService userStatusService, IUserProfileService userProfileService, UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment webHostEnvironment)
+        public UserController(
+            IUserService userService,
+            IUserRoleService userRoleService,
+            IUserStatusService userStatusService,
+            IUserProfileService userProfileService,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.userRoleService = userRoleService;
