@@ -21,8 +21,8 @@ namespace GameSource.API.Controllers
             this.newsArticleCategoryService = newsArticleCategoryService;
         }
 
-        [HttpGet("GetAllAsync")]
-        public async Task<ApiResponse> GetAllAsync()
+        [HttpGet("GetAll")]
+        public async Task<ApiResponse> GetAll()
         {
             IEnumerable<NewsArticleCategory> result = await newsArticleCategoryService.GetAllAsync();
 
@@ -30,6 +30,35 @@ namespace GameSource.API.Controllers
                 return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned NewsArticleCategory list.");
 
             return new ApiResponse(result, ResponseStatusCode.Error, "Could not return NewsArticleCategory list.");
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse> GetByID(int id)
+        {
+            var result = await newsArticleCategoryService.GetByIDAsync(id);
+
+            if (result != null)
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
+
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User.");
+        }
+
+        [HttpPost]
+        public async Task Insert([FromBody] NewsArticleCategory category)
+        {
+            await newsArticleCategoryService.InsertAsync(category);
+        }
+
+        [HttpPost]
+        public async Task Update([FromBody] NewsArticleCategory category)
+        {
+            await newsArticleCategoryService.UpdateAsync(category);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+            await newsArticleCategoryService.DeleteAsync(id);
         }
     }
 }

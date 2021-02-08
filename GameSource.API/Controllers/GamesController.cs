@@ -9,33 +9,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Controllers
 {
-    [Route("api/genre")]
+    [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowOrigin")]
-    public class GenreController : ControllerBase
+    public class GamesController : ControllerBase
     {
-        private readonly IGenreService genreService;
+        private readonly IGameService gameService;
 
-        public GenreController(IGenreService genreService)
+        public GamesController(IGameService gameService)
         {
-            this.genreService = genreService;
+            this.gameService = gameService;
         }
 
         [HttpGet("GetAll")]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Genre> result = await genreService.GetAllAsync();
+            IEnumerable<Game> result = await gameService.GetAllAsync();
 
             if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Genre list.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Genre list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Game list.");
         }
 
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await genreService.GetByIDAsync(id);
+            var result = await gameService.GetByIDAsync(id);
 
             if (result != null)
                 return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
@@ -44,21 +44,21 @@ namespace GameSource.API.Controllers
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] Genre genre)
+        public async Task Insert([FromBody] Game game)
         {
-            await genreService.InsertAsync(genre);
+            await gameService.InsertAsync(game);
         }
 
         [HttpPost]
-        public async Task Update([FromBody] Genre genre)
+        public async Task Update([FromBody] Game game)
         {
-            await genreService.UpdateAsync(genre);
+            await gameService.UpdateAsync(game);
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await genreService.DeleteAsync(id);
+            await gameService.DeleteAsync(id);
         }
     }
 }

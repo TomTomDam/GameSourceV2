@@ -1,10 +1,9 @@
 ﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Models.GameSource;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSource
 {
@@ -46,6 +45,35 @@ namespace GameSource.Data.Repositories.GameSource
             var publisher = GetByID(id);
             entity.Remove(publisher);
             context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Publisher>> GetAllAsync()
+        {
+            return await entity.ToListAsync();
+        }
+
+        public async Task<Publisher> GetByIDAsync(int id)
+        {
+            return await entity.FindAsync(id);
+        }
+
+        public async Task InsertAsync(Publisher publisher)
+        {
+            entity.Add(publisher);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Publisher publisher)
+        {
+            entity.Update(publisher);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var publisher = await GetByIDAsync(id);
+            entity.Remove(publisher);
+            await context.SaveChangesAsync();
         }
     }
 }

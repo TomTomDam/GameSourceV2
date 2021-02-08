@@ -9,33 +9,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Controllers
 {
-    [Route("api/genre")]
+    [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowOrigin")]
-    public class GenreController : ControllerBase
+    public class PublisherController : ControllerBase
     {
-        private readonly IGenreService genreService;
+        private readonly IPublisherService publisherService;
 
-        public GenreController(IGenreService genreService)
+        public PublisherController(IPublisherService publisherService)
         {
-            this.genreService = genreService;
+            this.publisherService = publisherService;
         }
 
         [HttpGet("GetAll")]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Genre> result = await genreService.GetAllAsync();
+            IEnumerable<Publisher> result = await publisherService.GetAllAsync();
 
             if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Genre list.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Publisher list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Genre list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Publisher list.");
         }
 
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await genreService.GetByIDAsync(id);
+            var result = await publisherService.GetByIDAsync(id);
 
             if (result != null)
                 return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
@@ -44,21 +44,21 @@ namespace GameSource.API.Controllers
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] Genre genre)
+        public async Task Insert([FromBody] Publisher publisher)
         {
-            await genreService.InsertAsync(genre);
+            await publisherService.InsertAsync(publisher);
         }
 
         [HttpPost]
-        public async Task Update([FromBody] Genre genre)
+        public async Task Update([FromBody] Publisher publisher)
         {
-            await genreService.UpdateAsync(genre);
+            await publisherService.UpdateAsync(publisher);
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await genreService.DeleteAsync(id);
+            await publisherService.DeleteAsync(id);
         }
     }
 }

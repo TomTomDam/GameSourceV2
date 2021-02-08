@@ -2,6 +2,7 @@
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSource
 {
@@ -37,6 +38,31 @@ namespace GameSource.Services.GameSource
         public void Delete(int id)
         {
             repo.Delete(id);
+        }
+
+        public async Task<IEnumerable<Developer>> GetAllAsync()
+        {
+            return await repo.GetAllAsync();
+        }
+
+        public async Task<Developer> GetByIDAsync(int id)
+        {
+            return await repo.GetByIDAsync(id);
+        }
+
+        public async Task InsertAsync(Developer developer)
+        {
+            await repo.InsertAsync(developer);
+        }
+
+        public async Task UpdateAsync(Developer developer)
+        {
+            await repo.UpdateAsync(developer);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await repo.DeleteAsync(id);
         }
     }
 }

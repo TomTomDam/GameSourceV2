@@ -1,7 +1,6 @@
 ﻿using GameSource.Models.GameSource;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSource.Contracts
 {
@@ -12,5 +11,10 @@ namespace GameSource.Services.GameSource.Contracts
         public void Insert(Game game);
         public void Update(Game game);
         public void Delete(int id);
+        public Task<IEnumerable<Game>> GetAllAsync();
+        public Task<Game> GetByIDAsync(int id);
+        public Task InsertAsync(Game game);
+        public Task UpdateAsync(Game game);
+        public Task DeleteAsync(int id);
     }
 }

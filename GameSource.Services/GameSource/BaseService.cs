@@ -1,6 +1,5 @@
 ﻿using GameSource.Data.Repositories.GameSource.Contracts;
 using GameSource.Services.GameSource.Contracts;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,52 +16,52 @@ namespace GameSource.Services.GameSource
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return repo.GetAll();
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await repo.GetAllAsync();
         }
 
         public T GetByID(int id)
         {
-            throw new NotImplementedException();
+            return repo.GetByID(id);
         }
 
-        public Task<T> GetByIDAsync(int id)
+        public async Task<T> GetByIDAsync(int id)
         {
-            throw new NotImplementedException();
+            return await repo.GetByIDAsync(id);
         }
 
         public void Insert(T item)
         {
-            throw new NotImplementedException();
+            repo.Insert(item);
         }
 
-        public Task InsertAsync(T item)
+        public async Task InsertAsync(T item)
         {
-            throw new NotImplementedException();
+            await repo.InsertAsync(item);
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            repo.Update(item);
         }
 
-        public Task UpdateAsync(T item)
+        public async Task UpdateAsync(T item)
         {
-            throw new NotImplementedException();
+            await repo.UpdateAsync(item);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            repo.Delete(id);
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            await repo.DeleteAsync(id);
         }
     }
 }
