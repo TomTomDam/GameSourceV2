@@ -1,7 +1,6 @@
 ﻿using GameSource.Models.GameSource;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace GameSource.Data.Repositories.GameSource.Contracts
 {
@@ -12,5 +11,10 @@ namespace GameSource.Data.Repositories.GameSource.Contracts
         public void Insert(Publisher publisher);
         public void Update(Publisher publisher);
         public void Delete(int id);
+        public Task<IEnumerable<Publisher>> GetAllAsync();
+        public Task<Publisher> GetByIDAsync(int id);
+        public Task InsertAsync(Publisher publisher);
+        public Task UpdateAsync(Publisher publisher);
+        public Task DeleteAsync(int id);
     }
 }

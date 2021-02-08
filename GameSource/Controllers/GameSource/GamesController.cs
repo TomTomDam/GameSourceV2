@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +7,6 @@ using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource.Contracts;
 using GameSource.Services.GameSourceUser.Contracts;
 using GameSource.ViewModels.GameSource.GameViewModel;
-using GameSource.ViewModels.GameSource.ReviewViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
