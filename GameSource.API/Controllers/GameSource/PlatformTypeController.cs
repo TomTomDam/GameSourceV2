@@ -7,7 +7,7 @@ using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.API.Controllers
+namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/[controller]")]
     [ApiController]

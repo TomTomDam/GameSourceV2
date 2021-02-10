@@ -7,35 +7,35 @@ using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.API.Controllers
+namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowOrigin")]
-    public class GamesController : ControllerBase
+    public class PublisherController : ControllerBase
     {
-        private readonly IGameService gameService;
+        private readonly IPublisherService publisherService;
 
-        public GamesController(IGameService gameService)
+        public PublisherController(IPublisherService publisherService)
         {
-            this.gameService = gameService;
+            this.publisherService = publisherService;
         }
 
         [HttpGet("GetAll")]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Game> result = await gameService.GetAllAsync();
+            IEnumerable<Publisher> result = await publisherService.GetAllAsync();
 
             if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Publisher list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Game list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Publisher list.");
         }
 
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await gameService.GetByIDAsync(id);
+            var result = await publisherService.GetByIDAsync(id);
 
             if (result != null)
                 return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
@@ -44,21 +44,21 @@ namespace GameSource.API.Controllers
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] Game game)
+        public async Task Insert([FromBody] Publisher publisher)
         {
-            await gameService.InsertAsync(game);
+            await publisherService.InsertAsync(publisher);
         }
 
         [HttpPost]
-        public async Task Update([FromBody] Game game)
+        public async Task Update([FromBody] Publisher publisher)
         {
-            await gameService.UpdateAsync(game);
+            await publisherService.UpdateAsync(publisher);
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await gameService.DeleteAsync(id);
+            await publisherService.DeleteAsync(id);
         }
     }
 }

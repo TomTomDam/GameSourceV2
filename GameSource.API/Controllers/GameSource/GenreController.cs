@@ -7,35 +7,35 @@ using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.API.Controllers
+namespace GameSource.API.Controllers.GameSource
 {
-    [Route("api/[controller]")]
+    [Route("api/genre")]
     [ApiController]
     [EnableCors("AllowOrigin")]
-    public class ReviewController : ControllerBase
+    public class GenreController : ControllerBase
     {
-        private readonly IReviewService reviewService;
+        private readonly IGenreService genreService;
 
-        public ReviewController(IReviewService reviewService)
+        public GenreController(IGenreService genreService)
         {
-            this.reviewService = reviewService;
+            this.genreService = genreService;
         }
 
         [HttpGet("GetAll")]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Review> result = await reviewService.GetAllAsync();
+            IEnumerable<Genre> result = await genreService.GetAllAsync();
 
             if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Genre list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Review list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Genre list.");
         }
 
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await reviewService.GetByIDAsync(id);
+            var result = await genreService.GetByIDAsync(id);
 
             if (result != null)
                 return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
@@ -44,21 +44,21 @@ namespace GameSource.API.Controllers
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] Review review)
+        public async Task Insert([FromBody] Genre genre)
         {
-            await reviewService.InsertAsync(review);
+            await genreService.InsertAsync(genre);
         }
 
         [HttpPost]
-        public async Task Update([FromBody] Review review)
+        public async Task Update([FromBody] Genre genre)
         {
-            await reviewService.UpdateAsync(review);
+            await genreService.UpdateAsync(genre);
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await reviewService.DeleteAsync(id);
+            await genreService.DeleteAsync(id);
         }
     }
 }

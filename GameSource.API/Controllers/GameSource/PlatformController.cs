@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GameSource.API.Controllers
+namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/platform")]
     [ApiController]
