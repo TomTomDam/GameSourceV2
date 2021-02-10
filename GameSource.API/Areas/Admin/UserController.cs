@@ -1,33 +1,35 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSourceUser.Contracts;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.API.Controllers
+namespace GameSource.API.Areas.Admin
 {
-    [Route("api/users")]
+    [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class UserController : ControllerBase
     {
-        public IUserService userService;
+        private readonly IUserService userService;
 
         public UserController(IUserService userService)
         {
             this.userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ApiResponse> GetAll()
         {
-            var result = await userService.GetAllAsync();
+            IEnumerable<User> result = await userService.GetAllAsync();
 
-            if (result.Any())
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Users list.");
+            if (result != null)
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Users list.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User list.");
         }
 
         [HttpGet("{id}")]
@@ -42,14 +44,9 @@ namespace GameSource.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ApiResponse> Insert([FromBody] User user)
+        public async Task Insert([FromBody] User user)
         {
-            var result = await userService.InsertAsync(user);
-
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully created a User.");
-
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not create a User.");
+            await userService.InsertAsync(user);
         }
 
         [HttpPost]

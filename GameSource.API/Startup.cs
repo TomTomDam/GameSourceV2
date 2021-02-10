@@ -33,7 +33,8 @@ namespace GameSource.API
             services.AddCors(options =>
             {
                 options.AddPolicy(name: AllowOrigin,
-                    builder => {
+                    builder =>
+                    {
                         builder.AllowAnyOrigin();
                         builder.AllowAnyMethod();
                         builder.AllowAnyHeader();
@@ -73,6 +74,14 @@ namespace GameSource.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "{area:exists}/{controller=admin}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "GameSourceUser",
+                    pattern: "{area:exists}/{controller=user}/{action=Index}/{id?}");
             });
         }
     }
