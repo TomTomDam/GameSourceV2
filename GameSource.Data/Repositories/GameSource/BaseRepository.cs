@@ -41,7 +41,7 @@ namespace GameSource.Data.Repositories.GameSource
 
         public void Delete(int id)
         {
-            var item = GetByID(id);
+            T item = GetByID(id);
             entity.Remove(item);
             context.SaveChanges();
         }
@@ -70,7 +70,7 @@ namespace GameSource.Data.Repositories.GameSource
 
         public async Task DeleteAsync(int id)
         {
-            var item = await GetByIDAsync(id);
+            T item = await GetByIDAsync(id);
             entity.Remove(item);
             await context.SaveChangesAsync();
         }

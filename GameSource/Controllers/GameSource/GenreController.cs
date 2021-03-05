@@ -2,8 +2,6 @@
 using GameSource.Services.GameSource.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using GameSource.ViewModels.GameSource.GenreViewModel;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GameSource.Controllers.GameSource
 {
@@ -16,18 +14,6 @@ namespace GameSource.Controllers.GameSource
         {
             this.genreService = genreService;
         }
-
-        //[HttpGet("get")]
-        //public async Task<IList<Genre>> Get(string filter)
-        //{
-        //    List<Genre> models = await genreService.FindByName(filter);
-
-        //    var viewModels = models
-        //        .Select(x => x.ToViewModel())
-        //        .ToList();
-
-        //    return viewModels;
-        //}
 
         [HttpGet("index")]
         public IActionResult Index()
