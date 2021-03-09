@@ -2,7 +2,7 @@
     <div>
         <div><p class="dropdown-header font-weight-bold">By Platform</p></div>
         <li><div class="dropdown-divider"></div></li>
-        <li><div class="dropdown-item" v-for="platform in platforms" :key="platform.id" v-on:click="redirectToURL($baseURL + 'platform/details/' + platform.id)">{{ platform.name }}</div></li>
+        <li><div class="dropdown-item" v-for="platform in platforms" :key="platform.id" v-on:click="redirectToURL($baseURL + 'platforms/details/' + platform.id)">{{ platform.name }}</div></li>
     </div>
 </template>
 <script>
@@ -14,13 +14,13 @@
         },
         methods: {
             getAllPlatforms() {
-                this.$api.get('platform/GetAllAsync')
+                this.$api.get("platforms")
                     .then(res => {
                         this.platforms = res.data.data;
-                        console.log("api/platform/GetAllAsync Success: " + res);
+                        console.log("api/platforms/GetAll Success: " + res.data);
                     })
                     .catch(err => {
-                        console.log("api/platform/GetAllAsync Error: " + err);
+                        console.log("api/platforms/GetAll Error: " + err);
                     });
             },
             redirectToURL(url) {

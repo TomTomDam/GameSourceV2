@@ -17,7 +17,7 @@
                 this.$api.get("genres")
                     .then(res => {
                         this.genres = res.data.data;
-                        console.log("api/genres/GetAll Success: " + res);
+                        console.log("api/genres/GetAll Success: " + res.data);
                     })
                     .catch(err => {
                         console.log("api/genres/GetAll Error: " + err);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GameSource.API.Controllers.GameSource
 {
-    [Route("api/platform")]
+    [Route("api/platforms")]
     [ApiController]
     [EnableCors("AllowOrigin")]
     public class PlatformController : ControllerBase
@@ -21,7 +21,7 @@ namespace GameSource.API.Controllers.GameSource
             this.platformService = platformService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
             IEnumerable<Platform> result = await platformService.GetAllAsync();

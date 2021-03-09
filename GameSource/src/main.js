@@ -10,9 +10,9 @@ import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
 //import GameCard from './components/GameCard.vue'
 //import GamesCardGrid from './components/GamesCardGrid.vue'
 //News Article
-import NewsIndexPage from './NewsIndexPage.vue';
-import NewsCategories from './components/NewsCategories.vue';
-import NewsCalendar from './components/NewsCalendar.vue';
+//import NewsIndexPage from './NewsIndexPage.vue';
+//import NewsCategories from './components/NewsCategories.vue';
+//import NewsCalendar from './components/NewsCalendar.vue';
 
 Vue.config.productionTip = false;
 
@@ -42,13 +42,13 @@ new Vue({
     render: h => h(BrowseGamesPage)
 });
 
-new Vue({
-    el: '#news-index-menu',
-    components: {
-        NewsCategories,
-        NewsCalendar
-    },
-    render: h => h(NewsIndexPage)
-});
+//new Vue({
+//    el: '#news-index-menu',
+//    components: {
+//        NewsCategories,
+//        NewsCalendar
+//    },
+//    render: h => h(NewsIndexPage)
+//});
 
 window.Vue = Vue;
