@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Controllers.GameSource
 {
-    [Route("api/genre")]
+    [Route("api/genres")]
     [ApiController]
     [EnableCors("AllowOrigin")]
     public class GenreController : ControllerBase
@@ -21,7 +21,7 @@ namespace GameSource.API.Controllers.GameSource
             this.genreService = genreService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
             IEnumerable<Genre> result = await genreService.GetAllAsync();
