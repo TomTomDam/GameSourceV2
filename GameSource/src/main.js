@@ -3,16 +3,16 @@ import Vue from 'vue';
 import axios from 'axios';
 //import router from './router/router.js';
 //Browse Games
-import BrowseGamesPage from './BrowseGamesPage.vue'
-import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue'
-import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue'
+import BrowseGamesPage from './views/Navbar/BrowseGamesPage.vue'
+import BrowseGamesByGenre from './components/Navbar/BrowseGamesByGenre.vue'
+import BrowseGamesByPlatform from './components/Navbar/BrowseGamesByPlatform.vue'
 ////Game Grid
-//import GameCard from './components/GameCard.vue'
-//import GamesCardGrid from './components/GamesCardGrid.vue'
+//import GameCard from './components/Games/GameCard.vue'
+//import GamesCardGrid from './components/Games/GamesCardGrid.vue'
 //News Article
-//import NewsIndexPage from './NewsIndexPage.vue';
-//import NewsCategories from './components/NewsCategories.vue';
-//import NewsCalendar from './components/NewsCalendar.vue';
+//import NewsIndexPage from './views/News/NewsIndexPage.vue';
+//import NewsCategories from './components/News/NewsCategories.vue';
+//import NewsCalendar from './components/News/NewsCalendar.vue';
 
 Vue.config.productionTip = false;
 

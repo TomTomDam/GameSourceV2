@@ -1,9 +1,9 @@
 ﻿//import Vue from 'vue';
 //import VueRouter from 'vue-router';
 ////BrowseGamesPage
-//import BrowseGamesPage from '../BrowseGamesPage.vue';
-//import BrowseGamesByGenre from '../components/BrowseGamesByGenre.vue';
-//import BrowseGamesByPlatform from '../components/BrowseGamesByPlatform.vue';
+//import BrowseGamesPage from '../views/Navbar/BrowseGamesPage.vue';
+//import BrowseGamesByGenre from '../components/Navbar/BrowseGamesByGenre.vue';
+//import BrowseGamesByPlatform from '../components/Navbar/BrowseGamesByPlatform.vue';
 
 //Vue.use(VueRouter);
 
