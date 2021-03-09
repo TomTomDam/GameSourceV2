@@ -2,7 +2,7 @@
     <div>
         <div><p class="dropdown-header font-weight-bold">By Genre</p></div>
         <li><div class="dropdown-divider"></div></li>
-        <li><div class="dropdown-item" v-for="genre in genres" :key="genre.id" v-on:click="redirectToURL($baseURL + 'genres/details' + genre.id)">{{ genre.name }}</div></li>
+        <li><div class="dropdown-item" v-for="genre in genres" :key="genre.id" v-on:click="redirectToURL($baseURL + 'genre/details/' + genre.id)">{{ genre.name }}</div></li>
     </div>
 </template>
 <script>
@@ -17,7 +17,7 @@
                 this.$api.get("genres")
                     .then(res => {
                         this.genres = res.data.data;
-                        console.log("api/genres/GetAll Success: " + res.data);
+                        console.log("api/genres/GetAll Success: " + res.data.data);
                     })
                     .catch(err => {
                         console.log("api/genres/GetAll Error: " + err);

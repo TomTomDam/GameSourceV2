@@ -33,6 +33,9 @@ namespace GameSource.Areas.GameSourceUser.Controllers
         [HttpGet("index")]
         public async Task<IActionResult> Index(UserProfileCommentIndexViewModel viewModel)
         {
+            IEnumerable<UserProfileComment> userProfileComments = await userProfileCommentService.GetAllAsync();
+            viewModel.UserProfileComments = userProfileComments;
+
             return View(viewModel);
         }
 

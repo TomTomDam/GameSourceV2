@@ -5,8 +5,8 @@
     </div>
 </template>
 <script>
-    import BrowseGamesByGenre from './components/BrowseGamesByGenre.vue';
-    import BrowseGamesByPlatform from './components/BrowseGamesByPlatform.vue';
+    import BrowseGamesByGenre from '../../components/Navbar/BrowseGamesByGenre.vue';
+    import BrowseGamesByPlatform from '../../components/Navbar/BrowseGamesByPlatform.vue';
 
     export default {
         components: {

@@ -51,6 +51,7 @@ namespace GameSource.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
             AdminUserStatusCreateViewModel viewModel = new AdminUserStatusCreateViewModel();
+
             return View(viewModel);
         }
 
@@ -65,7 +66,7 @@ namespace GameSource.Areas.Admin.Controllers
                     Name = viewModel.Name
                 };
 
-                userStatusService.Insert(userStatus);
+                await userStatusService.InsertAsync(userStatus);
                 return RedirectToAction("Index");
             }
 

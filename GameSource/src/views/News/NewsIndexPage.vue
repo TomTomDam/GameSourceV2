@@ -5,8 +5,8 @@
     </div>
 </template>
 <script>
-    import NewsCategories from './components/NewsCategories.vue';
-    import NewsCalendar from './components/NewsCalendar.vue';
+    import NewsCategories from '../../components/News/NewsCategories.vue';
+    import NewsCalendar from '../../components/News/NewsCalendar.vue';
 
     export default {
         components: {
