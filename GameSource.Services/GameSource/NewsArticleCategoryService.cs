@@ -1,68 +1,43 @@
-﻿using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Infrastructure;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSource
 {
-    public class NewsArticleCategoryService : INewsArticleCategoryService
+    public class NewsArticleCategoryService : BaseService<NewsArticleCategory>, INewsArticleCategoryService
     {
-        private INewsArticleCategoryRepository repo;
+        private readonly GameSource_DBContext context;
+        private DbSet<NewsArticleCategory> repo => context.Set<NewsArticleCategory>();
 
-        public NewsArticleCategoryService(INewsArticleCategoryRepository repo)
+        public NewsArticleCategoryService(GameSource_DBContext context) : base(context)
         {
-            this.repo = repo;
-        }
-
-        public IEnumerable<NewsArticleCategory> GetAll()
-        {
-            return repo.GetAll();
+            this.context = context;
         }
 
         public NewsArticleCategory GetByID(int? id)
         {
-            return repo.GetByID(id);
-        }
-
-        public void Insert(NewsArticleCategory newsArticleCategory)
-        {
-            repo.Insert(newsArticleCategory);
-        }
-
-        public void Update(NewsArticleCategory newsArticleCategory)
-        {
-            repo.Update(newsArticleCategory);
+            return repo.Find(id);
         }
 
         public void Delete(int? id)
         {
-            repo.Delete(id);
-        }
-
-        public async Task<IEnumerable<NewsArticleCategory>> GetAllAsync()
-        {
-            return await repo.GetAllAsync();
+            NewsArticleCategory category = repo.Find(id);
+            repo.Remove(category);
+            context.SaveChanges();
         }
 
         public async Task<NewsArticleCategory> GetByIDAsync(int? id)
         {
-            return await repo.GetByIDAsync(id);
-        }
-
-        public async Task<NewsArticleCategory> InsertAsync(NewsArticleCategory newsArticleCategory)
-        {
-            return await repo.InsertAsync(newsArticleCategory);
-        }
-
-        public async Task UpdateAsync(NewsArticleCategory newsArticleCategory)
-        {
-            await repo.UpdateAsync(newsArticleCategory);
+            return await repo.FindAsync(id);
         }
 
         public async Task DeleteAsync(int? id)
         {
-            await repo.DeleteAsync(id);
+            NewsArticleCategory category = await repo.FindAsync(id);
+            repo.Remove(category);
+            await context.SaveChangesAsync();
         }
     }
 }

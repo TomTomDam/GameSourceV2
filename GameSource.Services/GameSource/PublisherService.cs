@@ -1,68 +1,18 @@
-﻿using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Infrastructure;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSource.Services.GameSource
 {
-    public class PublisherService : IPublisherService
+    public class PublisherService : BaseService<Publisher>, IPublisherService
     {
-        private IPublisherRepository repo;
+        private readonly GameSource_DBContext context;
+        private DbSet<Publisher> repo => context.Set<Publisher>();
 
-        public PublisherService(IPublisherRepository repo)
+        public PublisherService(GameSource_DBContext context) : base(context)
         {
-            this.repo = repo;
-        }
-
-        public IEnumerable<Publisher> GetAll()
-        {
-            return repo.GetAll();
-        }
-
-        public Publisher GetByID(int id)
-        {
-            return repo.GetByID(id);
-        }
-
-        public void Insert(Publisher publisher)
-        {
-            repo.Insert(publisher);
-        }
-
-        public void Update(Publisher publisher)
-        {
-            repo.Update(publisher);
-        }
-
-        public void Delete(int id)
-        {
-            repo.Delete(id);
-        }
-
-        public async Task<IEnumerable<Publisher>> GetAllAsync()
-        {
-            return await repo.GetAllAsync();
-        }
-
-        public async Task<Publisher> GetByIDAsync(int id)
-        {
-            return await repo.GetByIDAsync(id);
-        }
-
-        public async Task InsertAsync(Publisher publisher)
-        {
-            await repo.InsertAsync(publisher);
-        }
-
-        public async Task UpdateAsync(Publisher publisher)
-        {
-            await repo.UpdateAsync(publisher);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await repo.DeleteAsync(id);
+            this.context = context;
         }
     }
 }

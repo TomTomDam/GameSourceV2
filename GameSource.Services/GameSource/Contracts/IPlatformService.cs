@@ -4,17 +4,8 @@ using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSource.Contracts
 {
-    public interface IPlatformService
+    public interface IPlatformService : IBaseService<Platform>
     {
-        public IEnumerable<Platform> GetAll();
-        public Platform GetByID(int id);
-        public void Insert(Platform platform);
-        public void Update(Platform platform);
-        public void Delete(int id);
-        public Task<IEnumerable<Platform>> GetAllAsync();
-        public Task<Platform> GetByIDAsync(int id);
-        public Task InsertAsync(Platform platform);
-        public Task UpdateAsync(Platform platform);
-        public Task DeleteAsync(int id);
+
     }
 }

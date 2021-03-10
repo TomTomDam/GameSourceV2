@@ -1,68 +1,18 @@
-﻿using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Infrastructure;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSource.Services.GameSource
 {
-    public class PlatformTypeService : IPlatformTypeService
+    public class PlatformTypeService : BaseService<PlatformType>, IPlatformTypeService
     {
-        private IPlatformTypeRepository repo;
+        private readonly GameSource_DBContext context;
+        private DbSet<PlatformType> repo => context.Set<PlatformType>();
 
-        public PlatformTypeService(IPlatformTypeRepository repo)
+        public PlatformTypeService(GameSource_DBContext context) : base(context)
         {
-            this.repo = repo;
-        }
-
-        public IEnumerable<PlatformType> GetAll()
-        {
-            return repo.GetAll();
-        }
-
-        public PlatformType GetByID(int id)
-        {
-            return repo.GetByID(id);
-        }
-
-        public void Insert(PlatformType platformType)
-        {
-            repo.Insert(platformType);
-        }
-
-        public void Update(PlatformType platformType)
-        {
-            repo.Update(platformType);
-        }
-
-        public void Delete(int id)
-        {
-            repo.Delete(id);
-        }
-
-        public Task<IEnumerable<PlatformType>> GetAllAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<PlatformType> GetByIDAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task InsertAsync(PlatformType platformType)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task UpdateAsync(PlatformType platformType)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteAsync(int id)
-        {
-            throw new System.NotImplementedException();
+            this.context = context;
         }
     }
 }
