@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
@@ -26,10 +28,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<Developer> result = await developerService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Developer list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Developer list.", result.Count());
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Developer list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Developer list.", result.Count());
         }
 
         [HttpGet("{id}")]
@@ -37,10 +39,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             var result = await developerService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Developer.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Developer.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Developer.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Developer.", 1);
         }
 
         [HttpPost]
@@ -49,9 +51,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await developerService.InsertAsync(developer);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Developer.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Developer.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Developer.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Developer.", rows);
         }
 
         [HttpPut]
@@ -60,9 +62,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await developerService.UpdateAsync(developer);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Developer.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Developer.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Developer.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Developer.", rows);
         }
 
         [HttpDelete("{id}")]
@@ -71,9 +73,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await developerService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Developer.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Developer.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Developer.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Developer.", rows);
         }
     }
 }

@@ -26,10 +26,10 @@ namespace GameSource.API.Areas.GameSourceUser
         {
             IEnumerable<UserProfileComment> result = await userProfileCommentService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile Comment list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile Comment list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile Comment list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile Comment list.");
         }
 
         [HttpGet("{id}")]
@@ -37,28 +37,43 @@ namespace GameSource.API.Areas.GameSourceUser
         {
             var result = await userProfileCommentService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile Comment.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile Comment.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile Comment.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile Comment.");
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] UserProfileComment userProfileComment)
+        public async Task<ApiResponse> Insert([FromBody] UserProfileComment userStatus)
         {
-            await userProfileCommentService.InsertAsync(userProfileComment);
+            int rows = await userProfileCommentService.InsertAsync(userStatus);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Profile Comment.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile Comment.");
         }
 
         [HttpPut]
-        public async Task Update([FromBody] UserProfileComment userProfileComment)
+        public async Task<ApiResponse> Update([FromBody] UserProfileComment userProfileComment)
         {
-            await userProfileCommentService.UpdateAsync(userProfileComment);
+            int rows = await userProfileCommentService.UpdateAsync(userProfileComment);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Profile Comment.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Profile Comment.");
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ApiResponse> Delete(int id)
         {
-            await userProfileCommentService.DeleteAsync(id);
+            int rows = await userProfileCommentService.DeleteAsync(id);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Profile Comment.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User Profile Comment.");
         }
     }
 }

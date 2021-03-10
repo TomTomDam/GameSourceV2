@@ -26,10 +26,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<Review> result = await reviewService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Review list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Review list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
         }
 
         [HttpGet("{id}")]
@@ -37,10 +37,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             var result = await reviewService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Review.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Review.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review.");
         }
 
         [HttpPost]
@@ -49,9 +49,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await reviewService.InsertAsync(review);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Review.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Review.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review.");
         }
 
         [HttpPut]
@@ -60,9 +60,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await reviewService.UpdateAsync(review);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Review.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Review.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Review.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Review.");
         }
 
         [HttpDelete("{id}")]
@@ -71,9 +71,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await reviewService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Review.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Review.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Review.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Review.");
         }
     }
 }

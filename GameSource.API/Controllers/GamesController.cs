@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
@@ -24,12 +25,12 @@ namespace GameSource.API.Controllers
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Game> games = await gameService.GetAllAsync();
+            IEnumerable<Game> result = await gameService.GetAllAsync();
 
-            if (games != null)
-                return new ApiResponse(games, ResponseStatusCode.Success, "Successfully returned Game list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Game list.", result.Count());
 
-            return new ApiResponse(games, ResponseStatusCode.Error, "Could not return Game list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
         }
 
         [HttpGet("{id}")]
@@ -37,10 +38,10 @@ namespace GameSource.API.Controllers
         {
             var result = await gameService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Game.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Game.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.", 1);
         }
 
         [HttpPost]
@@ -49,9 +50,10 @@ namespace GameSource.API.Controllers
             int rows = await gameService.InsertAsync(game);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Game.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Game.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Game.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Game.", rows);
         }
 
         [HttpPut("{id}")]
@@ -60,9 +62,9 @@ namespace GameSource.API.Controllers
             int rows = await gameService.UpdateAsync(game);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Game.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Game.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Game.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Game.", rows);
         }
 
         [HttpDelete("{id}")]
@@ -71,9 +73,10 @@ namespace GameSource.API.Controllers
             int rows = await gameService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Game.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Game.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Game.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Game.", rows);
+
         }
     }
 }

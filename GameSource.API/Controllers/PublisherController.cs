@@ -26,10 +26,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<Publisher> result = await publisherService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Publisher list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Publisher list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Publisher list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Publisher list.");
         }
 
         [HttpGet("{id}")]
@@ -37,10 +37,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             var result = await publisherService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Publisher.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Publisher.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Publisher.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Publisher.");
         }
 
         [HttpPost]
@@ -49,9 +49,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await publisherService.InsertAsync(publisher);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Publisher.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Publisher.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Publisher.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Publisher.");
         }
 
         [HttpPut]
@@ -60,9 +60,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await publisherService.UpdateAsync(publisher);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Publisher.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Publisher.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Publisher.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Publisher.");
         }
 
         [HttpDelete("{id}")]
@@ -71,9 +71,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await publisherService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Publisher.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Publisher.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Publisher.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Publisher.");
         }
     }
 }

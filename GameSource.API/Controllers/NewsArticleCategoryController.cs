@@ -26,10 +26,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<NewsArticleCategory> result = await newsArticleCategoryService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned News Article Category list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return News Article Category list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return News Article Category list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned News Article Category list.");
         }
 
         [HttpGet("{id}")]
@@ -37,10 +37,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             var result = await newsArticleCategoryService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a News Article Category.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a News Article Category.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a News Article Category.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a News Article Category.");
         }
 
         [HttpPost]
@@ -49,9 +49,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await newsArticleCategoryService.InsertAsync(newsArticleCategory);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new News Article Category.");
-
             return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a News Article Category.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new News Article Category.");
         }
 
         [HttpPut]
@@ -60,9 +60,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await newsArticleCategoryService.UpdateAsync(newsArticleCategory);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated News Article Category.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update News Article Category.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update News Article Category.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated News Article Category.");
         }
 
         [HttpDelete("{id}")]
@@ -71,9 +71,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await newsArticleCategoryService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted News Article Category.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete News Article Category.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete News Article Category.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted News Article Category.");
         }
     }
 }

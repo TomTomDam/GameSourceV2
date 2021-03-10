@@ -1,21 +1,27 @@
 ﻿using GameSource.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameSource.Models
 {
     public class ApiResponse
     {
-        public object Data { get; set; }
         public ResponseStatusCode ResponseStatusCode { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } = "";
+        public int NumberOfRows { get; set; } = 0;
+        public object Data { get; set; }
 
-        public ApiResponse(object data, ResponseStatusCode responseStatusCode, string message = null)
+        public ApiResponse(object data, ResponseStatusCode responseStatusCode, string message, int numberOfRows = 0)
         {
-            Data = data;
             ResponseStatusCode = responseStatusCode;
             Message = message ?? GetDefaultMessageForStatusCode(responseStatusCode);
+            Data = data;
+            NumberOfRows = numberOfRows != 0 ? numberOfRows : 0;
+        }
+
+        public ApiResponse(ResponseStatusCode responseStatusCode, string message, int numberOfRows = 0)
+        {
+            ResponseStatusCode = ResponseStatusCode;
+            Message = message ?? GetDefaultMessageForStatusCode(responseStatusCode);
+            NumberOfRows = numberOfRows != 0 ? numberOfRows : 0;
         }
 
         public static string GetDefaultMessageForStatusCode(ResponseStatusCode responseStatusCode)

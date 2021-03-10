@@ -27,10 +27,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<ReviewComment> result = await reviewCommentService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Review list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Review list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
         }
 
         [HttpGet("{id}")]
@@ -38,10 +38,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             var result = await reviewCommentService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review Comment.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Review Comment.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Review Comment.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review Comment.");
         }
 
         [HttpPost]
@@ -50,9 +50,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await reviewCommentService.InsertAsync(reviewComment);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review Comment.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Review Comment.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Review Comment.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review Comment.");
         }
 
         [HttpPut]
@@ -61,9 +61,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await reviewCommentService.UpdateAsync(reviewComment);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Review Comment.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Review Comment.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Review Comment.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Review Comment.");
         }
 
         [HttpDelete("{id}")]
@@ -72,9 +72,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await reviewCommentService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Review Comment.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Review Comment.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Review Comment.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Review Comment.");
         }
     }
 }

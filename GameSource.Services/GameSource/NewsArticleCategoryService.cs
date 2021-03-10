@@ -21,11 +21,11 @@ namespace GameSource.Services.GameSource
             return repo.Find(id);
         }
 
-        public void Delete(int? id)
+        public int Delete(int? id)
         {
             NewsArticleCategory category = repo.Find(id);
             repo.Remove(category);
-            context.SaveChanges();
+            return context.SaveChanges();
         }
 
         public async Task<NewsArticleCategory> GetByIDAsync(int? id)
@@ -33,11 +33,11 @@ namespace GameSource.Services.GameSource
             return await repo.FindAsync(id);
         }
 
-        public async Task DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
             NewsArticleCategory category = await repo.FindAsync(id);
             repo.Remove(category);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }
