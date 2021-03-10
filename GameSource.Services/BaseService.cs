@@ -18,18 +18,18 @@ namespace GameSource.Services.GameSource
             entity = context.Set<T>();
         }
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             T item = entity.Find(id);
             entity.Remove(item);
-            context.SaveChanges();
+            return context.SaveChanges();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             T item = await entity.FindAsync(id);
             entity.Remove(item);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll()
@@ -54,28 +54,28 @@ namespace GameSource.Services.GameSource
             return item;
         }
 
-        public void Insert(T item)
+        public int Insert(T item)
         {
             entity.Add(item);
-            context.SaveChanges();
+            return context.SaveChanges();
         }
 
-        public async Task InsertAsync(T item)
+        public async Task<int> InsertAsync(T item)
         {
             await entity.AddAsync(item);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
 
-        public void Update(T item)
+        public int Update(T item)
         {
             entity.Update(item);
-            context.SaveChanges();
+            return context.SaveChanges();
         }
 
-        public async Task UpdateAsync(T item)
+        public async Task<int> UpdateAsync(T item)
         {
             entity.Update(item);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }

@@ -4,12 +4,14 @@ using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Controllers
 {
     [Route("api/games")]
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class GamesController : ControllerBase
     {
         private readonly IGameService gameService;
@@ -36,27 +38,42 @@ namespace GameSource.API.Controllers
             var result = await gameService.GetByIDAsync(id);
 
             if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
+                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User.");
+            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Game.");
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] Game game)
+        public async Task<ApiResponse> Insert([FromBody] Game game)
         {
-            await gameService.InsertAsync(game);
+            int rows = await gameService.InsertAsync(game);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Game.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Game.");
         }
 
         [HttpPut("{id}")]
-        public async Task Update(int id, [FromBody] Game game)
+        public async Task<ApiResponse> Update([FromBody] Game game)
         {
-            await gameService.UpdateAsync(game);
+            int rows = await gameService.UpdateAsync(game);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Game.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Game.");
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ApiResponse> Delete(int id)
         {
-            await gameService.DeleteAsync(id);
+            int rows = await gameService.DeleteAsync(id);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Game.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Game.");
         }
     }
 }

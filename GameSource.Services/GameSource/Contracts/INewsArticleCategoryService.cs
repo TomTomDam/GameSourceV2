@@ -7,8 +7,8 @@ namespace GameSource.Services.GameSource.Contracts
     public interface INewsArticleCategoryService : IBaseService<NewsArticleCategory>
     {
         public NewsArticleCategory GetByID(int? id);
-        public void Delete(int? id);
+        public int Delete(int? id);
         public Task<NewsArticleCategory> GetByIDAsync(int? id);
-        public Task DeleteAsync(int? id);
+        public Task<int> DeleteAsync(int? id);
     }
 }
