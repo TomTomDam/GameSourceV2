@@ -26,10 +26,10 @@ namespace GameSource.API.Areas.GameSourceUser
         {
             IEnumerable<UserProfile> result = await userProfileService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile list.");
         }
 
         [HttpGet("{id}")]
@@ -37,28 +37,43 @@ namespace GameSource.API.Areas.GameSourceUser
         {
             var result = await userProfileService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile.");
         }
 
         [HttpPost]
-        public async Task Insert([FromBody] UserProfile userProfile)
+        public async Task<ApiResponse> Insert([FromBody] UserProfile userProfile)
         {
-            await userProfileService.InsertAsync(userProfile);
+            int rows = await userProfileService.InsertAsync(userProfile);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Profile.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile.");
         }
 
         [HttpPut]
-        public async Task Update([FromBody] UserProfile userProfile)
+        public async Task<ApiResponse> Update([FromBody] UserProfile userProfile)
         {
-            await userProfileService.UpdateAsync(userProfile);
+            int rows = await userProfileService.UpdateAsync(userProfile);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Profile.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Profile.");
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ApiResponse> Delete(int id)
         {
-            await userProfileService.DeleteAsync(id);
+            int rows = await userProfileService.DeleteAsync(id);
+
+            if (rows <= 0)
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Profile.");
+
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User Profile.");
         }
     }
 }

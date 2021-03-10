@@ -26,10 +26,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<PlatformType> result = await platformTypeService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform Type list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform Type list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform Type list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform Type list.");
         }
 
         [HttpPost]
@@ -38,9 +38,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformTypeService.InsertAsync(platformType);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform Type.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform Type.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform Type.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform Type.");
         }
 
         [HttpPut]
@@ -49,9 +49,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformTypeService.UpdateAsync(platformType);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform Type.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform Type.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform Type.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform Type.");
         }
 
         [HttpDelete("{id}")]
@@ -60,9 +60,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformTypeService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Platform Type.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform Type.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform Type.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Platform Type.");
         }
     }
 }

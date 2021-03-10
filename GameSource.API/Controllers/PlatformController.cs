@@ -26,10 +26,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<Platform> result = await platformService.GetAllAsync();
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform list.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform list.");
         }
 
         [HttpGet("{id}")]
@@ -37,10 +37,10 @@ namespace GameSource.API.Controllers.GameSource
         {
             var result = await platformService.GetByIDAsync(id);
 
-            if (result != null)
-                return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
 
-            return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
         }
 
         [HttpPost]
@@ -49,9 +49,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformService.InsertAsync(platform);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform.");
         }
 
         [HttpPut]
@@ -60,9 +60,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformService.UpdateAsync(platform);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform.");
         }
 
         [HttpDelete("{id}")]
@@ -71,9 +71,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformService.DeleteAsync(id);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Platform.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Platform.");
         }
     }
 }
