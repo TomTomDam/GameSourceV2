@@ -1,9 +1,3 @@
-# GameSource
+# GameSourceV2
 A games database and games review aggregator using .NET Core.
-
-## Features
-- **Back-end:** ASP.NET Core, Web API. MVC with Repository and Service Layers
-- **Login system:** ASP.NET Core Identity with customised users and roles tables
-- **Data access:** Entity Framework Core, Dapper
-- **Front-end:** Vue.js, Axios, JQuery, Sass, Bootstrap, JQuery DataTables
-- **Unit Testing:** NUnit, AutoFixture, Moq
+V2 features a SPA architecture, using React for the front-end and ASP.NET Core Web API for the back-end.
