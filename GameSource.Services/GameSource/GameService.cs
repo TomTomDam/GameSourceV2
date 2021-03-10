@@ -7,7 +7,6 @@ namespace GameSource.Services.GameSource
 {
     public class GameService : BaseService<Game>, IGameService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<Game> repo => context.Set<Game>();
 
         public GameService(GameSource_DBContext context) : base(context)

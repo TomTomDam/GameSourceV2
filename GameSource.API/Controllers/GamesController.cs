@@ -76,7 +76,6 @@ namespace GameSource.API.Controllers
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Game.", rows);
 
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Game.", rows);
-
         }
     }
 }

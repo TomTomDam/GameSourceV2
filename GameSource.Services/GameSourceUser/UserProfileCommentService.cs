@@ -8,7 +8,6 @@ namespace GameSource.Services.GameSourceUser
 {
     public class UserProfileCommentService : BaseService<UserProfileComment>, IUserProfileCommentService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<UserProfileComment> repo => context.Set<UserProfileComment>();
 
         public UserProfileCommentService(GameSource_DBContext context) : base(context)

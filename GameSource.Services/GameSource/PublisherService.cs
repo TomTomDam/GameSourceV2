@@ -7,7 +7,6 @@ namespace GameSource.Services.GameSource
 {
     public class PublisherService : BaseService<Publisher>, IPublisherService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<Publisher> repo => context.Set<Publisher>();
 
         public PublisherService(GameSource_DBContext context) : base(context)

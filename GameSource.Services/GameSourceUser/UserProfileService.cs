@@ -9,7 +9,6 @@ namespace GameSource.Services.GameSourceUser
 {
     public class UserProfileService : BaseService<UserProfile>, IUserProfileService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<UserProfile> repo => context.Set<UserProfile>();
         private DbSet<User> userRepo => context.Set<User>();
 
