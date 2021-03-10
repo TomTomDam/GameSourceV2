@@ -1,68 +1,18 @@
-﻿using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Infrastructure;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSource.Services.GameSource
 {
-    public class ReviewCommentService : IReviewCommentService
+    public class ReviewCommentService : BaseService<ReviewComment>, IReviewCommentService
     {
-        public IReviewCommentRepository repo;
+        private readonly GameSource_DBContext context;
+        private DbSet<ReviewComment> repo => context.Set<ReviewComment>();
 
-        public ReviewCommentService(IReviewCommentRepository repo)
+        public ReviewCommentService(GameSource_DBContext context) : base(context)
         {
-            this.repo = repo;
-        }
-
-        public IEnumerable<ReviewComment> GetAll()
-        {
-            return repo.GetAll();
-        }
-
-        public ReviewComment GetByID(int id)
-        {
-            return repo.GetByID(id);
-        }
-
-        public void Insert(ReviewComment reviewComment)
-        {
-            repo.Insert(reviewComment);
-        }
-
-        public void Update(ReviewComment reviewComment)
-        {
-            repo.Update(reviewComment);
-        }
-
-        public void Delete(int id)
-        {
-            repo.Delete(id);
-        }
-
-        public async Task<IEnumerable<ReviewComment>> GetAllAsync()
-        {
-            return await repo.GetAllAsync();
-        }
-
-        public async Task<ReviewComment> GetByIDAsync(int id)
-        {
-            return await repo.GetByIDAsync(id);
-        }
-
-        public async Task InsertAsync(ReviewComment reviewComment)
-        {
-            await repo.InsertAsync(reviewComment);
-        }
-
-        public async Task UpdateAsync(ReviewComment reviewComment)
-        {
-            await repo.UpdateAsync(reviewComment);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await repo.DeleteAsync(id);
+            this.context = context;
         }
     }
 }

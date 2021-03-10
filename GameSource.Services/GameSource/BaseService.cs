@@ -1,67 +1,81 @@
-﻿using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Infrastructure;
 using GameSource.Services.GameSource.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GameSource.Services.GameSource
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {
-        public IBaseRepository<T> repo;
+        protected readonly GameSource_DBContext context;
+        protected readonly DbSet<T> entity;
 
-        public BaseService(IBaseRepository<T> repo)
+        public BaseService(GameSource_DBContext context)
         {
-            this.repo = repo;
-        }
-
-        public IEnumerable<T> GetAll()
-        {
-            return repo.GetAll();
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await repo.GetAllAsync();
-        }
-
-        public T GetByID(int id)
-        {
-            return repo.GetByID(id);
-        }
-
-        public async Task<T> GetByIDAsync(int id)
-        {
-            return await repo.GetByIDAsync(id);
-        }
-
-        public void Insert(T item)
-        {
-            repo.Insert(item);
-        }
-
-        public async Task InsertAsync(T item)
-        {
-            await repo.InsertAsync(item);
-        }
-
-        public void Update(T item)
-        {
-            repo.Update(item);
-        }
-
-        public async Task UpdateAsync(T item)
-        {
-            await repo.UpdateAsync(item);
+            this.context = context;
+            entity = context.Set<T>();
         }
 
         public void Delete(int id)
         {
-            repo.Delete(id);
+            T item = entity.Find(id);
+            entity.Remove(item);
+            context.SaveChanges();
         }
 
         public async Task DeleteAsync(int id)
         {
-            await repo.DeleteAsync(id);
+            T item = await entity.FindAsync(id);
+            entity.Remove(item);
+            await context.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return entity.ToList();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await entity.ToListAsync();
+        }
+
+        public T GetByID(int id)
+        {
+            T item = entity.Find(id);
+            return item;
+        }
+
+        public async Task<T> GetByIDAsync(int id)
+        {
+            T item = await entity.FindAsync(id);
+            return item;
+        }
+
+        public void Insert(T item)
+        {
+            entity.Add(item);
+            context.SaveChanges();
+        }
+
+        public async Task InsertAsync(T item)
+        {
+            await entity.AddAsync(item);
+            await context.SaveChangesAsync();
+        }
+
+        public void Update(T item)
+        {
+            entity.Update(item);
+            context.SaveChanges();
+        }
+
+        public async Task UpdateAsync(T item)
+        {
+            entity.Update(item);
+            await context.SaveChangesAsync();
         }
     }
 }

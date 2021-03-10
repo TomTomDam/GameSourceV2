@@ -1,68 +1,18 @@
-﻿using GameSource.Data.Repositories.GameSource.Contracts;
+﻿using GameSource.Infrastructure;
 using GameSource.Models.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameSource.Services.GameSource
 {
-    public class ReviewService : IReviewService
+    public class ReviewService : BaseService<Review>, IReviewService
     {
-        private IReviewRepository repo;
+        private readonly GameSource_DBContext context;
+        private DbSet<Game> repo => context.Set<Game>();
 
-        public ReviewService(IReviewRepository repo)
+        public ReviewService(GameSource_DBContext context) : base(context)
         {
-            this.repo = repo;
-        }
-
-        public IEnumerable<Review> GetAll()
-        {
-            return repo.GetAll();
-        }
-
-        public Review GetByID(int id)
-        {
-            return repo.GetByID(id);
-        }
-
-        public void Insert(Review review)
-        {
-            repo.Insert(review);
-        }
-
-        public void Update(Review review)
-        {
-            repo.Update(review);
-        }
-
-        public void Delete(int id)
-        {
-            repo.Delete(id);
-        }
-
-        public async Task<IEnumerable<Review>> GetAllAsync()
-        {
-            return await repo.GetAllAsync();
-        }
-
-        public async Task<Review> GetByIDAsync(int id)
-        {
-            return await repo.GetByIDAsync(id);
-        }
-
-        public async Task InsertAsync(Review review)
-        {
-            await InsertAsync(review);
-        }
-
-        public async Task UpdateAsync(Review review)
-        {
-            await UpdateAsync(review);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await DeleteAsync(id);
+            this.context = context;
         }
     }
 }

@@ -1,13 +1,7 @@
-using GameSource.Data;
-using GameSource.Data.Repositories.GameSource;
-using GameSource.Data.Repositories.GameSource.Contracts;
-using GameSource.Data.Repositories.GameSourceUser;
-using GameSource.Data.Repositories.GameSourceUser.Contracts;
-using GameSource.Data.Settings;
+using GameSource.Infrastructure;
+using GameSource.Models.GameSourceUser;
 using GameSource.Services.GameSource;
 using GameSource.Services.GameSource.Contracts;
-using GameSource.Services.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,41 +19,43 @@ namespace GameSource.API
         }
 
         public IConfiguration Configuration { get; }
-        readonly string AllowOrigin = "AllowOrigin";
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: AllowOrigin,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin();
-                        builder.AllowAnyMethod();
-                        builder.AllowAnyHeader();
-                    });
-            });
-
             services.AddControllers();
 
-            services.Configure<DatabaseSettings>(Configuration.GetSection("ConnectionStrings"));
+            //Databases
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
+            //ASP.NET Identity Core
+            services.AddIdentity<User, UserRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddRoles<UserRole>()
+                .AddEntityFrameworkStores<GameSource_DBContext>();
 
-            services.AddScoped<IGenreRepository, GenreRepository>();
-            services.AddScoped<IGenreService, GenreService>();
-
-            services.AddScoped<IPlatformRepository, PlatformRepository>();
-            services.AddScoped<IPlatformService, PlatformService>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddScoped<INewsArticleCategoryRepository, NewsArticleCategoryRepository>();
-            services.AddScoped<INewsArticleCategoryService, NewsArticleCategoryService>();
+            //Services
+            services.AddScoped<IGameService, GameService>();
+            //services.AddScoped<IGenreService, GenreService>();
+            //services.AddScoped<IDeveloperService, DeveloperService>();
+            //services.AddScoped<IPublisherService, PublisherService>();
+            //services.AddScoped<IPlatformService, PlatformService>();
+            //services.AddScoped<IPlatformTypeService, PlatformTypeService>();
+            //services.AddScoped<INewsArticleService, NewsArticleService>();
+            //services.AddScoped<INewsArticleCategoryService, NewsArticleCategoryService>();
+            //services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<IUserRoleService, UserRoleService>();
+            //services.AddScoped<IUserStatusService, UserStatusService>();
+            //services.AddScoped<IUserProfileService, UserProfileService>();
+            //services.AddScoped<IUserProfileVisibilityService, UserProfileVisibilityService>();
+            //services.AddScoped<IUserProfileCommentService, UserProfileCommentService>();
+            //services.AddScoped<IUserProfileCommentPermissionService, UserProfileCommentPermissionService>();
+            //services.AddScoped<IReviewService, ReviewService>();
+            //services.AddScoped<IReviewCommentService, ReviewCommentService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -69,19 +65,10 @@ namespace GameSource.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors(AllowOrigin);
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-
-                endpoints.MapControllerRoute(
-                    name: "Admin",
-                    pattern: "{area:exists}/{controller=admin}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "GameSourceUser",
-                    pattern: "{area:exists}/{controller=user}/{action=Index}/{id?}");
             });
         }
     }
