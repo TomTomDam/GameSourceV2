@@ -54,8 +54,8 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Publisher.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] Publisher publisher)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] Publisher publisher)
         {
             int rows = await publisherService.UpdateAsync(publisher);
 

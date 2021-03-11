@@ -10,7 +10,6 @@ namespace GameSource.Services.GameSourceUser
 {
     public class UserStatusService : BaseService<UserStatus>, IUserStatusService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<UserStatus> repo => context.Set<UserStatus>();
 
         public UserStatusService(GameSource_DBContext context) : base(context)

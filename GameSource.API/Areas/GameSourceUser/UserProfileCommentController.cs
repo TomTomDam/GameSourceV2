@@ -54,8 +54,8 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile Comment.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] UserProfileComment userProfileComment)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] UserProfileComment userProfileComment)
         {
             int rows = await userProfileCommentService.UpdateAsync(userProfileComment);
 

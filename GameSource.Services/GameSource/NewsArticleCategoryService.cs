@@ -8,7 +8,6 @@ namespace GameSource.Services.GameSource
 {
     public class NewsArticleCategoryService : BaseService<NewsArticleCategory>, INewsArticleCategoryService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<NewsArticleCategory> repo => context.Set<NewsArticleCategory>();
 
         public NewsArticleCategoryService(GameSource_DBContext context) : base(context)

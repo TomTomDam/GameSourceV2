@@ -7,7 +7,6 @@ namespace GameSource.Services.GameSource
 {
     public class ReviewCommentService : BaseService<ReviewComment>, IReviewCommentService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<ReviewComment> repo => context.Set<ReviewComment>();
 
         public ReviewCommentService(GameSource_DBContext context) : base(context)

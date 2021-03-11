@@ -54,8 +54,8 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] Platform platform)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] Platform platform)
         {
             int rows = await platformService.UpdateAsync(platform);
 

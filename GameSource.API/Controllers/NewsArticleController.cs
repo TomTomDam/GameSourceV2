@@ -54,8 +54,8 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new News Article.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] NewsArticle newsArticle)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] NewsArticle newsArticle)
         {
             int rows = await newsArticleService.UpdateAsync(newsArticle);
 

@@ -54,8 +54,8 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] UserProfile userProfile)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] UserProfile userProfile)
         {
             int rows = await userProfileService.UpdateAsync(userProfile);
 

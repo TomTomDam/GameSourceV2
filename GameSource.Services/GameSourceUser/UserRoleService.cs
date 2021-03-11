@@ -8,7 +8,6 @@ namespace GameSource.Services.GameSourceUser
 {
     public class UserRoleService : BaseService<UserRole>, IUserRoleService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<UserRoleService> repo => context.Set<UserRoleService>();
 
         public UserRoleService(GameSource_DBContext context) : base(context)

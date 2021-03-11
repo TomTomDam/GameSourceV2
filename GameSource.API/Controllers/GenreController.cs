@@ -55,8 +55,8 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a Genre.", rows);
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] Genre genre)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] Genre genre)
         {
             int rows = await genreService.UpdateAsync(genre);
 

@@ -9,7 +9,7 @@ namespace GameSource.Services.GameSource
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {
-        protected readonly GameSource_DBContext context;
+        protected GameSource_DBContext context;
         protected readonly DbSet<T> entity;
 
         public BaseService(GameSource_DBContext context)

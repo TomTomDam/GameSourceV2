@@ -54,8 +54,8 @@ namespace GameSource.API.Areas.Admin
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Role.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] UserRole userRole)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] UserRole userRole)
         {
             int rows = await userRoleService.UpdateAsync(userRole);
 

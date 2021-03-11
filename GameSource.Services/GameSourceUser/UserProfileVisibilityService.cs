@@ -9,7 +9,6 @@ namespace GameSource.Services.GameSourceUser
 {
     public class UserProfileVisibilityService : BaseService<UserProfileVisibility>, IUserProfileVisibilityService
     {
-        private readonly GameSource_DBContext context;
         private DbSet<UserProfileVisibility> repo => context.Set<UserProfileVisibility>();
         private DbSet<UserProfile> userProfileRepo => context.Set<UserProfile>();
 
