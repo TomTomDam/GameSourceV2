@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
+using GameSource.Infrastructure.Repositories.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Areas.Admin
     [EnableCors("AllowOrigin")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IUserRepository userRepository;
 
-        public UserController(IUserService userService)
+        public UserController(IUserRepository userRepository)
         {
-            this.userService = userService;
+            this.userRepository = userRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<User> result = await userService.GetAllAsync();
+            IEnumerable<User> result = await userRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Areas.Admin
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await userService.GetByIDAsync(id);
+            var result = await userRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Areas.Admin
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] User user)
         {
-            int rows = await userService.InsertAsync(user);
+            int rows = await userRepository.InsertAsync(user);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Areas.Admin
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] User user)
         {
-            int rows = await userService.UpdateAsync(user);
+            int rows = await userRepository.UpdateAsync(user);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Areas.Admin
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userService.DeleteAsync(id);
+            int rows = await userRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User.");

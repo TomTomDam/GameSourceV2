@@ -1,7 +1,7 @@
 ﻿using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,17 +14,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class PlatformController : ControllerBase
     {
-        private readonly IPlatformService platformService;
+        private readonly IPlatformRepository platformRepository;
 
-        public PlatformController(IPlatformService platformService)
+        public PlatformController(IPlatformRepository platformRepository)
         {
-            this.platformService = platformService;
+            this.platformRepository = platformRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Platform> result = await platformService.GetAllAsync();
+            IEnumerable<Platform> result = await platformRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await platformService.GetByIDAsync(id);
+            var result = await platformRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Platform platform)
         {
-            int rows = await platformService.InsertAsync(platform);
+            int rows = await platformRepository.InsertAsync(platform);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Platform platform)
         {
-            int rows = await platformService.UpdateAsync(platform);
+            int rows = await platformRepository.UpdateAsync(platform);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await platformService.DeleteAsync(id);
+            int rows = await platformRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform.");

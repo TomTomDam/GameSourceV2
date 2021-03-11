@@ -1,9 +1,9 @@
 using GameSource.Infrastructure;
 using GameSource.Models.GameSourceUser;
-using GameSource.Services.GameSource;
-using GameSource.Services.GameSource.Contracts;
-using GameSource.Services.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSourceUser;
+using GameSource.Infrastructure.Repositories.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -50,24 +50,24 @@ namespace GameSource.API
                 .AddRoles<UserRole>()
                 .AddEntityFrameworkStores<GameSource_DBContext>();
 
-            //Services
-            services.AddScoped<IGameService, GameService>();
-            services.AddScoped<IGenreService, GenreService>();
-            services.AddScoped<IDeveloperService, DeveloperService>();
-            services.AddScoped<IPublisherService, PublisherService>();
-            services.AddScoped<IPlatformService, PlatformService>();
-            services.AddScoped<IPlatformTypeService, PlatformTypeService>();
-            services.AddScoped<INewsArticleService, NewsArticleService>();
-            services.AddScoped<INewsArticleCategoryService, NewsArticleCategoryService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRoleService, UserRoleService>();
-            services.AddScoped<IUserStatusService, UserStatusService>();
-            services.AddScoped<IUserProfileService, UserProfileService>();
-            services.AddScoped<IUserProfileVisibilityService, UserProfileVisibilityService>();
-            services.AddScoped<IUserProfileCommentService, UserProfileCommentService>();
-            services.AddScoped<IUserProfileCommentPermissionService, UserProfileCommentPermissionService>();
-            services.AddScoped<IReviewService, ReviewService>();
-            services.AddScoped<IReviewCommentService, ReviewCommentService>();
+            //Repositorys
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+            services.AddScoped<IPublisherRepository, PublisherRepository>();
+            services.AddScoped<IPlatformRepository, PlatformRepository>();
+            services.AddScoped<IPlatformTypeRepository, PlatformTypeRepository>();
+            services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
+            services.AddScoped<INewsArticleCategoryRepository, NewsArticleCategoryRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IUserStatusRepository, UserStatusRepository>();
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<IUserProfileVisibilityRepository, UserProfileVisibilityRepository>();
+            services.AddScoped<IUserProfileCommentRepository, UserProfileCommentRepository>();
+            services.AddScoped<IUserProfileCommentPermissionRepository, UserProfileCommentPermissionRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IReviewCommentRepository, ReviewCommentRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

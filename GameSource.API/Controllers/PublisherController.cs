@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class PublisherController : ControllerBase
     {
-        private readonly IPublisherService publisherService;
+        private readonly IPublisherRepository publisherRepository;
 
-        public PublisherController(IPublisherService publisherService)
+        public PublisherController(IPublisherRepository publisherRepository)
         {
-            this.publisherService = publisherService;
+            this.publisherRepository = publisherRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Publisher> result = await publisherService.GetAllAsync();
+            IEnumerable<Publisher> result = await publisherRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Publisher list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await publisherService.GetByIDAsync(id);
+            var result = await publisherRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Publisher.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Publisher publisher)
         {
-            int rows = await publisherService.InsertAsync(publisher);
+            int rows = await publisherRepository.InsertAsync(publisher);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Publisher.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Publisher publisher)
         {
-            int rows = await publisherService.UpdateAsync(publisher);
+            int rows = await publisherRepository.UpdateAsync(publisher);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Publisher.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await publisherService.DeleteAsync(id);
+            int rows = await publisherRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Publisher.");

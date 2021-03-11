@@ -1,7 +1,7 @@
 ﻿using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,17 +14,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class NewsArticleCategoryController : ControllerBase
     {
-        private readonly INewsArticleCategoryService newsArticleCategoryService;
+        private readonly INewsArticleCategoryRepository newsArticleCategoryRepository;
 
-        public NewsArticleCategoryController(INewsArticleCategoryService newsArticleCategoryService)
+        public NewsArticleCategoryController(INewsArticleCategoryRepository newsArticleCategoryRepository)
         {
-            this.newsArticleCategoryService = newsArticleCategoryService;
+            this.newsArticleCategoryRepository = newsArticleCategoryRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<NewsArticleCategory> result = await newsArticleCategoryService.GetAllAsync();
+            IEnumerable<NewsArticleCategory> result = await newsArticleCategoryRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return News Article Category list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await newsArticleCategoryService.GetByIDAsync(id);
+            var result = await newsArticleCategoryRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a News Article Category.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] NewsArticleCategory newsArticleCategory)
         {
-            int rows = await newsArticleCategoryService.InsertAsync(newsArticleCategory);
+            int rows = await newsArticleCategoryRepository.InsertAsync(newsArticleCategory);
 
             if (rows <= 0)
             return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a News Article Category.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] NewsArticleCategory newsArticleCategory)
         {
-            int rows = await newsArticleCategoryService.UpdateAsync(newsArticleCategory);
+            int rows = await newsArticleCategoryRepository.UpdateAsync(newsArticleCategory);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update News Article Category.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await newsArticleCategoryService.DeleteAsync(id);
+            int rows = await newsArticleCategoryRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete News Article Category.");

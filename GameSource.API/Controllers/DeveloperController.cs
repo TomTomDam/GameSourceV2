@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,17 +15,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class DeveloperController : ControllerBase
     {
-        private readonly IDeveloperService developerService;
+        private readonly IDeveloperRepository developerRepository;
 
-        public DeveloperController(IDeveloperService developerService)
+        public DeveloperController(IDeveloperRepository developerRepository)
         {
-            this.developerService = developerService;
+            this.developerRepository = developerRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Developer> result = await developerService.GetAllAsync();
+            IEnumerable<Developer> result = await developerRepository.GetAllAsync();
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Developer list.", result.Count());
 
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await developerService.GetByIDAsync(id);
+            var result = await developerRepository.GetByIDAsync(id);
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Developer.");
 
@@ -45,7 +45,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Developer developer)
         {
-            int rows = await developerService.InsertAsync(developer);
+            int rows = await developerRepository.InsertAsync(developer);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not create a Developer.", rows);
 
@@ -55,14 +55,14 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Developer developer)
         {
-            Developer updatedDeveloper = developerService.GetByID(id);
+            Developer updatedDeveloper = developerRepository.GetByID(id);
             if (updatedDeveloper == null)
                 return new ApiResponse(ResponseStatusCode.Error, "Developer was not found. Please check the ID.");
 
             updatedDeveloper.Name = developer.Name;
             updatedDeveloper.Games = developer.Games;
 
-            int rows = await developerService.UpdateAsync(updatedDeveloper);
+            int rows = await developerRepository.UpdateAsync(updatedDeveloper);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update Developer.", rows);
 
@@ -75,7 +75,7 @@ namespace GameSource.API.Controllers.GameSource
             if (id == 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Developer was not found. Please check the ID.");
 
-            int rows = await developerService.DeleteAsync(id);
+            int rows = await developerRepository.DeleteAsync(id);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not delete Developer.", rows);
 

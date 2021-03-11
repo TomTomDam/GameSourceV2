@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class NewsArticleController : ControllerBase
     {
-        private readonly INewsArticleService newsArticleService;
+        private readonly INewsArticleRepository newsArticleRepository;
 
-        public NewsArticleController(INewsArticleService newsArticleService)
+        public NewsArticleController(INewsArticleRepository newsArticleRepository)
         {
-            this.newsArticleService = newsArticleService;
+            this.newsArticleRepository = newsArticleRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<NewsArticle> result = await newsArticleService.GetAllAsync();
+            IEnumerable<NewsArticle> result = await newsArticleRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return News Article list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await newsArticleService.GetByIDAsync(id);
+            var result = await newsArticleRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a News Article.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] NewsArticle newsArticle)
         {
-            int rows = await newsArticleService.InsertAsync(newsArticle);
+            int rows = await newsArticleRepository.InsertAsync(newsArticle);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a News Article.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] NewsArticle newsArticle)
         {
-            int rows = await newsArticleService.UpdateAsync(newsArticle);
+            int rows = await newsArticleRepository.UpdateAsync(newsArticle);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update News Article.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await newsArticleService.DeleteAsync(id);
+            int rows = await newsArticleRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete News Article.");

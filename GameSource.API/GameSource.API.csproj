@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameSource.Infrastructure\GameSource.Infrastructure.csproj" />
-    <ProjectReference Include="..\GameSource.Services\GameSource.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
