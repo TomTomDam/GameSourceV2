@@ -54,8 +54,8 @@ namespace GameSource.API.Areas.Admin
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Status.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] UserStatus userStatus)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] UserStatus userStatus)
         {
             int rows = await userStatusService.UpdateAsync(userStatus);
 

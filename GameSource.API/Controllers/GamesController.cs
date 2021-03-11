@@ -26,7 +26,6 @@ namespace GameSource.API.Controllers
         public async Task<ApiResponse> GetAll()
         {
             IEnumerable<Game> result = await gameService.GetAllAsync();
-
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Game list.", result.Count());
 
@@ -37,7 +36,6 @@ namespace GameSource.API.Controllers
         public async Task<ApiResponse> GetByID(int id)
         {
             var result = await gameService.GetByIDAsync(id);
-
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Game.");
 
@@ -48,34 +46,45 @@ namespace GameSource.API.Controllers
         public async Task<ApiResponse> Insert([FromBody] Game game)
         {
             int rows = await gameService.InsertAsync(game);
-
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Game.", rows);
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Game.", rows);
 
-
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Game.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Game.", rows);
         }
 
         [HttpPut("{id}")]
-        public async Task<ApiResponse> Update([FromBody] Game game)
+        public async Task<ApiResponse> Update(int id, [FromBody] Game game)
         {
-            int rows = await gameService.UpdateAsync(game);
+            Game updatedGame = gameService.GetByID(id);
+            if (updatedGame == null)
+                return new ApiResponse(ResponseStatusCode.Error, "Game was not found. Please check the ID.");
 
+            updatedGame.Name = game.Name;
+            updatedGame.Description = game.Description;
+            updatedGame.CoverImageFilePath = game.CoverImageFilePath;
+            updatedGame.GenreID = game.GenreID;
+            updatedGame.DeveloperID = game.DeveloperID;
+            updatedGame.PublisherID = game.PublisherID;
+            updatedGame.PlatformID = game.PlatformID;
+
+            int rows = await gameService.UpdateAsync(updatedGame);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Game.", rows);
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update Game.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Game.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully updated Game.", rows);
         }
 
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Game was not found. Please check the ID.");
+
             int rows = await gameService.DeleteAsync(id);
-
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Game.", rows);
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Game.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Game.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Game.", rows);
         }
     }
 }

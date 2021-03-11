@@ -19,7 +19,7 @@ namespace GameSource.Models
 
         public ApiResponse(ResponseStatusCode responseStatusCode, string message, int numberOfRows = 0)
         {
-            ResponseStatusCode = ResponseStatusCode;
+            ResponseStatusCode = responseStatusCode;
             Message = message ?? GetDefaultMessageForStatusCode(responseStatusCode);
             NumberOfRows = numberOfRows != 0 ? numberOfRows : 0;
         }

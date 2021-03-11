@@ -54,8 +54,8 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review.");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] Review review)
+        [HttpPut("{id}")]
+        public async Task<ApiResponse> Update(int id, [FromBody] Review review)
         {
             int rows = await reviewService.UpdateAsync(review);
 
