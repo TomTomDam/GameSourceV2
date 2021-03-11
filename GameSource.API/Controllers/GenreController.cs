@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,17 +15,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class GenreController : ControllerBase
     {
-        private readonly IGenreService genreService;
+        private readonly IGenreRepository genreRepository;
 
-        public GenreController(IGenreService genreService)
+        public GenreController(IGenreRepository genreRepository)
         {
-            this.genreService = genreService;
+            this.genreRepository = genreRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Genre> result = await genreService.GetAllAsync();
+            IEnumerable<Genre> result = await genreRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Genre list.");
@@ -36,7 +36,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await genreService.GetByIDAsync(id);
+            var result = await genreRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Genre.");
@@ -47,7 +47,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Genre genre)
         {
-            int rows = await genreService.InsertAsync(genre);
+            int rows = await genreRepository.InsertAsync(genre);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Genre.", rows);
@@ -58,7 +58,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Genre genre)
         {
-            int rows = await genreService.UpdateAsync(genre);
+            int rows = await genreRepository.UpdateAsync(genre);
 
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update Genre.", rows);
@@ -69,7 +69,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await genreService.DeleteAsync(id);
+            int rows = await genreRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not delete Genre.", rows);

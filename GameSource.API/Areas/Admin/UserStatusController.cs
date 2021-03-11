@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
+using GameSource.Infrastructure.Repositories.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Areas.Admin
     [EnableCors("AllowOrigin")]
     public class UserStatusController : ControllerBase
     {
-        private readonly IUserStatusService userStatusService;
+        private readonly IUserStatusRepository userStatusRepository;
 
-        public UserStatusController(IUserStatusService userStatusService)
+        public UserStatusController(IUserStatusRepository userStatusRepository)
         {
-            this.userStatusService = userStatusService;
+            this.userStatusRepository = userStatusRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<UserStatus> result = await userStatusService.GetAllAsync();
+            IEnumerable<UserStatus> result = await userStatusRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Status list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Areas.Admin
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await userStatusService.GetByIDAsync(id);
+            var result = await userStatusRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Status.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Areas.Admin
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] UserStatus userStatus)
         {
-            int rows = await userStatusService.InsertAsync(userStatus);
+            int rows = await userStatusRepository.InsertAsync(userStatus);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Status.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Areas.Admin
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserStatus userStatus)
         {
-            int rows = await userStatusService.UpdateAsync(userStatus);
+            int rows = await userStatusRepository.UpdateAsync(userStatus);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Status.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Areas.Admin
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userStatusService.DeleteAsync(id);
+            int rows = await userStatusRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Status.");

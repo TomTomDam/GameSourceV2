@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
+using GameSource.Infrastructure.Repositories.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Areas.GameSourceUser
     [EnableCors("AllowOrigin")]
     public class UserProfileCommentController : ControllerBase
     {
-        private readonly IUserProfileCommentService userProfileCommentService;
+        private readonly IUserProfileCommentRepository userProfileCommentRepository;
 
-        public UserProfileCommentController(IUserProfileCommentService userProfileCommentService)
+        public UserProfileCommentController(IUserProfileCommentRepository userProfileCommentRepository)
         {
-            this.userProfileCommentService = userProfileCommentService;
+            this.userProfileCommentRepository = userProfileCommentRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<UserProfileComment> result = await userProfileCommentService.GetAllAsync();
+            IEnumerable<UserProfileComment> result = await userProfileCommentRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile Comment list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await userProfileCommentService.GetByIDAsync(id);
+            var result = await userProfileCommentRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile Comment.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] UserProfileComment userStatus)
         {
-            int rows = await userProfileCommentService.InsertAsync(userStatus);
+            int rows = await userProfileCommentRepository.InsertAsync(userStatus);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Profile Comment.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserProfileComment userProfileComment)
         {
-            int rows = await userProfileCommentService.UpdateAsync(userProfileComment);
+            int rows = await userProfileCommentRepository.UpdateAsync(userProfileComment);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Profile Comment.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userProfileCommentService.DeleteAsync(id);
+            int rows = await userProfileCommentRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Profile Comment.");

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Controllers.GameSource
     [EnableCors("AllowOrigin")]
     public class ReviewController : ControllerBase
     {
-        private readonly IReviewService reviewService;
+        private readonly IReviewRepository reviewRepository;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewRepository reviewRepository)
         {
-            this.reviewService = reviewService;
+            this.reviewRepository = reviewRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Review> result = await reviewService.GetAllAsync();
+            IEnumerable<Review> result = await reviewRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Review list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await reviewService.GetByIDAsync(id);
+            var result = await reviewRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Review.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Review review)
         {
-            int rows = await reviewService.InsertAsync(review);
+            int rows = await reviewRepository.InsertAsync(review);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Review.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Review review)
         {
-            int rows = await reviewService.UpdateAsync(review);
+            int rows = await reviewRepository.UpdateAsync(review);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Review.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await reviewService.DeleteAsync(id);
+            int rows = await reviewRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Review.");

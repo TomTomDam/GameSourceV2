@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
-using GameSource.Services.GameSource.Contracts;
+using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,17 +15,17 @@ namespace GameSource.API.Controllers
     [EnableCors("AllowOrigin")]
     public class GamesController : ControllerBase
     {
-        private readonly IGameService gameService;
+        private readonly IGameRepository gameRepository;
 
-        public GamesController(IGameService gameService)
+        public GamesController(IGameRepository gameRepository)
         {
-            this.gameService = gameService;
+            this.gameRepository = gameRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Game> result = await gameService.GetAllAsync();
+            IEnumerable<Game> result = await gameRepository.GetAllAsync();
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Game list.", result.Count());
 
@@ -35,7 +35,7 @@ namespace GameSource.API.Controllers
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await gameService.GetByIDAsync(id);
+            var result = await gameRepository.GetByIDAsync(id);
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Game.");
 
@@ -45,7 +45,7 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Game game)
         {
-            int rows = await gameService.InsertAsync(game);
+            int rows = await gameRepository.InsertAsync(game);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not create a Game.", rows);
 
@@ -55,7 +55,7 @@ namespace GameSource.API.Controllers
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Game game)
         {
-            Game updatedGame = gameService.GetByID(id);
+            Game updatedGame = gameRepository.GetByID(id);
             if (updatedGame == null)
                 return new ApiResponse(ResponseStatusCode.Error, "Game was not found. Please check the ID.");
 
@@ -67,7 +67,7 @@ namespace GameSource.API.Controllers
             updatedGame.PublisherID = game.PublisherID;
             updatedGame.PlatformID = game.PlatformID;
 
-            int rows = await gameService.UpdateAsync(updatedGame);
+            int rows = await gameRepository.UpdateAsync(updatedGame);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update Game.", rows);
 
@@ -80,7 +80,7 @@ namespace GameSource.API.Controllers
             if (id == 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Game was not found. Please check the ID.");
 
-            int rows = await gameService.DeleteAsync(id);
+            int rows = await gameRepository.DeleteAsync(id);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not delete Game.", rows);
 

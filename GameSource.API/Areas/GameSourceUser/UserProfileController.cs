@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSourceUser;
-using GameSource.Services.GameSourceUser.Contracts;
+using GameSource.Infrastructure.Repositories.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,17 +14,17 @@ namespace GameSource.API.Areas.GameSourceUser
     [EnableCors("AllowOrigin")]
     public class UserProfileController : ControllerBase
     {
-        private readonly IUserProfileService userProfileService;
+        private readonly IUserProfileRepository userProfileRepository;
 
-        public UserProfileController(IUserProfileService userProfileService)
+        public UserProfileController(IUserProfileRepository userProfileRepository)
         {
-            this.userProfileService = userProfileService;
+            this.userProfileRepository = userProfileRepository;
         }
 
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<UserProfile> result = await userProfileService.GetAllAsync();
+            IEnumerable<UserProfile> result = await userProfileRepository.GetAllAsync();
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile list.");
@@ -35,7 +35,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await userProfileService.GetByIDAsync(id);
+            var result = await userProfileRepository.GetByIDAsync(id);
 
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile.");
@@ -46,7 +46,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] UserProfile userProfile)
         {
-            int rows = await userProfileService.InsertAsync(userProfile);
+            int rows = await userProfileRepository.InsertAsync(userProfile);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Profile.");
@@ -57,7 +57,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserProfile userProfile)
         {
-            int rows = await userProfileService.UpdateAsync(userProfile);
+            int rows = await userProfileRepository.UpdateAsync(userProfile);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Profile.");
@@ -68,7 +68,7 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userProfileService.DeleteAsync(id);
+            int rows = await userProfileRepository.DeleteAsync(id);
 
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Profile.");
