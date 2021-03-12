@@ -12,6 +12,7 @@ namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/developers")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class DeveloperController : ControllerBase
     {
@@ -22,6 +23,11 @@ namespace GameSource.API.Controllers.GameSource
             this.developerRepository = developerRepository;
         }
 
+        /// <summary>
+        /// Gets all Developers
+        /// </summary>
+        /// <response code="200">Returns a list of Developers</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,16 +38,36 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Developer list.", result.Count());
         }
 
+        /// <summary>
+        /// Gets a developer by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a Developers</response>
+        /// <response code="404">Could not find a Developer</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
             var result = await developerRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Developer.");
+                return new ApiResponse(result, ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Developer.", 1);
         }
 
+        /// <summary>
+        /// Creates a new Developer
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new Developer</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Developer developer)
         {
@@ -52,12 +78,28 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Developer.", rows);
         }
 
+        /// <summary>
+        /// Updates a Developer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="developer"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a Developer</response>
+        /// <response code="404">Could not find a Developer</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Developer developer)
         {
             Developer updatedDeveloper = developerRepository.GetByID(id);
             if (updatedDeveloper == null)
-                return new ApiResponse(ResponseStatusCode.Error, "Developer was not found. Please check the ID.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
             updatedDeveloper.Name = developer.Name;
             updatedDeveloper.Games = developer.Games;
@@ -69,11 +111,18 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(ResponseStatusCode.Success, "Successfully updated Developer.", rows);
         }
 
+        /// <summary>
+        /// Deletes a Developer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a Developer</response>
+        /// <response code="404">Could not find a Developer</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
             if (id == 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Developer was not found. Please check the ID.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
             int rows = await developerRepository.DeleteAsync(id);
             if (rows <= 0)

@@ -7,6 +7,7 @@ namespace GameSource.Models.Enums
     public enum ResponseStatusCode
     {
         Success = 200,
-        Error = 400
+        Error = 400,
+        NotFound = 404
     }
 }
