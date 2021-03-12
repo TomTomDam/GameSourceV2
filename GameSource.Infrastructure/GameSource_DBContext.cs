@@ -12,6 +12,8 @@ namespace GameSource.Infrastructure
 
         }
 
+        public GameSource_DBContext() { }
+
         public DbSet<Game> Game { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Developer> Developer { get; set; }
@@ -34,16 +36,14 @@ namespace GameSource.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            //Change default delete behaviour from Cascade to Restrict.
-            //Prevents multiple cascading paths - you must then explicitly update/delete a given row's foreign keys, afterwards you may update/delete the given row
-            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            //{
-            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            //}
-
             modelBuilder.Entity<User>(e => e.ToTable(name: "User"));
             modelBuilder.Entity<UserRole>(e => e.ToTable(name: "UserRole"));
+
             modelBuilder.Entity<Review>().Property(p => p.Rating).HasColumnType("decimal(18,2)");
+
+            //TODO:
+            //One AspNetUserRoles to One User
+            //One AspNetUserRoles to One UserRole
 
             //One PlatformType to Many Platforms
             modelBuilder.Entity<Platform>()
