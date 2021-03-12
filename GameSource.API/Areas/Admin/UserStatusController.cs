@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Areas.Admin
 {
-    [Route("api/user-statuses")]
+    [Route("api/admin/user-statuses")]
     [ApiController]
     [EnableCors("AllowOrigin")]
     public class UserStatusController : ControllerBase
