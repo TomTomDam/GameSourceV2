@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GameSource.API</name>
+    </assembly>
+    <members>
+        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.GetAll">
+            <summary>
+            Gets all Developers
+            </summary>
+            <response code="200">Returns a list of Developers</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.GetByID(System.Int32)">
+            <summary>
+            Gets a developer by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a Developers</response>
+            <response code="404">Could not find a Developer</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.Insert(GameSource.Models.GameSource.Developer)">
+            <summary>
+            Creates a new Developer
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "BioWare"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new Developer</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.Update(System.Int32,GameSource.Models.GameSource.Developer)">
+            <summary>
+            Updates a Developer
+            </summary>
+            <param name="id"></param>
+            <param name="developer"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "BioWare"
+                }
+                
+            </remarks>
+            <response code="200">Updated a Developer</response>
+            <response code="404">Could not find a Developer</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.Delete(System.Int32)">
+            <summary>
+            Deletes a Developer
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a Developer</response>
+            <response code="404">Could not find a Developer</response>
+            <response code="400">Request failed</response>
+        </member>
+    </members>
+</doc>
