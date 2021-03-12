@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace GameSource.API
 {
@@ -50,7 +51,13 @@ namespace GameSource.API
                 .AddRoles<UserRole>()
                 .AddEntityFrameworkStores<GameSource_DBContext>();
 
-            //Repositorys
+            //Swagger
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "GameSource API", Version = "v1" });
+            });
+
+            //Repositories
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IDeveloperRepository, DeveloperRepository>();
@@ -76,6 +83,20 @@ namespace GameSource.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //Swagger Documentation
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = swaggerOptions.JsonRoute;
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();

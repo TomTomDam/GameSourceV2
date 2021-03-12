@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameSource.API.Areas.Admin
 {
-    [Route("api/user-roles")]
+    [Route("api/admin/user-roles")]
     [ApiController]
     [EnableCors("AllowOrigin")]
     public class UserRoleController : ControllerBase
