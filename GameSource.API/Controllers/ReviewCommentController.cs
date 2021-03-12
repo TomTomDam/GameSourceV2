@@ -11,6 +11,7 @@ namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/review-comments")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
 
     public class ReviewCommentController : ControllerBase
@@ -22,6 +23,11 @@ namespace GameSource.API.Controllers.GameSource
             this.reviewCommentRepository = reviewCommentRepository;
         }
 
+        /// <summary>
+        /// Gets all ReviewComments
+        /// </summary>
+        /// <response code="200">Returns a list of ReviewComments</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -33,6 +39,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
         }
 
+        /// <summary>
+        /// Gets a ReviewComment by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a ReviewComment</response>
+        /// <response code="404">Could not find a ReviewComment</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -44,6 +57,19 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review Comment.");
         }
 
+        /// <summary>
+        /// Creates a new ReviewComment
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new ReviewComment</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] ReviewComment reviewComment)
         {
@@ -55,6 +81,22 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review Comment.");
         }
 
+        /// <summary>
+        /// Updates a ReviewComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="reviewComment"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a ReviewComment</response>
+        /// <response code="404">Could not find a ReviewComment</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] ReviewComment reviewComment)
         {
@@ -66,6 +108,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Review Comment.");
         }
 
+        /// <summary>
+        /// Deletes a ReviewComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a ReviewComment</response>
+        /// <response code="404">Could not find a ReviewComment</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {

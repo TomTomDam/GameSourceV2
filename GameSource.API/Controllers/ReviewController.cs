@@ -11,6 +11,7 @@ namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/reviews")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class ReviewController : ControllerBase
     {
@@ -21,6 +22,11 @@ namespace GameSource.API.Controllers.GameSource
             this.reviewRepository = reviewRepository;
         }
 
+        /// <summary>
+        /// Gets all Reviews
+        /// </summary>
+        /// <response code="200">Returns a list of Reviews</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Review list.");
         }
 
+        /// <summary>
+        /// Gets a Review by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a Review</response>
+        /// <response code="404">Could not find a Review</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -43,6 +56,19 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review.");
         }
 
+        /// <summary>
+        /// Creates a new Review
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new Review</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Review review)
         {
@@ -54,6 +80,22 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Review.");
         }
 
+        /// <summary>
+        /// Updates a Review
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="review"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a Review</response>
+        /// <response code="404">Could not find a Review</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Review review)
         {
@@ -65,6 +107,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Review.");
         }
 
+        /// <summary>
+        /// Deletes a Review
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a Review</response>
+        /// <response code="404">Could not find a Review</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {

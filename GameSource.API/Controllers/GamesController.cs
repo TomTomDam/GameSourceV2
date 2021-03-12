@@ -12,6 +12,7 @@ namespace GameSource.API.Controllers
 {
     [Route("api/games")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class GamesController : ControllerBase
     {
@@ -22,6 +23,11 @@ namespace GameSource.API.Controllers
             this.gameRepository = gameRepository;
         }
 
+        /// <summary>
+        /// Gets all Games
+        /// </summary>
+        /// <response code="200">Returns a list of Games</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,13 @@ namespace GameSource.API.Controllers
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
         }
 
+        /// <summary>
+        /// Gets a Game by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a Game</response>
+        /// <response code="404">Could not find a Game</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -42,6 +55,19 @@ namespace GameSource.API.Controllers
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.", 1);
         }
 
+        /// <summary>
+        /// Creates a new Game
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new Game</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Game game)
         {
@@ -52,6 +78,22 @@ namespace GameSource.API.Controllers
             return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Game.", rows);
         }
 
+        /// <summary>
+        /// Updates a Game
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="game"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a Game</response>
+        /// <response code="404">Could not find a Game</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Game game)
         {
@@ -74,6 +116,13 @@ namespace GameSource.API.Controllers
             return new ApiResponse(ResponseStatusCode.Success, "Successfully updated Game.", rows);
         }
 
+        /// <summary>
+        /// Deletes a Game
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a Game</response>
+        /// <response code="404">Could not find a Game</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {

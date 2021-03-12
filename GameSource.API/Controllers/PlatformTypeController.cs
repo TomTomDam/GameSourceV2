@@ -11,6 +11,7 @@ namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/platorm-types")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class PlatformTypeController : ControllerBase
     {
@@ -21,6 +22,11 @@ namespace GameSource.API.Controllers.GameSource
             this.platformTypeRepository = platformTypeRepository;
         }
 
+        /// <summary>
+        /// Gets all PlatformTypes
+        /// </summary>
+        /// <response code="200">Returns a list of PlatformTypes</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,37 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform Type list.");
         }
 
+        /// <summary>
+        /// Gets a PlatformType by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a PlatformType</response>
+        /// <response code="404">Could not find a PlatformType</response>
+        /// <response code="400">Request failed</response>
+        [HttpGet("{id}")]
+        public async Task<ApiResponse> GetByID(int id)
+        {
+            var result = await platformTypeRepository.GetByIDAsync(id);
+
+            if (result == null)
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
+
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
+        }
+
+        /// <summary>
+        /// Creates a new PlatformType
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new PlatformType</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] PlatformType platformType)
         {
@@ -43,6 +80,22 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform Type.");
         }
 
+        /// <summary>
+        /// Updates a PlatformType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="platformType"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a PlatformType</response>
+        /// <response code="404">Could not find a PlatformType</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] PlatformType platformType)
         {
@@ -54,6 +107,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform Type.");
         }
 
+        /// <summary>
+        /// Deletes a PlatformType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a PlatformType</response>
+        /// <response code="404">Could not find a PlatformType</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
