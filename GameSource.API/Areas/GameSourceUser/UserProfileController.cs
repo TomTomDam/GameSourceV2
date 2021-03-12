@@ -11,6 +11,7 @@ namespace GameSource.API.Areas.GameSourceUser
 {
     [Route("api/user-profiles")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class UserProfileController : ControllerBase
     {
@@ -21,6 +22,11 @@ namespace GameSource.API.Areas.GameSourceUser
             this.userProfileRepository = userProfileRepository;
         }
 
+        /// <summary>
+        /// Gets all UserProfiles
+        /// </summary>
+        /// <response code="200">Returns a list of UserProfiles</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,13 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile list.");
         }
 
+        /// <summary>
+        /// Gets a UserProfile by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a UserProfile</response>
+        /// <response code="404">Could not find a UserProfile</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -43,6 +56,19 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile.");
         }
 
+        /// <summary>
+        /// Creates a new UserProfile
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new UserProfile</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] UserProfile userProfile)
         {
@@ -54,6 +80,22 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile.");
         }
 
+        /// <summary>
+        /// Updates a UserProfile
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userProfile"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a UserProfile</response>
+        /// <response code="404">Could not find a UserProfile</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserProfile userProfile)
         {
@@ -65,6 +107,13 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Profile.");
         }
 
+        /// <summary>
+        /// Deletes a UserProfile
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a UserProfile</response>
+        /// <response code="404">Could not find a UserProfile</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {

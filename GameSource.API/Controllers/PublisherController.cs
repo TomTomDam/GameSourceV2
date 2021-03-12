@@ -11,6 +11,7 @@ namespace GameSource.API.Controllers.GameSource
 {
     [Route("api/publishers")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class PublisherController : ControllerBase
     {
@@ -21,6 +22,11 @@ namespace GameSource.API.Controllers.GameSource
             this.publisherRepository = publisherRepository;
         }
 
+        /// <summary>
+        /// Gets all Publishers
+        /// </summary>
+        /// <response code="200">Returns a list of Publishers</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Publisher list.");
         }
 
+        /// <summary>
+        /// Gets a Publisher by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a Publisher</response>
+        /// <response code="404">Could not find a Publisher</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -43,6 +56,19 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Publisher.");
         }
 
+        /// <summary>
+        /// Creates a new Publisher
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new Publisher</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Publisher publisher)
         {
@@ -54,6 +80,22 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Publisher.");
         }
 
+        /// <summary>
+        /// Updates a Publisher
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="publisher"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a Publisher</response>
+        /// <response code="404">Could not find a Publisher</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Publisher publisher)
         {
@@ -65,6 +107,13 @@ namespace GameSource.API.Controllers.GameSource
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Publisher.");
         }
 
+        /// <summary>
+        /// Deletes a Publisher
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a Publisher</response>
+        /// <response code="404">Could not find a Publisher</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {

@@ -39,10 +39,10 @@ namespace GameSource.API.Controllers.GameSource
         }
 
         /// <summary>
-        /// Gets a developer by its ID
+        /// Gets a Developer by its ID
         /// </summary>
         /// <param name="id"></param>
-        /// <response code="200">Returns a Developers</response>
+        /// <response code="200">Returns a Developer</response>
         /// <response code="404">Could not find a Developer</response>
         /// <response code="400">Request failed</response>
         [HttpGet("{id}")]

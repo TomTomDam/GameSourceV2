@@ -11,6 +11,7 @@ namespace GameSource.API.Areas.GameSourceUser
 {
     [Route("api/user-profile-comments")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class UserProfileCommentController : ControllerBase
     {
@@ -21,6 +22,11 @@ namespace GameSource.API.Areas.GameSourceUser
             this.userProfileCommentRepository = userProfileCommentRepository;
         }
 
+        /// <summary>
+        /// Gets all UserProfileComments
+        /// </summary>
+        /// <response code="200">Returns a list of UserProfileComments</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,13 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile Comment list.");
         }
 
+        /// <summary>
+        /// Gets a UserProfileComment by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a UserProfileComment</response>
+        /// <response code="404">Could not find a UserProfileComment</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -43,6 +56,19 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile Comment.");
         }
 
+        /// <summary>
+        /// Creates a new UserProfileComment
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Creates a new UserProfileComment</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] UserProfileComment userStatus)
         {
@@ -54,6 +80,22 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile Comment.");
         }
 
+        /// <summary>
+        /// Updates a UserProfileComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userProfileComment"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a UserProfileComment</response>
+        /// <response code="404">Could not find a UserProfileComment</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserProfileComment userProfileComment)
         {
@@ -65,6 +107,13 @@ namespace GameSource.API.Areas.GameSourceUser
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Profile Comment.");
         }
 
+        /// <summary>
+        /// Deletes a UserProfileComment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a UserProfileComment</response>
+        /// <response code="404">Could not find a UserProfileComment</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {

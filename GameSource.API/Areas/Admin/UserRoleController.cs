@@ -11,6 +11,7 @@ namespace GameSource.API.Areas.Admin
 {
     [Route("api/admin/user-roles")]
     [ApiController]
+    [Produces("application/json")]
     [EnableCors("AllowOrigin")]
     public class UserRoleController : ControllerBase
     {
@@ -21,6 +22,11 @@ namespace GameSource.API.Areas.Admin
             this.userRoleRepository = userRoleRepository;
         }
 
+        /// <summary>
+        /// Gets all UserRoles
+        /// </summary>
+        /// <response code="200">Returns a list of UserRole</response>
+        /// <response code="400">Request failed</response>
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
@@ -32,6 +38,13 @@ namespace GameSource.API.Areas.Admin
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Role list.");
         }
 
+        /// <summary>
+        /// Gets a UserRole by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns a UserRole</response>
+        /// <response code="404">Could not find a UserRole</response>
+        /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
@@ -43,6 +56,19 @@ namespace GameSource.API.Areas.Admin
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Role.");
         }
 
+        /// <summary>
+        /// Creates a new UserRole
+        /// </summary>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>UserRole
+        /// <response code="200">Creates a new UserRole</response>
+        /// <response code="400">Request failed</response>
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] UserRole userRole)
         {
@@ -54,6 +80,22 @@ namespace GameSource.API.Areas.Admin
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Role.");
         }
 
+        /// <summary>
+        /// Updates a UserRole
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userRole"></param>
+        /// <remarks>
+        /// Example request:
+        /// 
+        ///     {
+        ///         "name": "BioWare"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="200">Updated a UserRole</response>
+        /// <response code="404">Could not find a UserRole</response>
+        /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserRole userRole)
         {
@@ -65,6 +107,13 @@ namespace GameSource.API.Areas.Admin
             return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Role.");
         }
 
+        /// <summary>
+        /// Deletes a UserRole
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Deleted a UserRole</response>
+        /// <response code="404">Could not find a UserRole</response>
+        /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
