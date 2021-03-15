@@ -9,7 +9,7 @@ namespace GameSource.Infrastructure.Repositories.GameSource
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected GameSource_DBContext context;
-        protected readonly DbSet<T> entity;
+        protected DbSet<T> entity;
 
         public BaseRepository(GameSource_DBContext context)
         {

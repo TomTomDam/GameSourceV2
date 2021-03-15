@@ -26,9 +26,9 @@ namespace GameSource.Models.GameSource
         [Display(Name = "Category")]
         public NewsArticleCategory Category { get; set; }
 
-        [Display(Name = "Upload Image")]
-        [NotMapped]
-        public IFormFile CoverImage { get; set; }
+        //[Display(Name = "Upload Image")]
+        //[NotMapped]
+        //public IFormFile CoverImage { get; set; }
 
         [Display(Name = "Current Cover Image")]
         public string CoverImageFilePath { get; set; }
