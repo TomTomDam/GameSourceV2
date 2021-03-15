@@ -33,9 +33,9 @@ namespace GameSource.API.Areas.Admin
             IEnumerable<UserStatus> result = await userStatusRepository.GetAllAsync();
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Status list.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return UserStatus list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Status list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned UserStatus list.");
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace GameSource.API.Areas.Admin
             var result = await userStatusRepository.GetByIDAsync(id);
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Status.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a UserStatus.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Status.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a UserStatus.");
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace GameSource.API.Areas.Admin
             int rows = await userStatusRepository.InsertAsync(userStatus);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Status.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a UserStatus.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Status.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new UserStatus.");
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace GameSource.API.Areas.Admin
             int rows = await userStatusRepository.UpdateAsync(userStatus);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Status.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update UserStatus.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Status.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated UserStatus.");
         }
 
         /// <summary>
@@ -117,12 +117,15 @@ namespace GameSource.API.Areas.Admin
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userStatusRepository.DeleteAsync(id);
+            UserStatus userStatus = await userStatusRepository.GetByIDAsync(id);
+            if (id == 0 || userStatus == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserStatus was not found. Please check the ID.");
 
+            int rows = await userStatusRepository.DeleteAsync(userStatus);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Status.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete UserStatus.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User Status.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted UserStatus.");
         }
     }
 }

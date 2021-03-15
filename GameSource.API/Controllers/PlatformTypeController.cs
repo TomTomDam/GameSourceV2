@@ -117,8 +117,11 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await platformTypeRepository.DeleteAsync(id);
+            PlatformType platformType = await platformTypeRepository.GetByIDAsync(id);
+            if (id == 0 || platformType == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "PlatformType was not found. Please check the ID.");
 
+            int rows = await platformTypeRepository.DeleteAsync(platformType);
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform Type.");
 

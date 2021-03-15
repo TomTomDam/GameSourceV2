@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Fixtures\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 

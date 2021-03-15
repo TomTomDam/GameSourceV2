@@ -117,8 +117,11 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await newsArticleRepository.DeleteAsync(id);
+            NewsArticle newsArticle = await newsArticleRepository.GetByIDAsync(id);
+            if (id == 0 || newsArticle == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticle was not found. Please check the ID.");
 
+            int rows = await newsArticleRepository.DeleteAsync(newsArticle);
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete News Article.");
 

@@ -33,9 +33,9 @@ namespace GameSource.API.Areas.GameSourceUser
             IEnumerable<UserProfileComment> result = await userProfileCommentRepository.GetAllAsync();
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile Comment list.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return UserProfileComment list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile Comment list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned UserProfileComment list.");
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace GameSource.API.Areas.GameSourceUser
             var result = await userProfileCommentRepository.GetByIDAsync(id);
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile Comment.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a UserProfileComment.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile Comment.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a UserProfileComment.");
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace GameSource.API.Areas.GameSourceUser
             int rows = await userProfileCommentRepository.InsertAsync(userStatus);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Profile Comment.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a UserProfileComment.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile Comment.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new UserProfileComment.");
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace GameSource.API.Areas.GameSourceUser
             int rows = await userProfileCommentRepository.UpdateAsync(userProfileComment);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Profile Comment.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update UserProfileComment.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Profile Comment.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated UserProfileComment.");
         }
 
         /// <summary>
@@ -117,12 +117,15 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userProfileCommentRepository.DeleteAsync(id);
+            UserProfileComment userProfileComment = await userProfileCommentRepository.GetByIDAsync(id);
+            if (id == 0 || userProfileComment == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfileComment was not found. Please check the ID.");
 
+            int rows = await userProfileCommentRepository.DeleteAsync(userProfileComment);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Profile Comment.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete UserProfileComment.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User Profile Comment.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted UserProfileComment.");
         }
     }
 }

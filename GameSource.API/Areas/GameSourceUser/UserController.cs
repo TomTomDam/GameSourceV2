@@ -117,8 +117,11 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userRepository.DeleteAsync(id);
+            User user = await userRepository.GetByIDAsync(id);
+            if (id == 0 || user == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "User was not found. Please check the ID.");
 
+            int rows = await userRepository.DeleteAsync(user);
             if (rows <= 0)
                 return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User.");
 

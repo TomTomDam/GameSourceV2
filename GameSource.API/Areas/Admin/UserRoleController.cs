@@ -33,9 +33,9 @@ namespace GameSource.API.Areas.Admin
             IEnumerable<UserRole> result = await userRoleRepository.GetAllAsync();
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Role list.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return UserRole list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Role list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned UserRole list.");
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace GameSource.API.Areas.Admin
             var result = await userRoleRepository.GetByIDAsync(id);
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Role.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a UserRole.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Role.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a UserRole.");
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace GameSource.API.Areas.Admin
             int rows = await userRoleRepository.InsertAsync(userRole);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Role.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a UserRole.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Role.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new UserRole.");
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace GameSource.API.Areas.Admin
             int rows = await userRoleRepository.UpdateAsync(userRole);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Role.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update UserRole.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Role.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated UserRole.");
         }
 
         /// <summary>
@@ -117,12 +117,15 @@ namespace GameSource.API.Areas.Admin
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            int rows = await userRoleRepository.DeleteAsync(id);
+            UserRole userRole = await userRoleRepository.GetByIDAsync(id);
+            if (id == 0 || userRole == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserRole was not found. Please check the ID.");
 
+            int rows = await userRoleRepository.DeleteAsync(userRole);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Role.");
+                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete UserRole.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User Role.");
+            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted UserRole.");
         }
     }
 }

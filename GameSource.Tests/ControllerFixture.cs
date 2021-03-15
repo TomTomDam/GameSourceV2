@@ -2,12 +2,11 @@
 using GameSource.API.Controllers.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
-using System;
 using System.Linq;
 
 namespace GameSource.Tests
 {
-    public class ControllerFixture : IDisposable
+    public class ControllerFixture
     {
         public DeveloperController developerController;
         public Mock<IDeveloperRepository> mockDeveloperRepo;
@@ -23,11 +22,6 @@ namespace GameSource.Tests
                 .ToList()
                 .ForEach(b => fixture.Behaviors.Remove(b));
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-        }
-
-        public void Dispose()
-        {
-            mockDeveloperRepo.Invocations.Clear();
         }
     }
 }
