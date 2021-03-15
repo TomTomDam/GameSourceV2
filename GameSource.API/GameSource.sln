@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource.Models", "..\GameSource.Models\GameSource.Models.csproj", "{180DD843-BB21-4238-944C-C82A15D9451B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSource.Tests", "..\GameSource.Tests\GameSource.Tests.csproj", "{44FE8D11-F518-43FE-B8C6-74DB99C491E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSource.Tests", "..\GameSource.Tests\GameSource.Tests.csproj", "{82EC6530-3B09-42EE-99D9-054F66CABDF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{180DD843-BB21-4238-944C-C82A15D9451B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{180DD843-BB21-4238-944C-C82A15D9451B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{180DD843-BB21-4238-944C-C82A15D9451B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44FE8D11-F518-43FE-B8C6-74DB99C491E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44FE8D11-F518-43FE-B8C6-74DB99C491E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44FE8D11-F518-43FE-B8C6-74DB99C491E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44FE8D11-F518-43FE-B8C6-74DB99C491E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82EC6530-3B09-42EE-99D9-054F66CABDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82EC6530-3B09-42EE-99D9-054F66CABDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82EC6530-3B09-42EE-99D9-054F66CABDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82EC6530-3B09-42EE-99D9-054F66CABDF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

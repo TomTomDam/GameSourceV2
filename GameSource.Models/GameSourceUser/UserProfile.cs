@@ -16,16 +16,16 @@ namespace GameSource.Models.GameSourceUser
 
         public string Biography { get; set; }
 
-        [Display(Name = "Upload Image")]
-        [NotMapped]
-        public IFormFile AvatarImage { get; set; }
+        //[Display(Name = "Upload Image")]
+        //[NotMapped]
+        //public IFormFile AvatarImage { get; set; }
 
         [Display(Name = "Current Avatar Image")]
         public string AvatarFilePath { get; set; }
 
-        [Display(Name = "Upload Image")]
-        [NotMapped]
-        public IFormFile ProfileBackgroundImage { get; set; }
+        //[Display(Name = "Upload Image")]
+        //[NotMapped]
+        //public IFormFile ProfileBackgroundImage { get; set; }
 
         [Display(Name = "Current Profile Background Image")]
         public string ProfileBackgroundImageFilePath { get; set; }

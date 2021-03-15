@@ -1,5 +1,4 @@
-﻿using GameSource.Infrastructure;
-using GameSource.Models.GameSource;
+﻿using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +6,7 @@ namespace GameSource.Infrastructure.Repositories.GameSource
 {
     public class PublisherRepository : BaseRepository<Publisher>, IPublisherRepository
     {
-        private DbSet<Publisher> repo => context.Set<Publisher>();
+        protected DbSet<Publisher> repo => context.Set<Publisher>();
 
         public PublisherRepository(GameSource_DBContext context) : base(context)
         {
