@@ -32,8 +32,6 @@ namespace GameSource.API.Controllers.GameSource
         public async Task<ApiResponse> GetAll()
         {
             IEnumerable<Developer> result = await developerRepository.GetAllAsync();
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Developer list.", result.Count());
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Developer list.", result.Count());
         }
@@ -97,8 +95,8 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Developer developer)
         {
-            Developer updatedDeveloper = developerRepository.GetByID(id);
-            if (updatedDeveloper == null)
+            Developer updatedDeveloper = await developerRepository.GetByIDAsync(id);
+            if (id == 0 || updatedDeveloper == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
             updatedDeveloper.Name = developer.Name;
@@ -121,10 +119,11 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            if (id == 0)
+            Developer developer = await developerRepository.GetByIDAsync(id);
+            if (id == 0 || developer == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
-            int rows = await developerRepository.DeleteAsync(id);
+            int rows = await developerRepository.DeleteAsync(developer);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not delete Developer.", rows);
 

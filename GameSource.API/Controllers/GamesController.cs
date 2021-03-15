@@ -126,10 +126,11 @@ namespace GameSource.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            if (id == 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Game was not found. Please check the ID.");
+            Game game = await gameRepository.GetByIDAsync(id);
+            if (id == 0 || game == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found. Please check the ID.");
 
-            int rows = await gameRepository.DeleteAsync(id);
+            int rows = await gameRepository.DeleteAsync(game);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not delete Game.", rows);
 

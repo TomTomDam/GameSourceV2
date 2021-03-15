@@ -17,16 +17,14 @@ namespace GameSource.Infrastructure.Repositories.GameSource
             entity = context.Set<T>();
         }
 
-        public int Delete(int id)
+        public int Delete(T item)
         {
-            T item = entity.Find(id);
             entity.Remove(item);
             return context.SaveChanges();
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(T item)
         {
-            T item = await entity.FindAsync(id);
             entity.Remove(item);
             return await context.SaveChangesAsync();
         }
