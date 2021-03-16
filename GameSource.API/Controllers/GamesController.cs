@@ -65,7 +65,7 @@ namespace GameSource.API.Controllers
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Mass Effect"
         ///     }
         ///     
         /// </remarks>
@@ -90,7 +90,7 @@ namespace GameSource.API.Controllers
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Mass Effect"
         ///     }
         ///     
         /// </remarks>

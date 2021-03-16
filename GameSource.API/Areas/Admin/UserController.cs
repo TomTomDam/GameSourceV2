@@ -63,7 +63,12 @@ namespace GameSource.API.Areas.Admin
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "firstName": "Tom",
+        ///         "lastName": "Dam",
+        ///         "age": 23,
+        ///         "location": "Barnsley",
+        ///         "userStatus": 1,
+        ///         "userRole": 1
         ///     }
         ///     
         /// </remarks>
@@ -89,7 +94,12 @@ namespace GameSource.API.Areas.Admin
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "firstName": "Tom",
+        ///         "lastName": "Dam",
+        ///         "age": 23,
+        ///         "location": "Barnsley",
+        ///         "userStatus": 1,
+        ///         "userRole": 1
         ///     }
         ///     
         /// </remarks>
