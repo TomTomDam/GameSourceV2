@@ -63,7 +63,10 @@ namespace GameSource.API.Areas.GameSourceUser
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "firstName": "Tom",
+        ///         "lastName": "Dam",
+        ///         "age": 23,
+        ///         "location": "Barnsley"
         ///     }
         ///     
         /// </remarks>
@@ -89,7 +92,10 @@ namespace GameSource.API.Areas.GameSourceUser
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "firstName": "Tom",
+        ///         "lastName": "Dam",
+        ///         "age": 23,
+        ///         "location": "Barnsley"
         ///     }
         ///     
         /// </remarks>

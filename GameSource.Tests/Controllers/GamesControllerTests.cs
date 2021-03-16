@@ -14,7 +14,7 @@ namespace GameSource.Tests.Controllers
 {
     public class GamesControllerTests : IClassFixture<GameControllerFixture>, IDisposable
     {
-        public GameControllerFixture fixture;
+        GameControllerFixture fixture;
 
         public GamesControllerTests(GameControllerFixture fixture)
         {
@@ -137,12 +137,14 @@ namespace GameSource.Tests.Controllers
             var id = 1;
             var game = new Game
             {
-                Name = "Mass Effect"
+                Name = "Mass Effect",
+                Description = "Shepard."
             };
             var updatedGame = new Game
             {
                 ID = 1,
-                Name = "Star Wars: Knights of the Old Republic"
+                Name = "Star Wars: Knights of the Old Republic",
+                Description = "Mucha shaka paka"
             };
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedGame);
@@ -163,10 +165,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_ErrorResponse_WhenIDIs0()
         {
-            var game = new Game
-            {
-                Name = "Mass Effect"
-            };
+            var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Game)null);
 
@@ -184,11 +183,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_ErrorResponse_WhenGameIsNull()
         {
-            var game = new Game
-            {
-                ID = 1,
-                Name = "Mass Effect"
-            };
+            var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
             fixture.mockGameRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
@@ -209,11 +204,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Delete_SuccessResponse_DeletesGame()
         {
-            var game = new Game
-            {
-                ID = 1,
-                Name = "Mass Effect"
-            };
+            var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
             fixture.mockGameRepo.Setup(x => x.DeleteAsync(game)).ReturnsAsync(1);
@@ -248,11 +239,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Delete_ErrorResponse_WhenGameIsNull()
         {
-            var game = new Game
-            {
-                ID = 1,
-                Name = "Mass Effect"
-            };
+            var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
             fixture.mockGameRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);

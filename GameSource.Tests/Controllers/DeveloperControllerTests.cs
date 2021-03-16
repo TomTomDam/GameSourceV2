@@ -162,10 +162,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_ErrorResponse_WhenIDIs0()
         {
-            var developer = new Developer
-            {
-                Name = "BioWare"
-            };
+            var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Developer)null);
 
@@ -183,11 +180,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_ErrorResponse_WhenDeveloperIsNull()
         {
-            var developer = new Developer
-            {
-                ID = 1,
-                Name = "BioWare"
-            };
+            var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
             fixture.mockDeveloperRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
@@ -208,11 +201,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Delete_SuccessResponse_DeletesDeveloper()
         {
-            var developer = new Developer
-            {
-                ID = 1,
-                Name = "BioWare"
-            };
+            var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
             fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(developer)).ReturnsAsync(1);
@@ -247,11 +236,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Delete_ErrorResponse_WhenDeveloperIsNull()
         {
-            var developer = new Developer
-            {
-                ID = 1,
-                Name = "BioWare"
-            };
+            var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
             fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);

@@ -1,11 +1,256 @@
-﻿using System;
+﻿using AutoFixture;
+using GameSource.Models;
+using GameSource.Models.Enums;
+using GameSource.Models.GameSource;
+using Moq;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace GameSource.Tests.Controllers
 {
-    public class ReviewControllerTests
+    public class ReviewControllerTests : IClassFixture<ReviewControllerFixture>, IDisposable
     {
+        ReviewControllerFixture fixture;
 
+        public ReviewControllerTests(ReviewControllerFixture fixture)
+        {
+            this.fixture = fixture;
+        }
+
+        public void Dispose()
+        {
+            fixture.mockReviewRepo.Invocations.Clear();
+        }
+
+        #region GetAll
+        [Fact]
+        public async Task GetAll_SuccessResponse_ReturnsListOfReviews()
+        {
+            var reviewList = fixture.fixture.Create<IEnumerable<Review>>();
+
+            fixture.mockReviewRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(reviewList);
+
+            var result = await fixture.reviewController.GetAll();
+
+            fixture.mockReviewRepo.Verify(x => x.GetAllAsync(), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(reviewList, result.Data);
+            Assert.True(result.NumberOfRows > 0);
+            Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task GetAll_SuccessResponse_ReturnsEmptyList()
+        {
+            fixture.mockReviewRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(Enumerable.Empty<Review>());
+
+            var result = await fixture.reviewController.GetAll();
+
+            fixture.mockReviewRepo.Verify(x => x.GetAllAsync(), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(0, result.NumberOfRows);
+            Assert.Equal(Enumerable.Empty<Review>(), result.Data);
+            Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
+        }
+        #endregion
+
+        #region GetByID
+        [Fact]
+        public async Task GetByID_SuccessResponse_ReturnsReview()
+        {
+            var review = fixture.fixture.Create<Review>();
+
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(review.ID)).ReturnsAsync(review);
+
+            var result = await fixture.reviewController.GetByID(review.ID);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.IsType<Review>(result.Data);
+            Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task GetByID_ErrorResponse_WhenIDIs0()
+        {
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Review)null);
+
+            var result = await fixture.reviewController.GetByID(0);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+        }
+        #endregion
+
+        #region Insert
+        [Fact]
+        public async Task Insert_SuccessResponse_CreatesReview()
+        {
+            var review = fixture.fixture.Create<Review>();
+
+            fixture.mockReviewRepo.Setup(x => x.InsertAsync(review)).ReturnsAsync(1);
+
+            var result = await fixture.reviewController.Insert(review);
+
+            fixture.mockReviewRepo.Verify(x => x.InsertAsync(It.IsAny<Review>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(1, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Insert_ErrorResponse_WhenReviewIsNull()
+        {
+            fixture.mockReviewRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+
+            var result = await fixture.reviewController.Insert(null);
+
+            fixture.mockReviewRepo.Verify(x => x.InsertAsync(It.IsAny<Review>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(0, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+        }
+        #endregion
+
+        #region Update
+        [Fact]
+        public async Task Update_SuccessResponse_UpdatesReview()
+        {
+            var id = 1;
+            var review = new Review
+            {
+                Title = "Great game!"
+            };
+            var updatedReview = new Review
+            {
+                ID = 1,
+                Title = "Cool game!"
+            };
+
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedReview);
+            fixture.mockReviewRepo.Setup(x => x.UpdateAsync(updatedReview)).ReturnsAsync(1);
+
+            var result = await fixture.reviewController.Update(id, review);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockReviewRepo.Verify(x => x.UpdateAsync(updatedReview), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(updatedReview, result.Data);
+            Assert.Equal(1, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Update_ErrorResponse_WhenIDIs0()
+        {
+            var review = fixture.fixture.Create<Review>();
+
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Review)null);
+
+            var result = await fixture.reviewController.Update(0, review);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
+            fixture.mockReviewRepo.Verify(x => x.UpdateAsync(It.IsAny<Review>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(0, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Update_ErrorResponse_WhenReviewIsNull()
+        {
+            var review = fixture.fixture.Create<Review>();
+
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(review.ID)).ReturnsAsync(review);
+            fixture.mockReviewRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+
+            var result = await fixture.reviewController.Update(review.ID, review);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockReviewRepo.Verify(x => x.UpdateAsync(It.IsAny<Review>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(0, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+        }
+        #endregion
+
+        #region Delete
+        [Fact]
+        public async Task Delete_SuccessResponse_DeletesReview()
+        {
+            var review = fixture.fixture.Create<Review>();
+
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(review.ID)).ReturnsAsync(review);
+            fixture.mockReviewRepo.Setup(x => x.DeleteAsync(review)).ReturnsAsync(1);
+
+            var result = await fixture.reviewController.Delete(review.ID);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockReviewRepo.Verify(x => x.DeleteAsync(It.IsAny<Review>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(1, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenIDIs0()
+        {
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Review)null);
+
+            var result = await fixture.reviewController.Delete(0);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
+            fixture.mockReviewRepo.Verify(x => x.DeleteAsync(It.IsAny<Review>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(0, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenReviewIsNull()
+        {
+            var review = fixture.fixture.Create<Review>();
+
+            fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(review.ID)).ReturnsAsync(review);
+            fixture.mockReviewRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+
+            var result = await fixture.reviewController.Delete(review.ID);
+
+            fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockReviewRepo.Verify(x => x.DeleteAsync(It.IsAny<Review>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Equal(0, result.NumberOfRows);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+        }
+        #endregion
     }
 }

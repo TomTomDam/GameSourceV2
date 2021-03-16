@@ -28,7 +28,12 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "firstName": "Tom",
+                    "lastName": "Dam",
+                    "age": 23,
+                    "location": "Barnsley",
+                    "userStatus": 1,
+                    "userRole": 1
                 }
                 
             </remarks>
@@ -45,7 +50,12 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "firstName": "Tom",
+                    "lastName": "Dam",
+                    "age": 23,
+                    "location": "Barnsley",
+                    "userStatus": 1,
+                    "userRole": 1
                 }
                 
             </remarks>
@@ -86,7 +96,8 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Member",
+                    "description": "Default role for Users."
                 }
                 
             </remarks>UserRole
@@ -103,7 +114,8 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Member",
+                    "description": "Default role for Users."
                 }
                 
             </remarks>
@@ -144,7 +156,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Active"
                 }
                 
             </remarks>
@@ -161,7 +173,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Active"
                 }
                 
             </remarks>
@@ -202,7 +214,10 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "firstName": "Tom",
+                    "lastName": "Dam",
+                    "age": 23,
+                    "location": "Barnsley"
                 }
                 
             </remarks>
@@ -219,7 +234,10 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "firstName": "Tom",
+                    "lastName": "Dam",
+                    "age": 23,
+                    "location": "Barnsley"
                 }
                 
             </remarks>
@@ -260,7 +278,8 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "body": "Cool profile!",
+                    "userProfileID": "1"
                 }
                 
             </remarks>
@@ -277,7 +296,8 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "body": "Cool profile!",
+                    "userProfileID": "1"
                 }
                 
             </remarks>
@@ -310,21 +330,6 @@
             <response code="404">Could not find a UserProfile</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Areas.GameSourceUser.UserProfileController.Insert(GameSource.Models.GameSourceUser.UserProfile)">
-            <summary>
-            Creates a new UserProfile
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "BioWare"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new UserProfile</response>
-            <response code="400">Request failed</response>
-        </member>
         <member name="M:GameSource.API.Areas.GameSourceUser.UserProfileController.Update(System.Int32,GameSource.Models.GameSourceUser.UserProfile)">
             <summary>
             Updates a UserProfile
@@ -335,7 +340,8 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "displayName": "TomDam",
+                    "biography": "This is my profile!",
                 }
                 
             </remarks>
@@ -434,7 +440,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Sci-Fi"
                 }
                 
             </remarks>
@@ -451,7 +457,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Sci-Fi"
                 }
                 
             </remarks>
@@ -550,7 +556,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "title": "Welcome to GameSource!"
                 }
                 
             </remarks>
@@ -567,7 +573,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "title": "Welcome to GameSource!"
                 }
                 
             </remarks>
@@ -608,7 +614,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "PS4"
                 }
                 
             </remarks>
@@ -625,7 +631,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "PS4"
                 }
                 
             </remarks>
@@ -666,7 +672,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Console"
                 }
                 
             </remarks>
@@ -683,7 +689,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Console"
                 }
                 
             </remarks>
@@ -724,7 +730,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Electronic Arts"
                 }
                 
             </remarks>
@@ -741,7 +747,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Electronic Arts"
                 }
                 
             </remarks>
@@ -782,7 +788,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Great review!"
                 }
                 
             </remarks>
@@ -799,7 +805,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Great review!"
                 }
                 
             </remarks>
@@ -840,7 +846,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
                 }
                 
             </remarks>
@@ -857,7 +863,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
                 }
                 
             </remarks>
@@ -898,7 +904,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Mass Effect"
                 }
                 
             </remarks>
@@ -915,7 +921,7 @@
             Example request:
             
                 {
-                    "name": "BioWare"
+                    "name": "Mass Effect"
                 }
                 
             </remarks>

@@ -63,7 +63,8 @@ namespace GameSource.API.Areas.GameSourceUser
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "body": "Cool profile!",
+        ///         "userProfileID": "1"
         ///     }
         ///     
         /// </remarks>
@@ -89,7 +90,8 @@ namespace GameSource.API.Areas.GameSourceUser
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "body": "Cool profile!",
+        ///         "userProfileID": "1"
         ///     }
         ///     
         /// </remarks>

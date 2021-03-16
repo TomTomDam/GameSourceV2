@@ -77,9 +77,9 @@ namespace GameSource.API.Controllers.GameSource
         {
             int rows = await genreRepository.InsertAsync(genre);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Genre.", rows);
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Genre.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a Genre.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a Genre.", rows);
         }
 
         /// <summary>

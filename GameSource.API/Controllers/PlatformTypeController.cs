@@ -6,6 +6,7 @@ using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace GameSource.API.Controllers.GameSource
 {
@@ -32,10 +33,7 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<PlatformType> result = await platformTypeRepository.GetAllAsync();
 
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform Type list.");
-
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform Type list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned PlatformType list.", result.Count());
         }
 
         /// <summary>
@@ -48,12 +46,14 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
+
             var result = await platformTypeRepository.GetByIDAsync(id);
-
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "PlatformType was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a PlatformType.");
         }
 
         /// <summary>
@@ -73,11 +73,10 @@ namespace GameSource.API.Controllers.GameSource
         public async Task<ApiResponse> Insert([FromBody] PlatformType platformType)
         {
             int rows = await platformTypeRepository.InsertAsync(platformType);
-
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform Type.");
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a PlatformType.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform Type.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new PlatformType.", rows);
         }
 
         /// <summary>
@@ -99,12 +98,20 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] PlatformType platformType)
         {
-            int rows = await platformTypeRepository.UpdateAsync(platformType);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
+            var updatedPlatformType = await platformTypeRepository.GetByIDAsync(id);
+            if (updatedPlatformType == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "PlatformType was not found.");
+
+            updatedPlatformType.Name = platformType.Name;
+
+            int rows = await platformTypeRepository.UpdateAsync(updatedPlatformType);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform Type.");
+                return new ApiResponse(updatedPlatformType, ResponseStatusCode.Error, "Could not update PlatformType.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform Type.");
+            return new ApiResponse(updatedPlatformType, ResponseStatusCode.Success, "Successfully updated PlatformType.", rows);
         }
 
         /// <summary>
@@ -117,15 +124,18 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
+
             PlatformType platformType = await platformTypeRepository.GetByIDAsync(id);
-            if (id == 0 || platformType == null)
+            if (platformType == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "PlatformType was not found. Please check the ID.");
 
             int rows = await platformTypeRepository.DeleteAsync(platformType);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform Type.");
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete PlatformType.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Platform Type.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted PlatformType.", rows);
         }
     }
 }
