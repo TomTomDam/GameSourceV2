@@ -4,7 +4,7 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
 using System.Linq;
 
-namespace GameSource.Tests.Fixtures
+namespace GameSource.Tests.Fixtures.Controllers.GameSource
 {
     public class GameControllerFixture
     {

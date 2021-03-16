@@ -4,18 +4,18 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
 using System.Linq;
 
-namespace GameSource.Tests
+namespace GameSource.Tests.Fixtures.Controllers.GameSource
 {
-    public class ReviewCommentControllerFixture
+    public class ReviewControllerFixture
     {
-        public ReviewCommentController reviewCommentController;
-        public Mock<IReviewCommentRepository> mockReviewCommentRepo;
+        public ReviewController reviewController;
+        public Mock<IReviewRepository> mockReviewRepo;
         public IFixture fixture;
 
-        public ReviewCommentControllerFixture()
+        public ReviewControllerFixture()
         {
-            mockReviewCommentRepo = new Mock<IReviewCommentRepository>();
-            reviewCommentController = new ReviewCommentController(mockReviewCommentRepo.Object);
+            mockReviewRepo = new Mock<IReviewRepository>();
+            reviewController = new ReviewController(mockReviewRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()

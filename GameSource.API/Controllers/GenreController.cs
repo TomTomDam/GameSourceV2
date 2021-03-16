@@ -8,7 +8,7 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameSource.API.Controllers.GameSource
+namespace GameSource.API.Controllers
 {
     [Route("api/genres")]
     [ApiController]

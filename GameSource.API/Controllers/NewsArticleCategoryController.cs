@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace GameSource.API.Controllers.GameSource
+namespace GameSource.API.Controllers
 {
     [Route("api/news-article-categories")]
     [ApiController]

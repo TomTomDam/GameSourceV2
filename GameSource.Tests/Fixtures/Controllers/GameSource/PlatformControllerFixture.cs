@@ -4,18 +4,18 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
 using System.Linq;
 
-namespace GameSource.Tests
+namespace GameSource.Tests.Fixtures.Controllers.GameSource
 {
-    public class NewsArticleControllerFixture
+    public class PlatformControllerFixture
     {
-        public NewsArticleController newsArticleController;
-        public Mock<INewsArticleRepository> mockNewsArticleRepo;
+        public PlatformController platformController;
+        public Mock<IPlatformRepository> mockPlatformRepo;
         public IFixture fixture;
 
-        public NewsArticleControllerFixture()
+        public PlatformControllerFixture()
         {
-            mockNewsArticleRepo = new Mock<INewsArticleRepository>();
-            newsArticleController = new NewsArticleController(mockNewsArticleRepo.Object);
+            mockPlatformRepo = new Mock<IPlatformRepository>();
+            platformController = new PlatformController(mockPlatformRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()

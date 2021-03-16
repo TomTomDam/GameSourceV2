@@ -2,6 +2,7 @@
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
+using GameSource.Tests.Fixtures.Controllers.GameSource;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace GameSource.Tests.Controllers
+namespace GameSource.Tests.Controllers.GameSource
 {
     public class NewsArticleCategoryControllerTests : IClassFixture<NewsArticleCategoryControllerFixture>, IDisposable
     {
