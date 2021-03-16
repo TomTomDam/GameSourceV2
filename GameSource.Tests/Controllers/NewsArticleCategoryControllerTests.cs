@@ -141,7 +141,7 @@ namespace GameSource.Tests.Controllers
             var updatedNewsArticleCategory = new NewsArticleCategory
             {
                 ID = 1,
-                Name = "Game update"
+                Name = "Game Update"
             };
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedNewsArticleCategory);
@@ -162,10 +162,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_ErrorResponse_WhenIDIs0()
         {
-            var newsArticleCategory = new NewsArticleCategory
-            {
-                Name = "Announcement"
-            };
+            var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((NewsArticleCategory)null);
 
@@ -183,11 +180,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_ErrorResponse_WhenNewsArticleCategoryIsNull()
         {
-            var newsArticleCategory = new NewsArticleCategory
-            {
-                ID = 1,
-                Name = "Announcement"
-            };
+            var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
@@ -208,11 +201,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Delete_SuccessResponse_DeletesNewsArticleCategory()
         {
-            var newsArticleCategory = new NewsArticleCategory
-            {
-                ID = 1,
-                Name = "Announcement"
-            };
+            var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory.ID)).ReturnsAsync(1);
@@ -247,11 +236,7 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Delete_ErrorResponse_WhenNewsArticleCategoryIsNull()
         {
-            var newsArticleCategory = new NewsArticleCategory
-            {
-                ID = 1,
-                Name = "Announcement"
-            };
+            var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);

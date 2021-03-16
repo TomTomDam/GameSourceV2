@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GameSource.API.Controllers.GameSource
 {
@@ -32,10 +33,7 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<Platform> result = await platformRepository.GetAllAsync();
 
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Platform list.");
-
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Platform list.", result.Count());
         }
 
         /// <summary>
@@ -48,8 +46,10 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await platformRepository.GetByIDAsync(id);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
+            var result = await platformRepository.GetByIDAsync(id);
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
 
@@ -75,9 +75,9 @@ namespace GameSource.API.Controllers.GameSource
             int rows = await platformRepository.InsertAsync(platform);
 
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a Platform.");
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Platform.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new Platform.");
+            return new ApiResponse(platform, ResponseStatusCode.Success, "Successfully created a new Platform.", rows);
         }
 
         /// <summary>
@@ -99,12 +99,21 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Platform platform)
         {
-            int rows = await platformRepository.UpdateAsync(platform);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
+            var updatedPlatform = await platformRepository.GetByIDAsync(id);
+            if (updatedPlatform == null)
+                return new ApiResponse(ResponseStatusCode.Error, "Platform was not found. Please check the ID.");
+
+            updatedPlatform.Name = platform.Name;
+            updatedPlatform.PlatformTypeID = platform.PlatformTypeID;
+
+            int rows = await platformRepository.UpdateAsync(updatedPlatform);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update Platform.");
+                return new ApiResponse(updatedPlatform, ResponseStatusCode.Error, "Could not update Platform.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated Platform.");
+            return new ApiResponse(updatedPlatform, ResponseStatusCode.Success, "Successfully updated Platform.", rows);
         }
 
         /// <summary>
@@ -117,15 +126,18 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
+
             Platform platform = await platformRepository.GetByIDAsync(id);
-            if (id == 0 || platform == null)
+            if (platform == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found. Please check the ID.");
 
             int rows = await platformRepository.DeleteAsync(platform);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete Platform.");
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Platform.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted Platform.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Platform.", rows);
         }
     }
 }

@@ -6,6 +6,8 @@ using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System;
 
 namespace GameSource.API.Controllers.GameSource
 {
@@ -32,10 +34,7 @@ namespace GameSource.API.Controllers.GameSource
         {
             IEnumerable<NewsArticle> result = await newsArticleRepository.GetAllAsync();
 
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return News Article list.");
-
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned News Article list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned News Article list.", result.Count());
         }
 
         /// <summary>
@@ -48,10 +47,12 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
-            var result = await newsArticleRepository.GetByIDAsync(id);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
+            var result = await newsArticleRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a News Article.");
+                return new ApiResponse(result, ResponseStatusCode.NotFound, "Could not find a News Article.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a News Article.");
         }
@@ -63,7 +64,7 @@ namespace GameSource.API.Controllers.GameSource
         /// Example request:
         /// 
         ///     {
-        ///         "name": "Welcome to GameSource!"
+        ///         "title": "Welcome to GameSource!"
         ///     }
         ///     
         /// </remarks>
@@ -73,11 +74,10 @@ namespace GameSource.API.Controllers.GameSource
         public async Task<ApiResponse> Insert([FromBody] NewsArticle newsArticle)
         {
             int rows = await newsArticleRepository.InsertAsync(newsArticle);
-
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a News Article.");
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a News Article.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new News Article.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new News Article.", rows);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace GameSource.API.Controllers.GameSource
         /// Example request:
         /// 
         ///     {
-        ///         "name": "Welcome to GameSource!"
+        ///         "title": "Welcome to GameSource!"
         ///     }
         ///     
         /// </remarks>
@@ -99,12 +99,23 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] NewsArticle newsArticle)
         {
-            int rows = await newsArticleRepository.UpdateAsync(newsArticle);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
+            NewsArticle updatedNewsArticle = await newsArticleRepository.GetByIDAsync(id);
+            if (updatedNewsArticle == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "Could not find a News Article.");
+
+            updatedNewsArticle.Title = newsArticle.Title;
+            updatedNewsArticle.Body = newsArticle.Body;
+            updatedNewsArticle.CreatedByID = newsArticle.CreatedByID;
+            updatedNewsArticle.DateModified = DateTime.Now;
+
+            int rows = await newsArticleRepository.UpdateAsync(updatedNewsArticle);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update News Article.");
+                return new ApiResponse(updatedNewsArticle, ResponseStatusCode.Error, "Could not update News Article.", rows);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated News Article.");
+            return new ApiResponse(updatedNewsArticle, ResponseStatusCode.Success, "Successfully updated News Article.", rows);
         }
 
         /// <summary>
@@ -117,15 +128,18 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
+
             NewsArticle newsArticle = await newsArticleRepository.GetByIDAsync(id);
-            if (id == 0 || newsArticle == null)
+            if (newsArticle == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticle was not found. Please check the ID.");
 
             int rows = await newsArticleRepository.DeleteAsync(newsArticle);
             if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete News Article.");
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete News Article.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted News Article.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted News Article.", rows);
         }
     }
 }

@@ -57,30 +57,6 @@ namespace GameSource.API.Areas.GameSourceUser
         }
 
         /// <summary>
-        /// Creates a new UserProfile
-        /// </summary>
-        /// <remarks>
-        /// Example request:
-        /// 
-        ///     {
-        ///         "name": "BioWare"
-        ///     }
-        ///     
-        /// </remarks>
-        /// <response code="200">Creates a new UserProfile</response>
-        /// <response code="400">Request failed</response>
-        [HttpPost]
-        public async Task<ApiResponse> Insert([FromBody] UserProfile userProfile)
-        {
-            int rows = await userProfileRepository.InsertAsync(userProfile);
-
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User Profile.");
-
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User Profile.");
-        }
-
-        /// <summary>
         /// Updates a UserProfile
         /// </summary>
         /// <param name="id"></param>
@@ -89,7 +65,8 @@ namespace GameSource.API.Areas.GameSourceUser
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "displayName": "TomDam",
+        ///         "biography": "This is my profile!",
         ///     }
         ///     
         /// </remarks>
