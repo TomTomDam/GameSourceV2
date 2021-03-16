@@ -27,7 +27,7 @@ namespace GameSource.Tests.Controllers
 
         #region GetAll
         [Fact]
-        public async Task GetAll_ReturnsListOfDevelopers()
+        public async Task GetAll_SuccessResponse_ReturnsListOfDevelopers()
         {
             var developerList = fixture.fixture.Create<IEnumerable<Developer>>();
 
@@ -45,7 +45,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetAll_ReturnsEmptyList()
+        public async Task GetAll_SuccessResponse_ReturnsEmptyList()
         {
             fixture.mockDeveloperRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(Enumerable.Empty<Developer>());
 
@@ -63,7 +63,7 @@ namespace GameSource.Tests.Controllers
 
         #region GetByID
         [Fact]
-        public async Task GetByID_ReturnsDeveloper()
+        public async Task GetByID_SuccessResponse_ReturnsDeveloper()
         {
             var developer = fixture.fixture.Create<Developer>();
 
@@ -80,7 +80,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetByID_InvalidID_WhenIDIs0()
+        public async Task GetByID_ErrorResponse_WhenIDIs0()
         {
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Developer)null);
 
@@ -97,7 +97,7 @@ namespace GameSource.Tests.Controllers
 
         #region Insert
         [Fact]
-        public async Task Insert_CreatesDeveloper()
+        public async Task Insert_SuccessResponse_CreatesDeveloper()
         {
             var developer = fixture.fixture.Create<Developer>();
 
@@ -114,7 +114,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Insert_RequestFailed()
+        public async Task Insert_ErrorResponse_WhenDeveloperIsNull()
         {
             fixture.mockDeveloperRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
 
@@ -131,7 +131,7 @@ namespace GameSource.Tests.Controllers
 
         #region Update
         [Fact]
-        public async Task Update_UpdatesDeveloper()
+        public async Task Update_SuccessResponse_UpdatesDeveloper()
         {
             var id = 1;
             var developer = new Developer
@@ -150,7 +150,7 @@ namespace GameSource.Tests.Controllers
             var result = await fixture.developerController.Update(id, developer);
 
             fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockDeveloperRepo.Verify(x => x.UpdateAsync(It.IsAny<Developer>()), Times.Once);
+            fixture.mockDeveloperRepo.Verify(x => x.UpdateAsync(updatedDeveloper), Times.Once);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
@@ -160,7 +160,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Update_InvalidID_WhenIDIs0()
+        public async Task Update_ErrorResponse_WhenIDIs0()
         {
             var developer = new Developer
             {
@@ -181,7 +181,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Update_RequestFailed()
+        public async Task Update_ErrorResponse_WhenDeveloperIsNull()
         {
             var developer = new Developer
             {
@@ -206,7 +206,7 @@ namespace GameSource.Tests.Controllers
 
         #region Delete
         [Fact]
-        public async Task Delete_DeletesDeveloper()
+        public async Task Delete_SuccessResponse_DeletesDeveloper()
         {
             var developer = new Developer
             {
@@ -229,7 +229,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_InvalidID_WhenIDIs0()
+        public async Task Delete_ErrorResponse_WhenIDIs0()
         {
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Developer)null);
 
@@ -245,7 +245,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_RequestFailed()
+        public async Task Delete_ErrorResponse_WhenDeveloperIsNull()
         {
             var developer = new Developer
             {
