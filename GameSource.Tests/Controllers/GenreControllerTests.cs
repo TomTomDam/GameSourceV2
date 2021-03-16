@@ -28,7 +28,7 @@ namespace GameSource.Tests.Controllers
 
         #region GetAll
         [Fact]
-        public async Task GetAll_ReturnsListOfGenres()
+        public async Task GetAll_SuccessResponse_ReturnsListOfGenres()
         {
             var genreList = fixture.fixture.Create<IEnumerable<Genre>>();
 
@@ -46,7 +46,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetAll_ReturnsEmptyList()
+        public async Task GetAll_SuccessResponse_ReturnsEmptyList()
         {
             fixture.mockGenreRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(Enumerable.Empty<Genre>());
 
@@ -64,7 +64,7 @@ namespace GameSource.Tests.Controllers
 
         #region GetByID
         [Fact]
-        public async Task GetByID_ReturnsGenre()
+        public async Task GetByID_SuccessResponse_ReturnsGenre()
         {
             var genre = fixture.fixture.Create<Genre>();
 
@@ -81,7 +81,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetByID_InvalidID_WhenIDIs0()
+        public async Task GetByID_ErrorResponse_WhenIDIs0()
         {
             fixture.mockGenreRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Genre)null);
 
@@ -98,7 +98,7 @@ namespace GameSource.Tests.Controllers
 
         #region Insert
         [Fact]
-        public async Task Insert_CreatesGenre()
+        public async Task Insert_SuccessResponse_CreatesGenre()
         {
             var genre = fixture.fixture.Create<Genre>();
 
@@ -115,7 +115,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Insert_RequestFailed()
+        public async Task Insert_ErrorResponse_WhenGenreIsNull()
         {
             fixture.mockGenreRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers
 
         #region Update
         [Fact]
-        public async Task Update_UpdatesGenre()
+        public async Task Update_SuccessResponse_UpdatesGenre()
         {
             var id = 1;
             var genre = new Genre
@@ -151,7 +151,7 @@ namespace GameSource.Tests.Controllers
             var result = await fixture.genreController.Update(id, genre);
 
             fixture.mockGenreRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockGenreRepo.Verify(x => x.UpdateAsync(It.IsAny<Genre>()), Times.Once);
+            fixture.mockGenreRepo.Verify(x => x.UpdateAsync(updatedGenre), Times.Once);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
@@ -161,7 +161,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Update_InvalidID_WhenIDIs0()
+        public async Task Update_ErrorResponse_WhenIDIs0()
         {
             var genre = new Genre
             {
@@ -182,7 +182,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Update_RequestFailed()
+        public async Task Update_ErrorResponse_WhenGenreIsNull()
         {
             var genre = new Genre
             {
@@ -207,7 +207,7 @@ namespace GameSource.Tests.Controllers
 
         #region Delete
         [Fact]
-        public async Task Delete_DeletesGenre()
+        public async Task Delete_SuccessResponse_DeletesGenre()
         {
             var genre = new Genre
             {
@@ -230,7 +230,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_GenreNotFound_WhenIDIs0()
+        public async Task Delete_ErrorResponse_WhenIDIs0()
         {
             fixture.mockGenreRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Genre)null);
 
@@ -246,7 +246,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_RequestFailed()
+        public async Task Delete_ErrorResponse_WhenGenreIsNull()
         {
             var genre = new Genre
             {

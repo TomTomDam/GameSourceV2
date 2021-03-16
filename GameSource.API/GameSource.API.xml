@@ -475,7 +475,7 @@
             <response code="200">Returns a list of NewsArticleCategory</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.GetByID(System.Int32)">
+        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.GetByID(System.Nullable{System.Int32})">
             <summary>
             Gets a NewsArticleCategory by its ID
             </summary>
@@ -499,7 +499,7 @@
             <response code="200">Creates a new NewsArticleCategory</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Update(System.Int32,GameSource.Models.GameSource.NewsArticleCategory)">
+        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Update(System.Nullable{System.Int32},GameSource.Models.GameSource.NewsArticleCategory)">
             <summary>
             Updates a NewsArticleCategory
             </summary>
@@ -517,7 +517,7 @@
             <response code="404">Could not find a NewsArticleCategory</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Delete(System.Int32)">
+        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Delete(System.Nullable{System.Int32})">
             <summary>
             Deletes a NewsArticleCategory
             </summary>

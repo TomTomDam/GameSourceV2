@@ -28,7 +28,7 @@ namespace GameSource.Tests.Controllers
 
         #region GetAll
         [Fact]
-        public async Task GetAll_ReturnsListOfGames()
+        public async Task GetAll_SuccessResponse_ReturnsListOfGames()
         {
             var gameList = fixture.fixture.Create<IEnumerable<Game>>();
 
@@ -46,7 +46,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetAll_ReturnsEmptyList()
+        public async Task GetAll_SuccessResponse_ReturnsEmptyList()
         {
             fixture.mockGameRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(Enumerable.Empty<Game>());
 
@@ -64,7 +64,7 @@ namespace GameSource.Tests.Controllers
 
         #region GetByID
         [Fact]
-        public async Task GetByID_ReturnsGame()
+        public async Task GetByID_SuccessResponse_ReturnsGame()
         {
             var game = fixture.fixture.Create<Game>();
 
@@ -81,7 +81,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetByID_InvalidID_WhenIDIs0()
+        public async Task GetByID_ErrorResponse_WhenIDIs0()
         {
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Game)null);
 
@@ -98,7 +98,7 @@ namespace GameSource.Tests.Controllers
 
         #region Insert
         [Fact]
-        public async Task Insert_CreatesGame()
+        public async Task Insert_SuccessResponse_CreatesGame()
         {
             var game = fixture.fixture.Create<Game>();
 
@@ -115,7 +115,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Insert_RequestFailed()
+        public async Task Insert_ErrorResponse_WhenGameIsNull()
         {
             fixture.mockGameRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers
 
         #region Update
         [Fact]
-        public async Task Update_UpdatesGame()
+        public async Task Update_SuccessResponse_UpdatesGame()
         {
             var id = 1;
             var game = new Game
@@ -151,7 +151,7 @@ namespace GameSource.Tests.Controllers
             var result = await fixture.gameController.Update(id, game);
 
             fixture.mockGameRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockGameRepo.Verify(x => x.UpdateAsync(It.IsAny<Game>()), Times.Once);
+            fixture.mockGameRepo.Verify(x => x.UpdateAsync(updatedGame), Times.Once);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
@@ -161,7 +161,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Update_InvalidID_WhenIDIs0()
+        public async Task Update_ErrorResponse_WhenIDIs0()
         {
             var game = new Game
             {
@@ -182,7 +182,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Update_RequestFailed()
+        public async Task Update_ErrorResponse_WhenGameIsNull()
         {
             var game = new Game
             {
@@ -207,7 +207,7 @@ namespace GameSource.Tests.Controllers
 
         #region Delete
         [Fact]
-        public async Task Delete_DeletesGame()
+        public async Task Delete_SuccessResponse_DeletesGame()
         {
             var game = new Game
             {
@@ -230,7 +230,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_InvalidID_WhenIDIs0()
+        public async Task Delete_ErrorResponse_WhenIDIs0()
         {
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Game)null);
 
@@ -246,7 +246,7 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_RequestFailed()
+        public async Task Delete_ErrorResponse_WhenGameIsNull()
         {
             var game = new Game
             {
