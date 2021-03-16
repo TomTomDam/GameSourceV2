@@ -11,11 +11,11 @@ using Xunit;
 
 namespace GameSource.Tests.Controllers
 {
-    public class DeveloperControllerTests : IClassFixture<ControllerFixture>, IDisposable
+    public class DeveloperControllerTests : IClassFixture<DeveloperControllerFixture>, IDisposable
     {
-        ControllerFixture fixture;
+        DeveloperControllerFixture fixture;
 
-        public DeveloperControllerTests(ControllerFixture fixture)
+        public DeveloperControllerTests(DeveloperControllerFixture fixture)
         {
             this.fixture = fixture;
         }
@@ -80,18 +80,18 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetByID_ReturnsNull()
+        public async Task GetByID_InvalidID_WhenIDIs0()
         {
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Developer)null);
 
             var result = await fixture.developerController.GetByID(0);
 
-            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
             Assert.Null(result.Data);
-            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
         #endregion
 
@@ -133,45 +133,51 @@ namespace GameSource.Tests.Controllers
         [Fact]
         public async Task Update_UpdatesDeveloper()
         {
+            var id = 1;
             var developer = new Developer
             {
-                ID = 1,
                 Name = "BioWare"
             };
+            var updatedDeveloper = new Developer
+            {
+                ID = 1,
+                Name = "Naughty Dog"
+            };
 
-            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
-            fixture.mockDeveloperRepo.Setup(x => x.UpdateAsync(developer)).ReturnsAsync(1);
+            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedDeveloper);
+            fixture.mockDeveloperRepo.Setup(x => x.UpdateAsync(updatedDeveloper)).ReturnsAsync(1);
 
-            var result = await fixture.developerController.Update(developer.ID, developer);
+            var result = await fixture.developerController.Update(id, developer);
 
             fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
             fixture.mockDeveloperRepo.Verify(x => x.UpdateAsync(It.IsAny<Developer>()), Times.Once);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Equal(updatedDeveloper, result.Data);
             Assert.Equal(1, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
         }
 
         [Fact]
-        public async Task Update_DeveloperNotFound_WhenIDIs0()
+        public async Task Update_InvalidID_WhenIDIs0()
         {
             var developer = new Developer
             {
-                ID = 0
+                Name = "BioWare"
             };
 
-            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync((Developer)null);
+            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Developer)null);
 
-            var result = await fixture.developerController.Update(developer.ID, developer);
+            var result = await fixture.developerController.Update(0, developer);
 
-            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
             fixture.mockDeveloperRepo.Verify(x => x.UpdateAsync(It.IsAny<Developer>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
             Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
 
         [Fact]
@@ -223,24 +229,19 @@ namespace GameSource.Tests.Controllers
         }
 
         [Fact]
-        public async Task Delete_DeveloperNotFound_WhenIDIs0()
+        public async Task Delete_InvalidID_WhenIDIs0()
         {
-            var developer = new Developer
-            {
-                ID = 0
-            };
+            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((Developer)null);
 
-            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync((Developer)null);
+            var result = await fixture.developerController.Delete(0);
 
-            var result = await fixture.developerController.Delete(developer.ID);
-
-            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
             fixture.mockDeveloperRepo.Verify(x => x.DeleteAsync(It.IsAny<Developer>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
             Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
 
         [Fact]
