@@ -63,7 +63,7 @@ namespace GameSource.API.Controllers.GameSource
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
         ///     }
         ///     
         /// </remarks>
@@ -89,7 +89,7 @@ namespace GameSource.API.Controllers.GameSource
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
         ///     }
         ///     
         /// </remarks>

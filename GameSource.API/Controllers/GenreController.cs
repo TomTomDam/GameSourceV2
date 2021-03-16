@@ -66,7 +66,7 @@ namespace GameSource.API.Controllers.GameSource
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Sci-Fi"
         ///     }
         ///     
         /// </remarks>
@@ -91,7 +91,7 @@ namespace GameSource.API.Controllers.GameSource
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Sci-Fi"
         ///     }
         ///     
         /// </remarks>

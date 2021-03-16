@@ -63,7 +63,7 @@ namespace GameSource.API.Areas.Admin
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Active"
         ///     }
         ///     
         /// </remarks>
@@ -89,7 +89,7 @@ namespace GameSource.API.Areas.Admin
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Active"
         ///     }
         ///     
         /// </remarks>

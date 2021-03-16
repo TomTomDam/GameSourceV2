@@ -63,7 +63,8 @@ namespace GameSource.API.Areas.Admin
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Member",
+        ///         "description": "Default role for Users."
         ///     }
         ///     
         /// </remarks>UserRole
@@ -89,7 +90,8 @@ namespace GameSource.API.Areas.Admin
         /// Example request:
         /// 
         ///     {
-        ///         "name": "BioWare"
+        ///         "name": "Member",
+        ///         "description": "Default role for Users."
         ///     }
         ///     
         /// </remarks>
