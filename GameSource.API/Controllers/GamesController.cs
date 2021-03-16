@@ -48,9 +48,12 @@ namespace GameSource.API.Controllers
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
+
             var result = await gameRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Game.");
+                return new ApiResponse(result, ResponseStatusCode.NotFound, "Could not return a Game.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.", 1);
         }
@@ -97,9 +100,12 @@ namespace GameSource.API.Controllers
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Game game)
         {
-            Game updatedGame = gameRepository.GetByID(id);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
+
+            Game updatedGame = await gameRepository.GetByIDAsync(id);
             if (updatedGame == null)
-                return new ApiResponse(ResponseStatusCode.Error, "Game was not found. Please check the ID.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found. Please check the ID.");
 
             updatedGame.Name = game.Name;
             updatedGame.Description = game.Description;
@@ -113,7 +119,7 @@ namespace GameSource.API.Controllers
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update Game.", rows);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully updated Game.", rows);
+            return new ApiResponse(updatedGame, ResponseStatusCode.Success, "Successfully updated Game.", rows);
         }
 
         /// <summary>
@@ -126,8 +132,11 @@ namespace GameSource.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
+
             Game game = await gameRepository.GetByIDAsync(id);
-            if (id == 0 || game == null)
+            if (game == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found. Please check the ID.");
 
             int rows = await gameRepository.DeleteAsync(game);

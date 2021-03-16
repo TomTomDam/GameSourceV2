@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace GameSource.Tests
 {
-    public class ControllerFixture
+    public class PlatformTypeControllerFixture
     {
-        public DeveloperController developerController;
-        public Mock<IDeveloperRepository> mockDeveloperRepo;
+        public PlatformTypeController platformTypeController;
+        public Mock<IPlatformTypeRepository> mockPlatformTypeRepo;
         public IFixture fixture;
 
-        public ControllerFixture()
+        public PlatformTypeControllerFixture()
         {
-            mockDeveloperRepo = new Mock<IDeveloperRepository>();
-            developerController = new DeveloperController(mockDeveloperRepo.Object);
+            mockPlatformTypeRepo = new Mock<IPlatformTypeRepository>();
+            platformTypeController = new PlatformTypeController(mockPlatformTypeRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()

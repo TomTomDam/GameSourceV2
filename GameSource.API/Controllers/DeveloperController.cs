@@ -46,6 +46,9 @@ namespace GameSource.API.Controllers.GameSource
         [HttpGet("{id}")]
         public async Task<ApiResponse> GetByID(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
+
             var result = await developerRepository.GetByIDAsync(id);
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
@@ -95,8 +98,11 @@ namespace GameSource.API.Controllers.GameSource
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] Developer developer)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
+
             Developer updatedDeveloper = await developerRepository.GetByIDAsync(id);
-            if (id == 0 || updatedDeveloper == null)
+            if (updatedDeveloper == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
             updatedDeveloper.Name = developer.Name;
@@ -106,7 +112,7 @@ namespace GameSource.API.Controllers.GameSource
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update Developer.", rows);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully updated Developer.", rows);
+            return new ApiResponse(updatedDeveloper, ResponseStatusCode.Success, "Successfully updated Developer.", rows);
         }
 
         /// <summary>
@@ -119,8 +125,11 @@ namespace GameSource.API.Controllers.GameSource
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
+
             Developer developer = await developerRepository.GetByIDAsync(id);
-            if (id == 0 || developer == null)
+            if (developer == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
             int rows = await developerRepository.DeleteAsync(developer);
