@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace GameSource.API.Controllers.GameSource
+namespace GameSource.API.Controllers
 {
     [Route("api/platorm-types")]
     [ApiController]

@@ -32,9 +32,6 @@ namespace GameSource.API.Areas.Admin
         {
             IEnumerable<UserRole> result = await userRoleRepository.GetAllAsync();
 
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return UserRole list.");
-
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned UserRole list.");
         }
 

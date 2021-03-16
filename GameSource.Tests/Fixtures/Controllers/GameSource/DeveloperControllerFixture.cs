@@ -4,18 +4,18 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
 using System.Linq;
 
-namespace GameSource.Tests
+namespace GameSource.Tests.Fixtures.Controllers.GameSource
 {
-    public class PublisherControllerFixture
+    public class DeveloperControllerFixture
     {
-        public PublisherController publisherController;
-        public Mock<IPublisherRepository> mockPublisherRepo;
+        public DeveloperController developerController;
+        public Mock<IDeveloperRepository> mockDeveloperRepo;
         public IFixture fixture;
 
-        public PublisherControllerFixture()
+        public DeveloperControllerFixture()
         {
-            mockPublisherRepo = new Mock<IPublisherRepository>();
-            publisherController = new PublisherController(mockPublisherRepo.Object);
+            mockDeveloperRepo = new Mock<IDeveloperRepository>();
+            developerController = new DeveloperController(mockDeveloperRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()

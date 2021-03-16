@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
 
-namespace GameSource.API.Controllers.GameSource
+namespace GameSource.API.Controllers
 {
     [Route("api/reviews")]
     [ApiController]

@@ -32,9 +32,6 @@ namespace GameSource.API.Areas.Admin
         {
             IEnumerable<UserStatus> result = await userStatusRepository.GetAllAsync();
 
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return UserStatus list.");
-
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned UserStatus list.");
         }
 

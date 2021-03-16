@@ -4,18 +4,18 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
 using System.Linq;
 
-namespace GameSource.Tests
+namespace GameSource.Tests.Fixtures.Controllers.GameSource
 {
-    public class PlatformTypeControllerFixture
+    public class GenreControllerFixture
     {
-        public PlatformTypeController platformTypeController;
-        public Mock<IPlatformTypeRepository> mockPlatformTypeRepo;
+        public GenreController genreController;
+        public Mock<IGenreRepository> mockGenreRepo;
         public IFixture fixture;
 
-        public PlatformTypeControllerFixture()
+        public GenreControllerFixture()
         {
-            mockPlatformTypeRepo = new Mock<IPlatformTypeRepository>();
-            platformTypeController = new PlatformTypeController(mockPlatformTypeRepo.Object);
+            mockGenreRepo = new Mock<IGenreRepository>();
+            genreController = new GenreController(mockGenreRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()
