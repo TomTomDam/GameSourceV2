@@ -52,7 +52,7 @@ namespace GameSource.API.Controllers
 
             var result = await reviewRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.NotFound, "Review was not found.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Review was not found.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review.");
         }

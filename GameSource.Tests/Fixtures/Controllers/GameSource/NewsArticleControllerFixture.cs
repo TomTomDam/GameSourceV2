@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using GameSource.API.Controllers.GameSource;
+using GameSource.API.Controllers;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Moq;
 using System.Linq;

@@ -94,6 +94,21 @@ namespace GameSource.Tests.Controllers.GameSource
             Assert.Null(result.Data);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
+
+        [Fact]
+        public async Task GetByID_ErrorResponse_WhenNewsArticleIsNotFound()
+        {
+            fixture.mockNewsArticleRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((NewsArticle)null);
+
+            var result = await fixture.newsArticleController.GetByID(1);
+
+            fixture.mockNewsArticleRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
         #endregion
 
         #region Insert

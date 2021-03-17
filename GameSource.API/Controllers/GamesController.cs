@@ -53,7 +53,7 @@ namespace GameSource.API.Controllers
 
             var result = await gameRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.NotFound, "Could not return a Game.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.", 1);
         }

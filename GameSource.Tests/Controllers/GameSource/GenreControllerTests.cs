@@ -95,6 +95,21 @@ namespace GameSource.Tests.Controllers.GameSource
             Assert.Null(result.Data);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
+
+        [Fact]
+        public async Task GetByID_ErrorResponse_WhenGenreIsNotFound()
+        {
+            fixture.mockGenreRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Genre)null);
+
+            var result = await fixture.genreController.GetByID(1);
+
+            fixture.mockGenreRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
         #endregion
 
         #region Insert

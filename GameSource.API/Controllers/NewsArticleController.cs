@@ -52,7 +52,7 @@ namespace GameSource.API.Controllers
 
             var result = await newsArticleRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.NotFound, "Could not find a News Article.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Could not find a News Article.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a News Article.");
         }
