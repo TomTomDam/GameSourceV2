@@ -51,7 +51,7 @@ namespace GameSource.API.Controllers
 
             var result = await platformRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a Platform.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Could not return a Platform.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
         }

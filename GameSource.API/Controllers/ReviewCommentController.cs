@@ -52,7 +52,7 @@ namespace GameSource.API.Controllers
 
             var result = await reviewCommentRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.NotFound, "Review Comment was not found.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Review Comment was not found.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review Comment.");
         }

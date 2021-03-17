@@ -94,6 +94,21 @@ namespace GameSource.Tests.Controllers.GameSource
             Assert.Null(result.Data);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
+
+        [Fact]
+        public async Task GetByID_ErrorResponse_WhenPlatformIsNotFound()
+        {
+            fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Platform)null);
+
+            var result = await fixture.platformController.GetByID(1);
+
+            fixture.mockPlatformRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
         #endregion
 
         #region Insert

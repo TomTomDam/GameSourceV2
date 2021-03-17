@@ -358,14 +358,14 @@
             <response code="404">Could not find a UserProfile</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.GetAll">
+        <member name="M:GameSource.API.Controllers.DeveloperController.GetAll">
             <summary>
             Gets all Developers
             </summary>
             <response code="200">Returns a list of Developers</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.GetByID(System.Int32)">
+        <member name="M:GameSource.API.Controllers.DeveloperController.GetByID(System.Int32)">
             <summary>
             Gets a Developer by its ID
             </summary>
@@ -374,7 +374,7 @@
             <response code="404">Could not find a Developer</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.Insert(GameSource.Models.GameSource.Developer)">
+        <member name="M:GameSource.API.Controllers.DeveloperController.Insert(GameSource.Models.GameSource.Developer)">
             <summary>
             Creates a new Developer
             </summary>
@@ -389,7 +389,7 @@
             <response code="200">Creates a new Developer</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.Update(System.Int32,GameSource.Models.GameSource.Developer)">
+        <member name="M:GameSource.API.Controllers.DeveloperController.Update(System.Int32,GameSource.Models.GameSource.Developer)">
             <summary>
             Updates a Developer
             </summary>
@@ -407,477 +407,13 @@
             <response code="404">Could not find a Developer</response>
             <response code="400">Request failed</response>
         </member>
-        <member name="M:GameSource.API.Controllers.GameSource.DeveloperController.Delete(System.Int32)">
+        <member name="M:GameSource.API.Controllers.DeveloperController.Delete(System.Int32)">
             <summary>
             Deletes a Developer
             </summary>
             <param name="id"></param>
             <response code="200">Deleted a Developer</response>
             <response code="404">Could not find a Developer</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.GenreController.GetAll">
-            <summary>
-            Gets all Genres
-            </summary>
-            <response code="200">Returns a list of Genres</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.GenreController.GetByID(System.Int32)">
-            <summary>
-            Gets a Genre by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a Genre</response>
-            <response code="404">Could not find a Genre</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.GenreController.Insert(GameSource.Models.GameSource.Genre)">
-            <summary>
-            Creates a new Genre
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Sci-Fi"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new Genre</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.GenreController.Update(System.Int32,GameSource.Models.GameSource.Genre)">
-            <summary>
-            Updates a Genre
-            </summary>
-            <param name="id"></param>
-            <param name="genre"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Sci-Fi"
-                }
-                
-            </remarks>
-            <response code="200">Updated a Genre</response>
-            <response code="404">Could not find a Genre</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.GenreController.Delete(System.Int32)">
-            <summary>
-            Deletes a Genre
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a Genre</response>
-            <response code="404">Could not find a Genre</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.GetAll">
-            <summary>
-            Gets all NewsArticleCategories
-            </summary>
-            <response code="200">Returns a list of NewsArticleCategory</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.GetByID(System.Nullable{System.Int32})">
-            <summary>
-            Gets a NewsArticleCategory by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a NewsArticleCategory</response>
-            <response code="404">Could not find a NewsArticleCategory</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Insert(GameSource.Models.GameSource.NewsArticleCategory)">
-            <summary>
-            Creates a new NewsArticleCategory
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Promotion"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new NewsArticleCategory</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Update(System.Nullable{System.Int32},GameSource.Models.GameSource.NewsArticleCategory)">
-            <summary>
-            Updates a NewsArticleCategory
-            </summary>
-            <param name="id"></param>
-            <param name="newsArticleCategory"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Promotion"
-                }
-                
-            </remarks>
-            <response code="200">Updated a NewsArticleCategory</response>
-            <response code="404">Could not find a NewsArticleCategory</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleCategoryController.Delete(System.Nullable{System.Int32})">
-            <summary>
-            Deletes a NewsArticleCategory
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a NewsArticleCategory</response>
-            <response code="404">Could not find a NewsArticleCategory</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleController.GetAll">
-            <summary>
-            Gets all NewsArticles
-            </summary>
-            <response code="200">Returns a list of NewsArticle</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleController.GetByID(System.Int32)">
-            <summary>
-            Gets a NewsArticle by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a NewsArticle</response>
-            <response code="404">Could not find a NewsArticle</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleController.Insert(GameSource.Models.GameSource.NewsArticle)">
-            <summary>
-            Creates a new NewsArticle
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "title": "Welcome to GameSource!"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new NewsArticle</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleController.Update(System.Int32,GameSource.Models.GameSource.NewsArticle)">
-            <summary>
-            Updates a NewsArticle
-            </summary>
-            <param name="id"></param>
-            <param name="newsArticle"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "title": "Welcome to GameSource!"
-                }
-                
-            </remarks>
-            <response code="200">Updated a NewsArticle</response>
-            <response code="404">Could not find a NewsArticle</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.NewsArticleController.Delete(System.Int32)">
-            <summary>
-            Deletes a NewsArticle
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a NewsArticle</response>
-            <response code="404">Could not find a NewsArticle</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformController.GetAll">
-            <summary>
-            Gets all Platforms
-            </summary>
-            <response code="200">Returns a list of Platforms</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformController.GetByID(System.Int32)">
-            <summary>
-            Gets a Platform by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a Platform</response>
-            <response code="404">Could not find a Platform</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformController.Insert(GameSource.Models.GameSource.Platform)">
-            <summary>
-            Creates a new Platform
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "PS4"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new Platform</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformController.Update(System.Int32,GameSource.Models.GameSource.Platform)">
-            <summary>
-            Updates a Platform
-            </summary>
-            <param name="id"></param>
-            <param name="platform"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "PS4"
-                }
-                
-            </remarks>
-            <response code="200">Updated a Platform</response>
-            <response code="404">Could not find a Platform</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformController.Delete(System.Int32)">
-            <summary>
-            Deletes a Platform
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a Platform</response>
-            <response code="404">Could not find a Platform</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformTypeController.GetAll">
-            <summary>
-            Gets all PlatformTypes
-            </summary>
-            <response code="200">Returns a list of PlatformTypes</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformTypeController.GetByID(System.Int32)">
-            <summary>
-            Gets a PlatformType by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a PlatformType</response>
-            <response code="404">Could not find a PlatformType</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformTypeController.Insert(GameSource.Models.GameSource.PlatformType)">
-            <summary>
-            Creates a new PlatformType
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Console"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new PlatformType</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformTypeController.Update(System.Int32,GameSource.Models.GameSource.PlatformType)">
-            <summary>
-            Updates a PlatformType
-            </summary>
-            <param name="id"></param>
-            <param name="platformType"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Console"
-                }
-                
-            </remarks>
-            <response code="200">Updated a PlatformType</response>
-            <response code="404">Could not find a PlatformType</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PlatformTypeController.Delete(System.Int32)">
-            <summary>
-            Deletes a PlatformType
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a PlatformType</response>
-            <response code="404">Could not find a PlatformType</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PublisherController.GetAll">
-            <summary>
-            Gets all Publishers
-            </summary>
-            <response code="200">Returns a list of Publishers</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PublisherController.GetByID(System.Int32)">
-            <summary>
-            Gets a Publisher by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a Publisher</response>
-            <response code="404">Could not find a Publisher</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PublisherController.Insert(GameSource.Models.GameSource.Publisher)">
-            <summary>
-            Creates a new Publisher
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Electronic Arts"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new Publisher</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PublisherController.Update(System.Int32,GameSource.Models.GameSource.Publisher)">
-            <summary>
-            Updates a Publisher
-            </summary>
-            <param name="id"></param>
-            <param name="publisher"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Electronic Arts"
-                }
-                
-            </remarks>
-            <response code="200">Updated a Publisher</response>
-            <response code="404">Could not find a Publisher</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.PublisherController.Delete(System.Int32)">
-            <summary>
-            Deletes a Publisher
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a Publisher</response>
-            <response code="404">Could not find a Publisher</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewCommentController.GetAll">
-            <summary>
-            Gets all ReviewComments
-            </summary>
-            <response code="200">Returns a list of ReviewComments</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewCommentController.GetByID(System.Int32)">
-            <summary>
-            Gets a ReviewComment by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a ReviewComment</response>
-            <response code="404">Could not find a ReviewComment</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewCommentController.Insert(GameSource.Models.GameSource.ReviewComment)">
-            <summary>
-            Creates a new ReviewComment
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Great review!"
-                }
-                
-            </remarks>
-            <response code="200">Creates a new ReviewComment</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewCommentController.Update(System.Int32,GameSource.Models.GameSource.ReviewComment)">
-            <summary>
-            Updates a ReviewComment
-            </summary>
-            <param name="id"></param>
-            <param name="reviewComment"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "Great review!"
-                }
-                
-            </remarks>
-            <response code="200">Updated a ReviewComment</response>
-            <response code="404">Could not find a ReviewComment</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewCommentController.Delete(System.Int32)">
-            <summary>
-            Deletes a ReviewComment
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a ReviewComment</response>
-            <response code="404">Could not find a ReviewComment</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewController.GetAll">
-            <summary>
-            Gets all Reviews
-            </summary>
-            <response code="200">Returns a list of Reviews</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewController.GetByID(System.Int32)">
-            <summary>
-            Gets a Review by its ID
-            </summary>
-            <param name="id"></param>
-            <response code="200">Returns a Review</response>
-            <response code="404">Could not find a Review</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewController.Insert(GameSource.Models.GameSource.Review)">
-            <summary>
-            Creates a new Review
-            </summary>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
-                }
-                
-            </remarks>
-            <response code="200">Creates a new Review</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewController.Update(System.Int32,GameSource.Models.GameSource.Review)">
-            <summary>
-            Updates a Review
-            </summary>
-            <param name="id"></param>
-            <param name="review"></param>
-            <remarks>
-            Example request:
-            
-                {
-                    "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
-                }
-                
-            </remarks>
-            <response code="200">Updated a Review</response>
-            <response code="404">Could not find a Review</response>
-            <response code="400">Request failed</response>
-        </member>
-        <member name="M:GameSource.API.Controllers.GameSource.ReviewController.Delete(System.Int32)">
-            <summary>
-            Deletes a Review
-            </summary>
-            <param name="id"></param>
-            <response code="200">Deleted a Review</response>
-            <response code="404">Could not find a Review</response>
             <response code="400">Request failed</response>
         </member>
         <member name="M:GameSource.API.Controllers.GamesController.GetAll">
@@ -936,6 +472,470 @@
             <param name="id"></param>
             <response code="200">Deleted a Game</response>
             <response code="404">Could not find a Game</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GenreController.GetAll">
+            <summary>
+            Gets all Genres
+            </summary>
+            <response code="200">Returns a list of Genres</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GenreController.GetByID(System.Int32)">
+            <summary>
+            Gets a Genre by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a Genre</response>
+            <response code="404">Could not find a Genre</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GenreController.Insert(GameSource.Models.GameSource.Genre)">
+            <summary>
+            Creates a new Genre
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Sci-Fi"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new Genre</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GenreController.Update(System.Int32,GameSource.Models.GameSource.Genre)">
+            <summary>
+            Updates a Genre
+            </summary>
+            <param name="id"></param>
+            <param name="genre"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Sci-Fi"
+                }
+                
+            </remarks>
+            <response code="200">Updated a Genre</response>
+            <response code="404">Could not find a Genre</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.GenreController.Delete(System.Int32)">
+            <summary>
+            Deletes a Genre
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a Genre</response>
+            <response code="404">Could not find a Genre</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleCategoryController.GetAll">
+            <summary>
+            Gets all NewsArticleCategories
+            </summary>
+            <response code="200">Returns a list of NewsArticleCategory</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleCategoryController.GetByID(System.Nullable{System.Int32})">
+            <summary>
+            Gets a NewsArticleCategory by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a NewsArticleCategory</response>
+            <response code="404">Could not find a NewsArticleCategory</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleCategoryController.Insert(GameSource.Models.GameSource.NewsArticleCategory)">
+            <summary>
+            Creates a new NewsArticleCategory
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Promotion"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new NewsArticleCategory</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleCategoryController.Update(System.Nullable{System.Int32},GameSource.Models.GameSource.NewsArticleCategory)">
+            <summary>
+            Updates a NewsArticleCategory
+            </summary>
+            <param name="id"></param>
+            <param name="newsArticleCategory"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Promotion"
+                }
+                
+            </remarks>
+            <response code="200">Updated a NewsArticleCategory</response>
+            <response code="404">Could not find a NewsArticleCategory</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleCategoryController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Deletes a NewsArticleCategory
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a NewsArticleCategory</response>
+            <response code="404">Could not find a NewsArticleCategory</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleController.GetAll">
+            <summary>
+            Gets all NewsArticles
+            </summary>
+            <response code="200">Returns a list of NewsArticle</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleController.GetByID(System.Int32)">
+            <summary>
+            Gets a NewsArticle by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a NewsArticle</response>
+            <response code="404">Could not find a NewsArticle</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleController.Insert(GameSource.Models.GameSource.NewsArticle)">
+            <summary>
+            Creates a new NewsArticle
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "title": "Welcome to GameSource!"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new NewsArticle</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleController.Update(System.Int32,GameSource.Models.GameSource.NewsArticle)">
+            <summary>
+            Updates a NewsArticle
+            </summary>
+            <param name="id"></param>
+            <param name="newsArticle"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "title": "Welcome to GameSource!"
+                }
+                
+            </remarks>
+            <response code="200">Updated a NewsArticle</response>
+            <response code="404">Could not find a NewsArticle</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.NewsArticleController.Delete(System.Int32)">
+            <summary>
+            Deletes a NewsArticle
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a NewsArticle</response>
+            <response code="404">Could not find a NewsArticle</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformController.GetAll">
+            <summary>
+            Gets all Platforms
+            </summary>
+            <response code="200">Returns a list of Platforms</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformController.GetByID(System.Int32)">
+            <summary>
+            Gets a Platform by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a Platform</response>
+            <response code="404">Could not find a Platform</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformController.Insert(GameSource.Models.GameSource.Platform)">
+            <summary>
+            Creates a new Platform
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "PS4"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new Platform</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformController.Update(System.Int32,GameSource.Models.GameSource.Platform)">
+            <summary>
+            Updates a Platform
+            </summary>
+            <param name="id"></param>
+            <param name="platform"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "PS4"
+                }
+                
+            </remarks>
+            <response code="200">Updated a Platform</response>
+            <response code="404">Could not find a Platform</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformController.Delete(System.Int32)">
+            <summary>
+            Deletes a Platform
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a Platform</response>
+            <response code="404">Could not find a Platform</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformTypeController.GetAll">
+            <summary>
+            Gets all PlatformTypes
+            </summary>
+            <response code="200">Returns a list of PlatformTypes</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformTypeController.GetByID(System.Int32)">
+            <summary>
+            Gets a PlatformType by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a PlatformType</response>
+            <response code="404">Could not find a PlatformType</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformTypeController.Insert(GameSource.Models.GameSource.PlatformType)">
+            <summary>
+            Creates a new PlatformType
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Console"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new PlatformType</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformTypeController.Update(System.Int32,GameSource.Models.GameSource.PlatformType)">
+            <summary>
+            Updates a PlatformType
+            </summary>
+            <param name="id"></param>
+            <param name="platformType"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Console"
+                }
+                
+            </remarks>
+            <response code="200">Updated a PlatformType</response>
+            <response code="404">Could not find a PlatformType</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PlatformTypeController.Delete(System.Int32)">
+            <summary>
+            Deletes a PlatformType
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a PlatformType</response>
+            <response code="404">Could not find a PlatformType</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PublisherController.GetAll">
+            <summary>
+            Gets all Publishers
+            </summary>
+            <response code="200">Returns a list of Publishers</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PublisherController.GetByID(System.Int32)">
+            <summary>
+            Gets a Publisher by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a Publisher</response>
+            <response code="404">Could not find a Publisher</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PublisherController.Insert(GameSource.Models.GameSource.Publisher)">
+            <summary>
+            Creates a new Publisher
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Electronic Arts"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new Publisher</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PublisherController.Update(System.Int32,GameSource.Models.GameSource.Publisher)">
+            <summary>
+            Updates a Publisher
+            </summary>
+            <param name="id"></param>
+            <param name="publisher"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Electronic Arts"
+                }
+                
+            </remarks>
+            <response code="200">Updated a Publisher</response>
+            <response code="404">Could not find a Publisher</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.PublisherController.Delete(System.Int32)">
+            <summary>
+            Deletes a Publisher
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a Publisher</response>
+            <response code="404">Could not find a Publisher</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewCommentController.GetAll">
+            <summary>
+            Gets all ReviewComments
+            </summary>
+            <response code="200">Returns a list of ReviewComments</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewCommentController.GetByID(System.Int32)">
+            <summary>
+            Gets a ReviewComment by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a ReviewComment</response>
+            <response code="404">Could not find a ReviewComment</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewCommentController.Insert(GameSource.Models.GameSource.ReviewComment)">
+            <summary>
+            Creates a new ReviewComment
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Great review!"
+                }
+                
+            </remarks>
+            <response code="200">Creates a new ReviewComment</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewCommentController.Update(System.Int32,GameSource.Models.GameSource.ReviewComment)">
+            <summary>
+            Updates a ReviewComment
+            </summary>
+            <param name="id"></param>
+            <param name="reviewComment"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "Great review!"
+                }
+                
+            </remarks>
+            <response code="200">Updated a ReviewComment</response>
+            <response code="404">Could not find a ReviewComment</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewCommentController.Delete(System.Int32)">
+            <summary>
+            Deletes a ReviewComment
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a ReviewComment</response>
+            <response code="404">Could not find a ReviewComment</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewController.GetAll">
+            <summary>
+            Gets all Reviews
+            </summary>
+            <response code="200">Returns a list of Reviews</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewController.GetByID(System.Int32)">
+            <summary>
+            Gets a Review by its ID
+            </summary>
+            <param name="id"></param>
+            <response code="200">Returns a Review</response>
+            <response code="404">Could not find a Review</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewController.Insert(GameSource.Models.GameSource.Review)">
+            <summary>
+            Creates a new Review
+            </summary>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
+                }
+                
+            </remarks>
+            <response code="200">Creates a new Review</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewController.Update(System.Int32,GameSource.Models.GameSource.Review)">
+            <summary>
+            Updates a Review
+            </summary>
+            <param name="id"></param>
+            <param name="review"></param>
+            <remarks>
+            Example request:
+            
+                {
+                    "name": "I'm Commander Shepard, and this is my favourite store on the Citadel."
+                }
+                
+            </remarks>
+            <response code="200">Updated a Review</response>
+            <response code="404">Could not find a Review</response>
+            <response code="400">Request failed</response>
+        </member>
+        <member name="M:GameSource.API.Controllers.ReviewController.Delete(System.Int32)">
+            <summary>
+            Deletes a Review
+            </summary>
+            <param name="id"></param>
+            <response code="200">Deleted a Review</response>
+            <response code="404">Could not find a Review</response>
             <response code="400">Request failed</response>
         </member>
     </members>

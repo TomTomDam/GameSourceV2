@@ -51,7 +51,7 @@ namespace GameSource.API.Controllers
 
             var result = await publisherRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.NotFound, "Publisher was not found.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Publisher was not found.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Publisher.");
         }
