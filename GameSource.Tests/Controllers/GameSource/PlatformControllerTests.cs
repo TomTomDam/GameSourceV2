@@ -152,12 +152,14 @@ namespace GameSource.Tests.Controllers.GameSource
             var id = 1;
             var platform = new Platform
             {
-                Name = "PS4"
+                Name = "PS4",
+                PlatformTypeID = 1
             };
             var updatedPlatform = new Platform
             {
                 ID = 1,
-                Name = "XBOX Series X"
+                Name = "XBOX Series X",
+                PlatformTypeID = 2
             };
 
             fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedPlatform);

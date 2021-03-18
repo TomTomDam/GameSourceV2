@@ -153,13 +153,23 @@ namespace GameSource.Tests.Controllers.GameSource
             var game = new Game
             {
                 Name = "Mass Effect",
-                Description = "Shepard."
+                Description = "Shepard.",
+                CoverImageFilePath =  "masseffect",
+                GenreID = 2,
+                DeveloperID = 1,
+                PublisherID = 2,
+                PlatformID = 1
             };
             var updatedGame = new Game
             {
                 ID = 1,
                 Name = "Star Wars: Knights of the Old Republic",
-                Description = "Mucha shaka paka"
+                Description = "Mucha shaka paka",
+                CoverImageFilePath = "kotor",
+                GenreID = 2,
+                DeveloperID = 1,
+                PublisherID = 2,
+                PlatformID = 1
             };
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedGame);

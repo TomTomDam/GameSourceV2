@@ -109,7 +109,6 @@ namespace GameSource.API.Controllers
             updatedReview.Title = review.Title;
             updatedReview.Body = review.Body;
             updatedReview.DateModified = DateTime.Now;
-            updatedReview.Rating = updatedReview.Rating;
             updatedReview.HelpfulRating = updatedReview.HelpfulRating;
 
             int rows = await reviewRepository.UpdateAsync(updatedReview);
