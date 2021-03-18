@@ -70,9 +70,9 @@ namespace GameSource.API.Controllers
         /// <response code="200">Creates a new NewsArticleCategory</response>
         /// <response code="400">Request failed</response>
         [HttpPost]
-        public async Task<ApiResponse> Insert([FromBody] NewsArticleCategory newsArticleCategory)
+        public async Task<ApiResponse> Insert([FromBody] NewsArticleCategory category)
         {
-            int rows = await newsArticleCategoryRepository.InsertAsync(newsArticleCategory);
+            int rows = await newsArticleCategoryRepository.InsertAsync(category);
 
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not create a NewsArticleCategory.", rows);
@@ -84,7 +84,7 @@ namespace GameSource.API.Controllers
         /// Updates a NewsArticleCategory
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="newsArticleCategory"></param>
+        /// <param name="category"></param>
         /// <remarks>
         /// Example request:
         /// 
@@ -97,20 +97,22 @@ namespace GameSource.API.Controllers
         /// <response code="404">Could not find a NewsArticleCategory</response>
         /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
-        public async Task<ApiResponse> Update(int? id, [FromBody] NewsArticleCategory newsArticleCategory)
+        public async Task<ApiResponse> Update(int? id, [FromBody] NewsArticleCategory category)
         {
             if (id == null || id == 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
-            NewsArticleCategory updatedNewsArticleCategory = await newsArticleCategoryRepository.GetByIDAsync(id);
+            NewsArticleCategory updatedCategory = await newsArticleCategoryRepository.GetByIDAsync(id);
+            if (updatedCategory == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticleCategory was not found.");
 
-            updatedNewsArticleCategory.Name = newsArticleCategory.Name;
+            updatedCategory.Name = category.Name;
 
-            int rows = await newsArticleCategoryRepository.UpdateAsync(updatedNewsArticleCategory);
+            int rows = await newsArticleCategoryRepository.UpdateAsync(updatedCategory);
             if (rows <= 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update NewsArticleCategory.", rows);
 
-            return new ApiResponse(updatedNewsArticleCategory, ResponseStatusCode.Success, "Successfully updated NewsArticleCategory.", rows);
+            return new ApiResponse(updatedCategory, ResponseStatusCode.Success, "Successfully updated NewsArticleCategory.", rows);
         }
 
         /// <summary>
@@ -126,9 +128,9 @@ namespace GameSource.API.Controllers
             if (id == null || id == 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
-            NewsArticleCategory newsArticleCategory = await newsArticleCategoryRepository.GetByIDAsync(id);
-            if (newsArticleCategory == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticleCategory was not found. Please check the ID.");
+            NewsArticleCategory category = await newsArticleCategoryRepository.GetByIDAsync(id);
+            if (category == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticleCategory was not found.");
 
             int rows = await newsArticleCategoryRepository.DeleteAsync(id);
             if (rows <= 0)

@@ -51,7 +51,7 @@ namespace GameSource.API.Controllers
 
             var result = await platformRepository.GetByIDAsync(id);
             if (result == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "Could not return a Platform.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found.");
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
         }
@@ -104,7 +104,7 @@ namespace GameSource.API.Controllers
 
             var updatedPlatform = await platformRepository.GetByIDAsync(id);
             if (updatedPlatform == null)
-                return new ApiResponse(ResponseStatusCode.Error, "Platform was not found. Please check the ID.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found.");
 
             updatedPlatform.Name = platform.Name;
             updatedPlatform.PlatformTypeID = platform.PlatformTypeID;
@@ -131,7 +131,7 @@ namespace GameSource.API.Controllers
 
             Platform platform = await platformRepository.GetByIDAsync(id);
             if (platform == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found. Please check the ID.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found.");
 
             int rows = await platformRepository.DeleteAsync(platform);
             if (rows <= 0)

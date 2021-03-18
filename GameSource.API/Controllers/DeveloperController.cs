@@ -103,7 +103,7 @@ namespace GameSource.API.Controllers
 
             Developer updatedDeveloper = await developerRepository.GetByIDAsync(id);
             if (updatedDeveloper == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found.");
 
             updatedDeveloper.Name = developer.Name;
             updatedDeveloper.Games = developer.Games;

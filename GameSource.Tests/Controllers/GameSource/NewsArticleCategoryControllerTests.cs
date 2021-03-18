@@ -194,22 +194,21 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Update_ErrorResponse_WhenNewsArticleCategoryIsNull()
+        public async Task Update_ErrorResponse_WhenNewsArticleCategoryIsNotFound()
         {
             var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((NewsArticleCategory)null);
 
             var result = await fixture.newsArticleCategoryController.Update(newsArticleCategory.ID, newsArticleCategory);
 
             fixture.mockNewsArticleCategoryRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockNewsArticleCategoryRepo.Verify(x => x.UpdateAsync(It.IsAny<NewsArticleCategory>()), Times.Once);
+            fixture.mockNewsArticleCategoryRepo.Verify(x => x.UpdateAsync(It.IsAny<NewsArticleCategory>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
         }
         #endregion
 
@@ -250,12 +249,30 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Delete_ErrorResponse_WhenNewsArticleCategoryIsNull()
+        public async Task Delete_ErrorResponse_WhenNewsArticleCategoryIsNotFound()
+        {
+            var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
+
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((NewsArticleCategory)null);
+
+            var result = await fixture.newsArticleCategoryController.Delete(newsArticleCategory.ID);
+
+            fixture.mockNewsArticleCategoryRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockNewsArticleCategoryRepo.Verify(x => x.DeleteAsync(It.IsAny<NewsArticleCategory>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenNewsArticleCategoryIsNotDeleted()
         {
             var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory)).ReturnsAsync(0);
 
             var result = await fixture.newsArticleCategoryController.Delete(newsArticleCategory.ID);
 
@@ -264,6 +281,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
             Assert.Equal(0, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }

@@ -194,22 +194,21 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Update_ErrorResponse_WhenPublisherIsNull()
+        public async Task Update_ErrorResponse_WhenPublisherIsNotFound()
         {
             var publisher = fixture.fixture.Create<Publisher>();
 
-            fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(publisher.ID)).ReturnsAsync(publisher);
-            fixture.mockPublisherRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Publisher)null);
 
             var result = await fixture.publisherController.Update(publisher.ID, publisher);
 
             fixture.mockPublisherRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockPublisherRepo.Verify(x => x.UpdateAsync(It.IsAny<Publisher>()), Times.Once);
+            fixture.mockPublisherRepo.Verify(x => x.UpdateAsync(It.IsAny<Publisher>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
         }
         #endregion
 
@@ -250,12 +249,30 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Delete_ErrorResponse_WhenPublisherIsNull()
+        public async Task Delete_ErrorResponse_WhenPublisherIsNotFound()
+        {
+            var publisher = fixture.fixture.Create<Publisher>();
+
+            fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Publisher)null);
+
+            var result = await fixture.publisherController.Delete(publisher.ID);
+
+            fixture.mockPublisherRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockPublisherRepo.Verify(x => x.DeleteAsync(It.IsAny<Publisher>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenPublisherIsNotDeleted()
         {
             var publisher = fixture.fixture.Create<Publisher>();
 
             fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(publisher.ID)).ReturnsAsync(publisher);
-            fixture.mockPublisherRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockPublisherRepo.Setup(x => x.DeleteAsync(publisher)).ReturnsAsync(0);
 
             var result = await fixture.publisherController.Delete(publisher.ID);
 
@@ -264,6 +281,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
             Assert.Equal(0, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }

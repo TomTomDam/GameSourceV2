@@ -568,7 +568,7 @@
             Updates a NewsArticleCategory
             </summary>
             <param name="id"></param>
-            <param name="newsArticleCategory"></param>
+            <param name="category"></param>
             <remarks>
             Example request:
             

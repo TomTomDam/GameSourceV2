@@ -194,22 +194,21 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Update_ErrorResponse_WhenDeveloperIsNull()
+        public async Task Update_ErrorResponse_WhenDeveloperIsNotFound()
         {
             var developer = fixture.fixture.Create<Developer>();
 
-            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
-            fixture.mockDeveloperRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Developer)null);
 
             var result = await fixture.developerController.Update(developer.ID, developer);
 
             fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockDeveloperRepo.Verify(x => x.UpdateAsync(It.IsAny<Developer>()), Times.Once);
+            fixture.mockDeveloperRepo.Verify(x => x.UpdateAsync(It.IsAny<Developer>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
         }
         #endregion
 
@@ -250,12 +249,30 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Delete_ErrorResponse_WhenDeveloperIsNull()
+        public async Task Delete_ErrorResponse_WhenDeveloperIsNotFound()
+        {
+            var developer = fixture.fixture.Create<Developer>();
+
+            fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Developer)null);
+
+            var result = await fixture.developerController.Delete(developer.ID);
+
+            fixture.mockDeveloperRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockDeveloperRepo.Verify(x => x.DeleteAsync(It.IsAny<Developer>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenDeveloperIsNotDeleted()
         {
             var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
-            fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(developer)).ReturnsAsync(0);
 
             var result = await fixture.developerController.Delete(developer.ID);
 
@@ -264,6 +281,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
             Assert.Equal(0, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }

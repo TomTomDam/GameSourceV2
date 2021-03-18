@@ -104,7 +104,7 @@ namespace GameSource.API.Controllers
 
             var updatedReview = await reviewRepository.GetByIDAsync(id);
             if (updatedReview == null)
-                return new ApiResponse(ResponseStatusCode.Error, "Review was not found.");
+                return new ApiResponse(ResponseStatusCode.NotFound, "Review was not found.");
 
             updatedReview.Title = review.Title;
             updatedReview.Body = review.Body;
