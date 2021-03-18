@@ -194,22 +194,21 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Update_ErrorResponse_WhenPlatformIsNull()
+        public async Task Update_ErrorResponse_WhenPlatformIsNotFound()
         {
             var platform = fixture.fixture.Create<Platform>();
 
-            fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(platform.ID)).ReturnsAsync(platform);
-            fixture.mockPlatformRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Platform)null);
 
             var result = await fixture.platformController.Update(platform.ID, platform);
 
             fixture.mockPlatformRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockPlatformRepo.Verify(x => x.UpdateAsync(It.IsAny<Platform>()), Times.Once);
+            fixture.mockPlatformRepo.Verify(x => x.UpdateAsync(It.IsAny<Platform>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
         }
         #endregion
 
@@ -250,12 +249,30 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Delete_ErrorResponse_WhenPlatformIsNull()
+        public async Task Delete_ErrorResponse_WhenPlatformIsNotFound()
+        {
+            var platform = fixture.fixture.Create<Platform>();
+
+            fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Platform)null);
+
+            var result = await fixture.platformController.Delete(platform.ID);
+
+            fixture.mockPlatformRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockPlatformRepo.Verify(x => x.DeleteAsync(It.IsAny<Platform>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenPlatformIsNotDeleted()
         {
             var platform = fixture.fixture.Create<Platform>();
 
             fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(platform.ID)).ReturnsAsync(platform);
-            fixture.mockPlatformRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockPlatformRepo.Setup(x => x.DeleteAsync(platform)).ReturnsAsync(0);
 
             var result = await fixture.platformController.Delete(platform.ID);
 
@@ -264,6 +281,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
             Assert.Equal(0, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }

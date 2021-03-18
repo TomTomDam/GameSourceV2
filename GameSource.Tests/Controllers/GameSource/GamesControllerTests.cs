@@ -196,22 +196,21 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Update_ErrorResponse_WhenGameIsNull()
+        public async Task Update_ErrorResponse_WhenGameIsNotFound()
         {
             var game = fixture.fixture.Create<Game>();
 
-            fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
-            fixture.mockGameRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockGameRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Game)null);
 
             var result = await fixture.gameController.Update(game.ID, game);
 
             fixture.mockGameRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockGameRepo.Verify(x => x.UpdateAsync(It.IsAny<Game>()), Times.Once);
+            fixture.mockGameRepo.Verify(x => x.UpdateAsync(It.IsAny<Game>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
         }
         #endregion
 
@@ -252,12 +251,30 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Delete_ErrorResponse_WhenGameIsNull()
+        public async Task Delete_ErrorResponse_WhenGameIsNotFound()
+        {
+            var game = fixture.fixture.Create<Game>();
+
+            fixture.mockGameRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((Game)null);
+
+            var result = await fixture.gameController.Delete(game.ID);
+
+            fixture.mockGameRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockGameRepo.Verify(x => x.DeleteAsync(It.IsAny<Game>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenGameIsNotDeleted()
         {
             var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
-            fixture.mockGameRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockGameRepo.Setup(x => x.DeleteAsync(game)).ReturnsAsync(0);
 
             var result = await fixture.gameController.Delete(game.ID);
 
@@ -266,6 +283,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
             Assert.Equal(0, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }

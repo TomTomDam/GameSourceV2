@@ -7,4 +7,6 @@ V2 features a SPA architecture, using React for the front-end and ASP.NET Core W
 - Login system using ASP.NET Core Identity with customised users and roles tables
 - **Data access** - Entity Framework Core with SQL Server
 - **Unit testing** - XUnit, Moq, AutoFixture
+
+TODO:
 - **Front-end** - React

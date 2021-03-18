@@ -194,22 +194,21 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Update_ErrorResponse_WhenReviewCommentIsNull()
+        public async Task Update_ErrorResponse_WhenReviewCommentIsNotFound()
         {
             var reviewComment = fixture.fixture.Create<ReviewComment>();
 
-            fixture.mockReviewCommentRepo.Setup(x => x.GetByIDAsync(reviewComment.ID)).ReturnsAsync(reviewComment);
-            fixture.mockReviewCommentRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockReviewCommentRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((ReviewComment)null);
 
             var result = await fixture.reviewCommentController.Update(reviewComment.ID, reviewComment);
 
             fixture.mockReviewCommentRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
-            fixture.mockReviewCommentRepo.Verify(x => x.UpdateAsync(It.IsAny<ReviewComment>()), Times.Once);
+            fixture.mockReviewCommentRepo.Verify(x => x.UpdateAsync(It.IsAny<ReviewComment>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
         }
         #endregion
 
@@ -250,12 +249,30 @@ namespace GameSource.Tests.Controllers.GameSource
         }
 
         [Fact]
-        public async Task Delete_ErrorResponse_WhenReviewCommentIsNull()
+        public async Task Delete_ErrorResponse_WhenReviewCommentIsNotFound()
+        {
+            var reviewComment = fixture.fixture.Create<ReviewComment>();
+
+            fixture.mockReviewCommentRepo.Setup(x => x.GetByIDAsync(It.IsAny<int>())).ReturnsAsync((ReviewComment)null);
+
+            var result = await fixture.reviewCommentController.Delete(reviewComment.ID);
+
+            fixture.mockReviewCommentRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockReviewCommentRepo.Verify(x => x.DeleteAsync(It.IsAny<ReviewComment>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
+            Assert.Equal(ResponseStatusCode.NotFound, result.ResponseStatusCode);
+        }
+
+        [Fact]
+        public async Task Delete_ErrorResponse_WhenReviewCommentIsNotDeleted()
         {
             var reviewComment = fixture.fixture.Create<ReviewComment>();
 
             fixture.mockReviewCommentRepo.Setup(x => x.GetByIDAsync(reviewComment.ID)).ReturnsAsync(reviewComment);
-            fixture.mockReviewCommentRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockReviewCommentRepo.Setup(x => x.DeleteAsync(reviewComment)).ReturnsAsync(0);
 
             var result = await fixture.reviewCommentController.Delete(reviewComment.ID);
 
@@ -264,6 +281,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
+            Assert.Null(result.Data);
             Assert.Equal(0, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Error, result.ResponseStatusCode);
         }
