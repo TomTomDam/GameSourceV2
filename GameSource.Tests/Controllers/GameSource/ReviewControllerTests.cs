@@ -152,12 +152,18 @@ namespace GameSource.Tests.Controllers.GameSource
             var id = 1;
             var review = new Review
             {
-                Title = "Great game!"
+                Title = "Great game!",
+                Body = "This is a great game!",
+                HelpfulRating = 1,
+                //DateModified = DateTime.Now
             };
             var updatedReview = new Review
             {
                 ID = 1,
-                Title = "Cool game!"
+                Title = "Cool game!",
+                Body = "This is a cool game!",
+                HelpfulRating = 2,
+                //DateModified = DateTime.Now
             };
 
             fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedReview);

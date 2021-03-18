@@ -108,7 +108,6 @@ namespace GameSource.API.Controllers
 
             updatedNewsArticle.Title = newsArticle.Title;
             updatedNewsArticle.Body = newsArticle.Body;
-            updatedNewsArticle.CreatedByID = newsArticle.CreatedByID;
             updatedNewsArticle.DateModified = DateTime.Now;
 
             int rows = await newsArticleRepository.UpdateAsync(updatedNewsArticle);

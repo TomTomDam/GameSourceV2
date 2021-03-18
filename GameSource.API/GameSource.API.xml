@@ -54,6 +54,7 @@
                     "lastName": "Dam",
                     "age": 23,
                     "location": "Barnsley",
+                    "userName": "TomDam",
                     "userStatus": 1,
                     "userRole": 1
                 }

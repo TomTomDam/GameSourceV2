@@ -152,12 +152,20 @@ namespace GameSource.Tests.Controllers.GameSource
             var id = 1;
             var newsArticle = new NewsArticle
             {
-                Title = "Welcome to GameSource!"
+                Title = "Welcome to GameSource!",
+                Body = "Enjoy your stay!",
+                CategoryID = 1,
+                CoverImageFilePath = "welcometogamesource",
+                //DateModified = DateTime.Now
             };
             var updatedNewsArticle = new NewsArticle
             {
                 ID = 1,
-                Title = "GameSource is cool!"
+                Title = "GameSource is cool!",
+                Body = "Check it out!",
+                CategoryID = 2,
+                CoverImageFilePath = "gamesourceiscool"
+                //DateModified = DateTime.Now
             };
 
             fixture.mockNewsArticleRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedNewsArticle);
