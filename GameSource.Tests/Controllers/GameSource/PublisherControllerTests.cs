@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var publisher = fixture.fixture.Create<Publisher>();
 
-            fixture.mockPublisherRepo.Setup(x => x.InsertAsync(publisher)).ReturnsAsync(1);
+            fixture.mockPublisherRepo.Setup(x => x.InsertAsync(publisher)).ReturnsAsync(true);
 
             var result = await fixture.publisherController.Insert(publisher);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenPublisherIsNull()
         {
-            fixture.mockPublisherRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockPublisherRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.publisherController.Insert(null);
 
@@ -161,7 +161,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedPublisher);
-            fixture.mockPublisherRepo.Setup(x => x.UpdateAsync(updatedPublisher)).ReturnsAsync(1);
+            fixture.mockPublisherRepo.Setup(x => x.UpdateAsync(updatedPublisher)).ReturnsAsync(true);
 
             var result = await fixture.publisherController.Update(id, publisher);
 
@@ -219,7 +219,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var publisher = fixture.fixture.Create<Publisher>();
 
             fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(publisher.ID)).ReturnsAsync(publisher);
-            fixture.mockPublisherRepo.Setup(x => x.DeleteAsync(publisher)).ReturnsAsync(1);
+            fixture.mockPublisherRepo.Setup(x => x.DeleteAsync(publisher)).ReturnsAsync(true);
 
             var result = await fixture.publisherController.Delete(publisher.ID);
 
@@ -272,7 +272,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var publisher = fixture.fixture.Create<Publisher>();
 
             fixture.mockPublisherRepo.Setup(x => x.GetByIDAsync(publisher.ID)).ReturnsAsync(publisher);
-            fixture.mockPublisherRepo.Setup(x => x.DeleteAsync(publisher)).ReturnsAsync(0);
+            fixture.mockPublisherRepo.Setup(x => x.DeleteAsync(publisher)).ReturnsAsync(false);
 
             var result = await fixture.publisherController.Delete(publisher.ID);
 

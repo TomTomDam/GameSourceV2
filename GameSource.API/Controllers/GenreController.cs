@@ -33,9 +33,6 @@ namespace GameSource.API.Controllers
         {
             IEnumerable<Genre> result = await genreRepository.GetAllAsync();
 
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Genre list.");
-
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Genre list.", result.Count());
         }
 
@@ -75,11 +72,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Genre genre)
         {
-            int rows = await genreRepository.InsertAsync(genre);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Genre.", rows);
+            var inserted = await genreRepository.InsertAsync(genre);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Genre.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a Genre.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a Genre.", 1);
         }
 
         /// <summary>
@@ -110,11 +107,11 @@ namespace GameSource.API.Controllers
 
             updatedGenre.Name = genre.Name;
 
-            int rows = await genreRepository.UpdateAsync(updatedGenre);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not update Genre.", rows);
+            var updated = await genreRepository.UpdateAsync(updatedGenre);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update Genre.", 0);
 
-            return new ApiResponse(updatedGenre, ResponseStatusCode.Success, "Successfully updated Genre.", rows);
+            return new ApiResponse(updatedGenre, ResponseStatusCode.Success, "Successfully updated Genre.", 1);
         }
 
         /// <summary>
@@ -134,11 +131,11 @@ namespace GameSource.API.Controllers
             if (genre == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Genre was not found. Please check the ID.");
 
-            int rows = await genreRepository.DeleteAsync(genre);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Genre.", rows);
+            var deleted = await genreRepository.DeleteAsync(genre);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Genre.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted a Genre.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted a Genre.", 1);
         }
     }
 }

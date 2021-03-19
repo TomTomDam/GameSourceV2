@@ -118,7 +118,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var genre = fixture.fixture.Create<Genre>();
 
-            fixture.mockGenreRepo.Setup(x => x.InsertAsync(genre)).ReturnsAsync(1);
+            fixture.mockGenreRepo.Setup(x => x.InsertAsync(genre)).ReturnsAsync(true);
 
             var result = await fixture.genreController.Insert(genre);
 
@@ -133,7 +133,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenGenreIsNull()
         {
-            fixture.mockGenreRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockGenreRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.genreController.Insert(null);
 
@@ -162,7 +162,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockGenreRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedGenre);
-            fixture.mockGenreRepo.Setup(x => x.UpdateAsync(updatedGenre)).ReturnsAsync(1);
+            fixture.mockGenreRepo.Setup(x => x.UpdateAsync(updatedGenre)).ReturnsAsync(true);
 
             var result = await fixture.genreController.Update(id, genre);
 
@@ -220,7 +220,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var genre = fixture.fixture.Create<Genre>();
 
             fixture.mockGenreRepo.Setup(x => x.GetByIDAsync(genre.ID)).ReturnsAsync(genre);
-            fixture.mockGenreRepo.Setup(x => x.DeleteAsync(genre)).ReturnsAsync(1);
+            fixture.mockGenreRepo.Setup(x => x.DeleteAsync(genre)).ReturnsAsync(true);
 
             var result = await fixture.genreController.Delete(genre.ID);
 
@@ -273,7 +273,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var genre = fixture.fixture.Create<Genre>();
 
             fixture.mockGenreRepo.Setup(x => x.GetByIDAsync(genre.ID)).ReturnsAsync(genre);
-            fixture.mockGenreRepo.Setup(x => x.DeleteAsync(genre)).ReturnsAsync(0);
+            fixture.mockGenreRepo.Setup(x => x.DeleteAsync(genre)).ReturnsAsync(false);
 
             var result = await fixture.genreController.Delete(genre.ID);
 

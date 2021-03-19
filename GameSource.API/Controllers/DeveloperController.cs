@@ -7,6 +7,7 @@ using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GameSource.API.Controllers
 {
@@ -49,7 +50,7 @@ namespace GameSource.API.Controllers
             if (id == 0)
                 return new ApiResponse(ResponseStatusCode.Error, "Invalid ID was passed. Please check the ID.");
 
-            var result = await developerRepository.GetByIDAsync(id);
+            Developer result = await developerRepository.GetByIDAsync(id);
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found.");
 
@@ -72,11 +73,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Developer developer)
         {
-            int rows = await developerRepository.InsertAsync(developer);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Developer.", rows);
+            var inserted = await developerRepository.InsertAsync(developer);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Developer.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Developer.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Developer.", 1);
         }
 
         /// <summary>
@@ -108,11 +109,11 @@ namespace GameSource.API.Controllers
             updatedDeveloper.Name = developer.Name;
             updatedDeveloper.Games = developer.Games;
 
-            int rows = await developerRepository.UpdateAsync(updatedDeveloper);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not update Developer.", rows);
+            var updated = await developerRepository.UpdateAsync(updatedDeveloper);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update Developer.", 0);
 
-            return new ApiResponse(updatedDeveloper, ResponseStatusCode.Success, "Successfully updated Developer.", rows);
+            return new ApiResponse(updatedDeveloper, ResponseStatusCode.Success, "Successfully updated Developer.", 1);
         }
 
         /// <summary>
@@ -132,11 +133,11 @@ namespace GameSource.API.Controllers
             if (developer == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Developer was not found. Please check the ID.");
 
-            int rows = await developerRepository.DeleteAsync(developer);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Developer.", rows);
+            var deleted = await developerRepository.DeleteAsync(developer);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Developer.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Developer.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Developer.", 1);
         }
     }
 }

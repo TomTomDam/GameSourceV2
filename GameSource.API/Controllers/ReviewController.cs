@@ -54,7 +54,7 @@ namespace GameSource.API.Controllers
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Review was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Review.", 1);
         }
 
         /// <summary>
@@ -73,11 +73,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Review review)
         {
-            int rows = await reviewRepository.InsertAsync(review);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Review.", rows);
+            var inserted = await reviewRepository.InsertAsync(review);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Review.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Review.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Review.", 1);
         }
 
         /// <summary>
@@ -111,11 +111,11 @@ namespace GameSource.API.Controllers
             updatedReview.DateModified = DateTime.Now;
             updatedReview.HelpfulRating = updatedReview.HelpfulRating;
 
-            int rows = await reviewRepository.UpdateAsync(updatedReview);
-            if (rows <= 0)
-                return new ApiResponse(updatedReview, ResponseStatusCode.Error, "Could not update Review.", rows);
+            var updated = await reviewRepository.UpdateAsync(updatedReview);
+            if (!updated)
+                return new ApiResponse(updatedReview, ResponseStatusCode.Error, "Could not update Review.", 0);
 
-            return new ApiResponse(updatedReview, ResponseStatusCode.Success, "Successfully updated Review.", rows);
+            return new ApiResponse(updatedReview, ResponseStatusCode.Success, "Successfully updated Review.", 1);
         }
 
         /// <summary>
@@ -135,11 +135,11 @@ namespace GameSource.API.Controllers
             if (review == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Review was not found. Please check the ID.");
 
-            int rows = await reviewRepository.DeleteAsync(review);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Review.", rows);
+            var deleted = await reviewRepository.DeleteAsync(review);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Review.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Review.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Review.", 1);
         }
     }
 }

@@ -32,8 +32,6 @@ namespace GameSource.API.Controllers
         public async Task<ApiResponse> GetAll()
         {
             IEnumerable<Game> result = await gameRepository.GetAllAsync();
-            if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return Game list.", result.Count());
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
         }
@@ -74,11 +72,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Game game)
         {
-            int rows = await gameRepository.InsertAsync(game);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Game.", rows);
+            var inserted = await gameRepository.InsertAsync(game);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Game.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Game.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new Game.", 1);
         }
 
         /// <summary>
@@ -115,11 +113,11 @@ namespace GameSource.API.Controllers
             updatedGame.PublisherID = game.PublisherID;
             updatedGame.PlatformID = game.PlatformID;
 
-            int rows = await gameRepository.UpdateAsync(updatedGame);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not update Game.", rows);
+            var updated = await gameRepository.UpdateAsync(updatedGame);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update Game.", 0);
 
-            return new ApiResponse(updatedGame, ResponseStatusCode.Success, "Successfully updated Game.", rows);
+            return new ApiResponse(updatedGame, ResponseStatusCode.Success, "Successfully updated Game.", 1);
         }
 
         /// <summary>
@@ -139,11 +137,11 @@ namespace GameSource.API.Controllers
             if (game == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found. Please check the ID.");
 
-            int rows = await gameRepository.DeleteAsync(game);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Game.", rows);
+            var deleted = await gameRepository.DeleteAsync(game);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Game.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Game.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Game.", 1);
         }
     }
 }

@@ -102,7 +102,7 @@ namespace GameSource.Tests.Controllers.Admin
         {
             var user = fixture.fixture.Create<User>();
 
-            fixture.mockUserRepo.Setup(x => x.InsertAsync(user)).ReturnsAsync(1);
+            fixture.mockUserRepo.Setup(x => x.InsertAsync(user)).ReturnsAsync(true);
 
             var result = await fixture.userController.Insert(user);
 
@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.Admin
         [Fact]
         public async Task Insert_ErrorResponse_WhenUserIsNull()
         {
-            fixture.mockUserRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockUserRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.userController.Insert(null);
 
@@ -148,7 +148,7 @@ namespace GameSource.Tests.Controllers.Admin
             };
 
             fixture.mockUserRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedUser);
-            fixture.mockUserRepo.Setup(x => x.UpdateAsync(updatedUser)).ReturnsAsync(1);
+            fixture.mockUserRepo.Setup(x => x.UpdateAsync(updatedUser)).ReturnsAsync(true);
 
             var result = await fixture.userController.Update(id, user);
 
@@ -186,7 +186,7 @@ namespace GameSource.Tests.Controllers.Admin
             var user = fixture.fixture.Create<User>();
 
             fixture.mockUserRepo.Setup(x => x.GetByIDAsync(user.Id)).ReturnsAsync(user);
-            fixture.mockUserRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(0);
+            fixture.mockUserRepo.Setup(x => x.UpdateAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.userController.Update(user.Id, user);
 
@@ -207,7 +207,7 @@ namespace GameSource.Tests.Controllers.Admin
             var user = fixture.fixture.Create<User>();
 
             fixture.mockUserRepo.Setup(x => x.GetByIDAsync(user.Id)).ReturnsAsync(user);
-            fixture.mockUserRepo.Setup(x => x.DeleteAsync(user)).ReturnsAsync(1);
+            fixture.mockUserRepo.Setup(x => x.DeleteAsync(user)).ReturnsAsync(true);
 
             var result = await fixture.userController.Delete(user.Id);
 
@@ -242,7 +242,7 @@ namespace GameSource.Tests.Controllers.Admin
             var user = fixture.fixture.Create<User>();
 
             fixture.mockUserRepo.Setup(x => x.GetByIDAsync(user.Id)).ReturnsAsync(user);
-            fixture.mockUserRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(0);
+            fixture.mockUserRepo.Setup(x => x.DeleteAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.userController.Delete(user.Id);
 

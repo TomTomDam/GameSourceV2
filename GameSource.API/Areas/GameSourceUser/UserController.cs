@@ -53,7 +53,7 @@ namespace GameSource.API.Areas.GameSourceUser
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.", 1);
         }
 
         /// <summary>
@@ -75,12 +75,11 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] User user)
         {
-            int rows = await userRepository.InsertAsync(user);
+            var inserted = await userRepository.InsertAsync(user);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a User.", 0);
 
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a User.");
-
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new User.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new User.", 1);
         }
 
         /// <summary>
@@ -105,12 +104,26 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] User user)
         {
-            int rows = await userRepository.UpdateAsync(user);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User.");
+            var updatedUser = await userRepository.GetByIDAsync(id);
+            if (updatedUser == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "User was not found.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User.");
+            updatedUser.FirstName = user.FirstName;
+            updatedUser.LastName = user.LastName;
+            updatedUser.Age = user.Age;
+            updatedUser.Location = updatedUser.Location;
+            updatedUser.UserName = updatedUser.UserName;
+            updatedUser.UserStatusID = user.UserStatusID;
+            updatedUser.UserRoleID = user.UserRoleID;
+
+            var updated = await userRepository.UpdateAsync(updatedUser);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update User.", 0);
+
+            return new ApiResponse(updatedUser, ResponseStatusCode.Success, "Successfully updated User.", 1);
         }
 
         /// <summary>
@@ -123,15 +136,18 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
+
             User user = await userRepository.GetByIDAsync(id);
-            if (id == 0 || user == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "User was not found. Please check the ID.");
+            if (user == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "User was not found.");
 
-            int rows = await userRepository.DeleteAsync(user);
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User.");
+            var deleted = await userRepository.DeleteAsync(user);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete User.", 0);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted User.", 1);
         }
     }
 }

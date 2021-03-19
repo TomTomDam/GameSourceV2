@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.InsertAsync(newsArticleCategory)).ReturnsAsync(1);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.InsertAsync(newsArticleCategory)).ReturnsAsync(true);
 
             var result = await fixture.newsArticleCategoryController.Insert(newsArticleCategory);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenNewsArticleCategoryIsNull()
         {
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.newsArticleCategoryController.Insert(null);
 
@@ -161,7 +161,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedNewsArticleCategory);
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.UpdateAsync(updatedNewsArticleCategory)).ReturnsAsync(1);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.UpdateAsync(updatedNewsArticleCategory)).ReturnsAsync(true);
 
             var result = await fixture.newsArticleCategoryController.Update(id, newsArticleCategory);
 
@@ -272,7 +272,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory)).ReturnsAsync(0);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory.ID)).ReturnsAsync(0);
 
             var result = await fixture.newsArticleCategoryController.Delete(newsArticleCategory.ID);
 

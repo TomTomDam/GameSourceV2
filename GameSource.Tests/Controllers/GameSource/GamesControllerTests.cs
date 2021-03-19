@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var game = fixture.fixture.Create<Game>();
 
-            fixture.mockGameRepo.Setup(x => x.InsertAsync(game)).ReturnsAsync(1);
+            fixture.mockGameRepo.Setup(x => x.InsertAsync(game)).ReturnsAsync(true);
 
             var result = await fixture.gameController.Insert(game);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenGameIsNull()
         {
-            fixture.mockGameRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockGameRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.gameController.Insert(null);
 
@@ -173,7 +173,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedGame);
-            fixture.mockGameRepo.Setup(x => x.UpdateAsync(updatedGame)).ReturnsAsync(1);
+            fixture.mockGameRepo.Setup(x => x.UpdateAsync(updatedGame)).ReturnsAsync(true);
 
             var result = await fixture.gameController.Update(id, game);
 
@@ -231,7 +231,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
-            fixture.mockGameRepo.Setup(x => x.DeleteAsync(game)).ReturnsAsync(1);
+            fixture.mockGameRepo.Setup(x => x.DeleteAsync(game)).ReturnsAsync(true);
 
             var result = await fixture.gameController.Delete(game.ID);
 
@@ -284,7 +284,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var game = fixture.fixture.Create<Game>();
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(game.ID)).ReturnsAsync(game);
-            fixture.mockGameRepo.Setup(x => x.DeleteAsync(game)).ReturnsAsync(0);
+            fixture.mockGameRepo.Setup(x => x.DeleteAsync(game)).ReturnsAsync(false);
 
             var result = await fixture.gameController.Delete(game.ID);
 

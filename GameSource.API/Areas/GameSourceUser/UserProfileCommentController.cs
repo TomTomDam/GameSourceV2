@@ -53,7 +53,7 @@ namespace GameSource.API.Areas.GameSourceUser
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a UserProfileComment.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a UserProfileComment.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a UserProfileComment.", 1);
         }
 
         /// <summary>
@@ -71,21 +71,20 @@ namespace GameSource.API.Areas.GameSourceUser
         /// <response code="200">Creates a new UserProfileComment</response>
         /// <response code="400">Request failed</response>
         [HttpPost]
-        public async Task<ApiResponse> Insert([FromBody] UserProfileComment userStatus)
+        public async Task<ApiResponse> Insert([FromBody] UserProfileComment comment)
         {
-            int rows = await userProfileCommentRepository.InsertAsync(userStatus);
+            var inserted = await userProfileCommentRepository.InsertAsync(comment);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a UserProfileComment.", 0);
 
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not create a UserProfileComment.");
-
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully created a new UserProfileComment.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new UserProfileComment.", 1);
         }
 
         /// <summary>
         /// Updates a UserProfileComment
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="userProfileComment"></param>
+        /// <param name="comment"></param>
         /// <remarks>
         /// Example request:
         /// 
@@ -99,14 +98,22 @@ namespace GameSource.API.Areas.GameSourceUser
         /// <response code="404">Could not find a UserProfileComment</response>
         /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
-        public async Task<ApiResponse> Update(int id, [FromBody] UserProfileComment userProfileComment)
+        public async Task<ApiResponse> Update(int id, [FromBody] UserProfileComment comment)
         {
-            int rows = await userProfileCommentRepository.UpdateAsync(userProfileComment);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update UserProfileComment.");
+            var updatedComment = await userProfileCommentRepository.GetByIDAsync(id);
+            if (updatedComment == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfileComment was not found.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated UserProfileComment.");
+            updatedComment.Body = comment.Body;
+
+            var updated = await userProfileCommentRepository.UpdateAsync(updatedComment);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update UserProfileComment.", 0);
+
+            return new ApiResponse(updatedComment, ResponseStatusCode.Success, "Successfully updated UserProfileComment.", 1);
         }
 
         /// <summary>
@@ -119,15 +126,18 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
-            UserProfileComment userProfileComment = await userProfileCommentRepository.GetByIDAsync(id);
-            if (id == 0 || userProfileComment == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfileComment was not found. Please check the ID.");
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
-            int rows = await userProfileCommentRepository.DeleteAsync(userProfileComment);
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete UserProfileComment.");
+            UserProfileComment user = await userProfileCommentRepository.GetByIDAsync(id);
+            if (user == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfileComment was not found.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted UserProfileComment.");
+            var deleted = await userProfileCommentRepository.DeleteAsync(user);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete UserProfileComment.", 0);
+
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted UserProfileComment.", 1);
         }
     }
 }

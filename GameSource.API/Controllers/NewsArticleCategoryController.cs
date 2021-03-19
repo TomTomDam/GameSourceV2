@@ -53,7 +53,7 @@ namespace GameSource.API.Controllers
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Could not return a NewsArticleCategory.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a NewsArticleCategory.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a NewsArticleCategory.", 1);
         }
 
         /// <summary>
@@ -72,12 +72,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] NewsArticleCategory category)
         {
-            int rows = await newsArticleCategoryRepository.InsertAsync(category);
+            var inserted = await newsArticleCategoryRepository.InsertAsync(category);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a NewsArticleCategory.", 0);
 
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a NewsArticleCategory.", rows);
-
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new NewsArticleCategory.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new NewsArticleCategory.", 1);
         }
 
         /// <summary>
@@ -108,11 +107,11 @@ namespace GameSource.API.Controllers
 
             updatedCategory.Name = category.Name;
 
-            int rows = await newsArticleCategoryRepository.UpdateAsync(updatedCategory);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not update NewsArticleCategory.", rows);
+            var updated = await newsArticleCategoryRepository.UpdateAsync(updatedCategory);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update NewsArticleCategory.", 0);
 
-            return new ApiResponse(updatedCategory, ResponseStatusCode.Success, "Successfully updated NewsArticleCategory.", rows);
+            return new ApiResponse(updatedCategory, ResponseStatusCode.Success, "Successfully updated NewsArticleCategory.", 1);
         }
 
         /// <summary>
@@ -133,10 +132,10 @@ namespace GameSource.API.Controllers
                 return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticleCategory was not found.");
 
             int rows = await newsArticleCategoryRepository.DeleteAsync(id);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete NewsArticleCategory.", rows);
+            if (rows == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete NewsArticleCategory.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted NewsArticleCategory.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted NewsArticleCategory.", 1);
         }
     }
 }

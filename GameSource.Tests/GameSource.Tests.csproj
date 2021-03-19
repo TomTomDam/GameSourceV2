@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\GameSourceUser\" />
     <Folder Include="Fixtures\Repositories\" />
     <Folder Include="Repositories\" />
   </ItemGroup>

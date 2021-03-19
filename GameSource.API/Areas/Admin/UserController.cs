@@ -53,7 +53,7 @@ namespace GameSource.API.Areas.Admin
             if (result == null)
                 return new ApiResponse(result, ResponseStatusCode.NotFound, "User was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User.", 1);
         }
 
         /// <summary>
@@ -77,12 +77,11 @@ namespace GameSource.API.Areas.Admin
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] User user)
         {
-            int rows = await userRepository.InsertAsync(user);
+            var inserted = await userRepository.InsertAsync(user);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a User.", 0);
 
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a User.", rows);
-
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new User.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new User.", 1);
         }
 
         /// <summary>
@@ -125,11 +124,11 @@ namespace GameSource.API.Areas.Admin
             updatedUser.UserStatusID = user.UserStatusID;
             updatedUser.UserRoleID = user.UserRoleID;
 
-            int rows = await userRepository.UpdateAsync(updatedUser);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not update User.", rows);
+            var updated = await userRepository.UpdateAsync(updatedUser);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update User.", 0);
 
-            return new ApiResponse(updatedUser, ResponseStatusCode.Success, "Successfully updated User.", rows);
+            return new ApiResponse(updatedUser, ResponseStatusCode.Success, "Successfully updated User.", 1);
         }
 
         /// <summary>
@@ -149,11 +148,11 @@ namespace GameSource.API.Areas.Admin
             if (user == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "User was not found.");
 
-            int rows = await userRepository.DeleteAsync(user);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete User.", rows);
+            var deleted = await userRepository.DeleteAsync(user);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete User.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted User.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted User.", 1);
         }
     }
 }
