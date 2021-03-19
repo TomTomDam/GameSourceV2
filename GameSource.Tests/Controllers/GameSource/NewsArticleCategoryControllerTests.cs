@@ -219,7 +219,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory.ID)).ReturnsAsync(1);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory.ID)).ReturnsAsync(true);
 
             var result = await fixture.newsArticleCategoryController.Delete(newsArticleCategory.ID);
 
@@ -272,7 +272,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var newsArticleCategory = fixture.fixture.Create<NewsArticleCategory>();
 
             fixture.mockNewsArticleCategoryRepo.Setup(x => x.GetByIDAsync(newsArticleCategory.ID)).ReturnsAsync(newsArticleCategory);
-            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory.ID)).ReturnsAsync(0);
+            fixture.mockNewsArticleCategoryRepo.Setup(x => x.DeleteAsync(newsArticleCategory.ID)).ReturnsAsync(false);
 
             var result = await fixture.newsArticleCategoryController.Delete(newsArticleCategory.ID);
 
