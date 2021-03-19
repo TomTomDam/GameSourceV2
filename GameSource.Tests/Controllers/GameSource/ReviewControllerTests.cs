@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var review = fixture.fixture.Create<Review>();
 
-            fixture.mockReviewRepo.Setup(x => x.InsertAsync(review)).ReturnsAsync(1);
+            fixture.mockReviewRepo.Setup(x => x.InsertAsync(review)).ReturnsAsync(true);
 
             var result = await fixture.reviewController.Insert(review);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenReviewIsNull()
         {
-            fixture.mockReviewRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockReviewRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.reviewController.Insert(null);
 
@@ -167,7 +167,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedReview);
-            fixture.mockReviewRepo.Setup(x => x.UpdateAsync(updatedReview)).ReturnsAsync(1);
+            fixture.mockReviewRepo.Setup(x => x.UpdateAsync(updatedReview)).ReturnsAsync(true);
 
             var result = await fixture.reviewController.Update(id, review);
 
@@ -225,7 +225,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var review = fixture.fixture.Create<Review>();
 
             fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(review.ID)).ReturnsAsync(review);
-            fixture.mockReviewRepo.Setup(x => x.DeleteAsync(review)).ReturnsAsync(1);
+            fixture.mockReviewRepo.Setup(x => x.DeleteAsync(review)).ReturnsAsync(true);
 
             var result = await fixture.reviewController.Delete(review.ID);
 
@@ -278,7 +278,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var review = fixture.fixture.Create<Review>();
 
             fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(review.ID)).ReturnsAsync(review);
-            fixture.mockReviewRepo.Setup(x => x.DeleteAsync(review)).ReturnsAsync(0);
+            fixture.mockReviewRepo.Setup(x => x.DeleteAsync(review)).ReturnsAsync(false);
 
             var result = await fixture.reviewController.Delete(review.ID);
 

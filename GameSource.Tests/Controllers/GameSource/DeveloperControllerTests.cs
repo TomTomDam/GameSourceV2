@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var developer = fixture.fixture.Create<Developer>();
 
-            fixture.mockDeveloperRepo.Setup(x => x.InsertAsync(developer)).ReturnsAsync(1);
+            fixture.mockDeveloperRepo.Setup(x => x.InsertAsync(developer)).ReturnsAsync(true);
 
             var result = await fixture.developerController.Insert(developer);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenDeveloperIsNull()
         {
-            fixture.mockDeveloperRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockDeveloperRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.developerController.Insert(null);
 
@@ -161,7 +161,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedDeveloper);
-            fixture.mockDeveloperRepo.Setup(x => x.UpdateAsync(updatedDeveloper)).ReturnsAsync(1);
+            fixture.mockDeveloperRepo.Setup(x => x.UpdateAsync(updatedDeveloper)).ReturnsAsync(true);
 
             var result = await fixture.developerController.Update(id, developer);
 
@@ -219,7 +219,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
-            fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(developer)).ReturnsAsync(1);
+            fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(developer)).ReturnsAsync(true);
 
             var result = await fixture.developerController.Delete(developer.ID);
 
@@ -272,7 +272,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var developer = fixture.fixture.Create<Developer>();
 
             fixture.mockDeveloperRepo.Setup(x => x.GetByIDAsync(developer.ID)).ReturnsAsync(developer);
-            fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(developer)).ReturnsAsync(0);
+            fixture.mockDeveloperRepo.Setup(x => x.DeleteAsync(developer)).ReturnsAsync(false);
 
             var result = await fixture.developerController.Delete(developer.ID);
 

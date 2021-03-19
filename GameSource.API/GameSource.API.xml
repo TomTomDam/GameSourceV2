@@ -292,7 +292,7 @@
             Updates a UserProfileComment
             </summary>
             <param name="id"></param>
-            <param name="userProfileComment"></param>
+            <param name="comment"></param>
             <remarks>
             Example request:
             

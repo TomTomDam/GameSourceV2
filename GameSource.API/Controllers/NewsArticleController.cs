@@ -54,7 +54,7 @@ namespace GameSource.API.Controllers
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticle was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a NewsArticle.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a NewsArticle.", 1);
         }
 
         /// <summary>
@@ -73,11 +73,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] NewsArticle newsArticle)
         {
-            int rows = await newsArticleRepository.InsertAsync(newsArticle);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a NewsArticle.", rows);
+            var inserted = await newsArticleRepository.InsertAsync(newsArticle);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a NewsArticle.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new NewsArticle.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully created a new NewsArticle.", 1);
         }
 
         /// <summary>
@@ -110,11 +110,11 @@ namespace GameSource.API.Controllers
             updatedNewsArticle.Body = newsArticle.Body;
             updatedNewsArticle.DateModified = DateTime.Now;
 
-            int rows = await newsArticleRepository.UpdateAsync(updatedNewsArticle);
-            if (rows <= 0)
-                return new ApiResponse(updatedNewsArticle, ResponseStatusCode.Error, "Could not update NewsArticle.", rows);
+            var updated = await newsArticleRepository.UpdateAsync(updatedNewsArticle);
+            if (!updated)
+                return new ApiResponse(updatedNewsArticle, ResponseStatusCode.Error, "Could not update NewsArticle.", 0);
 
-            return new ApiResponse(updatedNewsArticle, ResponseStatusCode.Success, "Successfully updated NewsArticle.", rows);
+            return new ApiResponse(updatedNewsArticle, ResponseStatusCode.Success, "Successfully updated NewsArticle.", 1);
         }
 
         /// <summary>
@@ -134,11 +134,11 @@ namespace GameSource.API.Controllers
             if (newsArticle == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticle was not found.");
 
-            int rows = await newsArticleRepository.DeleteAsync(newsArticle);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete NewsArticle.");
+            var deleted = await newsArticleRepository.DeleteAsync(newsArticle);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete NewsArticle.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted NewsArticle.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted NewsArticle.", 1);
         }
     }
 }

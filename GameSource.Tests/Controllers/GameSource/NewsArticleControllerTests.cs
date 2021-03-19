@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var newsArticle = fixture.fixture.Create<NewsArticle>();
 
-            fixture.mockNewsArticleRepo.Setup(x => x.InsertAsync(newsArticle)).ReturnsAsync(1);
+            fixture.mockNewsArticleRepo.Setup(x => x.InsertAsync(newsArticle)).ReturnsAsync(true);
 
             var result = await fixture.newsArticleController.Insert(newsArticle);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenNewsArticleIsNull()
         {
-            fixture.mockNewsArticleRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockNewsArticleRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.newsArticleController.Insert(null);
 
@@ -169,7 +169,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockNewsArticleRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedNewsArticle);
-            fixture.mockNewsArticleRepo.Setup(x => x.UpdateAsync(updatedNewsArticle)).ReturnsAsync(1);
+            fixture.mockNewsArticleRepo.Setup(x => x.UpdateAsync(updatedNewsArticle)).ReturnsAsync(true);
 
             var result = await fixture.newsArticleController.Update(id, newsArticle);
 
@@ -227,7 +227,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var newsArticle = fixture.fixture.Create<NewsArticle>();
 
             fixture.mockNewsArticleRepo.Setup(x => x.GetByIDAsync(newsArticle.ID)).ReturnsAsync(newsArticle);
-            fixture.mockNewsArticleRepo.Setup(x => x.DeleteAsync(newsArticle)).ReturnsAsync(1);
+            fixture.mockNewsArticleRepo.Setup(x => x.DeleteAsync(newsArticle)).ReturnsAsync(true);
 
             var result = await fixture.newsArticleController.Delete(newsArticle.ID);
 
@@ -280,7 +280,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var newsArticle = fixture.fixture.Create<NewsArticle>();
 
             fixture.mockNewsArticleRepo.Setup(x => x.GetByIDAsync(newsArticle.ID)).ReturnsAsync(newsArticle);
-            fixture.mockNewsArticleRepo.Setup(x => x.DeleteAsync(newsArticle)).ReturnsAsync(0);
+            fixture.mockNewsArticleRepo.Setup(x => x.DeleteAsync(newsArticle)).ReturnsAsync(false);
 
             var result = await fixture.newsArticleController.Delete(newsArticle.ID);
 

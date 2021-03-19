@@ -33,9 +33,9 @@ namespace GameSource.API.Areas.GameSourceUser
             IEnumerable<UserProfile> result = await userProfileRepository.GetAllAsync();
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return User Profile list.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return UserProfile list.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned User Profile list.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned UserProfile list.");
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace GameSource.API.Areas.GameSourceUser
             var result = await userProfileRepository.GetByIDAsync(id);
 
             if (result == null)
-                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a User Profile.");
+                return new ApiResponse(result, ResponseStatusCode.Error, "Could not return a UserProfile.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a User Profile.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a UserProfile.", 1);
         }
 
         /// <summary>
@@ -76,12 +76,24 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpPut("{id}")]
         public async Task<ApiResponse> Update(int id, [FromBody] UserProfile userProfile)
         {
-            int rows = await userProfileRepository.UpdateAsync(userProfile);
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not update User Profile.");
+            var updatedUserProfile = await userProfileRepository.GetByIDAsync(id);
+            if (updatedUserProfile == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfile was not found.");
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully updated User Profile.");
+            updatedUserProfile.Biography = userProfile.Biography;
+            updatedUserProfile.DisplayName = userProfile.DisplayName;
+            updatedUserProfile.ProfileBackgroundImageFilePath = userProfile.ProfileBackgroundImageFilePath;
+            updatedUserProfile.UserProfileCommentPermissionID = userProfile.UserProfileCommentPermissionID;
+            updatedUserProfile.UserProfileVisibilityID = updatedUserProfile.UserProfileVisibilityID;
+
+            var updated = await userProfileRepository.UpdateAsync(updatedUserProfile);
+            if (!updated)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not update UserProfile.", 0);
+
+            return new ApiResponse(updatedUserProfile, ResponseStatusCode.Success, "Successfully updated UserProfile.", 1);
         }
 
         /// <summary>
@@ -94,15 +106,18 @@ namespace GameSource.API.Areas.GameSourceUser
         [HttpDelete("{id}")]
         public async Task<ApiResponse> Delete(int id)
         {
+            if (id == 0)
+                return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
+
             UserProfile userProfile = await userProfileRepository.GetByIDAsync(id);
-            if (id == 0 || userProfile == null)
-                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfile was not found. Please check the ID.");
+            if (userProfile == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "UserProfile was not found.");
 
-            int rows = await userProfileRepository.DeleteAsync(userProfile);
-            if (rows <= 0)
-                return new ApiResponse(rows, ResponseStatusCode.Error, "Could not delete User Profile.");
+            var deleted = await userProfileRepository.DeleteAsync(userProfile);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete UserProfile.", 0);
 
-            return new ApiResponse(rows, ResponseStatusCode.Success, "Successfully deleted User Profile.");
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted UserProfile.", 1);
         }
     }
 }

@@ -17,16 +17,18 @@ namespace GameSource.Infrastructure.Repositories.GameSource
             entity = context.Set<T>();
         }
 
-        public int Delete(T item)
+        public bool Delete(T item)
         {
             entity.Remove(item);
-            return context.SaveChanges();
+            var deleted = context.SaveChanges();
+            return deleted > 0;
         }
 
-        public async Task<int> DeleteAsync(T item)
+        public async Task<bool> DeleteAsync(T item)
         {
             entity.Remove(item);
-            return await context.SaveChangesAsync();
+            var deleted = await context.SaveChangesAsync();
+            return deleted > 0;
         }
 
         public IEnumerable<T> GetAll()
@@ -51,28 +53,32 @@ namespace GameSource.Infrastructure.Repositories.GameSource
             return item;
         }
 
-        public int Insert(T item)
+        public bool Insert(T item)
         {
             entity.Add(item);
-            return context.SaveChanges();
+            var inserted = context.SaveChanges();
+            return inserted > 0;
         }
 
-        public async Task<int> InsertAsync(T item)
+        public async Task<bool> InsertAsync(T item)
         {
             await entity.AddAsync(item);
-            return await context.SaveChangesAsync();
+            var inserted = await context.SaveChangesAsync();
+            return inserted > 0;
         }
 
-        public int Update(T item)
+        public bool Update(T item)
         {
             entity.Update(item);
-            return context.SaveChanges();
+            var updated = context.SaveChanges();
+            return updated > 0;
         }
 
-        public async Task<int> UpdateAsync(T item)
+        public async Task<bool> UpdateAsync(T item)
         {
             entity.Update(item);
-            return await context.SaveChangesAsync();
+            var updated = await context.SaveChangesAsync();
+            return updated > 0;
         }
     }
 }

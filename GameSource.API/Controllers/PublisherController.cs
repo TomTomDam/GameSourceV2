@@ -53,7 +53,7 @@ namespace GameSource.API.Controllers
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Publisher was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Publisher.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Publisher.", 1);
         }
 
         /// <summary>
@@ -72,11 +72,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Publisher publisher)
         {
-            int rows = await publisherRepository.InsertAsync(publisher);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Publisher.");
+            var inserted = await publisherRepository.InsertAsync(publisher);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Publisher.", 0);
 
-            return new ApiResponse(publisher, ResponseStatusCode.Success, "Successfully created a new Publisher.", rows);
+            return new ApiResponse(publisher, ResponseStatusCode.Success, "Successfully created a new Publisher.", 1);
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace GameSource.API.Controllers
 
             updatedPublisher.Name = publisher.Name;
 
-            int rows = await publisherRepository.UpdateAsync(updatedPublisher);
-            if (rows <= 0)
-                return new ApiResponse(updatedPublisher, ResponseStatusCode.Error, "Could not update Publisher.", rows);
+            var updated = await publisherRepository.UpdateAsync(updatedPublisher);
+            if (!updated)
+                return new ApiResponse(updatedPublisher, ResponseStatusCode.Error, "Could not update Publisher.", 0);
 
-            return new ApiResponse(updatedPublisher, ResponseStatusCode.Success, "Successfully updated Publisher.", rows);
+            return new ApiResponse(updatedPublisher, ResponseStatusCode.Success, "Successfully updated Publisher.", 1);
         }
 
         /// <summary>
@@ -131,11 +131,11 @@ namespace GameSource.API.Controllers
             if (publisher == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Publisher was not found. Please check the ID.");
 
-            int rows = await publisherRepository.DeleteAsync(publisher);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Publisher.", rows);
+            var deleted = await publisherRepository.DeleteAsync(publisher);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Publisher.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Publisher.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Publisher.", 1);
         }
     }
 }

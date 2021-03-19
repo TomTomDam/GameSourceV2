@@ -117,7 +117,7 @@ namespace GameSource.Tests.Controllers.GameSource
         {
             var platformType = fixture.fixture.Create<PlatformType>();
 
-            fixture.mockPlatformTypeRepo.Setup(x => x.InsertAsync(platformType)).ReturnsAsync(1);
+            fixture.mockPlatformTypeRepo.Setup(x => x.InsertAsync(platformType)).ReturnsAsync(true);
 
             var result = await fixture.platformTypeController.Insert(platformType);
 
@@ -132,7 +132,7 @@ namespace GameSource.Tests.Controllers.GameSource
         [Fact]
         public async Task Insert_ErrorResponse_WhenPlatformTypeIsNull()
         {
-            fixture.mockPlatformTypeRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(0);
+            fixture.mockPlatformTypeRepo.Setup(x => x.InsertAsync(null)).ReturnsAsync(false);
 
             var result = await fixture.platformTypeController.Insert(null);
 
@@ -161,7 +161,7 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockPlatformTypeRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedPlatformType);
-            fixture.mockPlatformTypeRepo.Setup(x => x.UpdateAsync(updatedPlatformType)).ReturnsAsync(1);
+            fixture.mockPlatformTypeRepo.Setup(x => x.UpdateAsync(updatedPlatformType)).ReturnsAsync(true);
 
             var result = await fixture.platformTypeController.Update(id, platformType);
 
@@ -219,7 +219,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var platformType = fixture.fixture.Create<PlatformType>();
 
             fixture.mockPlatformTypeRepo.Setup(x => x.GetByIDAsync(platformType.ID)).ReturnsAsync(platformType);
-            fixture.mockPlatformTypeRepo.Setup(x => x.DeleteAsync(platformType)).ReturnsAsync(1);
+            fixture.mockPlatformTypeRepo.Setup(x => x.DeleteAsync(platformType)).ReturnsAsync(true);
 
             var result = await fixture.platformTypeController.Delete(platformType.ID);
 
@@ -272,7 +272,7 @@ namespace GameSource.Tests.Controllers.GameSource
             var platformType = fixture.fixture.Create<PlatformType>();
 
             fixture.mockPlatformTypeRepo.Setup(x => x.GetByIDAsync(platformType.ID)).ReturnsAsync(platformType);
-            fixture.mockPlatformTypeRepo.Setup(x => x.DeleteAsync(platformType)).ReturnsAsync(0);
+            fixture.mockPlatformTypeRepo.Setup(x => x.DeleteAsync(platformType)).ReturnsAsync(false);
 
             var result = await fixture.platformTypeController.Delete(platformType.ID);
 

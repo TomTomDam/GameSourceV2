@@ -53,7 +53,7 @@ namespace GameSource.API.Controllers
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.");
+            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Platform.", 1);
         }
 
         /// <summary>
@@ -72,12 +72,11 @@ namespace GameSource.API.Controllers
         [HttpPost]
         public async Task<ApiResponse> Insert([FromBody] Platform platform)
         {
-            int rows = await platformRepository.InsertAsync(platform);
+            var inserted = await platformRepository.InsertAsync(platform);
+            if (!inserted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Platform.", 0);
 
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not create a Platform.", rows);
-
-            return new ApiResponse(platform, ResponseStatusCode.Success, "Successfully created a new Platform.", rows);
+            return new ApiResponse(platform, ResponseStatusCode.Success, "Successfully created a new Platform.", 1);
         }
 
         /// <summary>
@@ -109,11 +108,11 @@ namespace GameSource.API.Controllers
             updatedPlatform.Name = platform.Name;
             updatedPlatform.PlatformTypeID = platform.PlatformTypeID;
 
-            int rows = await platformRepository.UpdateAsync(updatedPlatform);
-            if (rows <= 0)
-                return new ApiResponse(updatedPlatform, ResponseStatusCode.Error, "Could not update Platform.", rows);
+            var updated = await platformRepository.UpdateAsync(updatedPlatform);
+            if (!updated)
+                return new ApiResponse(updatedPlatform, ResponseStatusCode.Error, "Could not update Platform.", 0);
 
-            return new ApiResponse(updatedPlatform, ResponseStatusCode.Success, "Successfully updated Platform.", rows);
+            return new ApiResponse(updatedPlatform, ResponseStatusCode.Success, "Successfully updated Platform.", 1);
         }
 
         /// <summary>
@@ -133,11 +132,11 @@ namespace GameSource.API.Controllers
             if (platform == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found.");
 
-            int rows = await platformRepository.DeleteAsync(platform);
-            if (rows <= 0)
-                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Platform.", rows);
+            var deleted = await platformRepository.DeleteAsync(platform);
+            if (!deleted)
+                return new ApiResponse(ResponseStatusCode.Error, "Could not delete Platform.", 0);
 
-            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Platform.", rows);
+            return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted Platform.", 1);
         }
     }
 }
