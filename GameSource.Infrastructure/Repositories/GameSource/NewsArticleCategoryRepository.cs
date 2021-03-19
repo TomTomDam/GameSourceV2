@@ -20,23 +20,25 @@ namespace GameSource.Infrastructure.Repositories.GameSource
             return repo.Find(id);
         }
 
-        public int Delete(int? id)
-        {
-            NewsArticleCategory category = repo.Find(id);
-            repo.Remove(category);
-            return context.SaveChanges();
-        }
-
         public async Task<NewsArticleCategory> GetByIDAsync(int? id)
         {
             return await repo.FindAsync(id);
         }
 
-        public async Task<int> DeleteAsync(int? id)
+        public bool Delete(int? id)
+        {
+            NewsArticleCategory category = repo.Find(id);
+            repo.Remove(category);
+            var deleted = context.SaveChanges();
+            return deleted > 0;
+        }
+
+        public async Task<bool> DeleteAsync(int? id)
         {
             NewsArticleCategory category = await repo.FindAsync(id);
             repo.Remove(category);
-            return await context.SaveChangesAsync();
+            var deleted = await context.SaveChangesAsync();
+            return deleted > 0;
         }
     }
 }

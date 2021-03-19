@@ -131,8 +131,8 @@ namespace GameSource.API.Controllers
             if (category == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "NewsArticleCategory was not found.");
 
-            int rows = await newsArticleCategoryRepository.DeleteAsync(id);
-            if (rows == 0)
+            var deleted = await newsArticleCategoryRepository.DeleteAsync(id);
+            if (!deleted)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not delete NewsArticleCategory.", 0);
 
             return new ApiResponse(ResponseStatusCode.Success, "Successfully deleted NewsArticleCategory.", 1);
