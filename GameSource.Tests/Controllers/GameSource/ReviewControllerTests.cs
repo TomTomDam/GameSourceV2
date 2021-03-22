@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using GameSource.API;
 using GameSource.Models;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
@@ -150,12 +151,13 @@ namespace GameSource.Tests.Controllers.GameSource
         public async Task Update_SuccessResponse_UpdatesReview()
         {
             var id = 1;
+            var dateModified = new DateTime(2021, 03, 01);
             var review = new Review
             {
                 Title = "Great game!",
                 Body = "This is a great game!",
                 HelpfulRating = 1,
-                //DateModified = DateTime.Now
+                DateCreated = fixture.dateTimeProvider.Now
             };
             var updatedReview = new Review
             {
@@ -163,20 +165,23 @@ namespace GameSource.Tests.Controllers.GameSource
                 Title = "Cool game!",
                 Body = "This is a cool game!",
                 HelpfulRating = 2,
-                //DateModified = DateTime.Now
+                DateCreated = review.DateCreated
             };
 
             fixture.mockReviewRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedReview);
             fixture.mockReviewRepo.Setup(x => x.UpdateAsync(updatedReview)).ReturnsAsync(true);
+            fixture.mockDateTimeProvider.Setup(x => x.Now).Returns(dateModified);
 
             var result = await fixture.reviewController.Update(id, review);
 
             fixture.mockReviewRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
             fixture.mockReviewRepo.Verify(x => x.UpdateAsync(updatedReview), Times.Once);
+            fixture.mockDateTimeProvider.Verify(x => x.Now, Times.Once);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
             Assert.Equal(updatedReview, result.Data);
+            Assert.Equal(dateModified, updatedReview.DateModified);
             Assert.Equal(1, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
         }

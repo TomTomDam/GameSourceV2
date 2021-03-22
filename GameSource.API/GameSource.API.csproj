@@ -26,9 +26,5 @@
     <ProjectReference Include="..\GameSource.Infrastructure\GameSource.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 
 </Project>
