@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
+using GameSource.API.Providers;
 
 namespace GameSource.API.Controllers
 {
@@ -18,10 +19,12 @@ namespace GameSource.API.Controllers
     public class ReviewController : ControllerBase
     {
         private readonly IReviewRepository reviewRepository;
+        private readonly IDateTimeProvider dateTimeProvider;
 
-        public ReviewController(IReviewRepository reviewRepository)
+        public ReviewController(IReviewRepository reviewRepository, IDateTimeProvider dateTimeProvider)
         {
             this.reviewRepository = reviewRepository;
+            this.dateTimeProvider = dateTimeProvider;
         }
 
         /// <summary>
@@ -108,8 +111,8 @@ namespace GameSource.API.Controllers
 
             updatedReview.Title = review.Title;
             updatedReview.Body = review.Body;
-            updatedReview.DateModified = DateTime.Now;
-            updatedReview.HelpfulRating = updatedReview.HelpfulRating;
+            updatedReview.DateModified = dateTimeProvider.Now;
+            updatedReview.HelpfulRating = review.HelpfulRating;
 
             var updated = await reviewRepository.UpdateAsync(updatedReview);
             if (!updated)
