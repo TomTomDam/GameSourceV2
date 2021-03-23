@@ -2,6 +2,7 @@
 using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace GameSource.Infrastructure
 {
@@ -31,6 +32,33 @@ namespace GameSource.Infrastructure
         public DbSet<UserProfileCommentPermission> UserProfileCommentPermission { get; set; }
         public DbSet<Review> Review { get; set; }
         public DbSet<ReviewComment> ReviewComments { get; set; }
+
+        //Transactions
+        private IDbContextTransaction _transaction;
+
+        public void BeginTransaction()
+        {
+            _transaction = Database.BeginTransaction();
+        }
+
+        public void Commit()
+        {
+            try
+            {
+                SaveChanges();
+                _transaction.Commit();
+            }
+            finally
+            {
+                _transaction.Dispose();
+            }
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+            _transaction.Dispose();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

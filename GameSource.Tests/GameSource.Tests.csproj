@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Fixtures\Repositories\" />
+    <Folder Include="Fixtures\Repositories\GameSourceUser\" />
   </ItemGroup>
 
   <ItemGroup>
