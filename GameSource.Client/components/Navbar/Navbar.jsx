@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Genre from "./Genre";
 
 const Navbar = () => {
   const links = [
@@ -28,7 +29,9 @@ const Navbar = () => {
   return (
     <header>
       <Link to="/">GameSource</Link>
-      <nav>{linksMap}</nav>
+      <nav>
+        {linksMap}
+      </nav>
     </header>
   );
 };
