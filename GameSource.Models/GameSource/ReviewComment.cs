@@ -20,5 +20,7 @@ namespace GameSource.Models.GameSource
         public int CreatedByID { get; set; }
 
         public Review Review { get; set; }
+
+        public int ReviewID { get; set; }
     }
 }

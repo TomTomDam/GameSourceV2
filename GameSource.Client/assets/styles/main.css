@@ -1,0 +1,162 @@
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+  }
+  
+  /* Provide sufficient contrast against white background */
+  
+  .btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+  }
+  
+  .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+  }
+  
+  /* Sticky footer styles
+  -------------------------------------------------- */
+  html {
+    font-size: 14px;
+  }
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+  
+  .border-top {
+    border-top: 1px solid #e5e5e5;
+  }
+  .border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  }
+  
+  button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+  }
+  
+  /* Sticky footer styles
+  -------------------------------------------------- */
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+  
+  body {
+      /* Margin bottom by footer height */
+      margin-bottom: 200px;
+  }
+  .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      white-space: nowrap;
+      line-height: 60px; /* Vertically center the text there */
+  }
+  
+  /*Layout navbar dropdown columns*/
+  @media screen and (max-width: 991px) {
+      .dropdown-columns {
+          height: 200px;
+          overflow-y: scroll;
+      }
+  }
+  
+  @media screen and (min-width: 992px) {
+      .dropdown-columns {
+          -moz-column-count: 2; /* Firefox */
+          -webkit-column-count: 2; /* Safari and Chrome */
+          column-count: 2;
+          width: 500px;
+          height: 170px;
+      }
+  }
+  
+  /* Layout */
+  body {
+      background-color: #1b2838;
+      color: #fff;
+  }
+  
+  a {
+      text-decoration: none;
+      color: #fff;
+  }
+  
+  a:hover {
+      text-decoration: none;
+      color: #66c0f4;
+  }
+  
+  .navbar,
+  .navbar-brand {
+      background-color: #171a21;
+      color: #66c0f4;
+  }
+  
+  .nav-link,
+  .navbar-brand:hover {
+      color: #66c0f4;
+  }
+  
+  .nav-link:hover, 
+  #navbarDropdown:hover {
+      color: white;
+  }
+  
+  .dropdown-menu {
+      background-color: #c7d5e0;
+  }
+  
+  .dropdown-header {
+      color: #4f94bc;
+  }
+  
+  .dropdown-item {
+      color: black;
+  }
+  
+  .dropdown-item:hover, 
+  .dropdown-menu > li:hover:not(.dropdown-header) {
+      background-color: #171a21;
+      color: white;
+  }
+  
+  .footer {
+      background-color: #171a21;
+      color: #8F98A0;
+      line-height: 50px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+  }
+  
+  .divider {
+      border-top: 1px solid #363c44;
+  }
+  
+  .divider-margin {
+      margin-top: 5px;
+      margin-bottom: 30px;
+  }
+  
+  .footer-links > a {
+      color: #C6D4DF;
+  }
+  
+  .footer-links > a:hover {
+      color: #fff;
+  }
+  
+  hr {
+      border-color: #363c44;
+  }
