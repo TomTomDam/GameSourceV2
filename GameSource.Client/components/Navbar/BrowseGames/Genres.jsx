@@ -24,7 +24,7 @@ const Genres = () => {
           <div className="dropdown-header">By Platform</div>
           <span className="dropdown-divider"></span>
           <li>
-            <Link to={`/genres/${genre.id}`}>
+            <Link to={`/genres/${genre.id}`} className="nav-link dropdown-item">
               <span>{genre.name}</span>
             </Link>
           </li>
