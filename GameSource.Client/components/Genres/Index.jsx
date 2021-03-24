@@ -3,7 +3,7 @@ import React from "react";
 const Index = () => {
   return (
     <div>
-      <h1>News Article Category Index</h1>
+      <h1>Genre Index</h1>
     </div>
   );
 };
