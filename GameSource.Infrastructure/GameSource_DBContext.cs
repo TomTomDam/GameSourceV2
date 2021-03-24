@@ -125,24 +125,24 @@ namespace GameSource.Infrastructure
             modelBuilder.Entity<ReviewComment>()
                 .HasOne(rc => rc.Review)
                 .WithMany(rc => rc.ReviewComments)
-                .HasForeignKey(rc => rc.Review)
+                .HasForeignKey(rc => rc.ReviewID)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Review>()
                 .HasMany(r => r.ReviewComments)
                 .WithOne(r => r.Review)
-                .HasForeignKey(r => r.Review)
+                .HasForeignKey(r => r.ReviewID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Many UserProfileComments to One UserProfile
             modelBuilder.Entity<UserProfileComment>()
                 .HasOne(upc => upc.UserProfile)
                 .WithMany(upc => upc.Comments)
-                .HasForeignKey(upc => upc.UserProfile)
+                .HasForeignKey(upc => upc.UserProfileID)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<UserProfile>()
                 .HasMany(upc => upc.Comments)
                 .WithOne(upc => upc.UserProfile)
-                .HasForeignKey(upc => upc.UserProfile)
+                .HasForeignKey(upc => upc.UserProfileID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //One Developer to Many Games
