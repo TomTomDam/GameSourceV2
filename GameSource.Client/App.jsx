@@ -3,21 +3,22 @@ import { Route } from "react-router-dom";
 
 //Components
 import Home from "./components/Home";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Login from "./components/Account/Login";
 import Register from "./components/Account/Register";
-import GameIndex from "./components/Games/Index";
-import GenreIndex from "./components/Genres/Index";
-import DeveloperIndex from "./components/Developers/Index";
-import PublisherIndex from "./components/Publishers/Index";
-import PlatformIndex from "./components/Platforms/Index";
-import PlatformTypeIndex from "./components/PlatformTypes/Index";
-import ReviewIndex from "./components/PlatformTypes/Index";
-import ReviewCommentIndex from "./components/PlatformTypes/Index";
-import NewsArticleIndex from "./components/PlatformTypes/Index";
-import NewsArticleCategoryIndex from "./components/PlatformTypes/Index";
+import GameIndex from "./components/Game/Index";
+import GenreIndex from "./components/Genre/Index";
+import DeveloperIndex from "./components/Developer/Index";
+import PublisherIndex from "./components/Publisher/Index";
+import PlatformIndex from "./components/Platform/Index";
+import PlatformTypeIndex from "./components/PlatformType/Index";
+import ReviewIndex from "./components/Review/Index";
+import ReviewCommentIndex from "./components/ReviewComment/Index";
+import NewsArticleIndex from "./components/NewsArticle/Index";
+import NewsArticleCategoryIndex from "./components/NewsArticleCategory/Index";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
       <Route path="/review-comments" component={ReviewCommentIndex}/>
       <Route path="/news-articles" component={NewsArticleIndex}/>
       <Route path="/news-article-categories" component={NewsArticleCategoryIndex}/>
+      <Footer />
     </div>
   );
 };

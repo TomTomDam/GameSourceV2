@@ -5,32 +5,32 @@ import axios from "axios";
 const Platforms = () => {
   const platformApi = "https://localhost:44336/api/platforms/";
   const [platforms, setPlatforms] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(platformApi)
       .then((res) => {
         setPlatforms(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       {platforms.map((platform) => {
-        <>
-          <div className="dropdown-header">By Platform</div>
-          <span className="dropdown-divider"></span>
-          <li>
-            <div className="dropdown-header">By Platform</div>
-            <span className="dropdown-divider"></span>
-            <Link to={`/platform/${platform.id}`}>
-              <span>{platform.name}</span>
-            </Link>
-          </li>
-        </>;
+        <li>
+          <Link to={`/platform/${platform.id}`}>
+            <span>{platform.name}</span>
+          </Link>
+        </li>;
       })}
     </>
   );
