@@ -6,12 +6,12 @@ const Navbar = () => {
   const links = [
     {
       id: 1,
-      title: "Login",
-      path: "/login",
+      title: "News",
+      path: "news-articles"
     },
   ];
 
-  const browseGamesLinks = [
+  const databaseLinks = [
     {
       id: 1,
       title: "View All Games",
@@ -54,7 +54,7 @@ const Navbar = () => {
     );
   });
 
-  const browseGamesLinksMap = browseGamesLinks.map((link) => {
+  const databaseLinksMap = databaseLinks.map((link) => {
     return (
       <li className="nav-item" key={link.id}>
         <Link to={link.path} className="nav-link dropdown-item">
@@ -114,15 +114,41 @@ const Navbar = () => {
                   Database
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {browseGamesLinksMap}
+                  {databaseLinksMap}
                 </ul>
               </li>
+              {linksMap}
+            </ul>
+          </div>
+          <div className="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <ul className="navbar-nav ml-auto">
+              {/* <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="nav-link dropdown-item">View All Users</a></li>
+                        <li><a class="nav-link dropdown-item">View All User Roles</a></li>
+                        <li><a class="nav-link dropdown-item">View All User Statuses</a></li>
+                    </ul>
+                </li> */}
+              {/* <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="nav-link dropdown-item">View my profile</a></li>
+                        <li><a class="nav-link dropdown-item">Profile settings</a></li>
+                        <li><a class="nav-link dropdown-item">Account settings</a></li>
+                        <li><a class="nav-link dropdown-item">Logout</a></li>
+                    </ul>
+                </li> */}
               <li className="nav-item">
-                <Link to="/news" className="nav-link">
-                  <span>News</span>
+                <Link to="/register" className="nav-link">
+                  <span>Register</span>
                 </Link>
               </li>
-              {linksMap}
+              <li className="nav-item">
+                <Link to="/login" className="nav-link">
+                  <span>Login</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
