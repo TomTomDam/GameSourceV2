@@ -20,13 +20,13 @@ const Genres = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <li>Loading...</li>;
   }
 
   return (
     <>
       {genres.map((genre) => {
-        <li>
+        <li key={genre.id}>
           <Link to={`/genres/${genre.id}`} className="nav-link dropdown-item">
             <span>{genre.name}</span>
           </Link>

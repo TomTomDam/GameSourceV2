@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
 using System;
+using Serilog;
 
 namespace GameSource.API
 {
@@ -107,6 +108,7 @@ namespace GameSource.API
             });
 
             app.UseHttpsRedirection();
+            app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseCors(); //Must be placed between UseRouting and UseAuthentication
             app.UseAuthentication();
