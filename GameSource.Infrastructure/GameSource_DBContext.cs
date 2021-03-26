@@ -69,9 +69,15 @@ namespace GameSource.Infrastructure
 
             modelBuilder.Entity<Review>().Property(p => p.Rating).HasColumnType("decimal(18,2)");
 
-            //TODO:
-            //One AspNetUserRoles to One User
-            //One AspNetUserRoles to One UserRole
+            ////One AspNetUserRoles to One User
+            //modelBuilder.Entity<AspNetUserRoles>()
+            //    .HasOne(r => r.User)
+            //    .WithOne(r => r.IdentityRole);
+
+            ////One AspNetUserRoles to One UserRole
+            //modelBuilder.Entity<AspNetUserRoles>()
+            //    .HasOne(r => r.Role)
+            //    .WithOne(r => r.IdentityRole);
 
             //One PlatformType to Many Platforms
             modelBuilder.Entity<Platform>()

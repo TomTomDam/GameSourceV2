@@ -44,6 +44,8 @@ namespace GameSource.Models.GameSourceUser
 
         public UserProfile UserProfile { get; set; }
 
+        //public AspNetUserRoles IdentityRole { get; set; }
+
         public ICollection<Review> ReviewsCreated { get; set; }
 
         public ICollection<ReviewComment> ReviewCommentsCreated { get; set; }

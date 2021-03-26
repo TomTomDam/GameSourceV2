@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GameSource.Models.GameSource
 {
@@ -15,6 +16,7 @@ namespace GameSource.Models.GameSource
         public int? PlatformTypeID { get; set; }
 
         [Display(Name = "Platform Type")]
+        [JsonIgnore]
         public PlatformType PlatformType { get; set; }
 
         public ICollection<Game> Games { get; set; }

@@ -7,6 +7,8 @@ namespace GameSource.Models.GameSourceUser
     {
         public string Description { get; set; }
 
+        //public AspNetUserRoles IdentityRole { get; set; }
+
         public ICollection<User> Users { get; set; }
     }
 }

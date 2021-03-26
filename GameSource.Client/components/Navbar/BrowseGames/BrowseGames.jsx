@@ -5,10 +5,10 @@ import Platforms from "./Platforms";
 const BrowseGames = () => {
   return (
     <>
-      <div className="dropdown-header fw-bold">By Genre</div>
+      <span className="dropdown-header fw-bold">By Genre</span>
       <span className="divider"></span>
       <Genres />
-      <div className="dropdown-header fw-bold">By Platform</div>
+      <span className="dropdown-header fw-bold">By Platform</span>
       <span className="divider"></span>
       <Platforms />
     </>

@@ -20,13 +20,13 @@ const Platforms = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <li>Loading...</li>;
   }
 
   return (
     <>
       {platforms.map((platform) => {
-        <li>
+        <li key={platform.id}>
           <Link to={`/platform/${platform.id}`}>
             <span>{platform.name}</span>
           </Link>
