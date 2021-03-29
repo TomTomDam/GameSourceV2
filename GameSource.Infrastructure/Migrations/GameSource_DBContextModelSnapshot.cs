@@ -113,8 +113,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("CoverImageFilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedByID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreatedByID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -217,8 +217,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedByID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreatedByID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -257,13 +257,13 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedByID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreatedByID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ReviewID")
+                    b.Property<int>("ReviewID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -272,15 +272,45 @@ namespace GameSource.Infrastructure.Migrations
 
                     b.HasIndex("ReviewID");
 
-                    b.ToTable("ReviewComments");
+                    b.ToTable("ReviewComment");
+                });
+
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -336,6 +366,9 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -346,8 +379,8 @@ namespace GameSource.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserRoleID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserRoleID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("UserStatusID")
                         .HasColumnType("int");
@@ -362,7 +395,7 @@ namespace GameSource.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("UserRoleID");
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("UserStatusID");
 
@@ -389,8 +422,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("ProfileBackgroundImageFilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("UserProfileCommentPermissionID")
                         .HasColumnType("int");
@@ -420,8 +453,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedByID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreatedByID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -468,38 +501,6 @@ namespace GameSource.Infrastructure.Migrations
                     b.ToTable("UserProfileVisibility");
                 });
 
-            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("UserRole");
-                });
-
             modelBuilder.Entity("GameSource.Models.GameSourceUser.UserStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -515,7 +516,7 @@ namespace GameSource.Infrastructure.Migrations
                     b.ToTable("UserStatus");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -528,8 +529,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -538,7 +539,7 @@ namespace GameSource.Infrastructure.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -551,8 +552,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -561,7 +562,7 @@ namespace GameSource.Infrastructure.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -572,8 +573,8 @@ namespace GameSource.Infrastructure.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -582,13 +583,13 @@ namespace GameSource.Infrastructure.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -597,10 +598,10 @@ namespace GameSource.Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -621,25 +622,25 @@ namespace GameSource.Infrastructure.Migrations
                     b.HasOne("GameSource.Models.GameSource.Developer", "Developer")
                         .WithMany("Games")
                         .HasForeignKey("DeveloperID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Genre", "Genre")
                         .WithMany("Games")
                         .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Platform", "Platform")
                         .WithMany("Games")
                         .HasForeignKey("PlatformID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GameSource.Models.GameSource.Publisher", "Publisher")
                         .WithMany("Games")
                         .HasForeignKey("PublisherID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Developer");
@@ -655,7 +656,8 @@ namespace GameSource.Infrastructure.Migrations
                 {
                     b.HasOne("GameSource.Models.GameSource.NewsArticleCategory", "Category")
                         .WithMany("NewsArticles")
-                        .HasForeignKey("CategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GameSource.Models.GameSourceUser.User", "CreatedBy")
                         .WithMany("NewsArticlesCreated")
@@ -672,7 +674,8 @@ namespace GameSource.Infrastructure.Migrations
                 {
                     b.HasOne("GameSource.Models.GameSource.PlatformType", "PlatformType")
                         .WithMany("Platforms")
-                        .HasForeignKey("PlatformTypeID");
+                        .HasForeignKey("PlatformTypeID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("PlatformType");
                 });
@@ -706,7 +709,9 @@ namespace GameSource.Infrastructure.Migrations
 
                     b.HasOne("GameSource.Models.GameSource.Review", "Review")
                         .WithMany("ReviewComments")
-                        .HasForeignKey("ReviewID");
+                        .HasForeignKey("ReviewID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -715,11 +720,9 @@ namespace GameSource.Infrastructure.Migrations
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
-                    b.HasOne("GameSource.Models.GameSourceUser.UserRole", "UserRole")
+                    b.HasOne("GameSource.Models.GameSourceUser.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("UserRoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.HasOne("GameSource.Models.GameSourceUser.UserStatus", "UserStatus")
                         .WithMany("Users")
@@ -727,7 +730,7 @@ namespace GameSource.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("UserRole");
+                    b.Navigation("Role");
 
                     b.Navigation("UserStatus");
                 });
@@ -742,11 +745,13 @@ namespace GameSource.Infrastructure.Migrations
 
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfileCommentPermission", "UserProfileCommentPermission")
                         .WithMany("UserProfile")
-                        .HasForeignKey("UserProfileCommentPermissionID");
+                        .HasForeignKey("UserProfileCommentPermissionID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfileVisibility", "UserProfileVisibility")
                         .WithMany("UserProfile")
-                        .HasForeignKey("UserProfileVisibilityID");
+                        .HasForeignKey("UserProfileVisibilityID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
 
@@ -766,7 +771,7 @@ namespace GameSource.Infrastructure.Migrations
                     b.HasOne("GameSource.Models.GameSourceUser.UserProfile", "UserProfile")
                         .WithMany("Comments")
                         .HasForeignKey("UserProfileID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("CreatedBy");
@@ -774,16 +779,16 @@ namespace GameSource.Infrastructure.Migrations
                     b.Navigation("UserProfile");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("GameSource.Models.GameSourceUser.UserRole", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
@@ -792,7 +797,7 @@ namespace GameSource.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
@@ -801,9 +806,9 @@ namespace GameSource.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("GameSource.Models.GameSourceUser.UserRole", null)
+                    b.HasOne("GameSource.Models.GameSourceUser.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -816,7 +821,7 @@ namespace GameSource.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("GameSource.Models.GameSourceUser.User", null)
                         .WithMany()
@@ -865,6 +870,11 @@ namespace GameSource.Infrastructure.Migrations
                     b.Navigation("ReviewComments");
                 });
 
+            modelBuilder.Entity("GameSource.Models.GameSourceUser.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("GameSource.Models.GameSourceUser.User", b =>
                 {
                     b.Navigation("NewsArticlesCreated");
@@ -891,11 +901,6 @@ namespace GameSource.Infrastructure.Migrations
             modelBuilder.Entity("GameSource.Models.GameSourceUser.UserProfileVisibility", b =>
                 {
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("GameSource.Models.GameSourceUser.UserRole", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("GameSource.Models.GameSourceUser.UserStatus", b =>

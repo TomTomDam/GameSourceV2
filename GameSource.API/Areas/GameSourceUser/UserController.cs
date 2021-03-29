@@ -6,6 +6,7 @@ using GameSource.Models.GameSourceUser;
 using GameSource.Infrastructure.Repositories.GameSourceUser.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GameSource.API.Areas.GameSourceUser
 {
@@ -46,7 +47,7 @@ namespace GameSource.API.Areas.GameSourceUser
         /// <response code="404">Could not find a User</response>
         /// <response code="400">Request failed</response>
         [HttpGet("{id}")]
-        public async Task<ApiResponse> GetByID(int id)
+        public async Task<ApiResponse> GetByID(Guid id)
         {
             var result = await userRepository.GetByIDAsync(id);
 
@@ -102,9 +103,9 @@ namespace GameSource.API.Areas.GameSourceUser
         /// <response code="404">Could not find a User</response>
         /// <response code="400">Request failed</response>
         [HttpPut("{id}")]
-        public async Task<ApiResponse> Update(int id, [FromBody] User user)
+        public async Task<ApiResponse> Update(Guid id, [FromBody] User user)
         {
-            if (id == 0)
+            if (id == Guid.Empty)
                 return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
             var updatedUser = await userRepository.GetByIDAsync(id);
@@ -134,9 +135,9 @@ namespace GameSource.API.Areas.GameSourceUser
         /// <response code="404">Could not find a User</response>
         /// <response code="400">Request failed</response>
         [HttpDelete("{id}")]
-        public async Task<ApiResponse> Delete(int id)
+        public async Task<ApiResponse> Delete(Guid id)
         {
-            if (id == 0)
+            if (id == Guid.Empty)
                 return new ApiResponse(ResponseStatusCode.Error, "Invalid ID. Please check the ID.");
 
             User user = await userRepository.GetByIDAsync(id);

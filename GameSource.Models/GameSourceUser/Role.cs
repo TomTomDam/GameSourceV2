@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace GameSource.Models.GameSourceUser
 {
-    public class UserRole : IdentityRole<int>
+    public class Role : IdentityRole<Guid>
     {
         public string Description { get; set; }
-
-        //public AspNetUserRoles IdentityRole { get; set; }
 
         public ICollection<User> Users { get; set; }
     }

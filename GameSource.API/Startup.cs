@@ -46,13 +46,13 @@ namespace GameSource.API
             //Databases
             services.AddDbContext<GameSource_DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameSource_DB")));
             //ASP.NET Identity Core
-            services.AddIdentity<User, UserRole>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequiredLength = 10;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-                .AddRoles<UserRole>()
+                .AddRoles<Role>()
                 .AddEntityFrameworkStores<GameSource_DBContext>();
 
             //Swagger
@@ -76,7 +76,7 @@ namespace GameSource.API
             services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
             services.AddScoped<INewsArticleCategoryRepository, NewsArticleCategoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserStatusRepository, UserStatusRepository>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             services.AddScoped<IUserProfileVisibilityRepository, UserProfileVisibilityRepository>();

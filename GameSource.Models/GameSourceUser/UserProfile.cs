@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,7 +31,7 @@ namespace GameSource.Models.GameSourceUser
         [Display(Name = "Current Profile Background Image")]
         public string ProfileBackgroundImageFilePath { get; set; }
 
-        public int UserID { get; set; }
+        public Guid UserID { get; set; }
 
         [Display(Name = "Profile Visibility")]
         public int? UserProfileVisibilityID { get; set; }

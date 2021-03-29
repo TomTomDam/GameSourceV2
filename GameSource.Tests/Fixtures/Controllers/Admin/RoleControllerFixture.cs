@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace GameSource.Tests.Fixtures.Controllers.Admin
 {
-    public class UserRoleControllerFixture
+    public class RoleControllerFixture
     {
-        public UserRoleController userController;
-        public Mock<IUserRoleRepository> mockUserRoleRepo;
+        public RoleController roleController;
+        public Mock<IRoleRepository> mockUserRoleRepo;
         public IFixture fixture;
 
-        public UserRoleControllerFixture()
+        public RoleControllerFixture()
         {
-            mockUserRoleRepo = new Mock<IUserRoleRepository>();
-            userController = new UserRoleController(mockUserRoleRepo.Object);
+            mockUserRoleRepo = new Mock<IRoleRepository>();
+            roleController = new RoleController(mockUserRoleRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()

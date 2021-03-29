@@ -24,43 +24,43 @@ namespace GameSource.Tests.Repositories
             fixture.mockDbSet.Invocations.Clear();
         }
 
-        #region GetAll
-        [Fact]
-        public async Task GetAll_ReturnsListOfDevelopers()
-        {
-            var developerList = fixture.fixture.Create<IEnumerable<Developer>>();
-            var developerDbSet = fixture.SetupMockDbSet(developerList);
-            fixture.mockContext.Reset();
-            fixture.mockContext.Setup(x => x.Set<Developer>()).Returns(developerDbSet.Object);
+        //#region GetAll
+        //[Fact]
+        //public async Task GetAll_ReturnsListOfDevelopers()
+        //{
+        //    var developerList = fixture.fixture.Create<IEnumerable<Developer>>();
+        //    var developerDbSet = fixture.SetupMockDbSet(developerList);
+        //    fixture.mockContext.Reset();
+        //    fixture.mockContext.Setup(x => x.Set<Developer>()).Returns(developerDbSet.Object);
 
-            var result = await fixture.developerRepo.GetAllAsync();
+        //    var result = await fixture.developerRepo.GetAllAsync();
 
-            Assert.NotNull(result);
-            Assert.Equal(developerList, result);
-        }
-        #endregion
+        //    Assert.NotNull(result);
+        //    Assert.Equal(developerList, result);
+        //}
+        //#endregion
 
-        #region GetByID
-        [Fact]
-        public async Task GetByID_ReturnsDeveloper()
-        {
-            var developerList = new List<Developer>();
-            var developer = new Developer
-            {
-                ID = 1,
-                Name = "BioWare"
-            };
-            developerList.Add(developer);
+        //#region GetByID
+        //[Fact]
+        //public async Task GetByID_ReturnsDeveloper()
+        //{
+        //    var developerList = new List<Developer>();
+        //    var developer = new Developer
+        //    {
+        //        ID = 1,
+        //        Name = "BioWare"
+        //    };
+        //    developerList.Add(developer);
 
-            var developerDbSet = fixture.SetupMockDbSet(developerList);
-            fixture.mockContext.Reset();
-            fixture.mockContext.Setup(x => x.Set<Developer>()).Returns(developerDbSet.Object);
+        //    var developerDbSet = fixture.SetupMockDbSet(developerList);
+        //    fixture.mockContext.Reset();
+        //    fixture.mockContext.Setup(x => x.Set<Developer>()).Returns(developerDbSet.Object);
 
-            var result = await fixture.developerRepo.GetByIDAsync(developer.ID);
+        //    var result = await fixture.developerRepo.GetByIDAsync(developer.ID);
 
-            Assert.NotNull(result);
-            Assert.Equal(developer, result);
-        }
-        #endregion
+        //    Assert.NotNull(result);
+        //    Assert.Equal(developer, result);
+        //}
+        //#endregion
     }
 }
