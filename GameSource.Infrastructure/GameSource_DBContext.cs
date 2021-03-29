@@ -3,10 +3,11 @@ using GameSource.Models.GameSourceUser;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
 
 namespace GameSource.Infrastructure
 {
-    public class GameSource_DBContext : IdentityDbContext<User, UserRole, int>
+    public class GameSource_DBContext : IdentityDbContext<User, Role, Guid>
     {
         public GameSource_DBContext(DbContextOptions<GameSource_DBContext> options) : base(options)
         {
@@ -24,14 +25,14 @@ namespace GameSource.Infrastructure
         public DbSet<NewsArticle> NewsArticle { get; set; }
         public DbSet<NewsArticleCategory> NewsArticleCategory { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set; }
         public DbSet<UserStatus> UserStatus { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
         public DbSet<UserProfile> UserProfile { get; set; }
         public DbSet<UserProfileVisibility> UserProfileVisibility { get; set; }
         public DbSet<UserProfileComment> UserProfileComment { get; set; }
         public DbSet<UserProfileCommentPermission> UserProfileCommentPermission { get; set; }
         public DbSet<Review> Review { get; set; }
-        public DbSet<ReviewComment> ReviewComments { get; set; }
+        public DbSet<ReviewComment> ReviewComment { get; set; }
 
         //Transactions
         private IDbContextTransaction _transaction;
@@ -65,19 +66,9 @@ namespace GameSource.Infrastructure
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>(e => e.ToTable(name: "User"));
-            modelBuilder.Entity<UserRole>(e => e.ToTable(name: "UserRole"));
+            modelBuilder.Entity<Role>(e => e.ToTable(name: "Role"));
 
             modelBuilder.Entity<Review>().Property(p => p.Rating).HasColumnType("decimal(18,2)");
-
-            ////One AspNetUserRoles to One User
-            //modelBuilder.Entity<AspNetUserRoles>()
-            //    .HasOne(r => r.User)
-            //    .WithOne(r => r.IdentityRole);
-
-            ////One AspNetUserRoles to One UserRole
-            //modelBuilder.Entity<AspNetUserRoles>()
-            //    .HasOne(r => r.Role)
-            //    .WithOne(r => r.IdentityRole);
 
             //One PlatformType to Many Platforms
             modelBuilder.Entity<Platform>()
@@ -102,6 +93,14 @@ namespace GameSource.Infrastructure
                 .WithOne(nac => nac.Category)
                 .HasForeignKey(nac => nac.CategoryID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            //One UserProfile to One User
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.User)
+                .WithOne(up => up.UserProfile);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserProfile)
+                .WithOne(u => u.User);
 
             //One UserProfileCommentPermission to Many UserProfiles
             modelBuilder.Entity<UserProfile>()

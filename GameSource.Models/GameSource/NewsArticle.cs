@@ -34,7 +34,7 @@ namespace GameSource.Models.GameSource
         public string CoverImageFilePath { get; set; }
 
         [ForeignKey("CreatedBy")]
-        public int CreatedByID { get; set; }
+        public Guid CreatedByID { get; set; }
 
         [Display(Name = "Author")]
         public User CreatedBy { get; set; }

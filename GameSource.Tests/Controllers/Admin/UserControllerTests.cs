@@ -83,9 +83,9 @@ namespace GameSource.Tests.Controllers.Admin
         [Fact]
         public async Task GetByID_ErrorResponse_WhenIDIs0()
         {
-            fixture.mockUserRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((User)null);
+            fixture.mockUserRepo.Setup(x => x.GetByIDAsync(Guid.Empty)).ReturnsAsync((User)null);
 
-            var result = await fixture.userController.GetByID(0);
+            var result = await fixture.userController.GetByID(Guid.Empty);
 
             fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
 
@@ -134,7 +134,7 @@ namespace GameSource.Tests.Controllers.Admin
         [Fact]
         public async Task Update_SuccessResponse_UpdatesUser()
         {
-            var id = 1;
+            var id = Guid.NewGuid();
             var user = new User
             {
                 FirstName = "Tom",
@@ -142,7 +142,7 @@ namespace GameSource.Tests.Controllers.Admin
             };
             var updatedUser = new User
             {
-                Id = 1,
+                Id = id,
                 FirstName = "Commander",
                 LastName = "Shepard"
             };
@@ -169,7 +169,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             fixture.mockUserRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((User)null);
 
-            var result = await fixture.userController.Update(0, user);
+            var result = await fixture.userController.Update(Guid.Empty, user);
 
             fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
             fixture.mockUserRepo.Verify(x => x.UpdateAsync(It.IsAny<User>()), Times.Never);
@@ -223,9 +223,9 @@ namespace GameSource.Tests.Controllers.Admin
         [Fact]
         public async Task Delete_ErrorResponse_WhenIDIs0()
         {
-            fixture.mockUserRepo.Setup(x => x.GetByIDAsync(0)).ReturnsAsync((User)null);
+            fixture.mockUserRepo.Setup(x => x.GetByIDAsync(Guid.Empty)).ReturnsAsync((User)null);
 
-            var result = await fixture.userController.Delete(0);
+            var result = await fixture.userController.Delete(Guid.Empty);
 
             fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
             fixture.mockUserRepo.Verify(x => x.DeleteAsync(It.IsAny<User>()), Times.Never);

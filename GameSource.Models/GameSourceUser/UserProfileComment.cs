@@ -14,7 +14,7 @@ namespace GameSource.Models.GameSourceUser
         public DateTime DateCreated { get; set; }
 
         [ForeignKey("CreatedBy")]
-        public int CreatedByID { get; set; }
+        public Guid CreatedByID { get; set; }
 
         public int UserProfileID { get; set; }
 

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameSource.Models.GameSourceUser
 {
-    public class User : IdentityUser<int>
+    public class User : IdentityUser<Guid>
     {
         public User()
         {
@@ -34,17 +34,15 @@ namespace GameSource.Models.GameSourceUser
 
         public int UserStatusID { get; set; }
 
-        public int UserRoleID { get; set; }
+        public Guid UserRoleID { get; set; }
 
         [Display(Name = "User Status")]
         public UserStatus UserStatus { get; set; }
 
         [Display(Name = "User Role")]
-        public UserRole UserRole { get; set; }
+        public Role Role { get; set; }
 
         public UserProfile UserProfile { get; set; }
-
-        //public AspNetUserRoles IdentityRole { get; set; }
 
         public ICollection<Review> ReviewsCreated { get; set; }
 

@@ -35,7 +35,7 @@ namespace GameSource.Models.GameSource
         public User CreatedBy { get; set; }
 
         [ForeignKey("CreatedBy")]
-        public int CreatedByID { get; set; }
+        public Guid CreatedByID { get; set; }
 
         public ICollection<ReviewComment> ReviewComments { get; set; }
     }
