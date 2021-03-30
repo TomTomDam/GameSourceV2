@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+//using Serilog.Sinks.MSSqlServer;
 
 namespace GameSource.API
 {
@@ -19,6 +20,14 @@ namespace GameSource.API
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
+
+           // Log.Logger = new LoggerConfiguration()
+           //.WriteTo
+           //.MSSqlServer(
+           //    connectionString: "",
+           //    sinkOptions: new MSSqlServerSinkOptions { TableName = "EventsLog" }
+           //)
+           //.CreateLogger();
 
             try
             {
