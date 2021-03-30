@@ -51,5 +51,7 @@ namespace GameSource.Models.GameSourceUser
         public ICollection<UserProfileComment> UserProfileCommentsCreated { get; set; }
 
         public ICollection<NewsArticle> NewsArticlesCreated { get; set; }
+
+        public ICollection<EventsLog> EventLogsCreated { get; set; }
     }
 }

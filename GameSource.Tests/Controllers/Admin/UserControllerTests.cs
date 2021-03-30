@@ -72,7 +72,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.GetByID(user.Id);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Once);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
@@ -87,7 +87,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.GetByID(Guid.Empty);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Never);
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
@@ -152,7 +152,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.Update(id, user);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Once);
             fixture.mockUserRepo.Verify(x => x.UpdateAsync(updatedUser), Times.Once);
 
             Assert.NotNull(result);
@@ -171,7 +171,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.Update(Guid.Empty, user);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Never);
             fixture.mockUserRepo.Verify(x => x.UpdateAsync(It.IsAny<User>()), Times.Never);
 
             Assert.NotNull(result);
@@ -190,7 +190,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.Update(user.Id, user);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Once);
             fixture.mockUserRepo.Verify(x => x.UpdateAsync(It.IsAny<User>()), Times.Once);
 
             Assert.NotNull(result);
@@ -211,7 +211,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.Delete(user.Id);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Once);
             fixture.mockUserRepo.Verify(x => x.DeleteAsync(It.IsAny<User>()), Times.Once);
 
             Assert.NotNull(result);
@@ -227,7 +227,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.Delete(Guid.Empty);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Never);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Never);
             fixture.mockUserRepo.Verify(x => x.DeleteAsync(It.IsAny<User>()), Times.Never);
 
             Assert.NotNull(result);
@@ -246,7 +246,7 @@ namespace GameSource.Tests.Controllers.Admin
 
             var result = await fixture.userController.Delete(user.Id);
 
-            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockUserRepo.Verify(x => x.GetByIDAsync(It.IsAny<Guid>()), Times.Once);
             fixture.mockUserRepo.Verify(x => x.DeleteAsync(It.IsAny<User>()), Times.Once);
 
             Assert.NotNull(result);
