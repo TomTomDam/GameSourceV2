@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -39,10 +40,13 @@ namespace GameSource.Models.GameSourceUser
         [Display(Name = "Comment Visibility")]
         public int? UserProfileCommentPermissionID { get; set; }
 
+        [JsonIgnore]
         public User User { get; set; }
 
+        [JsonIgnore]
         public UserProfileVisibility UserProfileVisibility { get; set; }
 
+        [JsonIgnore]
         public UserProfileCommentPermission UserProfileCommentPermission { get; set; }
 
         public ICollection<UserProfileComment> Comments { get; set; }

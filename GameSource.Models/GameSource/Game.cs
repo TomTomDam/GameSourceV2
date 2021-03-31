@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GameSource.Models.GameSource
 {
@@ -41,12 +42,16 @@ namespace GameSource.Models.GameSource
         [Required]
         public int PlatformID { get; set; }
 
+        [JsonIgnore]
         public Genre Genre { get; set; }
 
+        [JsonIgnore]
         public Developer Developer { get; set; }
 
+        [JsonIgnore]
         public Publisher Publisher { get; set; }
 
+        [JsonIgnore]
         public Platform Platform { get; set; }
 
         public IEnumerable<Review> Reviews { get; set; }

@@ -34,7 +34,6 @@ namespace GameSource.API.Controllers
         {
             IEnumerable<Developer> result = await developerRepository.GetAllAsync();
 
-            Log.Information("Returned Developer list", result);
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Developer list.", result.Count());
         }
 

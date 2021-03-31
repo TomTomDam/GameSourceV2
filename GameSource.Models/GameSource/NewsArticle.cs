@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GameSource.Models.GameSource
 {
@@ -23,6 +24,7 @@ namespace GameSource.Models.GameSource
 
         public int? CategoryID { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Category")]
         public NewsArticleCategory Category { get; set; }
 
@@ -36,6 +38,7 @@ namespace GameSource.Models.GameSource
         [ForeignKey("CreatedBy")]
         public Guid CreatedByID { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Author")]
         public User CreatedBy { get; set; }
     }

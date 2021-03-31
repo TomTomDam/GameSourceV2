@@ -25,13 +25,13 @@ const Platforms = () => {
 
   return (
     <>
-      {platforms.map((platform) => {
+      {platforms.map((platform) => (
         <li key={platform.id}>
-          <Link to={`/platform/${platform.id}`}>
+          <Link to={`/platforms/${platform.id}`} className="nav-link dropdown-item">
             <span>{platform.name}</span>
           </Link>
-        </li>;
-      })}
+        </li>
+      ))}
     </>
   );
 };

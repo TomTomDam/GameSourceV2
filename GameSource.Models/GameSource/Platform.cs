@@ -15,8 +15,8 @@ namespace GameSource.Models.GameSource
 
         public int? PlatformTypeID { get; set; }
 
-        [Display(Name = "Platform Type")]
         [JsonIgnore]
+        [Display(Name = "Platform Type")]
         public PlatformType PlatformType { get; set; }
 
         public ICollection<Game> Games { get; set; }

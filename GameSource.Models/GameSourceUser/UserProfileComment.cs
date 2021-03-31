@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -18,8 +19,10 @@ namespace GameSource.Models.GameSourceUser
 
         public int UserProfileID { get; set; }
 
+        [JsonIgnore]
         public User CreatedBy { get; set; }
 
+        [JsonIgnore]
         public UserProfile UserProfile { get; set; }
     }
 }
