@@ -7,7 +7,7 @@ using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Serilog;
 
 namespace GameSource.API.Controllers
 {
@@ -34,6 +34,7 @@ namespace GameSource.API.Controllers
         {
             IEnumerable<Developer> result = await developerRepository.GetAllAsync();
 
+            Log.Information("Returned Developer list", result);
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Developer list.", result.Count());
         }
 
