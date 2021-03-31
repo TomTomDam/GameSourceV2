@@ -25,13 +25,13 @@ const Genres = () => {
 
   return (
     <>
-      {genres.map((genre) => {
+      {genres.map((genre) => (
         <li key={genre.id}>
           <Link to={`/genres/${genre.id}`} className="nav-link dropdown-item">
             <span>{genre.name}</span>
           </Link>
-        </li>;
-      })}
+        </li>
+      ))}
     </>
   );
 };

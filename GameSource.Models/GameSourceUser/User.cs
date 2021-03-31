@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GameSource.Models.GameSourceUser
 {
@@ -36,12 +37,15 @@ namespace GameSource.Models.GameSourceUser
 
         public Guid UserRoleID { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "User Status")]
         public UserStatus UserStatus { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "User Role")]
         public Role Role { get; set; }
 
+        [JsonIgnore]
         public UserProfile UserProfile { get; set; }
 
         public ICollection<Review> ReviewsCreated { get; set; }
