@@ -52,6 +52,6 @@ namespace GameSource.Models.GameSourceUser
 
         public ICollection<NewsArticle> NewsArticlesCreated { get; set; }
 
-        public ICollection<EventsLog> EventLogsCreated { get; set; }
+        //public ICollection<EventsLog> EventLogsCreated { get; set; }
     }
 }
