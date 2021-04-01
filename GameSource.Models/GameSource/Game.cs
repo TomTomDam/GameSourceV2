@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace GameSource.Models.GameSource
 {
@@ -11,6 +10,7 @@ namespace GameSource.Models.GameSource
         public Game()
         {
             Reviews = new List<Review>();
+            Platforms = new List<Platform>();
         }
 
         [Key]
@@ -39,7 +39,8 @@ namespace GameSource.Models.GameSource
         [Required]
         public int PublisherID { get; set; }
 
-        [Required]
+        [NotMapped]
+        [JsonIgnore]
         public int PlatformID { get; set; }
 
         [JsonIgnore]
@@ -51,8 +52,7 @@ namespace GameSource.Models.GameSource
         [JsonIgnore]
         public Publisher Publisher { get; set; }
 
-        [JsonIgnore]
-        public Platform Platform { get; set; }
+        public ICollection<Platform> Platforms { get; set; }
 
         public IEnumerable<Review> Reviews { get; set; }
     }

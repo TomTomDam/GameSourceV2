@@ -10,12 +10,14 @@ namespace GameSource.Tests.Fixtures.Controllers.GameSource
     {
         public GamesController gameController;
         public Mock<IGameRepository> mockGameRepo;
+        public Mock<IPlatformRepository> mockPlatformRepo;
         public IFixture fixture;
 
         public GameControllerFixture()
         {
             mockGameRepo = new Mock<IGameRepository>();
-            gameController = new GamesController(mockGameRepo.Object);
+            mockPlatformRepo = new Mock<IPlatformRepository>();
+            gameController = new GamesController(mockGameRepo.Object, mockPlatformRepo.Object);
 
             fixture = new Fixture();
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>()

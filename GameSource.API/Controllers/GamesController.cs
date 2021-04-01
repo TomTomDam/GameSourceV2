@@ -17,10 +17,12 @@ namespace GameSource.API.Controllers
     public class GamesController : ControllerBase
     {
         private readonly IGameRepository gameRepository;
+        private readonly IPlatformRepository platformRepository;
 
-        public GamesController(IGameRepository gameRepository)
+        public GamesController(IGameRepository gameRepository, IPlatformRepository platformRepository)
         {
             this.gameRepository = gameRepository;
+            this.platformRepository = platformRepository;
         }
 
         /// <summary>
@@ -105,13 +107,17 @@ namespace GameSource.API.Controllers
             if (updatedGame == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found. Please check the ID.");
 
+            Platform platform = await platformRepository.GetByIDAsync(game.PlatformID);
+            if (platform == null)
+                return new ApiResponse(ResponseStatusCode.NotFound, "Platform was not found. Please check the ID.");
+
             updatedGame.Name = game.Name;
             updatedGame.Description = game.Description;
             updatedGame.CoverImageFilePath = game.CoverImageFilePath;
             updatedGame.GenreID = game.GenreID;
             updatedGame.DeveloperID = game.DeveloperID;
             updatedGame.PublisherID = game.PublisherID;
-            updatedGame.PlatformID = game.PlatformID;
+            updatedGame.Platforms.ToList().Add(platform);
 
             var updated = await gameRepository.UpdateAsync(updatedGame);
             if (!updated)
