@@ -6,9 +6,9 @@ const Card = (props) => {
 
   return games.map((game) => (
     <div className="row">
-      <div key={game.id} className="col-sm">
+      <div key={game.id} className="col-3">
         <Link to={`/games/${game.id}`} className="nav-link dropdown-item">
-          <span>{game.name}</span>
+          <span className="text-white">{game.name}</span>
         </Link>
       </div>
     </div>

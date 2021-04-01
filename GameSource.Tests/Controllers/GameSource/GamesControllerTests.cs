@@ -150,6 +150,11 @@ namespace GameSource.Tests.Controllers.GameSource
         public async Task Update_SuccessResponse_UpdatesGame()
         {
             var id = 1;
+            var platform = new Platform
+            {
+                ID = 1,
+                Name = "Windows"
+            };
             var game = new Game
             {
                 Name = "Mass Effect",
@@ -173,11 +178,13 @@ namespace GameSource.Tests.Controllers.GameSource
             };
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedGame);
+            fixture.mockPlatformRepo.Setup(x => x.GetByIDAsync(platform.ID)).ReturnsAsync(platform);
             fixture.mockGameRepo.Setup(x => x.UpdateAsync(updatedGame)).ReturnsAsync(true);
 
             var result = await fixture.gameController.Update(id, game);
 
             fixture.mockGameRepo.Verify(x => x.GetByIDAsync(It.IsAny<int>()), Times.Once);
+            fixture.mockPlatformRepo.Verify(x => x.GetByIDAsync(platform.ID), Times.Once);
             fixture.mockGameRepo.Verify(x => x.UpdateAsync(updatedGame), Times.Once);
 
             Assert.NotNull(result);

@@ -174,17 +174,13 @@ namespace GameSource.Infrastructure
                 .HasForeignKey(g => g.GenreID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //One Platform to Many Games
+            //Many Platforms to Many Games
             modelBuilder.Entity<Platform>()
                 .HasMany(p => p.Games)
-                .WithOne(p => p.Platform)
-                .HasForeignKey(p => p.PlatformID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(p => p.Platforms);
             modelBuilder.Entity<Game>()
-                .HasOne(g => g.Platform)
-                .WithMany(g => g.Games)
-                .HasForeignKey(g => g.PlatformID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(g => g.Platforms)
+                .WithMany(g => g.Games);
 
             //One Publisher to Many Games
             modelBuilder.Entity<Publisher>()
