@@ -7,6 +7,9 @@ using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using GameSource.Models.DTOs.GameSource;
 
 namespace GameSource.API.Controllers
 {
@@ -33,7 +36,44 @@ namespace GameSource.API.Controllers
         [HttpGet]
         public async Task<ApiResponse> GetAll()
         {
-            IEnumerable<Game> result = await gameRepository.GetAllAsync();
+            var result = await gameRepository.GetAllAsync();
+            foreach (var game in result)
+            {
+                //Explicit loading
+                await gameRepository.GetPlatformAsync(game);
+                await gameRepository.GetReviewAsync(game);
+
+                var dto = new GameDTO
+                {
+                    ID = game.ID,
+                    Name = game.Name,
+                    Description = game.Description,
+                    CoverImageFilePath = game.CoverImageFilePath,
+                    GenreID = game.GenreID,
+                    DeveloperID = game.DeveloperID,
+                    PublisherID = game.PublisherID,
+                    Platforms = game.Platforms.Select(x => new PlatformDTO
+                    {
+                        ID = x.ID,
+                        Name = x.Name,
+                        PlatformTypeID = x.PlatformTypeID
+                    }),
+                    Reviews = game.Reviews.Select(x => new ReviewDTO
+                    {
+                        ID = x.ID,
+                        Title = x.Title,
+                        Body = x.Body,
+                        DateCreated = x.DateCreated,
+                        DateModified = x.DateModified,
+                        CreatedByID = x.CreatedByID,
+                        HelpfulRating = x.HelpfulRating,
+                        Rating = x.Rating,
+                        ReviewComments = x.ReviewComments
+                    })
+                };
+
+                return new ApiResponse(dto, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
+            }
 
             return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
         }
