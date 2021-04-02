@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using GameSource.Models.GameSource;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
 
-namespace GameSource.Models.GameSource
+namespace GameSource.Models.DTOs.GameSource
 {
-    public class Game
+    public class GameDTO
     {
-        public Game()
+        public GameDTO()
         {
-            Reviews = new List<Review>();
-            Platforms = new List<Platform>();
+            Reviews = new List<ReviewDTO>();
+            Platforms = new List<PlatformDTO>();
         }
 
-        [Key]
         public int ID { get; set; }
 
         [Required]
@@ -39,21 +39,8 @@ namespace GameSource.Models.GameSource
         [Required]
         public int PublisherID { get; set; }
 
-        [NotMapped]
-        [JsonIgnore]
-        public int PlatformID { get; set; }
+        public IEnumerable<PlatformDTO> Platforms { get; set; }
 
-        [JsonIgnore]
-        public Genre Genre { get; set; }
-
-        [JsonIgnore]
-        public Developer Developer { get; set; }
-
-        [JsonIgnore]
-        public Publisher Publisher { get; set; }
-
-        public IEnumerable<Platform> Platforms { get; set; }
-
-        public IEnumerable<Review> Reviews { get; set; }
+        public IEnumerable<ReviewDTO> Reviews { get; set; }
     }
 }

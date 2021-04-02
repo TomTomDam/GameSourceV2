@@ -3,6 +3,7 @@ using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using GameSource.Models.DTOs.GameSource;
 
 namespace GameSource.Infrastructure.Repositories.GameSource
 {
@@ -15,15 +16,16 @@ namespace GameSource.Infrastructure.Repositories.GameSource
             this.context = context;
         }
 
-        public new async Task<IEnumerable<Game>> GetAllAsync()
+        public async Task<IEnumerable<Platform>> GetPlatformAsync(Game game)
         {
-            return await entity.Include(x => x.Platforms).ToListAsync();
+            await context.Entry(game).Collection(g => g.Platforms).LoadAsync();
+            return game.Platforms;
         }
 
-        public new async Task<Game> GetByIDAsync(int id)
+        public async Task<IEnumerable<Review>> GetReviewAsync(Game game)
         {
-            var item = await entity.FindAsync(id);
-            return item;
+            await context.Entry(game).Collection(g => g.Reviews).LoadAsync();
+            return game.Reviews;
         }
     }
 }
