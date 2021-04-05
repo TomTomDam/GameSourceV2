@@ -1,5 +1,7 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using GameSource.Models;
+using GameSource.Models.DTOs.GameSource;
 using GameSource.Models.Enums;
 using GameSource.Models.GameSource;
 using GameSource.Tests.Fixtures.Controllers.GameSource;
@@ -24,23 +26,67 @@ namespace GameSource.Tests.Controllers.GameSource
         public void Dispose()
         {
             fixture.mockGameRepo.Invocations.Clear();
+            fixture.mockPlatformRepo.Invocations.Clear();
         }
 
         #region GetAll
         [Fact]
         public async Task GetAll_SuccessResponse_ReturnsListOfGames()
         {
-            var gameList = fixture.fixture.Create<IEnumerable<Game>>();
+            var gameList = fixture.fixture.CreateMany<Game>(2);
+            var platforms = fixture.fixture.CreateMany<Platform>(1);
+            var reviews = fixture.fixture.CreateMany<Review>(1);
+            var gameDtoList = new List<GameDTO>();
+
+            foreach (var game in gameList)
+            {
+                fixture.mockGameRepo.Setup(x => x.GetPlatformsAsync(game)).ReturnsAsync(platforms);
+                fixture.mockGameRepo.Setup(x => x.GetReviewsAsync(game)).ReturnsAsync(reviews);
+
+                var dto = new GameDTO
+                {
+                    ID = game.ID,
+                    Name = game.Name,
+                    Description = game.Description,
+                    CoverImageFilePath = game.CoverImageFilePath,
+                    GenreID = game.GenreID,
+                    DeveloperID = game.DeveloperID,
+                    PublisherID = game.PublisherID,
+                    Platforms = game.Platforms.Select(x => new PlatformDTO
+                    {
+                        ID = x.ID,
+                        Name = x.Name,
+                        PlatformTypeID = x.PlatformTypeID
+                    }),
+                    Reviews = game.Reviews.Select(x => new ReviewDTO
+                    {
+                        ID = x.ID,
+                        Title = x.Title,
+                        Body = x.Body,
+                        DateCreated = x.DateCreated,
+                        DateModified = x.DateModified,
+                        CreatedByID = x.CreatedByID,
+                        HelpfulRating = x.HelpfulRating,
+                        Rating = x.Rating,
+                        ReviewComments = x.ReviewComments
+                    })
+                };
+                
+                gameDtoList.Add(dto);
+            }
 
             fixture.mockGameRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(gameList);
 
             var result = await fixture.gameController.GetAll();
 
             fixture.mockGameRepo.Verify(x => x.GetAllAsync(), Times.Once);
+            fixture.mockGameRepo.Verify(x => x.GetPlatformsAsync(It.IsAny<Game>()), Times.Exactly(2));
+            fixture.mockGameRepo.Verify(x => x.GetReviewsAsync(It.IsAny<Game>()), Times.Exactly(2));
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(gameList, result.Data);
+            Assert.IsType<List<GameDTO>>(result.Data);
+            result.Data.Should().BeEquivalentTo(gameDtoList);
             Assert.True(result.NumberOfRows > 0);
             Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
         }
@@ -57,7 +103,7 @@ namespace GameSource.Tests.Controllers.GameSource
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
             Assert.Equal(0, result.NumberOfRows);
-            Assert.Equal(Enumerable.Empty<Game>(), result.Data);
+            Assert.Equal(Enumerable.Empty<GameDTO>(), result.Data);
             Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
         }
         #endregion
@@ -76,7 +122,7 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.IsType<Game>(result.Data);
+            Assert.IsType<GameDTO>(result.Data);
             Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
         }
 
@@ -173,8 +219,35 @@ namespace GameSource.Tests.Controllers.GameSource
                 CoverImageFilePath = "kotor",
                 GenreID = 2,
                 DeveloperID = 1,
-                PublisherID = 2,
-                PlatformID = 1
+                PublisherID = 2
+            };
+            var dto = new UpdateGameDTO
+            {
+                ID = id,
+                Name = game.Name,
+                Description = game.Description,
+                CoverImageFilePath = game.CoverImageFilePath,
+                GenreID = game.GenreID,
+                DeveloperID = game.DeveloperID,
+                PublisherID = game.PublisherID,
+                Platforms = game.Platforms.Select(x => new PlatformDTO
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    PlatformTypeID = x.PlatformTypeID
+                }),
+                Reviews = game.Reviews.Select(x => new ReviewDTO
+                {
+                    ID = x.ID,
+                    Title = x.Title,
+                    Body = x.Body,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    CreatedByID = x.CreatedByID,
+                    HelpfulRating = x.HelpfulRating,
+                    Rating = x.Rating,
+                    ReviewComments = x.ReviewComments
+                })
             };
 
             fixture.mockGameRepo.Setup(x => x.GetByIDAsync(id)).ReturnsAsync(updatedGame);
@@ -189,7 +262,8 @@ namespace GameSource.Tests.Controllers.GameSource
 
             Assert.NotNull(result);
             Assert.IsType<ApiResponse>(result);
-            Assert.Equal(updatedGame, result.Data);
+            Assert.IsType<UpdateGameDTO>(result.Data);
+            result.Data.Should().BeEquivalentTo(dto);
             Assert.Equal(1, result.NumberOfRows);
             Assert.Equal(ResponseStatusCode.Success, result.ResponseStatusCode);
         }
