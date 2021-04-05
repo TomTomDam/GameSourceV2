@@ -1,14 +1,13 @@
-﻿using GameSource.Models.GameSource;
-using Newtonsoft.Json;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace GameSource.Models.DTOs.GameSource
 {
-    public class GameDTO
+    public class UpdateGameDTO
     {
-        public GameDTO()
+        public UpdateGameDTO()
         {
             Reviews = new List<ReviewDTO>();
             Platforms = new List<PlatformDTO>();

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using GameSource.Models;
 using GameSource.Models.Enums;
@@ -7,9 +6,9 @@ using GameSource.Models.GameSource;
 using GameSource.Infrastructure.Repositories.GameSource.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 using GameSource.Models.DTOs.GameSource;
+using System.Collections.Generic;
 
 namespace GameSource.API.Controllers
 {
@@ -37,12 +36,13 @@ namespace GameSource.API.Controllers
         public async Task<ApiResponse> GetAll()
         {
             var result = await gameRepository.GetAllAsync();
+
+            var gameList = new List<GameDTO>();
             foreach (var game in result)
             {
                 //Explicit loading
-                await gameRepository.GetPlatformAsync(game);
-                await gameRepository.GetReviewAsync(game);
-
+                await gameRepository.GetPlatformsAsync(game);
+                await gameRepository.GetReviewsAsync(game);
                 var dto = new GameDTO
                 {
                     ID = game.ID,
@@ -71,11 +71,11 @@ namespace GameSource.API.Controllers
                         ReviewComments = x.ReviewComments
                     })
                 };
-
-                return new ApiResponse(dto, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
+                
+                gameList.Add(dto);
             }
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned Game list.", result.Count());
+            return new ApiResponse(gameList, ResponseStatusCode.Success, "Successfully returned Game list.", gameList.Count());
         }
 
         /// <summary>
@@ -95,7 +95,38 @@ namespace GameSource.API.Controllers
             if (result == null)
                 return new ApiResponse(ResponseStatusCode.NotFound, "Game was not found.");
 
-            return new ApiResponse(result, ResponseStatusCode.Success, "Successfully returned a Game.", 1);
+            await gameRepository.GetPlatformsAsync(result);
+            await gameRepository.GetReviewsAsync(result);
+            var dto = new GameDTO
+            {
+                ID = result.ID,
+                Name = result.Name,
+                Description = result.Description,
+                CoverImageFilePath = result.CoverImageFilePath,
+                GenreID = result.GenreID,
+                DeveloperID = result.DeveloperID,
+                PublisherID = result.PublisherID,
+                Platforms = result.Platforms.Select(x => new PlatformDTO
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    PlatformTypeID = x.PlatformTypeID
+                }),
+                Reviews = result.Reviews.Select(x => new ReviewDTO
+                {
+                    ID = x.ID,
+                    Title = x.Title,
+                    Body = x.Body,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    CreatedByID = x.CreatedByID,
+                    HelpfulRating = x.HelpfulRating,
+                    Rating = x.Rating,
+                    ReviewComments = x.ReviewComments
+                })
+            };
+
+            return new ApiResponse(dto, ResponseStatusCode.Success, "Successfully returned a Game.", 1);
         }
 
         /// <summary>
@@ -163,7 +194,36 @@ namespace GameSource.API.Controllers
             if (!updated)
                 return new ApiResponse(ResponseStatusCode.Error, "Could not update Game.", 0);
 
-            return new ApiResponse(updatedGame, ResponseStatusCode.Success, "Successfully updated Game.", 1);
+            var dto = new UpdateGameDTO
+            {
+                ID = updatedGame.ID,
+                Name = updatedGame.Name,
+                Description = updatedGame.Description,
+                CoverImageFilePath = updatedGame.CoverImageFilePath,
+                GenreID = updatedGame.GenreID,
+                DeveloperID = updatedGame.DeveloperID,
+                PublisherID = updatedGame.PublisherID,
+                Platforms = updatedGame.Platforms.Select(x => new PlatformDTO
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    PlatformTypeID = x.PlatformTypeID
+                }),
+                Reviews = updatedGame.Reviews.Select(x => new ReviewDTO
+                {
+                    ID = x.ID,
+                    Title = x.Title,
+                    Body = x.Body,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    CreatedByID = x.CreatedByID,
+                    HelpfulRating = x.HelpfulRating,
+                    Rating = x.Rating,
+                    ReviewComments = x.ReviewComments
+                })
+            };
+
+            return new ApiResponse(dto, ResponseStatusCode.Success, "Successfully updated Game.", 1);
         }
 
         /// <summary>
